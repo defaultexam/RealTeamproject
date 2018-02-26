@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+
+	<!-- <definition name="o"
+		template="/WEB-INF/views/template/client/mainLayout.jsp">
+		<put-attribute name="title" value="Yeop's Restaurant" />
+		<put-attribute name="menu"
+			value="/WEB-INF/views/template/client/mainMenu.jsp" />
+		<put-attribute name="footer"
+			value="/WEB-INF/views/template/client/footer.jsp" />
+	</definition> -->
+
+	<definition name="intro"
+		template="/WEB-INF/views/template/client/contentLayout.jsp">
+		<put-attribute name="title" value="Yeop's Restaurant" />
+		<put-attribute name="menu"
+			value="/WEB-INF/views/template/client/menu.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/template/client/mainContent.jsp" />
+		<put-attribute name="footer"
+			value="/WEB-INF/views/template/client/footer.jsp" />
+	</definition>
+
+	<definition name="user/login/*" extends="intro">
+		<put-attribute name="body" value="/WEB-INF/views/user/login/{1}.jsp" />
+	</definition>
+	
+	<definition name="user/register/*" extends="intro">
+		<put-attribute name="body" value="/WEB-INF/views/user/register/{1}.jsp" />
+	</definition>
+	
+	<definition name="user/menu/*" extends="intro">
+		<put-attribute name="body" value="/WEB-INF/views/user/menu/{1}.jsp" />
+	</definition>
+
+	<!-- <definition name="registerprocess" extends="login"> <put-attribute 
+		name="body" value="/WEB-INF/views/user/registerprocess.jsp" /> </definition> -->
+
+</tiles-definitions> 

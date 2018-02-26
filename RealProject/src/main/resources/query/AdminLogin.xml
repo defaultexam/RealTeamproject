@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.restaurant.admin.login.dao.LoginDao">
+
+	<!-- DB에서 아이디와 비밀번호 일치하는 관리자 아이디 패스워드 번호 찾기 -->
+	<select id="loginSelect" parameterType="adminLogin" resultType="java.lang.String">
+		select admin_Id from admin 
+		where admin_Id = #{adminId} and admin_pw = #{adminPw}
+	</select>
+
+</mapper>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.restaurant.user.member.dao.MemberDAO">
+
+	<select id="securitySelect" parameterType="String" resultType="security">
+		select userid, salt from security_user
+		where userId=#{userId}
+	</select>
+	<insert id="securityInsert" parameterType="security">
+		insert into
+		security_user(userid, salt)
+		values(#{userId}, #{salt})
+	</insert>
+	<delete id="securityDelete" parameterType="String">
+		delete from
+		security_user
+		where userId = #{userId}
+	</delete>
+
+	<select id="memberSelect" parameterType="String" resultType="member">
+		select member_no, id, password, name, gender, birthday,
+		email, phone,
+		address, marriage, weddingdate, job, agreement1,
+		agreement2, agreement3
+		from
+		member
+		where id = #{id}
+	</select>
+	<insert id="memberInsert" parameterType="member">
+		insert into
+		member(member_no, id, password, name, gender, birthday,
+		email, phone,
+		address, marriage, weddingdate, job, agreement1,
+		agreement2,
+		agreement3, condition, rank, member_date)
+		values(member_seq.nextval,
+		#{id},
+		#{password}, #{name},
+		#{gender}, #{birthday}, #{email},
+		#{phone},
+		#{address}, #{marriage},
+		#{weddingdate}, #{job},
+		'1', '1',
+		'1', '활동중',
+		'일반', sysdate)
+	</insert>
+
+	<delete id="memberDelete" parameterType="String">
+		delete from
+		member where
+		id = #{id}
+	</delete>
+</mapper>

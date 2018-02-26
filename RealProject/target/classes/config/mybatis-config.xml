@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?> <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.restaurant.user.member.vo.MemberVO"
+			alias="member" />
+		<typeAlias type="com.restaurant.user.member.vo.MemberSecurity"
+			alias="security" />
+		<typeAlias type="com.restaurant.user.login.vo.LoginVO"
+			alias="login" />
+		<typeAlias type="com.restaurant.admin.login.vo.LoginVO"
+			alias="adminLogin" />
+		<typeAlias type="com.restaurant.admin.member.vo.AdminMemberVO"
+			alias="adminMember" />
+	</typeAliases>
+</configuration> 

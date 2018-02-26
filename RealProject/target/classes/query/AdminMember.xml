@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.restaurant.admin.member.dao.AdminMemberDao">
+	<select id="memberList" parameterType="adminMember" resultType="adminMember">
+		select member_no,condition,rank,id,name,gender,birthday,email,phone
+		from member
+	</select>
+
+	<select id="memberOne" parameterType="int"
+		resultType="adminMember">
+		select * from member where member_no = #{member_no}
+
+	</select>
+</mapper>
