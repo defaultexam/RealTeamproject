@@ -231,7 +231,7 @@ li a {
 				<c:forEach var="menu" items="${menulist}" varStatus="status">
 
 					<img id="menuclick" alt="메뉴사진자리임"
-						src="/uploadStorage/menu/${menu.menu_menufile }"
+						src="/uploadStorage/menu/thumbnail/${menu.menu_menufile }"
 						data-num="${menu.menu_no }">
 
 

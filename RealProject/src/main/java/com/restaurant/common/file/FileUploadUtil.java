@@ -73,7 +73,7 @@ public class FileUploadUtil {
 		logger.info("원본 이미지 파일(fileAdd):" + fileAdd);
 
 		BufferedImage sourceImg = ImageIO.read(fileAdd);
-		BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 133);
+		BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 200);
 		// resize(대상[BufferedImage 타입], 원본비율, 높이 또는 너비, 크기)
 
 		String thumbnailName = "thumbnail_" + fileName;

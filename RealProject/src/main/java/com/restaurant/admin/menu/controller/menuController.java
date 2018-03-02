@@ -42,7 +42,7 @@ public class menuController {
 	/* 메뉴 추가 기능 */
 	@RequestMapping(value = "/menuInsert", method = RequestMethod.POST)
 	public String menuInsert(@ModelAttribute AdminMenuVO bvo, Model model, HttpServletRequest request)
-			throws IOException {
+			throws Exception {
 
 		logger.info("menuInsert 호출 성공");
 
@@ -56,6 +56,9 @@ public class menuController {
 		if (bvo.getMenu_menufile() != null) {
 			String menu_menufile = FileUploadUtil.fileUpload(bvo.getFile(), request, "menu");
 			bvo.setMenu_menufile(menu_menufile);
+			// fileUpload.java 에서 makeThumbnail 메소드를 생성해야함.
+			String thumbName = FileUploadUtil.makeThumbnail(menu_menufile, request);
+			bvo.setMenu_menufile(thumbName);
 		}
 
 		result = menuService.menuInsert(bvo);
