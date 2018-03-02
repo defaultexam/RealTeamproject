@@ -11,5 +11,7 @@
 			alias="adminLogin" />
 		<typeAlias type="com.restaurant.admin.member.vo.AdminMemberVO"
 			alias="adminMember" />
+		<typeAlias type="com.restaurant.admin.menu.vo.AdminMenuVO"
+			alias="bvo" />
 	</typeAliases>
 </configuration> 

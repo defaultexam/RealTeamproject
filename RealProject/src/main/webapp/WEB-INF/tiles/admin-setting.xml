@@ -6,7 +6,8 @@
 	<definition name="admin" template="/WEB-INF/views/admin/login/adminLogin.jsp">
 	</definition>
 
-	<definition name="afterLogin" template="/WEB-INF/views/admin/login/adminLayout.jsp">
+	<definition name="afterLogin"
+		template="/WEB-INF/views/admin/login/adminLayout.jsp">
 		<put-attribute name="title" value="관리자 페이지" />
 		<put-attribute name="header"
 			value="/WEB-INF/views/admin/login/adminHeader.jsp" />
@@ -15,16 +16,14 @@
 		<put-attribute name="footer"
 			value="/WEB-INF/views/admin/login/adminFooter.jsp" />
 	</definition>
-	
-	<definition name=""></definition>
-	
-
-	<definition name="user/info/*" extends="afterLogin">
-		<put-attribute name="main" value="/WEB-INF/views/user/info/{1}.jsp" />
-	</definition>
 
 	<definition name="admin/member/*" extends="afterLogin">
-		<put-attribute name="main" value="/WEB-INF/views/admin/member/{1}.jsp" />
+		<put-attribute name="main"
+			value="/WEB-INF/views/admin/member/{1}.jsp" />
+	</definition>
+
+	<definition name="admin/menu/*" extends="afterLogin">
+		<put-attribute name="main" value="/WEB-INF/views/admin/menu/{1}.jsp"/>
 	</definition>
 
 </tiles-definitions> 

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.restaurant.admin.menu.dao.AdminMenuDAO">
+
+	<!-- 전체 문제 해결책 -->
+	<select id="menuSelect" resultType="bvo">
+		SELECT *
+		FROM MENU
+	</select>
+
+	<!-- 메뉴추가 버튼 -->
+	<insert id="menuInsert" parameterType="bvo">
+		<selectKey keyProperty="menu_no" resultType="int" order="BEFORE">
+			select menu_seq.nextval from dual
+		</selectKey>
+		INSERT INTO MENU( menu_no,
+		menu_name,
+		menu_price,
+		<if test="menu_menufile != null and menu_menufile != ''">
+			menu_menufile,
+		</if>
+		menu_text,
+		menu_kind)
+		VALUES(#{menu_no} ,#{menu_name}, #{menu_price},
+		<if test="menu_menufile != null and menu_menufile != ''">
+			#{menu_menufile},
+		</if>
+		#{menu_text} , #{menu_kind})
+	</insert>
+
+	<!-- 메뉴 리스트 -->
+	<select id="menuList" resultType="bvo">
+		select
+		menu_name,menu_price,menu_text,menu_file, menu_kind from menu order
+		by
+		menu_no desc
+	</select>
+	<!-- 삭제 -->
+	<delete id="menudelete">
+
+	</delete>
+	<!-- 수정 -->
+	<update id="menuupdate">
+
+	</update>
+
+	<!-- 메뉴 클릭 후 해당메뉴 불러오기 --><!-- file오류 -->
+	<select id="menuClick" parameterType="bvo" resultType="bvo">
+		SELECT
+		menu_no,menu_name,menu_price,menu_menufile,menu_text,menu_kind
+		FROM
+		menu WHERE menu_no = #{menu_no}
+	</select>
+
+	<!-- 메뉴관리 상단 메뉴종류 -->
+	<sql id="">
+		<where>
+			<choose></choose>
+		</where>
+	</sql>
+</mapper>

@@ -11,6 +11,7 @@
 	<annotation-driven />
 	<!-- 리소스 폴더 설정 -->
 	<resources mapping="/resources/**" location="/resources/" />
+	<resources mapping="/uploadStorage/**" location="/uploadStorage/" />
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
 		in the /WEB-INF/views directory -->
 	<!-- Tiles 설정으로 인한 ViewResolver 주석처리 -->
@@ -41,6 +42,13 @@
 		<beans:property name="order" value="2" />
 	</beans:bean>
 
+	<beans:bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="defaultEncoding" value="UTF-8" />
+		<beans:property name="maxUploadSize" value="5242880" />
+	</beans:bean>
+	<beans:bean id="menudao"
+		class="com.restaurant.admin.menu.dao.AdminMenuDAOImpl" />
 
 	<context:component-scan base-package="com.restaurant.**.**.**" />
 </beans:beans>

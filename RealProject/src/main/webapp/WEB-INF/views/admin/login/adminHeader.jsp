@@ -34,7 +34,7 @@
 			</div>
 		</div>
 		<div id="headerMenu">
-			<a href="/adminMember/list.do">회원관리</a> | <a href="#">메뉴관리</a> | <a
+			<a href="/adminMember/list.do">회원관리</a> | <a href="/menu/menuSelect">메뉴관리</a> | <a
 				href="#">예약관리</a> | <a href="#">방문후기관리</a> | <a href="#">고객센터관리</a>
 			| <a href="#">통계</a>
 		</div>

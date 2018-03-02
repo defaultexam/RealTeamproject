@@ -52,7 +52,7 @@ a {
 					</td>
 					<td class="none"></td>
 					<td class="menu" align="center">
-						<h2>메뉴관리</h2> <a href="user/info/info.do">메뉴관리</a>
+						<h2>메뉴관리</h2> <a href="/menu/menuSelect">메뉴관리</a>
 					</td>
 					<td class="none"></td>
 					<td class="menu" align="center">
