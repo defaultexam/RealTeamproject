@@ -47,7 +47,25 @@
 	$(document).ready(function() {
 
 		$("#file").on("change", handleImgFileSelect);
-		$("#menuclick").click(function() {
+		
+		var selectMenu = "<c:out value='${adminvo}' />";
+		if (selectMenu != null) {
+			$("#menu_name").attr({
+				"value" : "${adminvo.menu_name}"
+			});
+			$("#menu_price").attr({
+				"value" : "${adminvo.menu_price}"
+			});
+			$("#menu_text").val("<c:out value='${adminvo.menu_text}' />");
+			$("#menu_kind").attr({
+				"value" : "${adminvo.menu_kind}"
+			});
+			$("#menu_img").attr({
+				"src" : "/uploadStorage/menu/thumbnail/${adminvo.menu_menufile }"
+			});
+		}
+		
+		$(".menuclick").click(function() {
 			var menu_no = $(this).attr("data-num");
 			$("#menu_no").val(menu_no);
 
@@ -230,7 +248,7 @@ li a {
 			<c:when test="${not empty menulist}">
 				<c:forEach var="menu" items="${menulist}" varStatus="status">
 
-					<img id="menuclick" alt="메뉴사진자리임"
+					<img class="menuclick" alt="메뉴사진자리임"
 						src="/uploadStorage/menu/thumbnail/${menu.menu_menufile }"
 						data-num="${menu.menu_no }">
 

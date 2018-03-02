@@ -36,6 +36,7 @@ public class menuController {
 		logger.info(menulist.get(0).getMenu_no());
 
 		model.addAttribute("menulist", menulist);
+		model.addAttribute("adminvo", null);
 		return "admin/menu/adminmenu";
 	}
 
@@ -96,9 +97,13 @@ public class menuController {
 		logger.info("menu_no" + bvo.getMenu_no());
 		AdminMenuVO adminvo = new AdminMenuVO();
 		adminvo = menuService.menuClick(bvo);
+
+		List<AdminMenuVO> menulist = menuService.menuSelect();
+		// logger.info(menulist.get(0).getMenu_no());
+
+		model.addAttribute("menulist", menulist);
 		model.addAttribute("adminvo", adminvo);
 		return "admin/menu/adminmenu";
-
 	}
 
 }
