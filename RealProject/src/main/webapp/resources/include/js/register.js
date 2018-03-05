@@ -12,6 +12,36 @@ function errCodeCheck() {
 	}
 }
 
+function sendMail(email) {
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (xhttp.readyState == 4) {
+			if (xhttp.status == 200)
+				console.log("메일 정상");
+			else
+				console.log("메일 비정상");
+		}
+	};
+	var email = $("#email").val();
+	$.ajax({
+		url : "/register/sendMail",
+		type : "post",
+		data : "email=" + $("#email").val(),
+		error : function() {
+			alert('사이트 접속 문제로 정상 작동하지 못하였습니다. 잠시 후 다시 시도해 주세요.');
+		},
+		success : function(resultData) {
+			$("#emailsended").val(resultData);
+			if (resultData >= 0) {
+				console.log(email + " 인증번호 전송 성공");
+			} else {
+				console.log(email + " 인증번호 전송 실패");
+			}
+		}
+	});
+	return false;
+}
+
 // 비밀번호와 비밀번호 확인 일치 여부 확인 
 function passwordCheck() {
 	if ($("#password").val() != $("#repassword").val()) {
@@ -40,15 +70,18 @@ function idPwdCheck() {
 }
 
 var idConfirm = 1;
+var emailChecked = 0;
 $(function() {
 	errCodeCheck();
 	// 사용자에게 요구사항에 대한 문자열로 배열 초기화.
 	var message = [
-		"영문,숫자만 가능. 6 ~ 12자로 입력해 주세요", /*모달*/
+		"영문,숫자만 가능. 6 ~ 12자로 입력해 주세요", /*아이디 중복체크 모달*/
 		"", /*아이디*/
 		"영문,숫자,특수문자만 가능. 8 ~ 15자 입력해 주세요.", /*비밀번호*/
 		"비밀번호와 비밀번호 확인란은 값이 일치해야 합니다.", /*비밀번호 확인*/
 		"", /*이름*/
+		"", /*생일*/
+		"", /*이메일*/
 		"", /*이메일*/
 		"- 포함 입력해 주세요. 예시) 010-0000-0000", /*전화번호*/
 		"" /*주소*/
@@ -56,8 +89,8 @@ $(function() {
 	$('.error').each(function(index) {
 		$('.error').eq(index).html(message[index]);
 	});
-	$('#modalid, #id, #password, #repassword, #name, #birthday, #email, #phone, #address').bind("focus", function() {
-		var idx = $("#modalid, #id, #password, #repassword, #name, #birthday, #email, #phone, #address").index(this);
+	$('#modalid, #id, #password, #repassword, #name, #birthday, #email1, #email2, #phone, #jibunAddress').bind("focus", function() {
+		var idx = $("#modalid, #id, #password, #repassword, #name, #birthday, #email1, #email2, #phone, #jibunAddress").index(this);
 		$(this).parents(".form-group").find(".error").html(message[idx]);
 		$(this).parents(".form-group").find(".error").css("color", "#000000");
 	});
@@ -107,6 +140,47 @@ $(function() {
 				});
 			}
 		});
+
+	$("#btnEmail").click(
+		function() {
+			$("#email").val($("#email1").val() + "@" + $("#email2").val());
+			if (!formCheck($('#email1'), $('.error:eq(8)'), "이메일 주소를"))
+				return;
+			else if (!formCheck($('#email2'), $('.error:eq(8)'), "이메일 주소를"))
+				return;
+			var email = document.getElementById("email").value;
+			if ($("#emailsended").val() >= 1) /*이메일 전송을 이미 했을 경우*/
+			{
+				$('.error:eq(8)').css("color", "#000099").html("이미 인증번호가 전송되었습니다.");
+				return;
+			}
+			else
+				console.log("전송 여부: 가능");
+			var abc = sendMail(email);
+			$('.error:eq(8)').css("color", "#000099").html(abc);
+		}
+	);
+	$("#emailCheck").click(
+		function() {
+			if (emailChecked == 0) {
+				$('.error:eq(8)').css("color", "#000099").html("이메일 인증을 완료해주세요.");
+			} else {
+				$("#modalemail").modal('hide');
+			}
+		}
+	);
+	$("#btnEmailCheck").click(
+		function() {
+			if ($("#txtemail").val() == $("#emailsended").val() && $("#emailsended").val() != "" && $("#txtemail").val() != "") {
+				console.log($("#emailsended").val());
+				$('.error:eq(8)').css("color", "#000099").html("인증 성공!");
+				emailChecked = 1;
+			} else {
+				$('.error:eq(8)').css("color", "#000099").html("인증 실패.");
+				emailChecked = 0;
+			}
+		}
+	);
 	$("#transferId").click(
 		function() {
 			if (idConfirm != 2) {
@@ -115,7 +189,7 @@ $(function() {
 			} else {
 				$("#noid").val($(id).val());
 				$("#id").val($(id).val());
-				$("#idcheck").modal('hide');
+				$("#idcheck").modal('toggle');
 			}
 		});
 	$("#modalid").bind("blur", function() {
@@ -163,15 +237,19 @@ $(function() {
 		if (!formCheck($('#name'), $('.error:eq(4)'), "이름을"))
 			return;
 	});
-	$("#email").bind("blur", function() {
+	$("#email1").bind("blur", function() {
 		if (!formCheck($('#email1'), $('.error:eq(5)'), "이메일 주소를"))
+			return;
+	});
+	$("#email2").bind("blur", function() {
+		if (!formCheck($('#email2'), $('.error:eq(5)'), "이메일 주소를"))
 			return;
 	});
 	$("#phone").bind("blur", function() {
 		if (!formCheck($('#phone'), $('.error:eq(6)'), "전화번호를"))
 			return;
 	});
-	$("#address").bind("blur", function() {
+	$("#jibunAddress").bind("blur", function() {
 		if (!formCheck($('#address'), $('.error:eq(7)'), "주소를"))
 			return;
 	});
@@ -198,16 +276,21 @@ $(function() {
 				return;
 			else if (!formCheck($('#name'), $('.error:eq(4)'), "이름을"))
 				return;
-			else if (!formCheck($('#email1'), $('.error:eq(4)'), "이메일 주소를"))
+			else if (!formCheck($('#email1'), $('.error:eq(5)'), "이메일 주소를"))
 				return;
-			else if (!formCheck($('#phone'), $('.error:eq(5)'), "전화번호를"))
+			else if (!formCheck($('#email2'), $('.error:eq(5)'), "이메일 주소를"))
 				return;
-			else if (!inputVerify(2, '#phone', '.error:eq(5)'))
+			else if (!formCheck($('#phone'), $('.error:eq(6)'), "전화번호를"))
 				return;
-			else if (!formCheck($('#address'), $('.error:eq(6)'), "주소를"))
+			else if (!inputVerify(2, '#phone', '.error:eq(6)'))
+				return;
+			else if (!formCheck($('#address'), $('.error:eq(7)'), "주소를"))
 				return;
 			else if (idConfirm != 2) {
-				alert("아이디 중복 체크 진행해 주세요.");
+				alert("아이디 중복 체크 진행해주세요.");
+				return;
+			} else if (emailChecked == 0) {
+				alert("이메일 인증을 진행해주세요.");
 				return;
 			} else {
 				$("#email").val($("#email1").val() + "@" + $("#email2").val());

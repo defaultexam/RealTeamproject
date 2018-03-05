@@ -32,5 +32,18 @@
 			<value>com.restaurant.**.**.dao</value>
 		</property>
 	</bean>
-
+	<!-- 이메일 설정 -->
+	<bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.ssl.trust">smtp.naver.com</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.smtp.auth">true</prop>
+			</props>
+		</property>
+		<property name="host" value="smtp.naver.com" />
+		<property name="port" value="587" />
+		<property name="username" value="00aaaa00@naver.com" />
+		<property name="password" value="tkdgns85'" />
+	</bean>
 </beans>

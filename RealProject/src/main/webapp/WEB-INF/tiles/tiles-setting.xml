@@ -30,6 +30,10 @@
 		<put-attribute name="body"
 			value="/WEB-INF/views/user/question/{1}.jsp" />
 	</definition>
-
+	
+	<definition name="user/reservation/*" extends="intro">
+		<put-attribute name="body"
+			value="/WEB-INF/views/user/reservation/{1}.jsp" />
+	</definition>
 
 </tiles-definitions> 

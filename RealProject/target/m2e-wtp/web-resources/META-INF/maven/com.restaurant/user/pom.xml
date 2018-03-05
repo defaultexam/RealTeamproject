@@ -46,6 +46,18 @@
 			<version>${org.springframework-version}</version>
 		</dependency>
 
+		<!-- 이메일 의존성 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4</version>
+		</dependency>
+
 		<!-- JSON( jackson) -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>

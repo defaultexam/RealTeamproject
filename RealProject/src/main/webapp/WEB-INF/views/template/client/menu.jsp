@@ -30,7 +30,7 @@
 							<li><a href="#">오시는길</a></li>
 						</ul></li>
 					<li><a href="#">메뉴</a></li>
-					<li><a href="#">예약</a></li>
+					<li><a href="/reservation">예약</a></li>
 					<li><a href="#">방문후기</a></li>
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"
@@ -40,9 +40,6 @@
 							<li><a href="#">FAQ</a></li>
 							<li><a href="/question">1:1문의</a></li>
 						</ul></li>
-					</li>
-
-
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<c:choose>
