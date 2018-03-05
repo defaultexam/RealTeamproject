@@ -24,7 +24,6 @@
 	padding-left: 30%;
 }
 </style>
-
 </head>
 <body>
 	<!-- 아이디 중복체크 모달창 -->
@@ -119,10 +118,10 @@
 					<table class="table-hover">
 						<tr>
 							<td class="tdsize"><label for="gender">성별*</label></td>
-							<td class="tdsize2"><input type="radio" id="gender"
-								name="gender" value="1" checked="checked" /> 남자
+							<td class="tdsize2"><input type="radio" name="gender"
+								value="1" checked="checked" /> 남자
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio"
-								id="gender" name="gender" value="2" /> 여자</td>
+								name="gender" value="2" /> 여자</td>
 						</tr>
 					</table>
 				</div>
@@ -148,6 +147,8 @@
 								<label for="email2">@</label> <input type="text"
 								class="form-control" id="email2" name="email2" placeholder=""
 								required="required">
+								<button type="button" id="btnEmail" class="btn btn-default"
+									data-toggle="modal" data-target="#modalemail">인증번호 받기</button>
 								<p class="form-control-static error"></p> <input type="hidden"
 								id="email" name="email"></td>
 						</tr>
@@ -241,12 +242,40 @@
 				</div>
 			</div>
 		</form>
+		<div id="modalemail" class="modal fade">
+			<form id="emailForm" class="form-inline">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h4 class="modal-title">이메일 인증</h4>
+						</div>
+						<div class="modal-body emailclass">
+							<label for="txtemail">인증번호*</label> <input type="text"
+								class="form-control" id="txtemail" name="txtemail"
+								placeholder="인증번호" required="required"> <input
+								type="button" id="btnEmailCheck"
+								class="btn btn-outline-secondary" value="인증번호 확인">
+							<p class="form-control-static error"></p>
+							<input type="hidden" id="emailsended" name="emailsended">
+						</div>
+						<div class="modal-footer">
+							<button type="button" id="emailCheck"
+								class="btn btn-outline-secondary">확인</button>
+							<button type="button" class="btn btn-outline-secondary"
+								data-dismiss="modal">취소</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
 	</div>
 	<script type="text/javascript"
 		src="/resources/include/js/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript" src="/resources/include/js/common.js"></script>
 	<script type="text/javascript" src="/resources/include/js/register.js"></script>
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-	<script src="/resources/include/dist/js/bootstrap.min.js"></script>
-
 </body>
