@@ -254,8 +254,8 @@
 							<h4 class="modal-title">이메일 인증</h4>
 						</div>
 						<div class="modal-body emailclass">
-							<label for="txtemail">인증번호*</label> <input type="text"
-								class="form-control" id="txtemail" name="txtemail"
+							입력하신 이메일로 인증번호가 발송되었습니다. <label for="txtemail">인증번호*</label> <input
+								type="text" class="form-control" id="txtemail" name="txtemail"
 								placeholder="인증번호" required="required"> <input
 								type="button" id="btnEmailCheck"
 								class="btn btn-outline-secondary" value="인증번호 확인">
