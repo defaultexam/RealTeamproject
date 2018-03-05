@@ -1,5 +1,7 @@
 package com.restaurant.user.register.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.restaurant.user.mail.service.MailService;
 import com.restaurant.user.member.service.MemberService;
 import com.restaurant.user.member.vo.MemberVO;
 
@@ -19,6 +22,8 @@ public class RegisterController {
 	Logger logger = Logger.getLogger(RegisterController.class);
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private MailService mailService;
 
 	/* 주소/register (GET 메소드) */
 	@RequestMapping(value = "", method = RequestMethod.GET)
@@ -58,5 +63,12 @@ public class RegisterController {
 			break;
 		}
 		return mav;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/sendMail", method = RequestMethod.POST)
+	private String sendMail(HttpSession session, @RequestParam(value = "email") String email) {
+		logger.info("/sendMail post 방식에 의한 메서드 호출 성공");
+		return mailService.send(session, email);
 	}
 }
