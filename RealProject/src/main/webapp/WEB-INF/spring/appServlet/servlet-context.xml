@@ -47,6 +47,7 @@
 		<beans:property name="defaultEncoding" value="UTF-8" />
 		<beans:property name="maxUploadSize" value="5242880" />
 	</beans:bean>
+
 	<beans:bean id="menudao"
 		class="com.restaurant.admin.menu.dao.AdminMenuDAOImpl" />
 

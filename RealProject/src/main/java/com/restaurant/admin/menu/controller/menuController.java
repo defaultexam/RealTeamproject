@@ -33,7 +33,7 @@ public class menuController {
 	public String boardList(@ModelAttribute AdminMenuVO bvo, Model model) {
 
 		List<AdminMenuVO> menulist = menuService.menuSelect();
-		logger.info(menulist.get(0).getMenu_no());
+		// logger.info(menulist.get(0).getMenu_no());
 
 		model.addAttribute("menulist", menulist);
 		model.addAttribute("adminvo", null);
@@ -104,6 +104,7 @@ public class menuController {
 		model.addAttribute("menulist", menulist);
 		model.addAttribute("adminvo", adminvo);
 		return "admin/menu/adminmenu";
+
 	}
 
 }

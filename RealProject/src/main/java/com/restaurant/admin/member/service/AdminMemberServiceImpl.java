@@ -26,14 +26,29 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 	}
 
 	@Override
-	public AdminMemberVO memberOne(AdminMemberVO avo) {
+	public AdminMemberVO memberOne(AdminMemberVO avo) throws Exception {
 		// TODO Auto-generated method stub
 		AdminMemberVO result = new AdminMemberVO();
-		
+
 		logger.info(avo.getMember_no());
-		
+
 		result = adminMemberDao.memberOne(avo);
 		return result;
+	}
+
+	@Override
+	public int memberUpdate(AdminMemberVO avo) {
+		// TODO Auto-generated method stub
+		int result = 0;
+		result = adminMemberDao.memberUpdate(avo);
+		return result;
+	}
+
+	/*멤버 리스트 수 구하기*/
+	@Override
+	public int memberListCnt(AdminMemberVO avo) {
+		// TODO Auto-generated method stub
+		return adminMemberDao.memberListCnt(avo);
 	}
 
 }

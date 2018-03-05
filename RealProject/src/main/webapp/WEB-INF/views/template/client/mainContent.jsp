@@ -7,8 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title></title>
-<script src="/resources/include/js/jquery-3.3.1.min.js"></script>
-<script src="/resources/include/dist/js/bootstrap.min.js"></script>
+
 <link href="/resources/include/dist/css/bootstrap.min.css"
 	rel="stylesheet">
 <link href="/resources/include/css/sticky-footer-navbar.css"
@@ -69,5 +68,7 @@ h4, p {
 			</div>
 		</div>
 	</div>
+	<script src="/resources/include/js/jquery-3.3.1.min.js"></script>
+	<script src="/resources/include/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

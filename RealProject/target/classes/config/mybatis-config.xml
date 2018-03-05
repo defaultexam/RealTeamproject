@@ -9,6 +9,8 @@
 			alias="login" />
 		<typeAlias type="com.restaurant.admin.login.vo.LoginVO"
 			alias="adminLogin" />
+		<typeAlias type="com.restaurant.user.question.vo.QuestionVO"
+			alias="question" />
 		<typeAlias type="com.restaurant.admin.member.vo.AdminMemberVO"
 			alias="adminMember" />
 		<typeAlias type="com.restaurant.admin.menu.vo.AdminMenuVO"

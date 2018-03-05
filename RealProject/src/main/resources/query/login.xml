@@ -9,7 +9,8 @@
 	</select>
 
 	<select id="loginSelect" parameterType="login" resultType="login">
-		select id, password, name from member where id = #{id} and password =
+		select member_no, id, password, name, email, phone from member where
+		id = #{id} and password =
 		#{password}
 	</select>
 

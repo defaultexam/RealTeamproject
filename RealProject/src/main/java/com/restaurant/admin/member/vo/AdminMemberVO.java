@@ -1,8 +1,11 @@
 package com.restaurant.admin.member.vo;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 
-public class AdminMemberVO {
+import com.restaurant.common.vo.CommonVO;
+
+public class AdminMemberVO extends CommonVO {
 	private int member_no = 9999;
 	private String id = "";
 	private String password = "";
@@ -24,19 +27,26 @@ public class AdminMemberVO {
 	private String memo = "";
 	private int point = 0;
 	private String b_coupon_no = "";
-	private Date b_coupon_start = null;
-	private Date b_coupon_end = null;
+	private String b_coupon_start = null;
+	private String b_coupon_end = null;
 	private String m_coupon_no = "";
-	private Date m_coupon_start = null;
-	private Date m_coupon_end = null;
+	private String m_coupon_start = null;
+	private String m_coupon_end = null;
 	private String v_coupon_no = "";
-	private Date v_coupon_start = null;
-	private Date v_coupon_end = null;
+	private String v_coupon_start = null;
+	private String v_coupon_end = null;
 	private Date member_outdate = null;
 	private int password_confirm = 0;
 
-	public AdminMemberVO() {
+	public AdminMemberVO() throws Exception {
 		super();
+		String oldString = "9999-12-31";
+		java.util.Date date = new java.util.Date();
+		date = new SimpleDateFormat("yyyy-mm-dd").parse(oldString);
+		Date sqlDate = new java.sql.Date(date.getTime());
+
+		this.birthday = sqlDate;
+		this.weddingdate = sqlDate;
 	}
 
 	public int getMember_no() {
@@ -207,19 +217,19 @@ public class AdminMemberVO {
 		this.b_coupon_no = b_coupon_no;
 	}
 
-	public Date getB_coupon_start() {
+	public String getB_coupon_start() {
 		return b_coupon_start;
 	}
 
-	public void setB_coupon_start(Date b_coupon_start) {
+	public void setB_coupon_start(String b_coupon_start) {
 		this.b_coupon_start = b_coupon_start;
 	}
 
-	public Date getB_coupon_end() {
+	public String getB_coupon_end() {
 		return b_coupon_end;
 	}
 
-	public void setB_coupon_end(Date b_coupon_end) {
+	public void setB_coupon_end(String b_coupon_end) {
 		this.b_coupon_end = b_coupon_end;
 	}
 
@@ -231,19 +241,19 @@ public class AdminMemberVO {
 		this.m_coupon_no = m_coupon_no;
 	}
 
-	public Date getM_coupon_start() {
+	public String getM_coupon_start() {
 		return m_coupon_start;
 	}
 
-	public void setM_coupon_start(Date m_coupon_start) {
+	public void setM_coupon_start(String m_coupon_start) {
 		this.m_coupon_start = m_coupon_start;
 	}
 
-	public Date getM_coupon_end() {
+	public String getM_coupon_end() {
 		return m_coupon_end;
 	}
 
-	public void setM_coupon_end(Date m_coupon_end) {
+	public void setM_coupon_end(String m_coupon_end) {
 		this.m_coupon_end = m_coupon_end;
 	}
 
@@ -255,19 +265,19 @@ public class AdminMemberVO {
 		this.v_coupon_no = v_coupon_no;
 	}
 
-	public Date getV_coupon_start() {
+	public String getV_coupon_start() {
 		return v_coupon_start;
 	}
 
-	public void setV_coupon_start(Date v_coupon_start) {
+	public void setV_coupon_start(String v_coupon_start) {
 		this.v_coupon_start = v_coupon_start;
 	}
 
-	public Date getV_coupon_end() {
+	public String getV_coupon_end() {
 		return v_coupon_end;
 	}
 
-	public void setV_coupon_end(Date v_coupon_end) {
+	public void setV_coupon_end(String v_coupon_end) {
 		this.v_coupon_end = v_coupon_end;
 	}
 

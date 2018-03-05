@@ -10,4 +10,8 @@ public interface AdminMemberDao {
 
 	public AdminMemberVO memberOne(AdminMemberVO avo);
 
+	public int memberUpdate(AdminMemberVO avo);
+	
+	public int memberListCnt(AdminMemberVO avo);
+
 }

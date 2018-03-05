@@ -26,4 +26,17 @@ public class AdminMemberDaoImpl implements AdminMemberDao {
 		return session.selectOne("memberOne", avo);
 	}
 
+	@Override
+	public int memberUpdate(AdminMemberVO avo) {
+		// TODO Auto-generated method stub
+		return session.update("memberUpdate", avo);
+	}
+
+	@Override
+	public int memberListCnt(AdminMemberVO avo) {
+		// TODO Auto-generated method stub
+		return (Integer) session.selectOne("memberListCnt");
+	}
+	
+
 }

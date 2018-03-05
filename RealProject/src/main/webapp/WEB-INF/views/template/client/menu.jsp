@@ -38,7 +38,7 @@
 						<ul class="dropdown-menu" aria-labelledby="about-us">
 							<li><a href="#">공지사항</a></li>
 							<li><a href="#">FAQ</a></li>
-							<li><a href="#">1:1문의</a></li>
+							<li><a href="/question">1:1문의</a></li>
 						</ul></li>
 					</li>
 
@@ -63,4 +63,6 @@
 			</div>
 		</div>
 	</nav>
+	<script src="/resources/include/js/jquery-3.3.1.min.js"></script>
+	<script src="/resources/include/dist/js/bootstrap.min.js"></script>
 </body>

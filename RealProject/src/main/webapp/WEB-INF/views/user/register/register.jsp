@@ -24,10 +24,7 @@
 	padding-left: 30%;
 }
 </style>
-<script type="text/javascript" src="/resources/include/js/jquery-3.3.1.min.js"></script>
-<script type="text/javascript" src="/resources/include/js/common.js"></script>
-<script type="text/javascript" src="/resources/include/js/register.js"></script>
-<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+
 </head>
 <body>
 	<!-- 아이디 중복체크 모달창 -->
@@ -245,5 +242,11 @@
 			</div>
 		</form>
 	</div>
+	<script type="text/javascript"
+		src="/resources/include/js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="/resources/include/js/common.js"></script>
+	<script type="text/javascript" src="/resources/include/js/register.js"></script>
+	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+	<script src="/resources/include/dist/js/bootstrap.min.js"></script>
 
 </body>
