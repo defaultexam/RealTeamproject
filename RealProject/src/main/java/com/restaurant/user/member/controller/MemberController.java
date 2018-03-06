@@ -1,0 +1,76 @@
+package com.restaurant.user.member.controller;
+
+import javax.servlet.http.HttpSession;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.restaurant.user.mail.service.MailService;
+import com.restaurant.user.member.service.MemberService;
+
+@Controller
+@RequestMapping("/member")
+public class MemberController {
+	Logger logger = Logger.getLogger(MemberController.class);
+	@Autowired
+	private MemberService memberService;
+	@Autowired
+	private MailService mailService;
+
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public String member() {
+		logger.info("/member GET 호출 성공");
+		return "user/login/mypage";
+	}
+
+	/* modify 기본 JSP 출력 (GET 메소드) */
+	@RequestMapping(value = "/modify", method = RequestMethod.GET)
+	public String modifyGet() {
+		logger.info("modify GET 호출 성공");
+		return "user/login/modify";
+	}
+
+	/* 이름, 이메일 인증 (POST 메소드) */
+	@ResponseBody
+	@RequestMapping(value = "/searchID", method = RequestMethod.POST)
+	public String searchID(@RequestParam("searchid_name") String name, @RequestParam("searchid_email") String email) {
+		logger.info("searchID POST 호출 성공");
+		String result = memberService.memberSearchByName(name, email);
+		return result;
+	}
+
+	/* 아이디, 이메일 인증 (POST 메소드) */
+	@ResponseBody
+	@RequestMapping(value = "/searchPassword", method = RequestMethod.POST)
+	public String passwordReset(@RequestParam("searchpassword_id") String id,
+			@RequestParam("searchpassword_email") String email) {
+		logger.info("searchPassword POST 호출 성공");
+		String result = memberService.memberSearchByID(id, email);
+		System.out.println(result);
+		return result;
+	}
+
+	/* 비밀번호 변경 */
+	@RequestMapping(value = "/passwordreset", method = RequestMethod.POST)
+	public String passwordResetConfirm(@RequestParam("reset_password1") String password,
+			@RequestParam("reset_password2") String passwordConfirm) {
+		logger.info("passwordreset POST 호출 성공");
+		/* 비밀번호 변경 메소드 */
+
+		/* JSP 이동 */
+		return null;
+	}
+
+	/* 회원가입 이메일 인증 */
+	@ResponseBody
+	@RequestMapping(value = "/sendMail", method = RequestMethod.POST)
+	private String sendMail(HttpSession session, @RequestParam(value = "email") String email) {
+		logger.info("/sendMail post 방식에 의한 메서드 호출 성공");
+		return mailService.send(session, email);
+	}
+}

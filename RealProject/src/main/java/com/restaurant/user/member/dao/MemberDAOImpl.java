@@ -9,7 +9,7 @@ import com.restaurant.user.member.vo.MemberVO;
 
 @Repository
 public class MemberDAOImpl implements MemberDAO {
-	
+
 	@Autowired
 	private SqlSession session;
 
@@ -47,4 +47,15 @@ public class MemberDAOImpl implements MemberDAO {
 	public int memberDelete(String userId) {
 		return session.delete("memberDelete", userId);
 	}
+
+	@Override
+	public String memberSearchByID(MemberVO mvo) {
+		return session.selectOne("memberSearchByID", mvo);
+	}
+
+	@Override
+	public String memberSearchByName(MemberVO mvo) {
+		return session.selectOne("memberSearchByName", mvo);
+	}
+
 }

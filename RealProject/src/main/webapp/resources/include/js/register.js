@@ -94,6 +94,7 @@ $(function() {
 		$(this).parents(".form-group").find(".error").html(message[idx]);
 		$(this).parents(".form-group").find(".error").css("color", "#000000");
 	});
+	let modaldiv = document.getElementById("idcheck");
 	let iddiv = document.getElementById("iddiv");
 	let passdiv = document.getElementById("passdiv");
 	let repassdiv = document.getElementById("repassdiv");
@@ -107,7 +108,9 @@ $(function() {
 				$.ajax({
 					url : "/register/userIdConfirm",
 					type : "post",
-					data : "userId=" + $("#modalid").val(),
+					data : {
+						"userId" : $("#modalid").val()
+					},
 					error : function() {
 						alert('사이트 접속 문제로 정상 작동하지 못하였습니다. 잠시 후 다시 시도해 주세요.');
 					},
@@ -144,10 +147,12 @@ $(function() {
 	$("#btnEmail").click(
 		function() {
 			$("#email").val($("#email1").val() + "@" + $("#email2").val());
-			if (!formCheck($('#email1'), $('.error:eq(8)'), "이메일 주소를"))
+			if (!formCheck($('#email1'), $('.error:eq(8)'), "이메일 주소를")) {
 				return;
-			else if (!formCheck($('#email2'), $('.error:eq(8)'), "이메일 주소를"))
+			} else if (!formCheck($('#email2'), $('.error:eq(8)'), "이메일 주소를")) {
 				return;
+			}
+			$("#modalemail").modal('show');
 			var email = document.getElementById("email").value;
 			if ($("#emailsended").val() >= 1) /*이메일 전송을 이미 했을 경우*/
 			{
@@ -175,6 +180,8 @@ $(function() {
 				console.log($("#emailsended").val());
 				$('.error:eq(8)').css("color", "#000099").html("인증 성공!");
 				emailChecked = 1;
+				$("#email1").attr("readonly", "readonly");
+				$("#email2").attr("readonly", "readonly");
 			} else {
 				$('.error:eq(8)').css("color", "#000099").html("인증 실패.");
 				emailChecked = 0;
@@ -195,10 +202,17 @@ $(function() {
 	$("#modalid").bind("blur", function() {
 		if (!formCheck($('#modalid'), $('.error:eq(0)'), "아이디를")) {
 			iddiv.classList.add("form-group", "has-error");
+			modaldiv.classList.add("form-group", "has-error");
 			return;
 		} else if (!inputVerify(0, '#modalid', '.error:eq(0)')) {
 			iddiv.classList.add("form-group", "has-error");
+			modaldiv.classList.add("form-group", "has-error");
 			return;
+		} else {
+			iddiv.classList.remove('has-error');
+			modaldiv.classList.remove('has-error');
+			iddiv.classList.add("form-group", "has-success");
+			modaldiv.classList.add("form-group", "has-success");
 		}
 	});
 	$("#password").bind("blur", function() {
@@ -257,9 +271,10 @@ $(function() {
 	$("#registerConfirm").click(
 		function() {
 			// 입력값 체크
-			if (!formCheck($('#modalid'), $('.error:eq(0)'), "아이디를"))
+			if (!formCheck($('#modalid'), $('.error:eq(0)'), "아이디를")) {
+				$('.error:eq(1)').css("color", "#000099").html("아이디를 입력해주세요.");
 				return;
-			else if (!inputVerify(0, '#modalid', '.error:eq(0)'))
+			} else if (!inputVerify(0, '#modalid', '.error:eq(0)'))
 				return;
 			else if (!formCheck($('#password'), $('.error:eq(2)'), "비밀번호를"))
 				return;

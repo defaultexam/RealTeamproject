@@ -19,7 +19,7 @@ function checkWrong(item) {
 }
 
 $(function() {
-	//	errCodeCheck();
+	errCodeCheck();
 	$('#id, #password').bind("keyup", function() {
 		$(this).parents("div").find(".error").html("");
 	});

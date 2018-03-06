@@ -93,4 +93,20 @@ public class MemberServiceImpl implements MemberService {
 		}
 		return isSucessCode;
 	}
+
+	@Override
+	public String memberSearchByName(String name, String email) {
+		MemberVO mvo = new MemberVO();
+		mvo.setName(name);
+		mvo.setEmail(email);
+		return memberDAO.memberSearchByName(mvo);
+	}
+
+	@Override
+	public String memberSearchByID(String id, String email) {
+		MemberVO mvo = new MemberVO();
+		mvo.setId(id);
+		mvo.setEmail(email);
+		return memberDAO.memberSearchByID(mvo);
+	}
 }

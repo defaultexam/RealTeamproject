@@ -27,7 +27,7 @@ public class RegisterController {
 
 	/* 주소/register (GET 메소드) */
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String login() {
+	public String register() {
 		logger.info("register get 호출 성공");
 		return "user/register/register";
 	}
@@ -65,6 +65,7 @@ public class RegisterController {
 		return mav;
 	}
 
+	/* 회원가입 이메일 인증 */
 	@ResponseBody
 	@RequestMapping(value = "/sendMail", method = RequestMethod.POST)
 	private String sendMail(HttpSession session, @RequestParam(value = "email") String email) {

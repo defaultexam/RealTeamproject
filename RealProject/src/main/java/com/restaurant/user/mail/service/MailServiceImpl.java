@@ -28,7 +28,7 @@ public class MailServiceImpl implements MailService {
 			joinCode = String.valueOf(randomCode);
 			session.setAttribute("joinCode", joinCode);
 			StringBuilder sb = new StringBuilder();
-			sb.append("회원님의 회원가입 인증번호는 ").append(joinCode).append("입니다.");
+			sb.append("회원님의 인증번호는 ").append(joinCode).append("입니다.");
 			MimeMessage message = javaMailSender.createMimeMessage();
 			MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 			helper.setSubject("Yeop's Restaurant, 이메일 인증번호를 확인해주세요.");
@@ -42,4 +42,5 @@ public class MailServiceImpl implements MailService {
 		}
 		return joinCode;
 	}
+
 }

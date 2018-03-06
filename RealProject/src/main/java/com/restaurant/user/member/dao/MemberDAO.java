@@ -12,4 +12,6 @@ public interface MemberDAO {
 	public int memberInsert(MemberVO mvo);
 	public int memberUpdate(MemberVO mvo);
 	public int memberDelete(String userId);
+	public String memberSearchByID(MemberVO mvo);
+	public String memberSearchByName(MemberVO mvo);
 }

@@ -147,8 +147,8 @@
 								<label for="email2">@</label> <input type="text"
 								class="form-control" id="email2" name="email2" placeholder=""
 								required="required">
-								<button type="button" id="btnEmail" class="btn btn-default"
-									data-toggle="modal" data-target="#modalemail">인증번호 받기</button>
+								<button type="button" id="btnEmail" class="btn btn-default">인증번호
+									받기</button>
 								<p class="form-control-static error"></p> <input type="hidden"
 								id="email" name="email"></td>
 						</tr>
@@ -254,11 +254,11 @@
 							<h4 class="modal-title">이메일 인증</h4>
 						</div>
 						<div class="modal-body emailclass">
-							입력하신 이메일로 인증번호가 발송되었습니다. <label for="txtemail">인증번호*</label> <input
-								type="text" class="form-control" id="txtemail" name="txtemail"
-								placeholder="인증번호" required="required"> <input
-								type="button" id="btnEmailCheck"
-								class="btn btn-outline-secondary" value="인증번호 확인">
+							입력하신 이메일로 인증번호가 발송되었습니다! <br /> <br /> <label for="txtemail">인증번호*</label>
+							<input type="text" class="form-control" id="txtemail"
+								name="txtemail" placeholder="인증번호" required="required">
+							<input type="button" id="btnEmailCheck"
+								class="btn btn-outline-secondary" value="인증번호 확인"> <br />
 							<p class="form-control-static error"></p>
 							<input type="hidden" id="emailsended" name="emailsended">
 						</div>
