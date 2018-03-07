@@ -1,14 +1,10 @@
 $(function() {
-
 	chkIdPw();
-	
 	$('#adminId, #adminPw').bind("keyup", function() {
 		$(this).parents("div").find(".error").html("&nbsp;");
 	});
-
 	// 로그인 버튼 클릭 시 처리 이벤트
 	$("#loginBtn").click(function() {
-
 		if (!formCheck($('#adminId'), $('.error:eq(0)'), "아이디를")) {
 			//$('.error:eq(1)').html("");
 			return;
@@ -16,16 +12,13 @@ $(function() {
 			//$('.error:eq(0)').html("");
 			return;
 		} else {
-
 			$("#loginForm").attr({
 				"method" : "POST",
 				"action" : "/admin/login.do"
 			});
 			$("#loginForm").submit();
 		}
-
 	});
-
 });
 /*
  * 함수명: formCheck(유효성 체크 대상, 출력 영역, 메시지 내용) * 출력영역: 매개변수 두번째 출력영역에. * 예시 :

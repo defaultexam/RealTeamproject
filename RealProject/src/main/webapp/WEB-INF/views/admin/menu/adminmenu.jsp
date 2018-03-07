@@ -7,12 +7,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
-
+<link href="/resources/include/dist/css/bootstrap.min.css"
+	rel="stylesheet">
 <script type="text/javascript" src="/resources/include/js/common.js"></script>
 <script type="text/javascript"
 	src="/resources/include/js/jquery-3.3.1.min.js"></script>
-
 <!-- 입력값 체크 및 submit 스크립 -->
 <script type="text/javascript">
 	$(function() {
@@ -47,7 +46,7 @@
 	$(document).ready(function() {
 
 		$("#file").on("change", handleImgFileSelect);
-		
+
 		var selectMenu = "<c:out value='${adminvo}' />";
 		if (selectMenu != null) {
 			$("#menu_name").attr({
@@ -64,7 +63,7 @@
 				"src" : "/uploadStorage/menu/thumbnail/${adminvo.menu_menufile }"
 			});
 		}
-		
+
 		$(".menuclick").click(function() {
 			var menu_no = $(this).attr("data-num");
 			$("#menu_no").val(menu_no);
@@ -98,27 +97,27 @@
 </script>
 
 <style type="text/css">
-.list {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	overflow: hidden;
-	background-color: #333;
-}
-
 .menulist {
 	width: 10;
 	height: 50;
 }
 
-li {
-	float: left;
-	border-right: 1px solid #bbb;
+.list {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background-color: silver;
 }
 
-li a {
+.list>li {
+	float: left;
+	border-right: 1px solid;
+}
+
+.list>li>a {
 	display: block;
-	color: white;
+	color: black;
 	text-align: center;
 	padding: 14px 16px;
 	text-decoration: none;
@@ -134,7 +133,7 @@ li a {
 }
 /* 전체 메뉴 버튼 색 */
 /* li a gallery :hover :not(.active){background-color:#111;} */
-.active {
+.list < .active {
 	background-color: #4CAF50;
 }
 /* 전체 메뉴 버튼 색  끝*/

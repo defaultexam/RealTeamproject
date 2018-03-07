@@ -7,28 +7,16 @@
 <head>
 <meta charset="UTF-8">
 <title>회원관리 페이지</title>
-<link rel="stylesheet" type="text/css"
-	href="/resources/include/css/common.css" />
-<link rel="stylesheet" type="text/css"
-	href="/resources/include/css/board.css" />
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link href="/resources/include/dist/css/bootstrap.min.css"
 	rel="stylesheet">
-<script type="text/javascript"
-	src="/resources/include/js/jquery-3.3.1.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
 <style type="text/css">
 #memberTable {
-	width: 100%;
+	width: 1750px;
 	height: auto;
 	margin-bottom: 50px;
 	margin-top: 20px;
-}
-
-#boardSearch table {
-	
 }
 </style>
 
@@ -64,7 +52,6 @@
 		$(".memberInfo").click(function() {
 			var m_no = $(this).parents("tr").attr("data-num");
 			$("#member_no").val(m_no);
-
 			// 상세 페이지로 이동하기위한 form에 액션과 전송방식 추가
 			$("#detailForm").attr({
 				"method" : "get",
@@ -167,20 +154,20 @@
 
 		/* 엑셀다운로드 버튼 클릭 시 처리 이벤트 */
 		$("#excelMemberList").click(
-				function() {
-					if ($("#birthday").val() == ""
-							|| $("#birthday").val() == null)
-						$("#birthday").val("9999-12-31");
-					if ($("#weddingdate").val() == ""
-							|| $("#weddingdate").val() == null)
-						$("#weddingdate").val("9999-12-31");
-					$("#page").val(page);
-					$("#f_search").attr({
-						"method" : "get",
-						"action" : "/adminMember/memberExcel"
-					});
-					$("#f_search").submit();
+			function() {
+				if ($("#birthday").val() == ""
+					|| $("#birthday").val() == null)
+					$("#birthday").val("9999-12-31");
+				if ($("#weddingdate").val() == ""
+					|| $("#weddingdate").val() == null)
+					$("#weddingdate").val("9999-12-31");
+				$("#page").val(page);
+				$("#f_search").attr({
+					"method" : "get",
+					"action" : "/adminMember/memberExcel"
 				});
+				$("#f_search").submit();
+			});
 
 	});
 
@@ -220,52 +207,50 @@
 					name="rank" id="rank"><input type="hidden" name="condition"
 					id="condition">
 
-				<table summary="검색">
-					<colgroup>
-						<col width="25%"></col>
-						<col width="40%"></col>
-						<col width="15%"></col>
-						<col width="20%"></col>
-					</colgroup>
+				<table summary="검색" style="width: 600px;">
 					<tr>
-						<td align="right"><label>생일 :</label></td>
-						<td align="center"><input type="date" id="birthday"
-							name="birthday"></td>
-						<td rowspan="4" align="center"><br> <br> <input
-							type="button" value="조회" id="memberSearch"><br> <br>
-						</td>
-						<td rowspan="4" align="center"><input type="button"
-							value="전체보기" id="memberSearchTotal"></td>
+						<td align="right"><label>생일 :&nbsp;</label></td>
+						<td><input type="date" id="birthday" name="birthday"
+							class="form-control" style="width: 400px;"></td>
 					</tr>
-
 					<tr>
-						<td align="right"><label>결혼기념일 :</label></td>
-						<td align="center"><input type="date" id="weddingdate"
-							name="weddingdate"></td>
+						<td align="right"><label>결혼기념일 :&nbsp;</label></td>
+						<td><input type="date" id="weddingdate" name="weddingdate"
+							class="form-control" style="width: 400px;"></td>
 
 					</tr>
 
 					<tr>
-						<td align="right"><label>이름 :</label></td>
-						<td align="center"><input type="text" id="name" name="name"></td>
+						<td align="right"><label>이름 :&nbsp;</label></td>
+						<td><input type="text" id="name" name="name"
+							class="form-control" style="width: 400px;"></td>
 					</tr>
 
 					<tr>
-						<td align="right"><label>전화번호 뒷자리 :</label></td>
-						<td align="center"><input type="text" id="phone" name="phone"></td>
-					</tr>
-
-					<tr>
-						<td colspan="4" align="right"><select id="pageSize"
-							name="pageSize">
-								<option value="10">10개씩 보기</option>
-								<option value="30">30개씩 보기</option>
-								<option value="50">50개씩 보기</option>
-						</select>&nbsp;&nbsp;&nbsp;
-							<button type="button" id="excelMemberList">Excel문서화</button></td>
+						<td align="right"><label>전화번호 뒷자리 :&nbsp;</label></td>
+						<td><input type="text" id="phone" name="phone"
+							class="form-control" style="width: 400px;"></td>
 					</tr>
 				</table>
 			</form>
+		</div>
+		<div style="padding-left: 79%;">
+			<table>
+				<tr>
+					<td><input type="button" value="조회" id="memberSearch"
+						class="btn btn-default"></td>
+					<td><input type="button" value="전체보기" id="memberSearchTotal"
+						class="btn btn-default"></td>
+					<td><select id="pageSize" name="pageSize" class="form-control">
+							<option value="10">10개씩 보기</option>
+							<option value="30">30개씩 보기</option>
+							<option value="50">50개씩 보기</option>
+					</select></td>
+					<td>
+						<button type="button" id="excelMemberList" class="btn btn-default">Excel문서화</button>
+					</td>
+				</tr>
+			</table>
 		</div>
 		<%-- ================ 검색기능 종료 =============== --%>
 		<div>
@@ -328,6 +313,9 @@
 				list_size="${data.pageSize }" />
 		</div>
 	</div>
+	<script type="text/javascript"
+		src="/resources/include/js/jquery-3.3.1.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script src="/resources/include/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

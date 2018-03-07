@@ -6,9 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>관리자 로그인</title>
-<script type="text/javascript"
-	src="/resources/include/js/jquery-3.3.1.min.js"></script>
-<script type="text/javascript" src="/resources/include/js/adminLogin.js"></script>
+<link href="/resources/include/dist/css/bootstrap.min.css"
+	rel="stylesheet">
 <script type="text/javascript">
 	function chkIdPw() {
 		var checkCode = '<c:out value="${check}" />';
@@ -18,38 +17,48 @@
 	}
 </script>
 <style type="text/css">
-#logTol {
-	border-style: solid;
-	border-width: medium;
-	width: 50%;
+.panel-default {
+	width: 700px;
 }
 
-#logTol .ipl {
-	border-top-style: solid;
-	border-top-width: medium;
+.container {
+	padding-top: 10%;
 }
 </style>
 </head>
 <body>
-	<center>
-
-		<label>관리자 로그인 서비스 입니다. 로그인 하시면 레스토랑 사이트관리를 하실 수 있습니다.</label>
-		<div id="logTol">
-			<h2>로그인</h2>
-			<form id="loginForm">
-				<div class="ipl">
-					<label for="adminId"> 아 이 디 : </label> <input type="text"
-						id="adminId" name="adminId" placeholder="ID" value="test">
-					<p class="error">&nbsp;</p>
-					<label for="adminPw"> 비밀번호 : </label> <input type="password"
-						id="adminPw" name="adminPw" placeholder="Password" value="1234">
-					<p class="error">&nbsp;</p>
+	<div class="container">
+		<form id="loginForm" method="post">
+			<div class="panel panel-default center-block" id="effect">
+				<div class="panel-heading">
+					<h1 class="panel-title text-center">관리자 로그인</h1>
 				</div>
-				<div class="ipl">
-					<input type="button" value="관리자로그인" id="loginBtn" />
+				<div class="panel-body">
+					<label>관리자 로그인 서비스 입니다. 로그인 하시면 레스토랑 사이트관리를 하실 수 있습니다.</label>
+					<div class="form-group col-md-12">
+						<br /> <label for="adminId"> 아 이 디 : </label> <input type="text"
+							id="adminId" name="adminId" placeholder="ID" value="test"
+							class="form-control">
+						<p class="error">&nbsp;</p>
+					</div>
+					<div class="form-group col-md-12">
+						<label for="adminPw"> 비밀번호 : </label> <input type="password"
+							id="adminPw" name="adminPw" placeholder="Password" value="1234"
+							class="form-control">
+						<p class="error">&nbsp;</p>
+					</div>
+					<div class="form-group col-md-12" style="padding-left: 27.5%;">
+						<input type="button" value="관리자로그인" id="loginBtn"
+							class="btn btn-default"
+							style="width: 300px; height: 50px; background-color: silver" />
+					</div>
 				</div>
-			</form>
-		</div>
-	</center>
+			</div>
+		</form>
+	</div>
+	<script src="/resources/include/js/jquery-3.3.1.min.js"></script>
+	<script src="/resources/include/dist/js/bootstrap.min.js"></script>
+	<script type="text/javascript"
+		src="/resources/include/js/adminLogin.js"></script>
 </body>
 </html>

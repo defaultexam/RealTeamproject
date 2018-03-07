@@ -14,41 +14,16 @@
 	width: 500px;
 }
 </style>
-<script type="text/javascript">
-	function errCodeCheck() {
-		var errCode = '<c:out value="${errCode}" />';
-		if (errCode != "") {
-			// 명확한 자료형 명시를 위해 errCode의 타입을 정수형으로 변환. 
-			switch (parseInt(errCode)) {
-			case 1:
-				alert("아이디 또는 비밀번호 일치 하지 않거나 존재하지 않는 \n회원입니다. 다시 로그인해 주세요.");
-				break;
-			case 3:
-				alert("회원탈퇴에 문제가 있어 정상 처리하지 못하였습니다.\n다시 시도해 주세요");
-				break;
-			case 6:
-				alert("5번이상 로그인 시도로 30초동안 로그인 할 수 없습니다.\n잠시 후 다시 시도해 주세요");
-				break;
-			}
-		}
-	}
-
-	/* 3초 후에 페이지 이동 */
-	function onLoading() {
-		oInterval = window.setInterval("afterTime()", 3000);
-	}
-	function afterTime() {
-		window.clearInterval(oInterval);
-		window.location.href = '/';
-	}
-	errCodeCheck();
-</script>
+<link rel="stylesheet" href="/resources/include/css/jquery-ui.min.css">
+<script type="text/javascript"
+	src="/resources/include/js/jquery-ui.min.js"></script>
 </head>
 <body>
 	<div class="container">
 		<c:if test="${login.id == null or login.id == ''}">
-			<form id="loginForm" class="form-horizontal" method="post" style="padding-top: 15%">
-				<div class="panel panel-default sizeoff center-block">
+			<form id="loginForm" class="form-horizontal" method="post"
+				style="padding-top: 15%">
+				<div class="panel panel-default sizeoff center-block" id="effect">
 					<div class="panel-heading">
 						<h1 class="panel-title">로그인</h1>
 					</div>
@@ -79,9 +54,7 @@
 			</div>
 		</c:if>
 	</div>
-	<script src="/resources/include/js/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript" src="/resources/include/js/common.js"></script>
 	<script type="text/javascript" src="/resources/include/js/login.js"></script>
 	<script src="/resources/include/dist/js/bootstrap.min.js"></script>
-
 </body>
