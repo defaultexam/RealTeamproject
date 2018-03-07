@@ -65,7 +65,9 @@
 		'1', '활동중',
 		'일반', sysdate)
 	</insert>
-
+	<update id="memberUpdate" parameterType="member">
+		update member set password= #{password} where id=#{id}
+	</update>
 	<delete id="memberDelete" parameterType="String">
 		delete from
 		member where

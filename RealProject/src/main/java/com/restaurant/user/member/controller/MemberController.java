@@ -1,7 +1,7 @@
 package com.restaurant.user.member.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,9 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.restaurant.user.mail.service.MailService;
 import com.restaurant.user.member.service.MemberService;
+import com.restaurant.user.member.vo.MemberVO;
 
 @Controller
 @RequestMapping("/member")
@@ -19,8 +18,6 @@ public class MemberController {
 	Logger logger = Logger.getLogger(MemberController.class);
 	@Autowired
 	private MemberService memberService;
-	@Autowired
-	private MailService mailService;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String member() {
@@ -56,21 +53,25 @@ public class MemberController {
 	}
 
 	/* 비밀번호 변경 */
-	@RequestMapping(value = "/passwordreset", method = RequestMethod.POST)
-	public String passwordResetConfirm(@RequestParam("reset_password1") String password,
-			@RequestParam("reset_password2") String passwordConfirm) {
-		logger.info("passwordreset POST 호출 성공");
-		/* 비밀번호 변경 메소드 */
-
-		/* JSP 이동 */
-		return null;
-	}
-
-	/* 회원가입 이메일 인증 */
 	@ResponseBody
-	@RequestMapping(value = "/sendMail", method = RequestMethod.POST)
-	private String sendMail(HttpSession session, @RequestParam(value = "email") String email) {
-		logger.info("/sendMail post 방식에 의한 메서드 호출 성공");
-		return mailService.send(session, email);
+	@RequestMapping(value = "/passwordreset", method = RequestMethod.POST)
+	public String passwordResetConfirm(@RequestParam("searchpassword_id") String id,
+			@RequestParam("reset_password1") String password, HttpSession session, HttpServletRequest request) {
+		logger.info("passwordreset POST 호출 성공");
+
+		/* 비밀번호 변경 메소드 */
+		MemberVO mvo = new MemberVO();
+		mvo.setId(id);
+		mvo.setPassword(password);
+		System.out.println(mvo.getId());
+		System.out.println(mvo.getPassword());
+		String result;
+		boolean parseresult = memberService.memberUpdate(mvo);
+		result = parseresult + "";
+
+		/* 세션 초기화 및 AJAX 리턴 */
+		session.invalidate();
+		session = request.getSession(true);
+		return result;
 	}
 }

@@ -37,6 +37,7 @@
 		window.clearInterval(oInterval);
 		window.location.href = '/';
 	}
+	errCodeCheck();
 </script>
 </head>
 <body>

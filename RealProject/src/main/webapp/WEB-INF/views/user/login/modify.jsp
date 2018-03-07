@@ -104,11 +104,11 @@
 					<div class="row">
 						<div class="col-xs-12">
 							<div class="form-inline" style="padding-left: 20px;">
-								<label for="searchpassword_id">비밀번호</label> <input
+								<label for="reset_password1">비밀번호</label> <input
 									type="password" class="form-control" id="reset_password1"
 									style="width: 650px;">
 								<p class="form-control-static error"></p>
-								<br /> <label for="searchpassword_email">비밀번호 확인</label> <input
+								<br /> <label for="reset_password2">비밀번호 확인</label> <input
 									type="password" class="form-control" id="reset_password2"
 									style="width: 650px;">
 								<p class="form-control-static error"></p>

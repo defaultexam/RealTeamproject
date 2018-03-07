@@ -37,6 +37,40 @@ function sendMail(email) {
 	return false;
 }
 
+//아이디에 비밀번호 포함 여부 확인
+function idPwdCheck() {
+	var userId = $("#searchpassword_id").val();
+	var userPw = $("#reset_password1").val();
+	if (userId == "") return true;
+	if (userPw.indexOf(userId) > -1) {
+		$('.error:eq(5)').css("color", "#000099").html("비밀번호에 아이디를 포함할 수 없습니다.");
+		$("#reset_password1").val("");
+		$("#reset_password1").focus();
+		return false;
+	} else {
+		return true;
+	}
+}
+
+function passwordChange() {
+	$.ajax({
+		url : "/member/passwordreset",
+		type : "post",
+		data : {
+			"searchpassword_id" : $("#searchpassword_id").val(),
+			"reset_password1" : $("#reset_password1").val()
+		},
+		error : function() {
+			alert('사이트 접속 문제로 정상 작동하지 못하였습니다. 잠시 후 다시 시도해 주세요.');
+		},
+		success : function(resultData) {
+			console.log(resultData);
+			alert("비밀번호가 성공적으로 변경되었습니다!\n로그인 창으로 이동합니다.");
+			location.href = "/login";
+		}
+	});
+}
+
 $(function() {
 	$("#btn_idsearch").click(function() {
 		/* 유효성 검사 */
@@ -130,19 +164,16 @@ $(function() {
 	});
 
 	$("#btn_resetpassword").click(function() {
-		$.ajax({
-			url : "/member/passwordreset",
-			type : "post",
-			data : {
-				"reset_password1" : $("#reset_password1").val(),
-				"reset_password2" : $("#reset_password2").val()
-			},
-			error : function() {
-				alert('사이트 접속 문제로 정상 작동하지 못하였습니다. 잠시 후 다시 시도해 주세요.');
-			},
-			success : function(resultData) {
-				console.log(resultData);
-			}
-		});
+		idPwdCheck();
+		if (!inputVerify(1, '#reset_password1', '.error:eq(5)'))
+			return;
+		if ($("#reset_password1").val() != $("#reset_password2").val()) {
+			$('.error:eq(5)').css("color", "#000099").html("비밀번호와 비밀번호 확인란이 다릅니다.");
+			alert("1");
+			return;
+		} else if ($("#reset_password1").val() == $("#reset_password2").val()) {
+			alert("2");
+			passwordChange();
+		}
 	});
 });
