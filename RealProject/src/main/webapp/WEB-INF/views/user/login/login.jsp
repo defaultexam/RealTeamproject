@@ -7,7 +7,11 @@
 <head>
 <style>
 .aligncenter {
-	padding-left: 45%;
+	padding-left: 37%;
+}
+
+.sizeoff {
+	width: 500px;
 }
 </style>
 <script type="text/javascript">
@@ -43,14 +47,14 @@
 <body>
 	<div class="container">
 		<c:if test="${login.id == null or login.id == ''}">
-			<form id="loginForm" class="form-horizontal" method="post">
-				<div class="panel panel-info">
+			<form id="loginForm" class="form-horizontal" method="post" style="padding-top: 15%">
+				<div class="panel panel-default sizeoff center-block">
 					<div class="panel-heading">
 						<h1 class="panel-title">로그인</h1>
 					</div>
 					<div class="panel-body">
 						<div class="form-group col-md-12">
-							<label for="id">아이디</label> <input type="text"
+							<br /> <label for="id">아이디</label> <input type="text"
 								class="form-control" id="id" name="id" placeholder="아이디">
 							<p class="form-control-static error"></p>
 						</div>
