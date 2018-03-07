@@ -39,10 +39,10 @@
 			<form id="loginForm">
 				<div class="ipl">
 					<label for="adminId"> 아 이 디 : </label> <input type="text"
-						id="adminId" name="adminId" placeholder="ID">
+						id="adminId" name="adminId" placeholder="ID" value="test">
 					<p class="error">&nbsp;</p>
 					<label for="adminPw"> 비밀번호 : </label> <input type="password"
-						id="adminPw" name="adminPw" placeholder="Password">
+						id="adminPw" name="adminPw" placeholder="Password" value="1234">
 					<p class="error">&nbsp;</p>
 				</div>
 				<div class="ipl">
