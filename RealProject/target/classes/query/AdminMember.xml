@@ -13,18 +13,76 @@
 					<if test="!weddingdate.toString().substring(0, 10).contains('9999')">
 						weddingdate like #{weddingdate} and
 						<if test="!birthday.toString().substring(0, 10).contains('9999')">
-							birthday like #{birthday}
+							birthday like #{birthday} and
+							<if test="condition != ''">
+								condition like #{condition}
+								<if test="rank != ''">
+								</if>
+								<if test="rank == ''">
+								</if>
+							</if>
+							<if test="condition == ''">
+								<if test="rank != ''">
+									rank like #{rank} and <![CDATA[ condition != '탈퇴' ]]>
+								</if>
+								<if test="rank == ''">
+									<![CDATA[ 1=1 ]]>
+								</if>
+							</if>
 						</if>
 						<if test="birthday.toString().substring(0, 10).contains('9999')">
-							<![CDATA[ 1=1 ]]>
+							<if test="condition != ''">
+								condition like #{condition}
+								<if test="rank != ''">
+								</if>
+								<if test="rank == ''">
+								</if>
+							</if>
+							<if test="condition == ''">
+								<if test="rank != ''">
+									rank like #{rank} and <![CDATA[ condition != '탈퇴' ]]>
+								</if>
+								<if test="rank == ''">
+									<![CDATA[ 1=1 ]]>
+								</if>
+							</if>
 						</if>
 					</if>
 					<if test="weddingdate.toString().substring(0, 10).contains('9999')">
 						<if test="!birthday.toString().substring(0, 10).contains('9999')">
-							birthday like #{birthday}
+							birthday like #{birthday} and
+							<if test="condition != ''">
+								condition like #{condition}
+								<if test="rank != ''">
+								</if>
+								<if test="rank == ''">
+								</if>
+							</if>
+							<if test="condition == ''">
+								<if test="rank != ''">
+									rank like #{rank} and <![CDATA[ condition != '탈퇴' ]]>
+								</if>
+								<if test="rank == ''">
+									<![CDATA[ 1=1 ]]>
+								</if>
+							</if>
 						</if>
 						<if test="birthday.toString().substring(0, 10).contains('9999')">
-							<![CDATA[ 1=1 ]]>
+							<if test="condition != ''">
+								condition like #{condition}
+								<if test="rank != ''">
+								</if>
+								<if test="rank == ''">
+								</if>
+							</if>
+							<if test="condition == ''">
+								<if test="rank != ''">
+									rank like #{rank} and <![CDATA[ condition != '탈퇴' ]]>
+								</if>
+								<if test="rank == ''">
+									<![CDATA[ 1=1 ]]>
+								</if>
+							</if>
 						</if>
 					</if>
 				</if>
@@ -33,18 +91,76 @@
 					<if test="!weddingdate.toString().substring(0, 10).contains('9999')">
 						weddingdate like #{weddingdate} and
 						<if test="!birthday.toString().substring(0, 10).contains('9999')">
-							birthday like #{birthday}
+							birthday like #{birthday} and
+							<if test="condition != ''">
+								condition like #{condition}
+								<if test="rank != ''">
+								</if>
+								<if test="rank == ''">
+								</if>
+							</if>
+							<if test="condition == ''">
+								<if test="rank != ''">
+									rank like #{rank} and <![CDATA[ condition != '탈퇴' ]]>
+								</if>
+								<if test="rank == ''">
+									<![CDATA[ 1=1 ]]>
+								</if>
+							</if>
 						</if>
 						<if test="birthday.toString().substring(0, 10).contains('9999')">
-							<![CDATA[ 1=1 ]]>
+							<if test="condition != ''">
+								condition like #{condition}
+								<if test="rank != ''">
+								</if>
+								<if test="rank == ''">
+								</if>
+							</if>
+							<if test="condition == ''">
+								<if test="rank != ''">
+									rank like #{rank} and <![CDATA[ condition != '탈퇴' ]]>
+								</if>
+								<if test="rank == ''">
+									<![CDATA[ 1=1 ]]>
+								</if>
+							</if>
 						</if>
 					</if>
 					<if test="weddingdate.toString().substring(0, 10).contains('9999')">
 						<if test="!birthday.toString().substring(0, 10).contains('9999')">
-							birthday like #{birthday}
+							birthday like #{birthday} and
+							<if test="condition != ''">
+								condition like #{condition}
+								<if test="rank != ''">
+								</if>
+								<if test="rank == ''">
+								</if>
+							</if>
+							<if test="condition == ''">
+								<if test="rank != ''">
+									rank like #{rank} and <![CDATA[ condition != '탈퇴' ]]>
+								</if>
+								<if test="rank == ''">
+									<![CDATA[ 1=1 ]]>
+								</if>
+							</if>
 						</if>
 						<if test="birthday.toString().substring(0, 10).contains('9999')">
-							<![CDATA[ 1=1 ]]>
+							<if test="condition != ''">
+								condition like #{condition}
+								<if test="rank != ''">
+								</if>
+								<if test="rank == ''">
+								</if>
+							</if>
+							<if test="condition == ''">
+								<if test="rank != ''">
+									rank like #{rank} and <![CDATA[ condition != '탈퇴' ]]>
+								</if>
+								<if test="rank == ''">
+									<![CDATA[ 1=1 ]]>
+								</if>
+							</if>
 						</if>
 					</if>
 				</if>
@@ -56,18 +172,76 @@
 					<if test="!weddingdate.toString().substring(0, 10).contains('9999')">
 						weddingdate like #{weddingdate} and
 						<if test="!birthday.toString().substring(0, 10).contains('9999')">
-							birthday like #{birthday}
+							birthday like #{birthday} and
+							<if test="condition != ''">
+								condition like #{condition}
+								<if test="rank != ''">
+								</if>
+								<if test="rank == ''">
+								</if>
+							</if>
+							<if test="condition == ''">
+								<if test="rank != ''">
+									rank like #{rank} and <![CDATA[ condition != '탈퇴' ]]>
+								</if>
+								<if test="rank == ''">
+									<![CDATA[ 1=1 ]]>
+								</if>
+							</if>
 						</if>
 						<if test="birthday.toString().substring(0, 10).contains('9999')">
-							<![CDATA[ 1=1 ]]>
+							<if test="condition != ''">
+								condition like #{condition}
+								<if test="rank != ''">
+								</if>
+								<if test="rank == ''">
+								</if>
+							</if>
+							<if test="condition == ''">
+								<if test="rank != ''">
+									rank like #{rank} and <![CDATA[ condition != '탈퇴' ]]>
+								</if>
+								<if test="rank == ''">
+									<![CDATA[ 1=1 ]]>
+								</if>
+							</if>
 						</if>
 					</if>
 					<if test="weddingdate.toString().substring(0, 10).contains('9999')">
 						<if test="!birthday.toString().substring(0, 10).contains('9999')">
-							birthday like #{birthday}
+							birthday like #{birthday} and
+							<if test="condition != ''">
+								condition like #{condition}
+								<if test="rank != ''">
+								</if>
+								<if test="rank == ''">
+								</if>
+							</if>
+							<if test="condition == ''">
+								<if test="rank != ''">
+									rank like #{rank} and <![CDATA[ condition != '탈퇴' ]]>
+								</if>
+								<if test="rank == ''">
+									<![CDATA[ 1=1 ]]>
+								</if>
+							</if>
 						</if>
 						<if test="birthday.toString().substring(0, 10).contains('9999')">
-							<![CDATA[ 1=1 ]]>
+							<if test="condition != ''">
+								condition like #{condition}
+								<if test="rank != ''">
+								</if>
+								<if test="rank == ''">
+								</if>
+							</if>
+							<if test="condition == ''">
+								<if test="rank != ''">
+									rank like #{rank} and <![CDATA[ condition != '탈퇴' ]]>
+								</if>
+								<if test="rank == ''">
+									<![CDATA[ 1=1 ]]>
+								</if>
+							</if>
 						</if>
 					</if>
 				</if>
@@ -76,24 +250,82 @@
 					<if test="!weddingdate.toString().substring(0, 10).contains('9999')">
 						weddingdate like #{weddingdate} and
 						<if test="!birthday.toString().substring(0, 10).contains('9999')">
-							birthday like #{birthday}
+							birthday like #{birthday} and
+							<if test="condition != ''">
+								condition like #{condition}
+								<if test="rank != ''">
+								</if>
+								<if test="rank == ''">
+								</if>
+							</if>
+							<if test="condition == ''">
+								<if test="rank != ''">
+									rank like #{rank} and <![CDATA[ condition != '탈퇴' ]]>
+								</if>
+								<if test="rank == ''">
+									<![CDATA[ 1=1 ]]>
+								</if>
+							</if>
 						</if>
 						<if test="birthday.toString().substring(0, 10).contains('9999')">
-							<![CDATA[ 1=1 ]]>
+							<if test="condition != ''">
+								condition like #{condition}
+								<if test="rank != ''">
+								</if>
+								<if test="rank == ''">
+								</if>
+							</if>
+							<if test="condition == ''">
+								<if test="rank != ''">
+									rank like #{rank} and <![CDATA[ condition != '탈퇴' ]]>
+								</if>
+								<if test="rank == ''">
+									<![CDATA[ 1=1 ]]>
+								</if>
+							</if>
 						</if>
 					</if>
 					<if test="weddingdate.toString().substring(0, 10).contains('9999')">
 						<if test="!birthday.toString().substring(0, 10).contains('9999')">
-							birthday like #{birthday}
+							birthday like #{birthday} and
+							<if test="condition != ''">
+								condition like #{condition}
+								<if test="rank != ''">
+								</if>
+								<if test="rank == ''">
+								</if>
+							</if>
+							<if test="condition == ''">
+								<if test="rank != ''">
+									rank like #{rank} and <![CDATA[ condition != '탈퇴' ]]>
+								</if>
+								<if test="rank == ''">
+									<![CDATA[ 1=1 ]]>
+								</if>
+							</if>
 						</if>
 						<if test="birthday.toString().substring(0, 10).contains('9999')">
-							<![CDATA[ 1=1 ]]>
+							<if test="condition != ''">
+								condition like #{condition}
+								<if test="rank != ''">
+								</if>
+								<if test="rank == ''">
+								</if>
+							</if>
+							<if test="condition == ''">
+								<if test="rank != ''">
+									rank like #{rank} and <![CDATA[ condition != '탈퇴' ]]>
+								</if>
+								<if test="rank == ''">
+									<![CDATA[ 1=1 ]]>
+								</if>
+							</if>
 						</if>
 					</if>
 				</if>
 			</if>
-
 		</where>
+		order by member_no desc
 	</sql>
 
 	<select id="memberList" parameterType="adminMember" resultType="adminMember">
@@ -114,7 +346,7 @@
 		resultType="int">
 		select nvl(count(1),0) from (select list.*, rownum as rnum from (
 		<include refid="searchMember"></include>
-		order by member_no desc ) list )
+		) list )
 	</select>
 
 	<select id="memberOne" parameterType="int" resultType="adminMember">

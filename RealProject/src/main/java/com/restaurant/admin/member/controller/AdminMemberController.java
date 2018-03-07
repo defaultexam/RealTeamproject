@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.restaurant.admin.member.service.AdminMemberService;
 import com.restaurant.admin.member.vo.AdminMemberVO;
+import com.restaurant.common.excel.ListExcelView;
 import com.restaurant.common.page.Paging;
 import com.restaurant.common.util.Util;
 
@@ -30,6 +31,7 @@ public class AdminMemberController {
 
 		ModelAndView mav = new ModelAndView();
 		logger.info("adminMember List 호출 성공");
+		logger.info(avo.getRank());
 		// 페이지 셋팅
 		Paging.setPage(avo);
 		logger.info("페이지" + avo.getPage());
@@ -42,6 +44,7 @@ public class AdminMemberController {
 		logger.info("count = " + count);
 
 		List<AdminMemberVO> list = adminMemberService.memberList(avo);
+		
 
 		mav.addObject("memberList", list);
 		mav.addObject("count", count);
@@ -86,8 +89,25 @@ public class AdminMemberController {
 		result = adminMemberService.memberUpdate(avo);
 		if (result == 1) {
 			url = "/adminMember/list.do";
-
 		}
 		return "redirect:" + url;
+	}
+	
+	/******************************************************
+	 * 액셀 다운로드 구현하기 참고 : ListExcelView 클래스에서 맵타입으로 Model에 접근하게 된다.
+	 *****************************************************/
+
+	@RequestMapping(value = "/memberExcel", method = RequestMethod.GET)
+	public ModelAndView boardExcel(@ModelAttribute AdminMemberVO avo) {
+		logger.info("boardExcel 호출 성공");
+
+		List<AdminMemberVO> memberList = adminMemberService.memberList(avo);
+
+		ModelAndView mv = new ModelAndView(new ListExcelView());
+		mv.addObject("list", memberList);
+		mv.addObject("template", "member.xlsx");
+		mv.addObject("file_name", "memberList");
+
+		return mv;
 	}
 }
