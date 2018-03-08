@@ -10,11 +10,17 @@ li < a {
 	font: black;
 }
 </style>
+<script type="text/javascript">
+	function tab() {
+		sessionStorage.removeItem("tab");
+	}
+</script>
 <link href="/resources/include/dist/css/bootstrap.min.css"
 	rel="stylesheet">
 </head>
 <body>
 	<div id="header">
+	
 		<div>
 			<img align="middle" alt="" src="/resources/image/1.jpg" width="200"
 				height="200" onclick='location.href="/afterAdminLogin.do"'>
@@ -24,13 +30,15 @@ li < a {
 		</div>
 		<div id="headerMenu" class="center-block">
 			<ul class="nav nav-tabs">
-				<li style="padding-left: 35%"><a href="/adminMember/list.do"
-					id="tab1"><font color="black">회원관리</font></a></li>
-				<li id="tab2"><a href="/menu/menuSelect" onclick="setNav(2);"><font color="black">메뉴관리</font></a></li>
-				<li id="tab3"><a href="#" onclick="setNav(3);"><font color="black">예약관리</font></a></li>
-				<li id="tab4"><a href="#" onclick="setNav(4);"><font color="black">방문후기관리</font></a></li>
-				<li id="tab5"><a href="#" onclick="setNav(5);"><font color="black">고객센터관리</font></a></li>
-				<li id="tab6"><a href="#" onclick="setNav(6);"><font color="black">통계</font></a></li>
+				<li id="menutab1" style="padding-left: 35%"><a
+					href="/adminMember/list.do" onclick="tab();"><font
+						color="black">회원관리</font></a></li>
+				<li id="menutab2"><a href="/menu/menuSelect"><font
+						color="black">메뉴관리</font></a></li>
+				<li id="menutab3"><a href="#"><font color="black">예약관리</font></a></li>
+				<li id="menutab4"><a href="#"><font color="black">방문후기관리</font></a></li>
+				<li id="menutab5"><a href="#"><font color="black">고객센터관리</font></a></li>
+				<li id="menutab6"><a href="#"><font color="black">통계</font></a></li>
 			</ul>
 		</div>
 		<br />

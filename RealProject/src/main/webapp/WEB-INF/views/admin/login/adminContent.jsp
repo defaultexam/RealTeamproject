@@ -35,6 +35,11 @@ a {
 	height: 40px;
 }
 </style>
+<script type="text/javascript">
+	function tab() {
+		sessionStorage.removeItem("tab");
+	}
+</script>
 <title>관리자컨텐츠부분</title>
 </head>
 <body>
@@ -42,7 +47,7 @@ a {
 		<table border="1">
 			<tr class="menu">
 				<td class="menu" align="center">
-					<h2>회원관리</h2> <a href="/adminMember/list.do">회원조회</a><br> <a
+					<h2>회원관리</h2> <a href="/adminMember/list.do" onclick="tab();">회원조회</a><br> <a
 					href="#">쿠폰관리</a><br> <a href="#">등급관리</a>
 				</td>
 				<td class="none"></td>
