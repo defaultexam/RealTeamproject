@@ -46,8 +46,6 @@
 				return;
 
 			else{
-				alert("어디까지오니")
-
 				$("#n_data").attr({
 					"method" : "POST",
 					"action" : "/adminNotice/noticeUpdate.do"
