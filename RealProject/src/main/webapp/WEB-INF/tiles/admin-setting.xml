@@ -23,7 +23,12 @@
 	</definition>
 
 	<definition name="admin/menu/*" extends="afterLogin">
-		<put-attribute name="main" value="/WEB-INF/views/admin/menu/{1}.jsp"/>
+		<put-attribute name="main" value="/WEB-INF/views/admin/menu/{1}.jsp" />
+	</definition>
+
+	<definition name="admin/notice/*" extends="afterLogin">
+		<put-attribute name="main"
+			value="/WEB-INF/views/admin/notice/{1}.jsp" />
 	</definition>
 
 </tiles-definitions> 

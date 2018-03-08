@@ -68,7 +68,7 @@ a {
 				</td>
 				<td class="none"></td>
 				<td class="menu" align="center">
-					<h2>고객센터관리</h2> <a href="#">공지사항관리</a><br> <a href="#">FAQ관리</a><br>
+					<h2>고객센터관리</h2> <a href="/adminNotice"">공지사항관리</a><br> <a href="#">FAQ관리</a><br>
 					<a href="#">1:1문의관리</a>
 				</td>
 				<td class="none"></td>

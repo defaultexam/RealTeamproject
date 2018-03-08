@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.restaurant.admin.notice.dao.AdminNoticeDao">
+
+	<!-- 공지사항 등록 -->
+	<insert id="noticeInsert" parameterType="notice">
+		<selectKey keyProperty="notice_no" resultType="int" order="BEFORE">
+			select notice_seq.nextval from dual
+		</selectKey>
+		insert into notice(
+		notice_no,
+		notice_title,
+		notice_date,
+		notice_text
+		)
+		values(
+		#{notice_no},
+		#{notice_title},
+		sysdate,
+		#{notice_text}
+		)
+	</insert>
+
+	<!-- 공지사항 목록 -->
+	<!-- <select id="noticeList" resultType="notice" parameterType="notice"> 
+		select notice_no, notice_title, to_char(notice_date, 'YYYY-MM-DD') as notice_date 
+		from notice order by notice_no desc </select> -->
+
+	<sql id="noticeCommon">
+		select notice_no, notice_title, notice_date
+		from notice
+		<where>
+			<if test="search=='notice_title'"> <![CDATA[ notice_title 
+		LIKE '%'|| #{keyword} ||'%']]>
+			</if>
+			<if test="search=='notice_text'"> 
+		<![CDATA[ notice_text LIKE '%'|| #{keyword} ||'%']]>
+			</if>
+			<if test="search=='notice_date'"> 
+		<![CDATA[ notice_date LIKE '%'|| #{keyword} ||'%']]>
+			</if>
+		</where>
+	</sql>
+
+	<!-- 공지사항 목록 -->
+	<select id="noticeList" resultType="notice" parameterType="notice">
+		select notice_no, notice_title, to_char(notice_date, 'YYYY-MM-DD') as
+		notice_date
+		from (SELECT list.*, ROWNUM AS RNUM FROM (
+		<include refid="noticeCommon"></include>
+		<choose>
+			<when test="order_by=='notice_no'"> ORDER BY notice_no</when>
+			<when test="order_by=='notice_date'"> ORDER BY notice_date</when>
+		</choose>
+		<choose>
+			<when test="order_sc=='ASC'"> ASC</when>
+			<when test="order_sc=='DESC'"> DESC</when>
+		</choose>
+		) list)
+		<where>
+			<if test="start_row != null and start_row != ''">
+				<if test="end_row != null and end_row != ''"> RNUM BETWEEN #{start_row} AND
+					#{end_row}
+				</if>
+			</if>
+		</where>
+	</select>
+
+	<!-- 게시물 전체 개수 -->
+	<select id="noticeListCnt" parameterType="notice" resultType="int">
+		SELECT NVL(count(1), 0) FROM (SELECT list.*, ROWNUM AS RNUM FROM (
+		<include refid="noticeCommon"></include>
+		ORDER BY notice_no desc) list )
+	</select>
+
+	<!-- 공지사항 상세보기 -->
+	<select id="noticeDetail" parameterType="int" resultType="notice">
+		select
+		notice_no,
+		admin_no,
+		notice_title,
+		to_char(notice_date, 'YYYY-MM-DD') as
+		notice_date,
+		notice_text
+		from notice
+		where notice_no= #{notice_no}
+	</select>
+
+	<!-- 공지사항 수정 -->
+	<update id="noticeUpdate" parameterType="notice">
+		update notice
+		set
+		notice_title = #{notice_title},
+		notice_date = sysdate,
+		notice_text =
+		#{notice_text}
+		where notice_no = #{notice_no}
+	</update>
+
+	<!-- 공지사항 삭제 -->
+	<delete id="noticeDelete" parameterType="notice">
+		delete from notice
+		where
+		notice_no = #{notice_no}
+	</delete>
+
+</mapper>

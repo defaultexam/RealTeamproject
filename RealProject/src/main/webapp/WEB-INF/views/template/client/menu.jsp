@@ -36,7 +36,7 @@
 						data-toggle="dropdown" role="button" aria-haspopup="true"
 						aria-expanded="false">고객센터<span class="caret"></span></a>
 						<ul class="dropdown-menu" aria-labelledby="about-us">
-							<li><a href="#">공지사항</a></li>
+							<li><a href="/userNotice">공지사항</a></li>
 							<li><a href="#">FAQ</a></li>
 							<li><a href="/question">1:1문의</a></li>
 						</ul></li>
