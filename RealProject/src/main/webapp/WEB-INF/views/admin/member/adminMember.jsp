@@ -19,35 +19,30 @@
 	margin-top: 20px;
 }
 </style>
-
 <script type="text/javascript">
-	function tabReload() {
-		$(function() {
-			var tab1 = document.getElementById("tab1");
-			var tab2 = document.getElementById("tab2");
-			var tab3 = document.getElementById("tab3");
-			var tab4 = document.getElementById("tab4");
-			// 탭 상태 화면 표시 설정
-			if (sessionStorage.getItem("tab") == '탈퇴') {
-				tab1.classList.remove("active");
-				tab2.classList.remove("active");
-				tab3.classList.remove("active");
-				tab4.classList.add("active");
-			} else if (sessionStorage.getItem("tab") == '일반') {
-				tab1.classList.remove("active");
-				tab2.classList.add("active");
-				tab3.classList.remove("active");
-				tab4.classList.remove("active");
-			} else if (sessionStorage.getItem("tab") == 'VIP') {
-				tab1.classList.remove("active");
-				tab2.classList.remove("active");
-				tab3.classList.add("active");
-				tab4.classList.remove("active");
-			}
-		});
-	}
-
 	$(function() {
+
+		var tab1 = document.getElementById("tab1");
+		var tab2 = document.getElementById("tab2");
+		var tab3 = document.getElementById("tab3");
+		var tab4 = document.getElementById("tab4");
+		// 탭 상태 화면 표시 설정
+		if (sessionStorage.getItem("tab") == '탈퇴') {
+			tab1.classList.remove("active");
+			tab2.classList.remove("active");
+			tab3.classList.remove("active");
+			tab4.classList.add("active");
+		} else if (sessionStorage.getItem("tab") == '일반') {
+			tab1.classList.remove("active");
+			tab2.classList.add("active");
+			tab3.classList.remove("active");
+			tab4.classList.remove("active");
+		} else if (sessionStorage.getItem("tab") == 'VIP') {
+			tab1.classList.remove("active");
+			tab2.classList.remove("active");
+			tab3.classList.add("active");
+			tab4.classList.remove("active");
+		}
 		// 이름클릭시 상세 페이지 이동을 위한 처리 이벤트
 		$(".memberInfo").click(function() {
 			var m_no = $(this).parents("tr").attr("data-num");
@@ -61,7 +56,7 @@
 		});
 
 		/* 한페이지에 보여줄 레코드수 조회후 선택한 값 그대로 유지 하기 위한 설정 */
-		if ("c:out value='${data.pageSize}' />" != "") {
+		if ("<c:out value='${data.pageSize}' />" != "") {
 			$("#pageSize").val("<c:out value='${data.pageSize}' />");
 		}
 
@@ -70,6 +65,7 @@
 
 		if (preSearchBirth.match("9999") != "9999") {
 			$("#birthday").val("<c:out value='${data.birthday}' />");
+			//$("#infoBirthday").val("<c:out value='${data.birthday}' />");
 		} else {
 
 		}
@@ -78,24 +74,29 @@
 
 		if (preSearchWedding.match("9999") != "9999") {
 			$("#weddingdate").val("<c:out value='${data.weddingdate}' />");
+			//$("#infoWeddingdate").val("<c:out value='${data.weddingdate}' />");
 		} else {
 
 		}
 
 		if ("<c:out value='${data.name}' />" != "") {
 			$("#name").val("<c:out value='${data.name}' />");
+			//$("#infoName").val("<c:out value='${data.name}' />");
 		}
 
 		if ("<c:out value='${data.phone}' />" != "") {
 			$("#phone").val("<c:out value='${data.phone}' />");
+			//$("#infoPhone").val("<c:out value='${data.phone}' />");
 		}
 
 		// 선택 탭 유지하기 위한 설정
 		if ("<c:out value='${data.rank}' />" != "") {
 			$("#rank").val("<c:out value='${data.rank}' />");
+			//$("#infoRank").val("<c:out value='${data.rank}' />");
 		}
 		if ("<c:out value='${data.condition}' />" != "") {
 			$("#condition").val("<c:out value='${data.condition}' />");
+			//$("#infoCondition").val("<c:out value='${data.condition}' />");
 		}
 
 		// 조회버튼 클릭시 발생 이벤트
@@ -154,21 +155,20 @@
 
 		/* 엑셀다운로드 버튼 클릭 시 처리 이벤트 */
 		$("#excelMemberList").click(
-			function() {
-				if ($("#birthday").val() == ""
-					|| $("#birthday").val() == null)
-					$("#birthday").val("9999-12-31");
-				if ($("#weddingdate").val() == ""
-					|| $("#weddingdate").val() == null)
-					$("#weddingdate").val("9999-12-31");
-				$("#page").val(page);
-				$("#f_search").attr({
-					"method" : "get",
-					"action" : "/adminMember/memberExcel"
+				function() {
+					if ($("#birthday").val() == ""
+							|| $("#birthday").val() == null)
+						$("#birthday").removeAttr("name");
+					if ($("#weddingdate").val() == ""
+							|| $("#weddingdate").val() == null)
+						$("#weddingdate").removeAttr("name");
+					$("#page").val(page);
+					$("#f_search").attr({
+						"method" : "get",
+						"action" : "/adminMember/memberExcel"
+					});
+					$("#f_search").submit();
 				});
-				$("#f_search").submit();
-			});
-
 	});
 
 	function goPage(page) {
@@ -183,7 +183,6 @@
 		});
 		$("#f_search").submit();
 	}
-	tabReload();
 </script>
 </head>
 <body>
@@ -198,8 +197,8 @@
 		</form>
 
 		<%-- ================ 검색기능 시작 =============== --%>
-		<div id="boardSearch">
-			<form id="f_search">
+		<form id="f_search">
+			<div id="boardSearch">
 				<input type="hidden" id="page" name="page" value="${data.page }" />
 				<input type="hidden" id="order_by" name="order_by"
 					value="${data.order_by}" /> <input type="hidden" id="order_sc"
@@ -232,26 +231,28 @@
 							class="form-control" style="width: 400px;"></td>
 					</tr>
 				</table>
-			</form>
-		</div>
-		<div style="padding-left: 79%;">
-			<table>
-				<tr>
-					<td><input type="button" value="조회" id="memberSearch"
-						class="btn btn-default"></td>
-					<td><input type="button" value="전체보기" id="memberSearchTotal"
-						class="btn btn-default"></td>
-					<td><select id="pageSize" name="pageSize" class="form-control">
-							<option value="10">10개씩 보기</option>
-							<option value="30">30개씩 보기</option>
-							<option value="50">50개씩 보기</option>
-					</select></td>
-					<td>
-						<button type="button" id="excelMemberList" class="btn btn-default">Excel문서화</button>
-					</td>
-				</tr>
-			</table>
-		</div>
+			</div>
+			<div style="padding-left: 79%;">
+				<table>
+					<tr>
+						<td><input type="button" value="조회" id="memberSearch"
+							class="btn btn-default"></td>
+						<td><input type="button" value="전체보기" id="memberSearchTotal"
+							class="btn btn-default"></td>
+						<td><select id="pageSize" name="pageSize"
+							class="form-control">
+								<option value="10">10개씩 보기</option>
+								<option value="30">30개씩 보기</option>
+								<option value="50">50개씩 보기</option>
+						</select></td>
+						<td>
+							<button type="button" id="excelMemberList"
+								class="btn btn-default">Excel문서화</button>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</form>
 		<%-- ================ 검색기능 종료 =============== --%>
 		<div>
 			<ul class="nav nav-tabs">
@@ -272,6 +273,7 @@
 							<th class="tac">이름</th>
 							<th class="tac">성별</th>
 							<th class="tac">생년월일</th>
+							<th class="tac">결혼기념일</th>
 							<th class="tac">이메일</th>
 							<th class="tac">전화번호</th>
 						</tr>
@@ -288,8 +290,22 @@
 										<td>${member.rank}</td>
 										<td>${member.id}</td>
 										<td class="memberInfo">${member.name}</td>
-										<td>${member.gender}</td>
+										<td><c:set value="${member.gender }" var="gender"></c:set>
+											<c:choose>
+												<c:when test="${gender == '1'}">
+										남성</c:when>
+												<c:otherwise>여성</c:otherwise>
+											</c:choose></td>
 										<td>${member.birthday}</td>
+										<td><c:set value="${member.weddingdate}" var="wedding" />
+											<c:choose>
+												<c:when
+													test="${wedding.toString().substring(0,5).contains('9999')}">
+										 없음 </c:when>
+												<c:otherwise>
+										${member.weddingdate}
+										</c:otherwise>
+											</c:choose></td>
 										<td>${member.email}</td>
 										<td>${member.phone}</td>
 									</tr>

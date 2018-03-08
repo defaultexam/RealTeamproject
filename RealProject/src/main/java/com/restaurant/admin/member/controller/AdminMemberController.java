@@ -45,7 +45,6 @@ public class AdminMemberController {
 
 		List<AdminMemberVO> list = adminMemberService.memberList(avo);
 		
-
 		mav.addObject("memberList", list);
 		mav.addObject("count", count);
 		mav.addObject("total", total);
@@ -57,7 +56,7 @@ public class AdminMemberController {
 	}
 
 	@RequestMapping(value = "/memberInfo.do", method = RequestMethod.GET)
-	public String memberOne(@ModelAttribute("AdminMemberVO") AdminMemberVO avo, Model model) throws Exception {
+	public String memberOne(@ModelAttribute AdminMemberVO avo, Model model) throws Exception {
 		AdminMemberVO memberInfo = new AdminMemberVO();
 
 		memberInfo = adminMemberService.memberOne(avo);
@@ -107,7 +106,6 @@ public class AdminMemberController {
 		mv.addObject("list", memberList);
 		mv.addObject("template", "member.xlsx");
 		mv.addObject("file_name", "memberList");
-
 		return mv;
 	}
 }

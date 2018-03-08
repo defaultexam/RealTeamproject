@@ -59,9 +59,10 @@
 		}
 
 		/* 취소버튼 클릭시 메소드 */
-		$("#memInfoCancel").click(function() {
+		/* $("#memInfoCancel").click(function() {
+			sessionStorage.removeItem("tab");
 			location.href = "/adminMember/list.do";
-		});
+		}); */
 
 		/* 쿠폰 기간 초기화 */
 		$("#b_coupon_clear").click(function() {
@@ -189,7 +190,7 @@
 					"value" : "0001"
 				});
 			}
-
+			sessionStorage.removeItem("tab");
 			$("#memInfoForm").attr({
 				"method" : "post",
 				"action" : "/adminMember/memberUpdate.do"
@@ -246,7 +247,12 @@
 				</tr>
 				<tr>
 					<td><label class="intbName">성별</label></td>
-					<td colspan="3">${memberInfo.gender }</td>
+					<td colspan="3"><c:set value="${memberInfo.gender }"
+							var="gender"></c:set> <c:choose>
+							<c:when test="${gender == '1'}">
+										남성</c:when>
+							<c:otherwise>여성</c:otherwise>
+						</c:choose></td>
 				</tr>
 				<tr>
 					<td><label class="intbName">생년월일</label></td>
@@ -262,11 +268,24 @@
 				</tr>
 				<tr>
 					<td><label class="intbName">결혼여부</label></td>
-					<td colspan="3">${memberInfo.marriage }</td>
+					<td colspan="3"><c:set value="${memberInfo.marriage }"
+							var="marriage"></c:set> <c:choose>
+							<c:when test="${marriage == '1'}">
+										기혼</c:when>
+							<c:otherwise>미혼</c:otherwise>
+						</c:choose></td>
 				</tr>
 				<tr>
 					<td><label class="intbName">결혼기념일</label></td>
-					<td colspan="3">${memberInfo.weddingdate }</td>
+					<td colspan="3"><c:set value="${memberInfo.weddingdate}"
+							var="wedding" /> <c:choose>
+							<c:when
+								test="${wedding.toString().substring(0,5).contains('9999')}">
+										 없음 </c:when>
+							<c:otherwise>
+										${memberInfo.weddingdate}
+										</c:otherwise>
+						</c:choose></td>
 				</tr>
 				<tr>
 					<td><label class="intbName">직업</label></td>
@@ -278,7 +297,12 @@
 				</tr>
 				<tr>
 					<td><label class="intbName">이벤트알림동의</label></td>
-					<td colspan="3">${memberInfo.agreement3}</td>
+					<td colspan="3"><c:set value="${memberInfo.agreement3 }"
+							var="agree3"></c:set> <c:choose>
+							<c:when test="${agree3 == '1'}">
+										동의</c:when>
+							<c:otherwise>미동의</c:otherwise>
+						</c:choose></td>
 				</tr>
 				<tr>
 					<td><label class="intbName">포인트</label></td>
@@ -325,7 +349,7 @@
 			</table>
 		</form>
 		<input id="memInfoUpdate" type="button" value="수정완료"> <input
-			id="memInfoCancel" type="button" value="취소">
+			id="memInfoCancel" type="button" value="취소" onclick="window.history.go(-1); return false;">
 	</div>
 
 </body>
