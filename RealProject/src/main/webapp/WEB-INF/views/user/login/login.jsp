@@ -22,7 +22,7 @@
 	<div class="container">
 		<c:if test="${login.id == null or login.id == ''}">
 			<form id="loginForm" class="form-horizontal" method="post"
-				style="padding-top: 15%">
+				style="padding-top: 10%">
 				<div class="panel panel-default sizeoff center-block" id="effect">
 					<div class="panel-heading">
 						<h1 class="panel-title">로그인</h1>
@@ -47,6 +47,21 @@
 					</div>
 				</div>
 			</form>
+			<div class="row" style="padding-left: 25%; padding-top: 5%;">
+				<div class="col-xs-5">
+					<font size="20px"><span class="glyphicon glyphicon-lock"
+						aria-hidden="true"></span></font> <span style="position: fixed;">아이디
+						또는 비밀번호를 분실하셨나요?</span> <input type="button"
+						onclick="location.href='/member/modify'" value="아이디/비밀번호 찾기"
+						id="btnlost" class="btn btn-default" />
+				</div>
+				<div class="col-xs-5">
+					<font size="20px"><span class="glyphicon glyphicon-file"
+						aria-hidden="true"></span></font> <span style="position: fixed;">아직도
+						회원가입을 하지 않으셨나요?</span> <input type="button" value="회원가입" id="btnregister"
+						class="btn btn-default" onclick="location.href='/register'" />
+				</div>
+			</div>
 		</c:if>
 		<c:if test="${login.id != null and login.id != ''}">
 			<div class="container" onload="onLoading();">
