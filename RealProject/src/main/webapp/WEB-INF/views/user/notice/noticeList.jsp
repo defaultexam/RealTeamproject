@@ -182,5 +182,6 @@
 			</div>
 		</div>
 	</div>
+	<script src="/resources/include/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

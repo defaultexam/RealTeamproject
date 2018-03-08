@@ -29,7 +29,7 @@ li {
 		$("#questionLoginBtn").click(function() {
 			location.href = "/login";
 		});
-		
+
 		/* 1:1 문의하기 폼에서 홈으로 클릭 시  */
 		$("#questionCancelBtn").click(function() {
 			alert("작성 중이던 문의글이 작성 취소됩니다");
@@ -65,7 +65,7 @@ li {
 		});
 
 	});
-	
+
 	/* // 1:1 문의 글쓰기 초기화 작업
 	function resetData() {
 		$("#questionForm").each(function() {
@@ -145,12 +145,13 @@ li {
 		<c:if test="${login.id == null or login.id == ''}">
 			<div class="container">
 				<br> <font style="text-decoration: underline">1:1 문의는
-					회원만 이용할 수 있는 서비스입니다.</font><br> 로그인 후 이용하여 주세요<br>
-				<br> <input type="button" value="로그인 페이지로 이동하기"
-					class="btn btn-default" id="questionLoginBtn">
+					회원만 이용할 수 있는 서비스입니다.</font><br> 로그인 후 이용하여 주세요<br> <br> <input
+					type="button" value="로그인 페이지로 이동하기" class="btn btn-default"
+					id="questionLoginBtn">
 			</div>
 		</c:if>
 
 	</div>
+	<script src="/resources/include/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
