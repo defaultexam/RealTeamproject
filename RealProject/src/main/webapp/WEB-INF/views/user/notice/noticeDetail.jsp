@@ -8,7 +8,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>공지사항 상세보기</title>
 </head>
-
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link href="/resources/include/dist/css/bootstrap.min.css"
+	rel="stylesheet">
 <script type="text/javascript"
 	src="/resources/include/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript"
@@ -36,7 +39,11 @@
 						value="${detail.notice_no}" /> <input type="hidden" name="page"
 						id="page" value="${param.page}">
 
-					<table id="noticeupdate">
+					<table id="noticeupdate" class="table table-bordered table-hover">
+					<colgroup>
+						<col width="80%"></col>
+						<col width="20%"></col>
+					</colgroup>
 						<tr>
 							<td class="detail_main"><strong>${detail.notice_title}</strong></td>
 							<td class="detail_main">${detail.notice_date}</td>
@@ -55,6 +62,7 @@
 
 		</div>
 	</div>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script src="/resources/include/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

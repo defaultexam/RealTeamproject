@@ -14,6 +14,10 @@ li {
 	font-size: 10pt;
 }
 </style>
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link href="/resources/include/dist/css/bootstrap.min.css"
+	rel="stylesheet">
 
 <script type="text/javascript"
 	src="/resources/include/js/jquery-3.3.1.min.js"></script>
@@ -93,7 +97,11 @@ li {
 				<!-- enctype : 파일을 전송할 수 있는 타입으로 바꿔줌  -->
 				<form id="questionForm" enctype="multipart/form-data">
 
-					<table id="questionWrite">
+					<table id="questionWrite" class="table table-bordered table-hover">
+						<colgroup>
+							<col width="15%"></col>
+							<col width="85%"></col>
+						</colgroup>
 						<tr>
 							<th scope="row" class="ac">이름</th>
 							<td><input type="text" id="name" value="${login.name}"
@@ -152,6 +160,7 @@ li {
 		</c:if>
 
 	</div>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script src="/resources/include/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -7,7 +7,15 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>공지사항</title>
-
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link href="/resources/include/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<style type="text/css">
+#noticeTotalDiv {
+	height: auto;
+}
+</style>
 <script type="text/javascript"
 	src="/resources/include/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript"
@@ -109,7 +117,7 @@
 </head>
 
 <body>
-	<div class="contentContainer">
+	<div class="contentContainer" id="noticeTotalDiv">
 		<h2>공지사항</h2>
 		<hr>
 		<div>
@@ -120,18 +128,15 @@
 			</form>
 
 			<!-- 검색 기능 -->
-			<div id="noticeSearch">
+			<div id="noticeSearch" style="width: 100%;">
 				<form name="n_search" id="n_search">
 					<input type="hidden" id="page" name="page" value="1" /> <input
 						type="hidden" id="order_by" name="order_by"
 						value="${data.order_by}" /> <input type="hidden" id="order_sc"
 						name="order_sc" value="${data.order_sc}" />
-					<table>
+					<table id="noticeTabel" class="table table-bordered table-hover">
 						<!-- 열의 디자인(배경색을 정해줄 수 있음) -->
-						<colgroup>
-							<col width="60%"></col>
-							<col width="30%"></col>
-						</colgroup>
+
 						<tr>
 							<td id="ntd1"><select id="search" name="search">
 									<option value="all">전체</option>
@@ -145,7 +150,12 @@
 				</form>
 			</div>
 			<div id="noticeList">
-				<table border="1">
+				<table class="table table-bordered table-hover">
+					<colgroup>
+						<col width="15%"></col>
+						<col width="60%"></col>
+						<col width="25%"></col>
+					</colgroup>
 					<thead>
 						<tr>
 							<th class="tac">번호</th>
@@ -153,7 +163,7 @@
 							<th class="tac">작성일</th>
 						</tr>
 					</thead>
-					<tbody id="list" border="1">
+					<tbody id="list">
 						<!-- 목록 출력 -->
 						<c:choose>
 							<c:when test="${not empty noticeList}">
@@ -176,12 +186,13 @@
 			</div>
 
 			<!-- 페이징 처리 -->
-			<div id="noticePage">
+			<div id="noticePage" align="center">
 				<tag:paging page="${param.page}" total="${total}" list_size="10">
 				</tag:paging>
 			</div>
 		</div>
 	</div>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script src="/resources/include/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
