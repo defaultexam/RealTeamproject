@@ -54,6 +54,15 @@
 	float: left;
 	float: left;
 }
+
+#div {
+	width: 100%;
+	height: 500px;
+}
+
+#content {
+	padding-top: 30px;
+}
 </style>
 </head>
 <body>
@@ -72,20 +81,22 @@
 			<c:choose>
 				<c:when test="${not empty menulist}">
 					<c:forEach var="menu" items="${menulist}" varStatus="status">
-						<c:if test="${menu.menu_kind == 'course'}">
-							<div>
-								<img src="/uploadStorage/menu/thumbnail/${menu.menu_menufile }"
-									data-num="${menu.menu_no }" alt="..." id="file">
+						<div id="div">
+							<c:if test="${menu.menu_kind == 'course'}">
 								<div>
-									<br> <br>
-									<h3 id="name">${menu.menu_name }</h3>
-									<p id="text">${menu.menu_text }</p>
-									<p id="won">
-										<font size="3.5">${menu.menu_price } 원</font>
-									</p>
+									<img src="/uploadStorage/menu/thumbnail/${menu.menu_menufile }"
+										data-num="${menu.menu_no }" alt="..." id="file">
+									<div id="content">
+										<br> <br>
+										<h3 id="name">${menu.menu_name }</h3>
+										<p id="text">${menu.menu_text }</p>
+										<p id="won">
+											<font size="3.5">${menu.menu_price } 원</font>
+										</p>
+									</div>
 								</div>
-							</div>
-						</c:if>
+							</c:if>
+						</div>
 					</c:forEach>
 				</c:when>
 				<c:otherwise>

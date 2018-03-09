@@ -34,6 +34,15 @@
 	text-decoration: underline;
 }
 
+#div {
+	width: 100%;
+	height: 500px;
+}
+
+#content {
+	padding-top: 30px;
+}
+
 #name {
 	font-size: 20px;
 	font-weight: 700;
@@ -41,13 +50,13 @@
 
 #text {
 	font-size: 15px;
-	padding-left: 50%;
+	padding-left: 55%;
 }
 
 #won {
 	font-size: 15px;
 	font-weight: 700;
-	padding-left: 60%;
+	padding-left: 80%;
 }
 
 #file {
@@ -79,16 +88,16 @@
 	<div id="steak">
 		<br> <br>
 		<h3>스테이크</h3>
-		<div>
-			<div class="row">
-				<c:choose>
-					<c:when test="${not empty menulist}">
-						<c:forEach var="menu" items="${menulist}" varStatus="status">
+		<div class="row">
+			<c:choose>
+				<c:when test="${not empty menulist}">
+					<c:forEach var="menu" items="${menulist}" varStatus="status">
+						<div id="div">
 							<c:if test="${menu.menu_kind == 'steak'}">
 								<div>
 									<img src="/uploadStorage/menu/thumbnail/${menu.menu_menufile }"
 										data-num="${menu.menu_no }" alt="..." id="file">
-									<div>
+									<div id="content">
 										<br> <br>
 										<h3 id="name">${menu.menu_name }</h3>
 										<p id="text">${menu.menu_text }</p>
@@ -98,15 +107,15 @@
 									</div>
 								</div>
 							</c:if>
-						</c:forEach>
-					</c:when>
-					<c:otherwise>
-						<tr>
-							<td colspan="4" class="tac">메뉴 준비중 입니다.</td>
-						</tr>
-					</c:otherwise>
-				</c:choose>
-			</div>
+						</div>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<tr>
+						<td colspan="4" class="tac">메뉴 준비중 입니다.</td>
+					</tr>
+				</c:otherwise>
+			</c:choose>
 		</div>
 	</div>
 	<div id="pasta">
@@ -117,20 +126,23 @@
 				<c:choose>
 					<c:when test="${not empty menulist}">
 						<c:forEach var="menu" items="${menulist}" varStatus="status">
-							<c:if test="${menu.menu_kind == 'pasta'}">
-								<div>
-									<img src="/uploadStorage/menu/thumbnail/${menu.menu_menufile }"
-										data-num="${menu.menu_no }" alt="..." id="file">
+							<div id="div">
+								<c:if test="${menu.menu_kind == 'pasta'}">
 									<div>
-										<br> <br>
-										<h3 id="name">${menu.menu_name }</h3>
-										<p id="text">${menu.menu_text }</p>
-										<p id="won">
-											<font size="3.5">${menu.menu_price } 원</font>
-										</p>
+										<img
+											src="/uploadStorage/menu/thumbnail/${menu.menu_menufile }"
+											data-num="${menu.menu_no }" alt="..." id="file">
+										<div id="content">
+											<br> <br>
+											<h3 id="name">${menu.menu_name }</h3>
+											<p id="text">${menu.menu_text }</p>
+											<p id="won">
+												<font size="3.5">${menu.menu_price } 원</font>
+											</p>
+										</div>
 									</div>
-								</div>
-							</c:if>
+								</c:if>
+							</div>
 						</c:forEach>
 					</c:when>
 					<c:otherwise>
@@ -150,20 +162,23 @@
 				<c:choose>
 					<c:when test="${not empty menulist}">
 						<c:forEach var="menu" items="${menulist}" varStatus="status">
-							<c:if test="${menu.menu_kind == 'sallad'}">
-								<div>
-									<img src="/uploadStorage/menu/thumbnail/${menu.menu_menufile }"
-										data-num="${menu.menu_no }" alt="..." id="file">
+							<div id="div">
+								<c:if test="${menu.menu_kind == 'sallad'}">
 									<div>
-										<br> <br>
-										<h3 id="name">${menu.menu_name }</h3>
-										<p id="text">${menu.menu_text }</p>
-										<p id="won">
-											<font size="3.5">${menu.menu_price } 원</font>
-										</p>
+										<img
+											src="/uploadStorage/menu/thumbnail/${menu.menu_menufile }"
+											data-num="${menu.menu_no }" alt="..." id="file">
+										<div id="content">
+											<br> <br>
+											<h3 id="name">${menu.menu_name }</h3>
+											<p id="text">${menu.menu_text }</p>
+											<p id="won">
+												<font size="3.5">${menu.menu_price } 원</font>
+											</p>
+										</div>
 									</div>
-								</div>
-							</c:if>
+								</c:if>
+							</div>
 						</c:forEach>
 					</c:when>
 					<c:otherwise>
