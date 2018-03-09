@@ -50,11 +50,35 @@ public class MenuServiceImpl implements MenuService {
 	}
 
 	@Override
-	public AdminMenuVO menuClick(AdminMenuVO bvo) {
+	public AdminMenuVO menuClick(int no) {
 		AdminMenuVO menuClickvo = null;
-		menuClickvo = adminMenuDAO.menuClick(bvo);
+		menuClickvo = adminMenuDAO.menuClick(no);
 		return menuClickvo;
 
+	}
+
+	@Override
+	public int menuEdit(AdminMenuVO bvo) {
+		int result = 0;
+		try {
+			result = adminMenuDAO.menuEdit(bvo);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = 0;
+		}
+		return result;
+	}
+
+	@Override
+	public int menuDelete(int menu_no) {
+		int result = 0;
+		try {
+			result = adminMenuDAO.menuDelete(menu_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = 0;
+		}
+		return result;
 	}
 
 	@Override
@@ -62,4 +86,9 @@ public class MenuServiceImpl implements MenuService {
 		AdminMenuVO menulist = adminMenuDAO.menuSelectByNum(menu_no);
 		return menulist;
 	}
+
+	/*@Override
+	public int menuListCnt(AdminMenuVO bvo) {
+		return adminMenuDAO.menuListCnt(bvo);
+	}*/
 }

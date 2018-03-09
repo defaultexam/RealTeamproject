@@ -1,5 +1,6 @@
 package com.restaurant.admin.menu.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,13 +12,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.restaurant.admin.menu.service.MenuService;
 import com.restaurant.admin.menu.vo.AdminMenuVO;
 import com.restaurant.common.file.FileUploadUtil;
+import com.restaurant.common.page.Paging;
 
 @Controller
 @RequestMapping(value = "/menu")
@@ -31,12 +30,21 @@ public class menuController {
 	@RequestMapping(value = "/menuSelect", method = RequestMethod.GET)
 	public String boardList(@ModelAttribute AdminMenuVO bvo, Model model) {
 
-		List<AdminMenuVO> menulist = menuService.menuSelect();
 		// logger.info(menulist.get(0).getMenu_no());
+		// 페이지 세팅
+		// 전체 레코드수 구현
+		/*
+		 * Paging.setPage(bvo); int total = menuService.menuListCnt(bvo);
+		 * logger.info("total = " + total);
+		 */
+
+		List<AdminMenuVO> menulist = menuService.menuSelect();
 
 		model.addAttribute("menulist", menulist);
+		/* model.addAttribute("total", total); */
 		model.addAttribute("adminvo", null);
 		return "admin/menu/adminmenu";
+
 	}
 
 	/* 메뉴 추가 기능 */
@@ -72,38 +80,66 @@ public class menuController {
 		return "redirect:" + url;
 	}
 
-	/* 전체리스트데이터 */
-	@ResponseBody
-	@RequestMapping(value = "/menuData.do")
-	public String menuData(ObjectMapper mapper) {
-		logger.info("menuData 호출 성공");
-		String listData = "";
-		List<AdminMenuVO> menuList = menuService.menuSelect();
-
-		try {
-			listData = mapper.writeValueAsString(menuList);
-			logger.info(listData);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-		return listData;
-
-	}
-
+	/* 메뉴 이동 */
 	@RequestMapping(value = "/menuclick", method = RequestMethod.GET)
-	public String menuclick(@ModelAttribute AdminMenuVO bvo, Model model) {
+	public String menuclick(Model model, HttpServletRequest request) {
 		logger.info("menuclick 호출 성공");
-		logger.info("menu_no" + bvo.getMenu_no());
-		AdminMenuVO adminvo = new AdminMenuVO();
-		adminvo = menuService.menuClick(bvo);
+		int num = 0;
+		num = Integer.parseInt(request.getParameter("menu_no"));
+		logger.info("menu_no" + num);
+		AdminMenuVO selectMenuVo = new AdminMenuVO();
+		selectMenuVo = menuService.menuClick(num);
 
 		List<AdminMenuVO> menulist = menuService.menuSelect();
 		// logger.info(menulist.get(0).getMenu_no());
 
 		model.addAttribute("menulist", menulist);
-		model.addAttribute("adminvo", adminvo);
+		model.addAttribute("selectMenuVo", selectMenuVo);
 		return "admin/menu/adminmenu";
 
+	}
+
+	/* 메뉴 수정 */
+
+	@RequestMapping(value = "/menuEdit", method = RequestMethod.POST)
+	public String menuEdit(@ModelAttribute AdminMenuVO bvo, Model model, HttpServletRequest request) throws Exception {
+		logger.info("menuEdit 호출 성공");
+		logger.info("menu_no :" + bvo.getMenu_no() + "메뉴 번호 호출");
+		logger.info("menu_no :" + bvo.getMenu_menufile() + "메뉴 이미지 호출");
+		int result = 0;
+		String url = "";
+
+		if (!bvo.getFile().isEmpty()) {
+			logger.info("file = " + bvo.getFile().getOriginalFilename());
+			if (!bvo.getMenu_menufile().isEmpty()) {
+				FileUploadUtil.fileDelete(bvo.getMenu_menufile(), request);
+			}
+			String menufile = FileUploadUtil.fileUpload(bvo.getFile(), request, "menu");
+			String thumbName = FileUploadUtil.makeThumbnail(menufile, request);
+			bvo.setMenu_menufile(thumbName);
+		} else {
+			logger.info("사진파일 변경 없음");
+		}
+		result = menuService.menuEdit(bvo);
+		if (result == 1) {
+			url = "/menu/menuSelect";
+		} else {
+			model.addAttribute("code", 1);
+			url = "/menu/menuSelect";
+		}
+
+		return "redirect:" + url;
+	}
+
+	/* 데이터 삭제 */
+	@RequestMapping(value = "/menuDelete", method = RequestMethod.GET)
+	public String menuDelete(@ModelAttribute AdminMenuVO bvo, HttpServletRequest request) throws IOException {
+		logger.info("menudelete 호출 성공");
+		
+		FileUploadUtil.fileDelete(bvo.getMenu_menufile(), request);
+		menuService.menuDelete(bvo.getMenu_no());
+		logger.info("파일 삭제 성공");
+		return "admin/menu/adminmenu";
 	}
 
 }

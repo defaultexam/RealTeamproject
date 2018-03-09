@@ -4,6 +4,7 @@
 
 <mapper namespace="com.restaurant.admin.menu.dao.AdminMenuDAO">
 
+
 	<!-- 전체 문제 해결책 -->
 	<select id="menuSelect" resultType="bvo">
 		SELECT *
@@ -16,7 +17,16 @@
 		FROM
 		menu WHERE menu_no = #{menu_no}
 	</select>
-
+	<!-- 리스트 임시 작성 -->
+	<!-- <select id="menuSelect" parameterType="bvo" resultType="bvo"> SELECT 
+		menu_no,menu_name,menu_price,menu_menufile,menu_text,menu_kind FROM ( SELECT 
+		menu.*, ROWNUM AS RNUM FROM ( <include refid="menuCommon"></include> <choose> 
+		<when test="order_by=='menu_no'"> ORDER BY b_num </when> <when test="order_by=='menu_name'"> 
+		ORDER BY menu_name </when> </choose> <choose> <when test="order_sc=='ASC'"> 
+		ASC </when> <when test="order_sc=='DESC'"> DESC </when> </choose> ) list 
+		) <where> <if test="start_row != null and start_row != ''"> <if test="end_row 
+		!= null and end_row != ''"> RNUM BETWEEN #{start_row} AND #{end_row} </if> 
+		</if> </where> </select> -->
 
 	<!-- 메뉴추가 버튼 -->
 	<insert id="menuInsert" parameterType="bvo">
@@ -38,34 +48,53 @@
 		#{menu_text} , #{menu_kind})
 	</insert>
 
-	<!-- 메뉴 리스트 -->
-	<select id="menuList" resultType="bvo">
-		select
-		menu_name,menu_price,menu_text,menu_file, menu_kind from menu order
-		by
-		menu_no desc
-	</select>
-	<!-- 삭제 -->
-	<delete id="menudelete">
-
-	</delete>
-	<!-- 수정 -->
-	<update id="menuupdate">
-
-	</update>
-
-	<!-- 메뉴 클릭 후 해당메뉴 불러오기 --><!-- file오류 -->
-	<select id="menuClick" parameterType="bvo" resultType="bvo">
+	<!-- 메뉴 클릭 후 해당메뉴 불러오기 -->
+	<select id="menuClick" parameterType="int" resultType="bvo">
 		SELECT
 		menu_no,menu_name,menu_price,menu_menufile,menu_text,menu_kind
 		FROM
 		menu WHERE menu_no = #{menu_no}
 	</select>
 
-	<!-- 메뉴관리 상단 메뉴종류 -->
-	<sql id="">
+	<!-- 메뉴 수정 -->
+	<update id="menuEdit" parameterType="bvo">
+		UPDATE menu SET
+		menu_name = #{menu_name}
+		,menu_price=#{menu_price}
+		<if test="menu_menufile != ''">,menu_menufile = #{menu_menufile}</if>
+		,menu_text = #{menu_text}
+		,menu_kind = #{menu_kind}
+		WHERE menu_no =
+		#{menu_no}
+	</update>
+
+	<!-- 메뉴 삭제 -->
+	<delete id="menuDelete" parameterType="bvo">
+		DELETE FROM menu
+		WHERE
+		menu_no = #{menu_no}
+	</delete>
+
+	<!-- 메뉴 페이징 처리 -->
+	<sql id="menuCommon">
+		select menu_no,menu_name,menu_price,menu_menufile,menu_text,menu_kind
+		from
+		menu
 		<where>
-			<choose></choose>
+			<if test="search == 'menu_no'">
+				<![CDATA[ menu_name LIKE '%'|| #{keyword} ||'%' ]]>
+			</if>
+			<if test="search=='menu_name'">
+				<![CDATA[ menu_name LIKE '%'|| #{keyword} ||'%' ]]>
+			</if>
+			<if test="search=='menu_price'">
+				<![CDATA[ menu_price LIKE '%'|| #{keyword} ||'%' ]]>
+			</if>
 		</where>
 	</sql>
+
+	<!-- <select id="menuListCnt" parameterType="bvo" resultType="int"> SELECT 
+		NVL(count(1), 0) FROM ( SELECT list.*, ROWNUM AS RNUM FROM ( <include refid="boardCommon"></include> 
+		ORDER BY menu_no desc ) list ) </select> -->
+
 </mapper>

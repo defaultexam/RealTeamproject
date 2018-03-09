@@ -10,6 +10,9 @@
 <link href="/resources/include/css/sticky-footer-navbar.css"
 	rel="stylesheet">
 <style>
+/*
+*	03/09 - 달력 모양새 살짝 변형 , 메뉴 기능 추가
+*/
 body {
 	height: 900px;
 }
@@ -68,9 +71,9 @@ body {
 	position: relative;
 }
 
-.ui-widget-content .ui-state-active{
-    border: 1px solid red;
-    color: black;
+.ui-widget-content .ui-state-active {
+	border: 1px solid red;
+	color: black;
 }
 </style>
 <script type="text/javascript">
@@ -185,14 +188,13 @@ body {
 			}
 		});
 	}
-	
-	$(function(){
-		$("#btn_reservation").click(function(){
+
+	$(function() {
+		$("#btn_reservation").click(function() {
 			alert("아~ 예약 ~ 되셨구요~ 시간 맞춰서~ 오세요~");
-			
+
 		});
 	});
-	
 </script>
 
 </head>
@@ -456,9 +458,9 @@ body {
 							<td><input type="text" class="form-control"></td>
 							<td style="padding-left: 2%; padding-right: 2%;">ㆍ연락처</td>
 							<td class="form-inline"><input type="text"
-								class="form-control telephone" style="width: 100px">-<input type="text"
-								class="form-control telephone" style="width: 150px">-<input type="text"
-								class="form-control telephone" style="width: 150px"></td>
+								class="form-control telephone" style="width: 100px">-<input
+								type="text" class="form-control telephone" style="width: 150px">-<input
+								type="text" class="form-control telephone" style="width: 150px"></td>
 						</tr>
 						<tr class="active">
 							<td>ㆍ이메일</td>

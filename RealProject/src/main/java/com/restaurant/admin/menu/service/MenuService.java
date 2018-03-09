@@ -9,15 +9,17 @@ public interface MenuService {
 	public List<AdminMenuVO> menuSelect();
 
 	public int menuInsert(AdminMenuVO bvo);
-	/*
-	 * public int menuUpdate(AdminMenuVO bvo);
-	 * 
-	 * public int menuDelete(int menu_no);
-	 */
 
 	public List<AdminMenuVO> menuList();
 
-	public AdminMenuVO menuClick(AdminMenuVO bvo);
+	public AdminMenuVO menuClick(int no);
+
+	public int menuEdit(AdminMenuVO bvo);
+
+	public int menuDelete(int bvo);
 
 	public AdminMenuVO menuSelectByNum(int menu_no);
+
+	/*public int menuListCnt(AdminMenuVO bvo);*/
+
 }

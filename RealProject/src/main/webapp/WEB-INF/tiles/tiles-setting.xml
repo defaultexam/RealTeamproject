@@ -26,6 +26,10 @@
 		<put-attribute name="body" value="/WEB-INF/views/user/menu/{1}.jsp" />
 	</definition>
 
+	<definition name="user/info/*" extends="intro">
+		<put-attribute name="body" value="/WEB-INF/views/user/info/{1}.jsp" />
+	</definition>
+
 	<definition name="user/question/*" extends="intro">
 		<put-attribute name="body"
 			value="/WEB-INF/views/user/question/{1}.jsp" />
