@@ -11,7 +11,7 @@
 	rel="stylesheet">
 <style>
 /*
-*	03/09 - 달력 모양새 살짝 변형 , 메뉴 기능 추가
+*	03/09 - 달력 모양새 살짝 변형 , 메뉴 기능 추가 ^^ 이상훈
 */
 body {
 	height: 900px;
@@ -92,7 +92,7 @@ body {
 		if (menuList == null || menuList == '') {
 			$("#getMenu").attr({
 				"method" : "post",
-				"action" : "/usermenu/menuSelect"
+				"action" : "/reservation/menu"
 			});
 			$("#getMenu").submit();
 		}
@@ -172,7 +172,7 @@ body {
 
 	function checkMenu(menu_no) {
 		$.ajax({
-			url : "/usermenu/checkMenu",
+			url : "/reservation/checkmenu",
 			type : "post",
 			data : {
 				"menu_no" : menu_no
