@@ -3,17 +3,33 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="tile" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="tag" uri="/WEB-INF/tld/custom_tag.tld"%>
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
-
-<!-- 추가 입력값 체크 및 submit -->
 <script type="text/javascript">
+	var sel_file;
+
+	/* 초기화 버튼 */
+	function menureset() {
+		$(function() {
+			$("#menu_name").val("");
+			$("#menu_price").val("");
+			$("#file").val("");
+			$("#menu_text").val("");
+			$("#menu_kind").val("");
+			$("#menu_img").removeAttr("src");
+			/* 수정,삭제 비활성 추가 활성 */
+			$("#menuedit").prop("disabled", true);
+			$("#menudel").prop("disabled", true);
+			$("#menuadd").prop("disabled", false);
+		});
+	}
+
 	$(function() {
+
+		/* 추가 입력값 체크 및 submit */
 		$("#menuadd").click(function() {
 			//입력값체크chkMenukind
 			if (!chkSubmit($('#menu_name'), "메뉴명을")) {
@@ -40,39 +56,14 @@
 				$("#menu_form").submit();
 			}
 		});
-	});
-</script>
+		$("#menuedit").prop("disabled", true);
+		$("#menudel").prop("disabled", true);
 
-
-<script type="text/javascript">
-	var sel_file;
-	
-	/* 초기화 버튼 */
-	function menureset() {
-		$(function() {
-			$("#menu_name").val("");
-			$("#menu_price").val("");
-			$("#file").val("");
-			$("#menu_text").val("");
-			$("#menu_kind").val("");
-			$("#menu_img").removeAttr("src");
-			/* 수정,삭제 비활성 추가 활성 */
-			$("#menuedit").prop("disabled",true);
-			$("#menudel").prop("disabled",true);
-			$("#menuadd").prop("disabled",false);
-		});
-	}
-		/* $("#menuedit").prop("disabled", false);
-		$("#menudel").prop("disabled",false);
-		$("#menuadd").prop("disabled",true); */
-	<!-- 파일선택 했을때 출력되는 이미지 스크립트 -->
-	$(function() {
-		$("#menuedit").prop("disabled",true);
-		$("#menudel").prop("disabled",true);
+		/* 파일선택 했을때 출력되는 이미지 스크립트 */
 		$("#file").on("change", handleImgFileSelect);
-		
+
+		/* selectMenuVo 가 존재할때 각 데이터값 입력처리, 수정, 삭제 버튼 활성화, 입력버튼 비활성화 */
 		var selectMenu = "<c:out value='${selectMenuVo}' />";
-		
 		if (selectMenu != "") {
 			$("#menu_name").attr({
 				"value" : "${selectMenuVo.menu_name}"
@@ -81,47 +72,77 @@
 				"value" : "${selectMenuVo.menu_price}"
 			});
 			$("#menu_text").val("<c:out value='${selectMenuVo.menu_text}' />");
-			$("#menu_kind").attr({
-				"value" : "${selectMenuVo.menu_kind}"
-			});
-			$("#menu_img").attr({
-				"src" : "/uploadStorage/menu/thumbnail/${selectMenuVo.menu_menufile }"
-			});
+
+			var seMenuKind = "<c:out value='${selectMenuVo.menu_kind}' />";
+			if (seMenuKind == "steak") {
+				$("#steak").attr({
+					"selected" : "selected"
+				});
+			} else if (seMenuKind == "pasta") {
+				$("#pasta").attr({
+					"selected" : "selected"
+				});
+			} else if (seMenuKind == "sallad") {
+				$("#sallad").attr({
+					"selected" : "selected"
+				});
+			} else if (seMenuKind == "course") {
+				$("#course").attr({
+					"selected" : "selected"
+				});
+			} else if (seMenuKind == "wine") {
+				$("#wine").attr({
+					"selected" : "selected"
+				});
+			} else if (seMenuKind == "beer") {
+				$("#beer").attr({
+					"selected" : "selected"
+				});
+			} else {
+				$("#liquor").attr({
+					"selected" : "selected"
+				});
+			}
+
+			$("#menu_img")
+					.attr(
+							{
+								"src" : "/uploadStorage/menu/thumbnail/${selectMenuVo.menu_menufile }"
+							});
 			$("#menu_no").val("<c:out value='${selectMenuVo.menu_no}' />");
-			$("#menu_menufile").val("<c:out value='${selectMenuVo.menu_menufile}' />");
-			$("#menuedit").prop("disabled",false);
-			$("#menudel").prop("disabled",false);
-			$("#menuadd").prop("disabled",true);
+			$("#menu_menufile").val(
+					"<c:out value='${selectMenuVo.menu_menufile}' />");
+			$("#menuedit").prop("disabled", false);
+			$("#menudel").prop("disabled", false);
+			$("#menuadd").prop("disabled", true);
 		}
-		/* 메뉴 데이터 체크*/
+
+		/* 메뉴 선택시 발생 이벤트*/
 		$(".menuclick").click(function() {
-			
 			var menu_no = $(this).attr("data-num");
-			$("#menu_no").val(menu_no);	
+			$("#menu_no").val(menu_no);
 			$("#menu_form").attr({
 				"method" : "get",
-				"action" : "/menu/menuclick"});
-			
+				"action" : "/menu/menuclick"
+			});
 			$("#menu_form").submit();
 		});
 
 		/* 메뉴 삭제 */
-		$("#menudel").click(
-			function() {
-				
-				$("#menu_form").removeAttr("method");
-				$("#menu_form").removeAttr("action");
-				$("#file").removeAttr("name");
-				$("#menu_form").attr({
-					"method" : "GET",
-					"action" : "/menu/menuDelete"
-				});
-				$("#menu_form").submit();
+		$("#menudel").click(function() {
+
+			$("#menu_form").removeAttr("method");
+			$("#menu_form").removeAttr("action");
+			$("#file").removeAttr("name");
+			$("#menu_form").attr({
+				"method" : "GET",
+				"action" : "/menu/menuDelete"
 			});
-		
+			$("#menu_form").submit();
+		});
+
 		/* 메뉴 수정 */
 		$("#menuedit").click(function() {
-		
 			//입력값체크
 			if (!chkSubmit($('#menu_name'), "수정할 메뉴명을")) {
 				return;
@@ -143,7 +164,7 @@
 		});
 
 	});
-	/* 이미지 선택 출력 */
+	/* 선택 이미지 출력 */
 	function handleImgFileSelect(e) {
 		var files = e.target.files;
 		var filesArr = Array.prototype.slice.call(files);
@@ -271,7 +292,6 @@ li a {
 		<li class=""><a href="#" class="menu" id=""> 식사</a></li>
 		<li class=""><a href="#" class="menu">코스요리</a></li>
 		<li class=""><a href="#" class="menu">주류</a></li>
-
 	</ul>
 
 	<div id="menusetting">
@@ -291,8 +311,16 @@ li a {
 					class="menuset">
 				<textarea name="menu_text" id="menu_text" placeholder="메뉴설명"
 					class="menuset"></textarea>
-				<input type="text" placeholder="메뉴종류" name="menu_kind"
-					id="menu_kind" class="menuset">
+				<select name="menu_kind" id="menu_kind" class="menuset">
+					<option id="noSelected" value="">메뉴종류</option>
+					<option value="steak" id="steak">스테이크</option>
+					<option value="pasta" id="pasta">파스타</option>
+					<option value="sallad" id="sallad">샐러드</option>
+					<option value="course" id="course">코스요리</option>
+					<option value="wine" id="wine">와인</option>
+					<option value="beer" id="beer">맥주</option>
+					<option value="liquor" id="">양주</option>
+				</select>
 			</div>
 		</form>
 
@@ -312,12 +340,9 @@ li a {
 		<c:choose>
 			<c:when test="${not empty menulist}">
 				<c:forEach var="menu" items="${menulist}" varStatus="status">
-
 					<img class="menuclick" alt="메뉴사진자리임"
 						src="/uploadStorage/menu/thumbnail/${menu.menu_menufile }"
 						data-num="${menu.menu_no }">
-
-
 				</c:forEach>
 			</c:when>
 			<c:otherwise>
@@ -337,5 +362,7 @@ li a {
 	<script type="text/javascript" src="/resources/include/js/common.js"></script>
 	<script type="text/javascript"
 		src="/resources/include/js/jquery-3.3.1.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="/resources/include/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
