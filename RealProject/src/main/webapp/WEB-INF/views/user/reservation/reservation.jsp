@@ -72,6 +72,7 @@ body {
 	var menuList = '${menulist}';
 	var selectedMenu;
 	$(document).ready(function() {
+		toggleSpinners(1);
 		if (menuList == null || menuList == '') {
 			$("#getMenu").attr({
 				"method" : "post",
@@ -94,9 +95,12 @@ body {
 				console.log("정보 받아오기 성공");
 				alert("장바구니에 추가되었습니다 !")
 				selectedMenu = resultdata;
-				$("#selectMenu_name").append("ㆍ" + selectedMenu.menu_name + " <br>");
-				$("#selectMenu_price").append(selectedMenu.menu_price + " 원" + "<br>");
-				$("#selectMenu_count").append("1개" + "<br>");
+				$("#afterhere").after("<tr id='name'>");
+				$("#name").append("<td id='td1'>" + "ㆍ" + selectedMenu.menu_name + "</td>" + "<br>");
+				$("#td1").after("<td id='td2'>" + selectedMenu.menu_price + " 원" + "</td>" + "<br>");
+				$("#td2").after("<td>" + "1개" + "</td>" + "<br>");
+				$(".table-detail3").before("</tr>");
+
 			}
 		});
 	}
@@ -340,19 +344,15 @@ body {
 						<td align="center"><span class="glyphicon glyphicon-user"
 							aria-hidden="true"></span> 좌석수 <a id="reservationpeople">1</a>석</td>
 					</tr>
-					<tr>
+					<tr id="afterhere">
 						<td><strong>메뉴명</strong></td>
 						<td><strong>가격</strong></td>
 						<td><strong>갯수</strong></td>
 					</tr>
-					<tr>
-						<td id="selectMenu_name"></td>
-						<td id="selectMenu_price"></td>
-						<td id="selectMenu_count"></td>
-					</tr>
 					<tr class="table-detail3">
-						<td colspan="3" align="right">주문 금액 | <font size="4px"><strong>125,000원</strong></font>
-							(1인 / VAT포함)
+						<td colspan="3" align="right">주문 금액 | <font size="4px"><strong><span
+									id="allprice">125,000</span>원</strong></font> (<span id="reservationpeople2">1</span>인
+							/ VAT포함)
 						</td>
 					</tr>
 				</table>
@@ -466,6 +466,7 @@ body {
 			max : "30",
 			change : function(event, ui) {
 				$("#reservationpeople").html($("#spinner4").val());
+				$("#reservationpeople2").html($("#spinner4").val());
 			}
 		});
 	
