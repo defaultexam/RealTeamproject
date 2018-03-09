@@ -26,10 +26,17 @@
 						data-toggle="dropdown" role="button" aria-haspopup="true"
 						aria-expanded="false">소개 <span class="caret"></span></a>
 						<ul class="dropdown-menu" aria-labelledby="about-us">
-							<li><a href="#">레스토랑소개</a></li>
-							<li><a href="#">오시는길</a></li>
+							<li><a href="/info/info">레스토랑소개</a></li>
+							<li><a href="/info/way">오시는길</a></li>
 						</ul></li>
-					<li><a href="#">메뉴</a></li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false">메뉴 <span class="caret"></span></a>
+						<ul class="dropdown-menu" aria-labelledby="about-us">
+							<li><a href="/usermenu/mainMenu">메인 메뉴</a></li>
+							<li><a href="/usermenu/course">코스 요리</a></li>
+							<li><a href="/usermenu/drink">주류</a></li>
+						</ul></li>
 					<li><a href="/reservation">예약</a></li>
 					<li><a href="#">방문후기</a></li>
 					<li class="dropdown"><a href="#" class="dropdown-toggle"

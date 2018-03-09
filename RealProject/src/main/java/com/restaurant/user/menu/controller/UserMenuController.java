@@ -33,6 +33,39 @@ public class UserMenuController {
 		return "user/reservation/reservation";
 	}
 
+	/* 메인메뉴 */
+	@RequestMapping(value = "/mainMenu", method = RequestMethod.GET)
+	public String mainMenu(@ModelAttribute AdminMenuVO bvo, Model model) {
+		logger.info("mainMenu POST 호출 성공");
+		List<AdminMenuVO> menulist = menuService.menuSelect();
+		logger.info("메뉴 서비스 접근");
+		model.addAttribute("menulist", menulist);
+		logger.info("menulist 추가");
+		return "user/menu/mainMenu";
+	}
+
+	/* 코스요리 */
+	@RequestMapping(value = "/course", method = RequestMethod.GET)
+	public String course(@ModelAttribute AdminMenuVO bvo, Model model) {
+		logger.info("course POST 호출 성공");
+		List<AdminMenuVO> menulist = menuService.menuSelect();
+		logger.info("메뉴 서비스 접근");
+		model.addAttribute("menulist", menulist);
+		logger.info("menulist 추가");
+		return "user/menu/course";
+	}
+
+	/* 음료 */
+	@RequestMapping(value = "/drink", method = RequestMethod.GET)
+	public String drink(@ModelAttribute AdminMenuVO bvo, Model model) {
+		logger.info("drink POST 호출 성공");
+		List<AdminMenuVO> menulist = menuService.menuSelect();
+		logger.info("메뉴 서비스 접근");
+		model.addAttribute("menulist", menulist);
+		logger.info("menulist 추가");
+		return "user/menu/drink";
+	}
+
 	/* 메뉴 번호를 받아서 정보 반환 */
 	@ResponseBody
 	@RequestMapping(value = "/checkMenu", method = RequestMethod.POST)
