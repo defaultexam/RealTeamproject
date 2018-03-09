@@ -89,8 +89,7 @@ li {
 			<ul>
 				<li>레스토랑의 이용 / 온라인 예약 / 홈페이지 관련 1:1 문의입니다.</li>
 				<li>1:1 문의는 평일 09:00 ~ 17:00까지 이며, 문의 답변은 3일 이내 가능합니다.<br>
-					<font style="text-decoration: underline">(마이 페이지에서 확인하실 수
-						있습니다.)</font></li>
+				</li>
 			</ul>
 
 			<div class="contentTB">
