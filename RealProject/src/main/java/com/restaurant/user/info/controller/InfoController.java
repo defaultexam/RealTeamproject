@@ -11,7 +11,7 @@ import com.restaurant.user.member.controller.MemberController;
 @RequestMapping("/info")
 public class InfoController {
 	Logger logger = Logger.getLogger(MemberController.class);
-
+/*으이그*/
 	@RequestMapping(value = "/info", method = RequestMethod.GET)
 	public String info() {
 		logger.info("/info GET 호출 성공");
