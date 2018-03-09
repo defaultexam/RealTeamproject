@@ -5,88 +5,14 @@
 <meta charset="UTF-8" />
 <head>
 <link rel="stylesheet" href="/resources/include/css/jquery-ui.min.css">
-<script type="text/javascript"
-	src="/resources/include/js/jquery-ui.min.js"></script>
 <link href="/resources/include/css/sticky-footer-navbar.css"
 	rel="stylesheet">
-<style>
-/*
-*	03/09 - 달력 모양새 살짝 변형 , 메뉴 기능 추가 ^^ 이상훈
-*/
-body {
-	height: 900px;
-}
-
-.sizedown {
-	width: 50px;
-	height: 15px;
-}
-
-.ui-datepicker {
-	font-size: 12px;
-	width: 550px;
-	height: 200px;
-}
-
-.ui-datepicker table {
-	height: 85%;
-}
-
-.table-detail1 td {
-	padding-top: 5px;
-	padding-bottom: 15px;
-	padding-left: 15px;
-	padding-top: 15px;
-}
-
-.table-detail2 td {
-	width: 45%;
-	padding: 10px;
-	padding-top: 15px;
-	padding-bottom: 15px;
-	padding-bottom: 15px;
-}
-
-.table-detail3 td {
-	width: auto;
-	padding: 15px;
-	padding-top: 15px;
-	padding-bottom: 15px;
-	padding-bottom: 15px;
-}
-
-.telephone {
-	width: 100px;
-}
-
-.memosize {
-	height: 150px;
-}
-
-.email {
-	width: 400px;
-}
-
-.footer {
-	position: relative;
-}
-
-.ui-widget-content .ui-state-active {
-	border: 1px solid red;
-	color: black;
-}
-</style>
+<link href="/resources/include/css/reservation.css" rel="stylesheet">
+<!-- 03/09 - 달력 모양새 살짝 변형 , 메뉴 기능 추가 ^^ 이상훈 -->
+<!-- 다음 번에는 ..... 음 .... 예약하기 .... 음 ..... 쿼리를 만들어야해 ..... 기억해야해 ...... -->
+</head>
 <script type="text/javascript">
 	var menuList = '${menulist}';
-	var selectedMenu;
-	var allprice;
-	var cart_menuno = new Array();
-	var cart_name = new Array();
-	var cart_text = new Array();
-	var cart_price = new Array();
-	var cart_kind = new Array();
-	var cart_amount = new Array();
-	var cart_seq = 0;
 	$(document).ready(function() {
 		toggleSpinners(1);
 		if (menuList == null || menuList == '') {
@@ -97,107 +23,7 @@ body {
 			$("#getMenu").submit();
 		}
 	});
-	function makecomma(num) {
-		var str = num + '';
-		var leng = str.length;
-		var finalStr = '';
-		var pos = 1;
-		var comma = '';
-		for (leng; leng > 0; leng--) {
-			try {
-				if (pos > 3) {
-					pos = 1;
-				}
-				if (pos == 3) {
-					if (str.length > 1) {
-						comma = ',';
-					} else {
-						comma = '';
-					}
-				} else {
-					comma = '';
-				}
-				finalStr = comma + str.substr(str.length - 1) + finalStr;
-				str = str.substr(0, str.length - 1);
-				pos++;
-			} catch (e) {
-				alert(e);
-			}
-		}
-		return finalStr;
-	}
-
-
-	function addList() {
-		var resultnum = 0;
-		$(function() {
-			for (var i = 0; i <= cart_seq; i++) {
-				/* cart 리스트에 이미 값이 있을 경우 */
-				if (cart_menuno[i] == selectedMenu.menu_no) {
-					resultnum = i;
-					break;
-				} else {
-					/* cart 리스트에 값이 없을 경우 */
-					resultnum = 999;
-				}
-			}
-			if (resultnum == 999) {
-				cart_menuno[cart_seq] = selectedMenu.menu_no;
-				cart_name[cart_seq] = selectedMenu.menu_name;
-				cart_text[cart_seq] = selectedMenu.menu_text;
-				cart_price[cart_seq] = selectedMenu.menu_price;
-				cart_kind[cart_seq] = selectedMenu.menu_kind;
-				cart_amount[cart_seq] = 1;
-				/* 테이블 생성 */
-				$("#afterhere").after("<tr id='tr" + selectedMenu.menu_no + "'>");
-				$("#tr" + selectedMenu.menu_no).append("<td id='td1_" + selectedMenu.menu_no + "'>" + "ㆍ" + selectedMenu.menu_name + "</td>" + "<br>");
-				$("#td1_" + selectedMenu.menu_no).after("<td id='td2_" + selectedMenu.menu_no + "'>" + selectedMenu.menu_price + " 원" + "</td>" + "<br>");
-				$("#td2_" + selectedMenu.menu_no).after("<td id='" + "cartamount" + selectedMenu.menu_no + "'>" + cart_amount[cart_seq] + "개" + "</td>" + "<br>");
-				$(".table-detail3").before("</tr>");
-			} else {
-				cart_amount[resultnum] = cart_amount[resultnum] + 1;
-				$("#cartamount" + selectedMenu.menu_no).html(cart_amount[i] + "개");
-			}
-			/* 테이블 전체 금액 계산 및 콤마 */
-			if (allprice == '' || allprice == null) {
-				allprice = selectedMenu.menu_price;
-				$("#allprice").html(makecomma(allprice));
-			} else {
-				allprice = allprice + selectedMenu.menu_price;
-				$("#allprice").html(makecomma(allprice));
-			}
-			cart_seq += 1;
-		});
-	}
-
-	function checkMenu(menu_no) {
-		$.ajax({
-			url : "/reservation/checkmenu",
-			type : "post",
-			data : {
-				"menu_no" : menu_no
-			},
-			error : function() {
-				alert('사이트 접속 문제로 정상 작동하지 못하였습니다. 잠시 후 다시 시도해 주세요.');
-			},
-			success : function(resultdata) {
-				console.log("정보 받아오기 성공");
-				alert("장바구니에 추가되었습니다 !")
-				selectedMenu = resultdata;
-				addList();
-			}
-		});
-	}
-
-	$(function() {
-		$("#btn_reservation").click(function() {
-			alert("아~ 예약 ~ 되셨구요~ 시간 맞춰서~ 오세요~");
-
-		});
-	});
 </script>
-
-</head>
 <body>
 	<div class="container-fluid">
 		<form method="get" id="getMenu">
@@ -458,15 +284,16 @@ body {
 							<td><input type="text" class="form-control"></td>
 							<td style="padding-left: 2%; padding-right: 2%;">ㆍ연락처</td>
 							<td class="form-inline"><input type="text"
-								class="form-control telephone" style="width: 100px">-<input
-								type="text" class="form-control telephone" style="width: 150px">-<input
-								type="text" class="form-control telephone" style="width: 150px"></td>
+								class="form-control telephone" id="phone1" style="width: 100px">-<input
+								type="text" class="form-control telephone" id="phone2"
+								style="width: 150px">-<input type="text"
+								class="form-control telephone" id="phone3" style="width: 150px"></td>
 						</tr>
 						<tr class="active">
 							<td>ㆍ이메일</td>
 							<td class="form-inline" colspan="3"><input type="text"
-								id="one" class="form-control"> @ <input type="text"
-								id="two" onchange="hey()" class="form-control"></td>
+								id="email1" class="form-control"> @ <input type="text"
+								id="email2" class="form-control"></td>
 						</tr>
 						<tr class="active">
 							<td>ㆍ남기실 말씀</td>
@@ -477,115 +304,16 @@ body {
 				</table>
 			</div>
 		</div>
+		<input type="hidden" id="email"> <input type="hidden"
+			id="phone">
 		<div class="row" align="center">
 			<input type="button" value="예약하기" class="btn btn-default"
 				style="width: 200px; height: 50px;" id="btn_reservation">
 		</div>
 		<br /> <br />
 	</div>
-	<script type="text/javascript">
-		var time = "12:00 ~ 14:00";
-		var selectOption = 1;
-		var spinner1 = $("#spinner1").spinner();
-		var spinner2 = $("#spinner2").spinner();
-		var spinner3 = $("#spinner3").spinner();
-		var spinner4 = $("#spinner4").spinner();
-	
-		$(function() {
-			$('input:radio[name="timetable"]').change(function() {
-				if ($(this).val() == '1') {
-					selectOption = 1;
-					time = "12:00 ~ 14:00";
-				} else if ($(this).val() == '2') {
-					selectOption = 2;
-					time = "17:30 ~ 19:20"
-				} else if ($(this).val() == '3') {
-					selectOption = 3;
-					time = "20:00 ~ 22:00";
-				} else if ($(this).val() == '4') {
-					selectOption = 4;
-					time = "21:15 ~ 23:15";
-				}
-				toggleSpinners(selectOption);
-				$("#reservationtime").html(time);
-			});
-		});
-	
-		$("#datepicker").datepicker({
-			minDate : "-d",
-			maxDate : "+14d",
-			dateFormat : 'yy-mm-dd',
-			dayNamesMin : [ "일", "월", "화", "수", "목", "금", "토" ],
-			monthNames : [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월" ],
-			defaultDate : "+1d",
-			prevText : "이전달",
-			nextText : "다음달",
-			dateFormat : "yy년 mm월 dd일",
-			onSelect : function(dateText, inst) {
-				$("#reservationdate").html(dateText);
-			}
-		});
-		$("#accordion").accordion({
-			collapsible : true,
-			active : false
-		});
-		$("#spinner1").spinner({
-			min : "1",
-			max : "30",
-			change : function(event, ui) {
-				$("#reservationpeople").html($("#spinner1").val());
-			}
-		});
-		$("#spinner2").spinner({
-			min : "1",
-			max : "30",
-			change : function(event, ui) {
-				$("#reservationpeople").html($("#spinner2").val());
-			}
-		});
-		$("#spinner3").spinner({
-			min : "1",
-			max : "30",
-			change : function(event, ui) {
-				$("#reservationpeople").html($("#spinner3").val());
-			}
-		});
-		$("#spinner4").spinner({
-			min : "1",
-			max : "30",
-			change : function(event, ui) {
-				$("#reservationpeople").html($("#spinner4").val());
-			}
-		});
-	
-		function toggleSpinners(options) {
-			switch (options) {
-			case 1:
-				spinner1.spinner("enable");
-				spinner2.spinner("disable");
-				spinner3.spinner("disable");
-				spinner4.spinner("disable");
-				break;
-			case 2:
-				spinner2.spinner("enable");
-				spinner1.spinner("disable");
-				spinner3.spinner("disable");
-				spinner4.spinner("disable");
-				break;
-			case 3:
-				spinner3.spinner("enable");
-				spinner2.spinner("disable");
-				spinner1.spinner("disable");
-				spinner4.spinner("disable");
-				break;
-			case 4:
-				spinner4.spinner("enable");
-				spinner2.spinner("disable");
-				spinner3.spinner("disable");
-				spinner1.spinner("disable");
-				break;
-			}
-		}
-	</script>
+	<script type="text/javascript"
+		src="/resources/include/js/jquery-ui.min.js"></script>
 	<script src="/resources/include/dist/js/bootstrap.min.js"></script>
+	<script src="/resources/include/js/reservation.js"></script>
 </body>

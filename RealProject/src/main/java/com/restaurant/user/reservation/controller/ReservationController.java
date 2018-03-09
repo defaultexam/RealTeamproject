@@ -28,18 +28,16 @@ public class ReservationController {
 		logger.info("register get 호출 성공");
 		return "user/reservation/reservation";
 	}
-
 	/* 메뉴 전체 */
 	@RequestMapping(value = "/menu", method = RequestMethod.POST)
-	public String boardList(@ModelAttribute AdminMenuVO bvo, Model model) {
-		logger.info("menuSelect POST 호출 성공");
+	public String loadMenu(@ModelAttribute AdminMenuVO bvo, Model model) {
+		logger.info("loadMenu POST 호출 성공");
 		List<AdminMenuVO> menulist = menuService.menuSelect();
 		logger.info("메뉴 서비스 접근");
 		model.addAttribute("menulist", menulist);
 		logger.info("menulist 추가");
 		return "user/reservation/reservation";
 	}
-
 	/* 메뉴 번호를 받아서 정보 반환 */
 	@ResponseBody
 	@RequestMapping(value = "/checkmenu", method = RequestMethod.POST)

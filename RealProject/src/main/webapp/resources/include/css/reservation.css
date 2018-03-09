@@ -1,0 +1,64 @@
+@charset "UTF-8";
+
+body {
+	height: 900px;
+}
+
+.sizedown {
+	width: 50px;
+	height: 15px;
+}
+
+.ui-datepicker {
+	font-size: 12px;
+	width: 550px;
+	height: 200px;
+}
+
+.ui-datepicker table {
+	height: 85%;
+}
+
+.table-detail1 td {
+	padding-top: 5px;
+	padding-bottom: 15px;
+	padding-left: 15px;
+	padding-top: 15px;
+}
+
+.table-detail2 td {
+	width: 45%;
+	padding: 10px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	padding-bottom: 15px;
+}
+
+.table-detail3 td {
+	width: auto;
+	padding: 15px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	padding-bottom: 15px;
+}
+
+.telephone {
+	width: 100px;
+}
+
+.memosize {
+	height: 150px;
+}
+
+.email {
+	width: 400px;
+}
+
+.footer {
+	position: relative;
+}
+
+.ui-widget-content .ui-state-active {
+	border: 1px solid red;
+	color: black;
+}
