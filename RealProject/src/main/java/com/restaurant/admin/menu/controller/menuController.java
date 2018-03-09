@@ -133,13 +133,23 @@ public class menuController {
 
 	/* 데이터 삭제 */
 	@RequestMapping(value = "/menuDelete", method = RequestMethod.GET)
-	public String menuDelete(@ModelAttribute AdminMenuVO bvo, HttpServletRequest request) throws IOException {
+	public String menuDelete(@ModelAttribute AdminMenuVO bvo, Model model, HttpServletRequest request)
+			throws IOException {
+		String url = "";
+		int result = 0;
 		logger.info("menudelete 호출 성공");
-		
+
 		FileUploadUtil.fileDelete(bvo.getMenu_menufile(), request);
-		menuService.menuDelete(bvo.getMenu_no());
+		result = menuService.menuDelete(bvo.getMenu_no());
 		logger.info("파일 삭제 성공");
-		return "admin/menu/adminmenu";
+		if (result == 1) {
+			url = "/menu/menuSelect";
+		} else {
+			model.addAttribute("code", 1);
+			url = "/menu/menuSelect";
+		}
+
+		return "redirect:" + url;
 	}
 
 }

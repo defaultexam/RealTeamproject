@@ -3,19 +3,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="tile" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="tag" uri="/WEB-INF/tld/custom_tag.tld"%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript" src="/resources/include/js/common.js"></script>
-<script type="text/javascript"
-	src="/resources/include/js/jquery-3.3.1.min.js"></script>
+
+
+<!-- 추가 입력값 체크 및 submit -->
 <script type="text/javascript">
-	var sel_file;
 	$(function() {
-		
-		/* 추가 입력값 체크 및 submit */
 		$("#menuadd").click(function() {
 			//입력값체크chkMenukind
 			if (!chkSubmit($('#menu_name'), "메뉴명을")) {
@@ -42,12 +40,40 @@
 				$("#menu_form").submit();
 			}
 		});
+	});
+</script>
 
-		/* 파일선택 했을때 출력되는 이미지 스크립트 */
+
+<script type="text/javascript">
+	var sel_file;
+	
+	/* 초기화 버튼 */
+	function menureset() {
+		$(function() {
+			$("#menu_name").val("");
+			$("#menu_price").val("");
+			$("#file").val("");
+			$("#menu_text").val("");
+			$("#menu_kind").val("");
+			$("#menu_img").removeAttr("src");
+			/* 수정,삭제 비활성 추가 활성 */
+			$("#menuedit").prop("disabled",true);
+			$("#menudel").prop("disabled",true);
+			$("#menuadd").prop("disabled",false);
+		});
+	}
+		/* $("#menuedit").prop("disabled", false);
+		$("#menudel").prop("disabled",false);
+		$("#menuadd").prop("disabled",true); */
+	<!-- 파일선택 했을때 출력되는 이미지 스크립트 -->
+	$(function() {
+		$("#menuedit").prop("disabled",true);
+		$("#menudel").prop("disabled",true);
 		$("#file").on("change", handleImgFileSelect);
-
+		
 		var selectMenu = "<c:out value='${selectMenuVo}' />";
-		if (selectMenu != null) {
+		
+		if (selectMenu != "") {
 			$("#menu_name").attr({
 				"value" : "${selectMenuVo.menu_name}"
 			});
@@ -63,35 +89,39 @@
 			});
 			$("#menu_no").val("<c:out value='${selectMenuVo.menu_no}' />");
 			$("#menu_menufile").val("<c:out value='${selectMenuVo.menu_menufile}' />");
+			$("#menuedit").prop("disabled",false);
+			$("#menudel").prop("disabled",false);
+			$("#menuadd").prop("disabled",true);
 		}
 		/* 메뉴 데이터 체크*/
 		$(".menuclick").click(function() {
+			
 			var menu_no = $(this).attr("data-num");
-			$("#menu_no").val(menu_no);
-
+			$("#menu_no").val(menu_no);	
 			$("#menu_form").attr({
 				"method" : "get",
-				"action" : "/menu/menuclick"
-			});
+				"action" : "/menu/menuclick"});
+			
 			$("#menu_form").submit();
 		});
 
 		/* 메뉴 삭제 */
 		$("#menudel").click(
 			function() {
+				
 				$("#menu_form").removeAttr("method");
 				$("#menu_form").removeAttr("action");
 				$("#file").removeAttr("name");
-				
-				
 				$("#menu_form").attr({
 					"method" : "GET",
 					"action" : "/menu/menuDelete"
 				});
 				$("#menu_form").submit();
 			});
+		
 		/* 메뉴 수정 */
 		$("#menuedit").click(function() {
+		
 			//입력값체크
 			if (!chkSubmit($('#menu_name'), "수정할 메뉴명을")) {
 				return;
@@ -129,18 +159,6 @@
 				$("#menu_img").attr("src", e.target.result);
 			}
 			reader.readAsDataURL(f);
-		});
-	}
-	
-	/* 초기화 버튼 */
-	function menureset() {
-		$(function() {
-			$("#menu_name").val("");
-			$("#menu_price").val("");
-			$("#file").val("");
-			$("#menu_text").val("");
-			$("#menu_kind").val("");
-			$("#menu_img").removeAttr("src");
 		});
 	}
 </script>
@@ -316,6 +334,8 @@ li a {
 		<tag:paging page="${param.page}" total="${total}"
 			list_size="${data.pageSize}" />
 	</div> --%>
-
+	<script type="text/javascript" src="/resources/include/js/common.js"></script>
+	<script type="text/javascript"
+		src="/resources/include/js/jquery-3.3.1.min.js"></script>
 </body>
 </html>
