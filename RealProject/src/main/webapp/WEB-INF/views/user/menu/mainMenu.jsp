@@ -34,7 +34,15 @@
 	text-decoration: underline;
 }
 
-#div {
+#steakdiv {
+	width: 100%;
+	height: 500px;
+}
+#pastadiv {
+	width: 100%;
+	height: 500px;
+}
+#salladdiv {
 	width: 100%;
 	height: 500px;
 }
@@ -92,7 +100,7 @@
 			<c:choose>
 				<c:when test="${not empty menulist}">
 					<c:forEach var="menu" items="${menulist}" varStatus="status">
-						<div id="div">
+						<div id="steakdiv">
 							<c:if test="${menu.menu_kind == 'steak'}">
 								<div>
 									<img src="/uploadStorage/menu/thumbnail/${menu.menu_menufile }"
@@ -126,7 +134,7 @@
 				<c:choose>
 					<c:when test="${not empty menulist}">
 						<c:forEach var="menu" items="${menulist}" varStatus="status">
-							<div id="div">
+							<div id="pastadiv">
 								<c:if test="${menu.menu_kind == 'pasta'}">
 									<div>
 										<img
@@ -162,7 +170,7 @@
 				<c:choose>
 					<c:when test="${not empty menulist}">
 						<c:forEach var="menu" items="${menulist}" varStatus="status">
-							<div id="div">
+							<div id="salladdiv">
 								<c:if test="${menu.menu_kind == 'sallad'}">
 									<div>
 										<img

@@ -55,7 +55,7 @@
 	float: left;
 }
 
-#div {
+#coursediv {
 	width: 100%;
 	height: 500px;
 }
@@ -81,7 +81,7 @@
 			<c:choose>
 				<c:when test="${not empty menulist}">
 					<c:forEach var="menu" items="${menulist}" varStatus="status">
-						<div id="div">
+						<div id="coursediv">
 							<c:if test="${menu.menu_kind == 'course'}">
 								<div>
 									<img src="/uploadStorage/menu/thumbnail/${menu.menu_menufile }"
