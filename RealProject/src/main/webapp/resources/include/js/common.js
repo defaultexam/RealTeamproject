@@ -21,6 +21,18 @@ function chkSubmit(item, msg) {
 		return true;
 	}
 }
+
+function chkNumber(item, msg) {
+	var exp = /^[1-9][0-9]*$/;
+	if (!item.val().replace(/\s/g, "").match(exp)) {
+		alert(msg + "정확히 입력해주세요.");
+		item.val("");
+		item.focus();
+		return false;
+	} else {
+		return true;
+	}
+}
 /*
  * 함수명: checkForm(유효성 체크 대상, 메시지 내용) 출력영역: placeholder 속성을 이용. 예시 :
  * if(!chkSubmit($('#keyword'),"검색어를")) return;

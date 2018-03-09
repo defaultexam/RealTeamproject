@@ -37,9 +37,20 @@ public class AdminMenuDAOImpl implements AdminMenuDAO {
 	}
 
 	@Override
-	public AdminMenuVO menuClick(AdminMenuVO bvo) {
+	public AdminMenuVO menuClick(int no) {
 		// TODO Auto-generated method stub
-		return (AdminMenuVO) session.selectOne("menuClick", bvo);
+		return (AdminMenuVO) session.selectOne("menuClick", no);
+	}
+
+	@Override
+	public int menuEdit(AdminMenuVO bvo) {
+		return session.update("menuEdit", bvo);
+	}
+
+	@Override
+	public int menuDelete(int menu_no) {
+		// TODO Auto-generated method stub
+		return session.delete("menuDelete", menu_no);
 	}
 
 	@Override
@@ -47,4 +58,10 @@ public class AdminMenuDAOImpl implements AdminMenuDAO {
 		AdminMenuVO list = session.selectOne("menuSelectByNum", menu_no);
 		return list;
 	}
+
+/*	@Override
+	public int menuListCnt(AdminMenuVO bvo) {
+		return (Integer)session.selectOne("menuListCnt");
+	}*/
+
 }
