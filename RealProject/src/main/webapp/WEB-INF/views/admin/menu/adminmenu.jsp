@@ -43,7 +43,7 @@
 			}
 		});
 
-		<!-- 파일선택 했을때 출력되는 이미지 스크립트 -->
+		/* 파일선택 했을때 출력되는 이미지 스크립트 */
 		$("#file").on("change", handleImgFileSelect);
 
 		var selectMenu = "<c:out value='${selectMenuVo}' />";
