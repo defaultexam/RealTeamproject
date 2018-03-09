@@ -42,4 +42,9 @@ public class AdminMenuDAOImpl implements AdminMenuDAO {
 		return (AdminMenuVO) session.selectOne("menuClick", bvo);
 	}
 
+	@Override
+	public AdminMenuVO menuSelectByNum(int menu_no) {
+		AdminMenuVO list = session.selectOne("menuSelectByNum", menu_no);
+		return list;
+	}
 }

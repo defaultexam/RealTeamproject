@@ -15,4 +15,5 @@ public interface AdminMenuDAO {
 
 	public AdminMenuVO menuClick(AdminMenuVO bvo);
 
+	public AdminMenuVO menuSelectByNum(int menu_no);
 }

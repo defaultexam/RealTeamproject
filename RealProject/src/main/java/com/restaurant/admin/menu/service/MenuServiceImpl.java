@@ -56,4 +56,10 @@ public class MenuServiceImpl implements MenuService {
 		return menuClickvo;
 
 	}
+
+	@Override
+	public AdminMenuVO menuSelectByNum(int menu_no) {
+		AdminMenuVO menulist = adminMenuDAO.menuSelectByNum(menu_no);
+		return menulist;
+	}
 }

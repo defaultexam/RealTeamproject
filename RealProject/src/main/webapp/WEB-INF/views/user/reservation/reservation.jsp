@@ -7,9 +7,11 @@
 <link rel="stylesheet" href="/resources/include/css/jquery-ui.min.css">
 <script type="text/javascript"
 	src="/resources/include/js/jquery-ui.min.js"></script>
+<link href="/resources/include/css/sticky-footer-navbar.css"
+	rel="stylesheet">
 <style>
 body {
-	height: 1200px;
+	height: 900px;
 }
 
 .sizedown {
@@ -61,10 +63,64 @@ body {
 .email {
 	width: 400px;
 }
+
+.footer {
+	position: relative;
+}
 </style>
+<script type="text/javascript">
+	var menuList = '${menulist}';
+	var selectedMenu;
+	$(document).ready(function() {
+		if (menuList == null || menuList == '') {
+			$("#getMenu").attr({
+				"method" : "post",
+				"action" : "/usermenu/menuSelect"
+			});
+			$("#getMenu").submit();
+		}
+	});
+	<%-- <c:choose>
+	<c:when test="${not empty selectedmenu}">
+		<c:forEach var="menu" items="${selectedmenu}" varStatus="status">
+			<td>ㆍ<span id="menuname">${menu.menu_name }</span></td>
+			<td>| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="menuamount">1</span>개&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+			</td>
+			<td><span id="menuprice">${menu.menu_price }</span></td>
+		</c:forEach>
+	</c:when>
+	<c:otherwise>
+		<td>안뜸</td>
+	</c:otherwise>
+</c:choose> --%>
+	function checkMenu(menu_no) {
+		$.ajax({
+			url : "/usermenu/checkMenu",
+			type : "post",
+			data : {
+				"menu_no" : menu_no
+			},
+			error : function() {
+				alert('사이트 접속 문제로 정상 작동하지 못하였습니다. 잠시 후 다시 시도해 주세요.');
+			},
+			success : function(resultdata) {
+				console.log("정보 받아오기 성공");
+				alert("장바구니에 추가되었습니다 !")
+				selectedMenu = resultdata;
+			$("#selectMenu_name").append("ㆍ" + selectedMenu.menu_name +" <br>");
+			$("#selectMenu_price").append(selectedMenu.menu_price + " 원" + "<br>");
+			$("#selectMenu_count").append("1개" + "<br>");	
+			}
+		});
+	}
+</script>
+
 </head>
 <body>
 	<div class="container-fluid">
+		<form method="get" id="getMenu">
+			<input type="hidden" id="transfer_menu_id">
+		</form>
 		<div class="row">
 			<div class="col-md-12">
 				<h1 class="text-center">
@@ -124,16 +180,155 @@ body {
 			<div class="col-md-12">
 				<div id="accordion">
 					<h3>스테이크</h3>
-					<div>
-						<p>아앙 기모띠이</p>
+					<div style="height: 900px">
+						<div class="row">
+							<c:choose>
+								<c:when test="${not empty menulist}">
+									<c:forEach var="menu" items="${menulist}" varStatus="status">
+										<c:if test="${menu.menu_kind == 'steak'}">
+											<div class="col-sm-6 col-md-4">
+												<div class="thumbnail">
+													<img
+														src="/uploadStorage/menu/thumbnail/${menu.menu_menufile }"
+														data-num="${menu.menu_no }" alt="...">
+													<div class="caption">
+														<h3 class="text-center">${menu.menu_name }</h3>
+														<p>${menu.menu_text }</p>
+														<p class="text-right">
+															<font size="3.5">${menu.menu_price } 원</font>
+														</p>
+														<p style="padding-left: 59%">
+															<input type="button" class="btn btn-primary"
+																role="button" id="${menu.menu_no }"
+																style="width: 130px;" value="선택"
+																onclick="checkMenu(${menu.menu_no });">
+														</p>
+													</div>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
+								</c:when>
+								<c:otherwise>
+									<tr>
+										<td colspan="4" class="tac">등록된 메뉴가 존재하지 않습니다.</td>
+									</tr>
+								</c:otherwise>
+							</c:choose>
+							<div class="tohere"></div>
+						</div>
 					</div>
 					<h3>파스타</h3>
 					<div>
-						<p>호옹 기모띠이</p>
+						<div class="row">
+							<c:choose>
+								<c:when test="${not empty menulist}">
+									<c:forEach var="menu" items="${menulist}" varStatus="status">
+										<c:if test="${menu.menu_kind == 'pasta'}">
+											<div class="col-sm-6 col-md-4">
+												<div class="thumbnail">
+													<img
+														src="/uploadStorage/menu/thumbnail/${menu.menu_menufile }"
+														data-num="${menu.menu_no }" alt="...">
+													<div class="caption">
+														<h3 class="text-center">${menu.menu_name }</h3>
+														<p>${menu.menu_text }</p>
+														<p class="text-right">
+															<font size="3.5">${menu.menu_price } 원</font>
+														</p>
+														<p style="padding-left: 59%">
+															<input type="button" class="btn btn-primary"
+																role="button" id="${menu.menu_no }"
+																style="width: 130px;" value="선택"
+																onclick="alert(${menu.menu_no });">
+														</p>
+													</div>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
+								</c:when>
+								<c:otherwise>
+									<tr>
+										<td colspan="4" class="tac">등록된 메뉴가 존재하지 않습니다.</td>
+									</tr>
+								</c:otherwise>
+							</c:choose>
+						</div>
 					</div>
 					<h3>샐러드</h3>
 					<div>
-						<p>히잉 기모띠이</p>
+						<div class="row">
+							<c:choose>
+								<c:when test="${not empty menulist}">
+									<c:forEach var="menu" items="${menulist}" varStatus="status">
+										<c:if test="${menu.menu_kind == 'sallad'}">
+											<div class="col-sm-6 col-md-4">
+												<div class="thumbnail">
+													<img
+														src="/uploadStorage/menu/thumbnail/${menu.menu_menufile }"
+														data-num="${menu.menu_no }" alt="...">
+													<div class="caption">
+														<h3 class="text-center">${menu.menu_name }</h3>
+														<p>${menu.menu_text }</p>
+														<p class="text-right">
+															<font size="3.5">${menu.menu_price } 원</font>
+														</p>
+														<p style="padding-left: 59%">
+															<input type="button" class="btn btn-primary"
+																role="button" id="${menu.menu_no }"
+																style="width: 130px;" value="선택"
+																onclick="alert(${menu.menu_no });">
+														</p>
+													</div>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
+								</c:when>
+								<c:otherwise>
+									<tr>
+										<td colspan="4" class="tac">등록된 메뉴가 존재하지 않습니다.</td>
+									</tr>
+								</c:otherwise>
+							</c:choose>
+						</div>
+					</div>
+					<h3>음료</h3>
+					<div>
+						<div class="row">
+							<c:choose>
+								<c:when test="${not empty menulist}">
+									<c:forEach var="menu" items="${menulist}" varStatus="status">
+										<c:if test="${menu.menu_kind == 'drink'}">
+											<div class="col-sm-6 col-md-4">
+												<div class="thumbnail">
+													<img
+														src="/uploadStorage/menu/thumbnail/${menu.menu_menufile }"
+														data-num="${menu.menu_no }" alt="...">
+													<div class="caption">
+														<h3 class="text-center">${menu.menu_name }</h3>
+														<p>${menu.menu_text }</p>
+														<p class="text-right">
+															<font size="3.5">${menu.menu_price } 원</font>
+														</p>
+														<p style="padding-left: 59%">
+															<a href="#" class="btn btn-primary" role="button"
+																style="width: 130px;">선택</a>
+														</p>
+													</div>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
+								</c:when>
+								<c:otherwise>
+									<tr>
+										<td colspan="4" class="tac">등록된 메뉴가 존재하지 않습니다.</td>
+									</tr>
+								</c:otherwise>
+							</c:choose>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -141,21 +336,26 @@ body {
 		<br /> <br />
 		<div class="row">
 			<div class="col-md-12 form-group container-fluid">
-				<table class="table table-bordered table-hover">
+				<table class="table table-bordered table-hover" id="selectMenuTable">
 					<tr class="table-detail1">
-						<td><span class="glyphicon glyphicon-calendar"
-							aria-hidden="true"></span>예약일 <a id="reservationdate">2018년
+						<td align="center"><span class="glyphicon glyphicon-calendar"
+							aria-hidden="true"></span> 예약일 <a id="reservationdate">2018년
 								03월 01일</a></td>
-						<td><span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-							이용시간 <a id="reservationtime">12:00 ~ 14:00</a></td>
-						<td><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-							좌석수 <a id="reservationpeople">1</a>석</td>
+						<td align="center"><span class="glyphicon glyphicon-time"
+							aria-hidden="true"></span> 이용시간 <a id="reservationtime">12:00
+								~ 14:00</a></td>
+						<td align="center"><span class="glyphicon glyphicon-user"
+							aria-hidden="true"></span> 좌석수 <a id="reservationpeople">1</a>석</td>
 					</tr>
-					<tr class="table-detail2">
-						<td>ㆍ등심 스테이크</td>
-						<td>|
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1개&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |</td>
-						<td>125,000원</td>
+					<tr>
+						<td><strong>메뉴명</strong></td>
+						<td><strong>가격</strong></td>
+						<td><strong>갯수</strong></td>
+					</tr>
+					<tr>
+						<td id="selectMenu_name"></td>
+						<td id="selectMenu_price"></td>
+						<td id="selectMenu_count"></td>
 					</tr>
 					<tr class="table-detail3">
 						<td colspan="3" align="right">주문 금액 | <font size="4px"><strong>125,000원</strong></font>
@@ -205,14 +405,6 @@ body {
 		var spinner3 = $("#spinner3").spinner();
 		var spinner4 = $("#spinner4").spinner();
 	
-		function hey() {
-			var original;
-			var newt;
-			original = $("#one").val();
-			newt = original - (original / 10 / 2);
-			$("#two").val(newt);
-		}
-	
 		$(function() {
 			$('input:radio[name="timetable"]').change(function() {
 				if ($(this).val() == '1') {
@@ -244,11 +436,13 @@ body {
 			nextText : "다음달",
 			dateFormat : "yy년 mm월 dd일",
 			onSelect : function(dateText, inst) {
-				/* alert(dateText); */
 				$("#reservationdate").html(dateText);
 			}
 		});
-		$("#accordion").accordion();
+		$("#accordion").accordion({
+			collapsible : true,
+			active : false
+		});
 		$("#spinner1").spinner({
 			min : "1",
 			max : "30",
@@ -307,4 +501,5 @@ body {
 			}
 		}
 	</script>
+	<script src="/resources/include/dist/js/bootstrap.min.js"></script>
 </body>
