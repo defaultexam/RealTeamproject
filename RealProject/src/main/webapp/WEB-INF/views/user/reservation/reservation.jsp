@@ -67,10 +67,23 @@ body {
 .footer {
 	position: relative;
 }
+
+.ui-widget-content .ui-state-active{
+    border: 1px solid red;
+    color: black;
+}
 </style>
 <script type="text/javascript">
 	var menuList = '${menulist}';
 	var selectedMenu;
+	var allprice;
+	var cart_menuno = new Array();
+	var cart_name = new Array();
+	var cart_text = new Array();
+	var cart_price = new Array();
+	var cart_kind = new Array();
+	var cart_amount = new Array();
+	var cart_seq = 0;
 	$(document).ready(function() {
 		toggleSpinners(1);
 		if (menuList == null || menuList == '') {
@@ -81,6 +94,79 @@ body {
 			$("#getMenu").submit();
 		}
 	});
+	function makecomma(num) {
+		var str = num + '';
+		var leng = str.length;
+		var finalStr = '';
+		var pos = 1;
+		var comma = '';
+		for (leng; leng > 0; leng--) {
+			try {
+				if (pos > 3) {
+					pos = 1;
+				}
+				if (pos == 3) {
+					if (str.length > 1) {
+						comma = ',';
+					} else {
+						comma = '';
+					}
+				} else {
+					comma = '';
+				}
+				finalStr = comma + str.substr(str.length - 1) + finalStr;
+				str = str.substr(0, str.length - 1);
+				pos++;
+			} catch (e) {
+				alert(e);
+			}
+		}
+		return finalStr;
+	}
+
+
+	function addList() {
+		var resultnum = 0;
+		$(function() {
+			for (var i = 0; i <= cart_seq; i++) {
+				/* cart 리스트에 이미 값이 있을 경우 */
+				if (cart_menuno[i] == selectedMenu.menu_no) {
+					resultnum = i;
+					break;
+				} else {
+					/* cart 리스트에 값이 없을 경우 */
+					resultnum = 999;
+				}
+			}
+			if (resultnum == 999) {
+				cart_menuno[cart_seq] = selectedMenu.menu_no;
+				cart_name[cart_seq] = selectedMenu.menu_name;
+				cart_text[cart_seq] = selectedMenu.menu_text;
+				cart_price[cart_seq] = selectedMenu.menu_price;
+				cart_kind[cart_seq] = selectedMenu.menu_kind;
+				cart_amount[cart_seq] = 1;
+				/* 테이블 생성 */
+				$("#afterhere").after("<tr id='tr" + selectedMenu.menu_no + "'>");
+				$("#tr" + selectedMenu.menu_no).append("<td id='td1_" + selectedMenu.menu_no + "'>" + "ㆍ" + selectedMenu.menu_name + "</td>" + "<br>");
+				$("#td1_" + selectedMenu.menu_no).after("<td id='td2_" + selectedMenu.menu_no + "'>" + selectedMenu.menu_price + " 원" + "</td>" + "<br>");
+				$("#td2_" + selectedMenu.menu_no).after("<td id='" + "cartamount" + selectedMenu.menu_no + "'>" + cart_amount[cart_seq] + "개" + "</td>" + "<br>");
+				$(".table-detail3").before("</tr>");
+			} else {
+				cart_amount[resultnum] = cart_amount[resultnum] + 1;
+				$("#cartamount" + selectedMenu.menu_no).html(cart_amount[i] + "개");
+			}
+			/* 테이블 전체 금액 계산 및 콤마 */
+			if (allprice == '' || allprice == null) {
+				allprice = selectedMenu.menu_price;
+				$("#allprice").html(makecomma(allprice));
+			} else {
+				allprice = allprice + selectedMenu.menu_price;
+				$("#allprice").html(makecomma(allprice));
+			}
+			cart_seq += 1;
+		});
+	}
+
 	function checkMenu(menu_no) {
 		$.ajax({
 			url : "/usermenu/checkMenu",
@@ -95,15 +181,18 @@ body {
 				console.log("정보 받아오기 성공");
 				alert("장바구니에 추가되었습니다 !")
 				selectedMenu = resultdata;
-				$("#afterhere").after("<tr id='name'>");
-				$("#name").append("<td id='td1'>" + "ㆍ" + selectedMenu.menu_name + "</td>" + "<br>");
-				$("#td1").after("<td id='td2'>" + selectedMenu.menu_price + " 원" + "</td>" + "<br>");
-				$("#td2").after("<td>" + "1개" + "</td>" + "<br>");
-				$(".table-detail3").before("</tr>");
-
+				addList();
 			}
 		});
 	}
+	
+	$(function(){
+		$("#btn_reservation").click(function(){
+			alert("아~ 예약 ~ 되셨구요~ 시간 맞춰서~ 오세요~");
+			
+		});
+	});
+	
 </script>
 
 </head>
@@ -207,7 +296,6 @@ body {
 									</tr>
 								</c:otherwise>
 							</c:choose>
-							<div class="tohere"></div>
 						</div>
 					</div>
 					<h3>파스타</h3>
@@ -351,8 +439,7 @@ body {
 					</tr>
 					<tr class="table-detail3">
 						<td colspan="3" align="right">주문 금액 | <font size="4px"><strong><span
-									id="allprice">125,000</span>원</strong></font> (<span id="reservationpeople2">1</span>인
-							/ VAT포함)
+									id="allprice">0</span>원</strong></font> (VAT포함)
 						</td>
 					</tr>
 				</table>
@@ -365,13 +452,13 @@ body {
 					class="table table-hover table-striped table-bordered table-user">
 					<tbody>
 						<tr class="active">
-							<td>ㆍ이름</td>
+							<td>ㆍ예약자 성명</td>
 							<td><input type="text" class="form-control"></td>
-							<td>ㆍ연락처</td>
+							<td style="padding-left: 2%; padding-right: 2%;">ㆍ연락처</td>
 							<td class="form-inline"><input type="text"
-								class="form-control telephone">-<input type="text"
-								class="form-control telephone">-<input type="text"
-								class="form-control telephone"></td>
+								class="form-control telephone" style="width: 100px">-<input type="text"
+								class="form-control telephone" style="width: 150px">-<input type="text"
+								class="form-control telephone" style="width: 150px"></td>
 						</tr>
 						<tr class="active">
 							<td>ㆍ이메일</td>
@@ -466,7 +553,6 @@ body {
 			max : "30",
 			change : function(event, ui) {
 				$("#reservationpeople").html($("#spinner4").val());
-				$("#reservationpeople2").html($("#spinner4").val());
 			}
 		});
 	
