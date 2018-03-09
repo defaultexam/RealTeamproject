@@ -9,6 +9,14 @@
 		SELECT *
 		FROM MENU
 	</select>
+	<!-- 상훈이꼬 -->
+	<select id="menuSelectByNum" parameterType="bvo" resultType="bvo">
+		SELECT
+		menu_no,menu_name,menu_price,menu_menufile,menu_text,menu_kind
+		FROM
+		menu WHERE menu_no = #{menu_no}
+	</select>
+
 
 	<!-- 메뉴추가 버튼 -->
 	<insert id="menuInsert" parameterType="bvo">

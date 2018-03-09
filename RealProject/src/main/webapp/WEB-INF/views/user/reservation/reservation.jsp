@@ -80,19 +80,6 @@ body {
 			$("#getMenu").submit();
 		}
 	});
-	<%-- <c:choose>
-	<c:when test="${not empty selectedmenu}">
-		<c:forEach var="menu" items="${selectedmenu}" varStatus="status">
-			<td>ㆍ<span id="menuname">${menu.menu_name }</span></td>
-			<td>| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="menuamount">1</span>개&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
-			</td>
-			<td><span id="menuprice">${menu.menu_price }</span></td>
-		</c:forEach>
-	</c:when>
-	<c:otherwise>
-		<td>안뜸</td>
-	</c:otherwise>
-</c:choose> --%>
 	function checkMenu(menu_no) {
 		$.ajax({
 			url : "/usermenu/checkMenu",
@@ -107,9 +94,9 @@ body {
 				console.log("정보 받아오기 성공");
 				alert("장바구니에 추가되었습니다 !")
 				selectedMenu = resultdata;
-			$("#selectMenu_name").append("ㆍ" + selectedMenu.menu_name +" <br>");
-			$("#selectMenu_price").append(selectedMenu.menu_price + " 원" + "<br>");
-			$("#selectMenu_count").append("1개" + "<br>");	
+				$("#selectMenu_name").append("ㆍ" + selectedMenu.menu_name + " <br>");
+				$("#selectMenu_price").append(selectedMenu.menu_price + " 원" + "<br>");
+				$("#selectMenu_count").append("1개" + "<br>");
 			}
 		});
 	}
@@ -191,17 +178,18 @@ body {
 													<img
 														src="/uploadStorage/menu/thumbnail/${menu.menu_menufile }"
 														data-num="${menu.menu_no }" alt="...">
-													<div class="caption">
+													<div class="caption" style="height: 250px;">
 														<h3 class="text-center">${menu.menu_name }</h3>
 														<p>${menu.menu_text }</p>
-														<p class="text-right">
+														<p class="text-right"
+															style="position: absolute; bottom: 30px;">
 															<font size="3.5">${menu.menu_price } 원</font>
 														</p>
 														<p style="padding-left: 59%">
 															<input type="button" class="btn btn-primary"
 																role="button" id="${menu.menu_no }"
-																style="width: 130px;" value="선택"
-																onclick="checkMenu(${menu.menu_no });">
+																style="width: 130px; position: absolute; bottom: 30px;"
+																value="선택" onclick="checkMenu(${menu.menu_no });">
 														</p>
 													</div>
 												</div>
@@ -230,17 +218,18 @@ body {
 													<img
 														src="/uploadStorage/menu/thumbnail/${menu.menu_menufile }"
 														data-num="${menu.menu_no }" alt="...">
-													<div class="caption">
+													<div class="caption" style="height: 250px;">
 														<h3 class="text-center">${menu.menu_name }</h3>
 														<p>${menu.menu_text }</p>
-														<p class="text-right">
+														<p class="text-right"
+															style="position: absolute; bottom: 30px;">
 															<font size="3.5">${menu.menu_price } 원</font>
 														</p>
 														<p style="padding-left: 59%">
 															<input type="button" class="btn btn-primary"
 																role="button" id="${menu.menu_no }"
-																style="width: 130px;" value="선택"
-																onclick="alert(${menu.menu_no });">
+																style="width: 130px; position: absolute; bottom: 30px;"
+																value="선택" onclick="checkMenu(${menu.menu_no });">
 														</p>
 													</div>
 												</div>
@@ -268,17 +257,18 @@ body {
 													<img
 														src="/uploadStorage/menu/thumbnail/${menu.menu_menufile }"
 														data-num="${menu.menu_no }" alt="...">
-													<div class="caption">
+													<div class="caption" style="height: 250px;">
 														<h3 class="text-center">${menu.menu_name }</h3>
 														<p>${menu.menu_text }</p>
-														<p class="text-right">
+														<p class="text-right"
+															style="position: absolute; bottom: 30px;">
 															<font size="3.5">${menu.menu_price } 원</font>
 														</p>
 														<p style="padding-left: 59%">
 															<input type="button" class="btn btn-primary"
 																role="button" id="${menu.menu_no }"
-																style="width: 130px;" value="선택"
-																onclick="alert(${menu.menu_no });">
+																style="width: 130px; position: absolute; bottom: 30px;"
+																value="선택" onclick="checkMenu(${menu.menu_no });">
 														</p>
 													</div>
 												</div>
@@ -306,15 +296,18 @@ body {
 													<img
 														src="/uploadStorage/menu/thumbnail/${menu.menu_menufile }"
 														data-num="${menu.menu_no }" alt="...">
-													<div class="caption">
+													<div class="caption" style="height: 250px;">
 														<h3 class="text-center">${menu.menu_name }</h3>
 														<p>${menu.menu_text }</p>
-														<p class="text-right">
+														<p class="text-right"
+															style="position: absolute; bottom: 30px;">
 															<font size="3.5">${menu.menu_price } 원</font>
 														</p>
 														<p style="padding-left: 59%">
-															<a href="#" class="btn btn-primary" role="button"
-																style="width: 130px;">선택</a>
+															<input type="button" class="btn btn-primary"
+																role="button" id="${menu.menu_no }"
+																style="width: 130px; position: absolute; bottom: 30px;"
+																value="선택" onclick="checkMenu(${menu.menu_no });">
 														</p>
 													</div>
 												</div>
@@ -365,7 +358,7 @@ body {
 				</table>
 			</div>
 		</div>
-		<br /> <br />
+		<br />
 		<div class="row">
 			<div class="col-md-12">
 				<table
@@ -394,6 +387,10 @@ body {
 					</tbody>
 				</table>
 			</div>
+		</div>
+		<div class="row" align="center">
+			<input type="button" value="예약하기" class="btn btn-default"
+				style="width: 200px; height: 50px;" id="btn_reservation">
 		</div>
 		<br /> <br />
 	</div>
