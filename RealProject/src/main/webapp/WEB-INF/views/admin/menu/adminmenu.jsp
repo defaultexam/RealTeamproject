@@ -8,11 +8,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
-
-<!-- 추가 입력값 체크 및 submit -->
+<script type="text/javascript" src="/resources/include/js/common.js"></script>
+<script type="text/javascript"
+	src="/resources/include/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
+	var sel_file;
 	$(function() {
+		
+		/* 추가 입력값 체크 및 submit */
 		$("#menuadd").click(function() {
 			//입력값체크chkMenukind
 			if (!chkSubmit($('#menu_name'), "메뉴명을")) {
@@ -39,26 +42,8 @@
 				$("#menu_form").submit();
 			}
 		});
-	});
-</script>
 
-
-<script type="text/javascript">
-	var sel_file;
-	/* 초기화 버튼 */
-	function menureset() {
-		$(function() {
-			$("#menu_name").val("");
-			$("#menu_price").val("");
-			$("#file").val("");
-			$("#menu_text").val("");
-			$("#menu_kind").val("");
-			$("#menu_img").removeAttr("src");
-		});
-	}
-	<!-- 파일선택 했을때 출력되는 이미지 스크립트 -->
-	$(function() {
-
+		<!-- 파일선택 했을때 출력되는 이미지 스크립트 -->
 		$("#file").on("change", handleImgFileSelect);
 
 		var selectMenu = "<c:out value='${selectMenuVo}' />";
@@ -144,6 +129,18 @@
 				$("#menu_img").attr("src", e.target.result);
 			}
 			reader.readAsDataURL(f);
+		});
+	}
+	
+	/* 초기화 버튼 */
+	function menureset() {
+		$(function() {
+			$("#menu_name").val("");
+			$("#menu_price").val("");
+			$("#file").val("");
+			$("#menu_text").val("");
+			$("#menu_kind").val("");
+			$("#menu_img").removeAttr("src");
 		});
 	}
 </script>
@@ -319,8 +316,6 @@ li a {
 		<tag:paging page="${param.page}" total="${total}"
 			list_size="${data.pageSize}" />
 	</div> --%>
-	<script type="text/javascript" src="/resources/include/js/common.js"></script>
-	<script type="text/javascript"
-		src="/resources/include/js/jquery-3.3.1.min.js"></script>
+
 </body>
 </html>
