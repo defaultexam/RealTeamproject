@@ -36,9 +36,10 @@
 
 #div {
 	width: 100%;
-	height: 500px;
 }
-
+#steak #div{
+    height: 500px;
+}
 #content {
 	padding-top: 30px;
 }
