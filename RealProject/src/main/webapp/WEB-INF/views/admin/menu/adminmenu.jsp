@@ -3,17 +3,33 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="tile" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="tag" uri="/WEB-INF/tld/custom_tag.tld"%>
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
-
-<!-- 추가 입력값 체크 및 submit -->
 <script type="text/javascript">
+	var sel_file;
+
+	/* 초기화 버튼 */
+	function menureset() {
+		$(function() {
+			$("#menu_name").val("");
+			$("#menu_price").val("");
+			$("#file").val("");
+			$("#menu_text").val("");
+			$("#menu_kind").val("");
+			$("#menu_img").removeAttr("src");
+			/* 수정,삭제 비활성 추가 활성 */
+			$("#menuedit").prop("disabled", true);
+			$("#menudel").prop("disabled", true);
+			$("#menuadd").prop("disabled", false);
+		});
+	}
+
 	$(function() {
+
+		/* 추가 입력값 체크 및 submit */
 		$("#menuadd").click(function() {
 			//입력값체크chkMenukind
 			if (!chkSubmit($('#menu_name'), "메뉴명을")) {
@@ -40,39 +56,15 @@
 				$("#menu_form").submit();
 			}
 		});
-	});
-</script>
+		/* 수정 삭제 버튼 비활성화 */
+		$("#menuedit").prop("disabled", true);
+		$("#menudel").prop("disabled", true);
 
-
-<script type="text/javascript">
-	var sel_file;
-	
-	/* 초기화 버튼 */
-	function menureset() {
-		$(function() {
-			$("#menu_name").val("");
-			$("#menu_price").val("");
-			$("#file").val("");
-			$("#menu_text").val("");
-			$("#menu_kind").val("");
-			$("#menu_img").removeAttr("src");
-			/* 수정,삭제 비활성 추가 활성 */
-			$("#menuedit").prop("disabled",true);
-			$("#menudel").prop("disabled",true);
-			$("#menuadd").prop("disabled",false);
-		});
-	}
-		/* $("#menuedit").prop("disabled", false);
-		$("#menudel").prop("disabled",false);
-		$("#menuadd").prop("disabled",true); */
-	<!-- 파일선택 했을때 출력되는 이미지 스크립트 -->
-	$(function() {
-		$("#menuedit").prop("disabled",true);
-		$("#menudel").prop("disabled",true);
+		/* 파일선택 했을때 출력되는 이미지 스크립트 */
 		$("#file").on("change", handleImgFileSelect);
-		
+
+		/* selectMenuVo 가 존재할때 각 데이터값 입력처리, 수정, 삭제 버튼 활성화, 입력버튼 비활성화 */
 		var selectMenu = "<c:out value='${selectMenuVo}' />";
-		
 		if (selectMenu != "") {
 			$("#menu_name").attr({
 				"value" : "${selectMenuVo.menu_name}"
@@ -81,47 +73,76 @@
 				"value" : "${selectMenuVo.menu_price}"
 			});
 			$("#menu_text").val("<c:out value='${selectMenuVo.menu_text}' />");
-			$("#menu_kind").attr({
-				"value" : "${selectMenuVo.menu_kind}"
-			});
-			$("#menu_img").attr({
-				"src" : "/uploadStorage/menu/thumbnail/${selectMenuVo.menu_menufile }"
-			});
+
+			var seMenuKind = "<c:out value='${selectMenuVo.menu_kind}' />";
+			if (seMenuKind == "steak") {
+				$("#steak").attr({
+					"selected" : "selected"
+				});
+			} else if (seMenuKind == "pasta") {
+				$("#pasta").attr({
+					"selected" : "selected"
+				});
+			} else if (seMenuKind == "sallad") {
+				$("#sallad").attr({
+					"selected" : "selected"
+				});
+			} else if (seMenuKind == "course") {
+				$("#course").attr({
+					"selected" : "selected"
+				});
+			} else if (seMenuKind == "wine") {
+				$("#wine").attr({
+					"selected" : "selected"
+				});
+			} else if (seMenuKind == "beer") {
+				$("#beer").attr({
+					"selected" : "selected"
+				});
+			} else {
+				$("#liquor").attr({
+					"selected" : "selected"
+				});
+			}
+
+			$("#menu_img")
+				.attr(
+					{
+						"src" : "/uploadStorage/menu/thumbnail/${selectMenuVo.menu_menufile }"
+					});
 			$("#menu_no").val("<c:out value='${selectMenuVo.menu_no}' />");
-			$("#menu_menufile").val("<c:out value='${selectMenuVo.menu_menufile}' />");
-			$("#menuedit").prop("disabled",false);
-			$("#menudel").prop("disabled",false);
-			$("#menuadd").prop("disabled",true);
+			$("#menu_menufile").val(
+				"<c:out value='${selectMenuVo.menu_menufile}' />");
+			$("#menuedit").prop("disabled", false);
+			$("#menudel").prop("disabled", false);
+			$("#menuadd").prop("disabled", true);
 		}
-		/* 메뉴 데이터 체크*/
+
+		/* 메뉴 선택시 발생 이벤트*/
 		$(".menuclick").click(function() {
-			
 			var menu_no = $(this).attr("data-num");
-			$("#menu_no").val(menu_no);	
+			$("#menu_no").val(menu_no);
 			$("#menu_form").attr({
 				"method" : "get",
-				"action" : "/menu/menuclick"});
-			
+				"action" : "/menu/menuclick"
+			});
+			$("#menu_form").submit();
+		});
+		/* 메뉴 삭제 */
+		$("#menudel").click(function() {
+
+			$("#menu_form").removeAttr("method");
+			$("#menu_form").removeAttr("action");
+			$("#file").removeAttr("name");
+			$("#menu_form").attr({
+				"method" : "GET",
+				"action" : "/menu/menuDelete"
+			});
 			$("#menu_form").submit();
 		});
 
-		/* 메뉴 삭제 */
-		$("#menudel").click(
-			function() {
-				
-				$("#menu_form").removeAttr("method");
-				$("#menu_form").removeAttr("action");
-				$("#file").removeAttr("name");
-				$("#menu_form").attr({
-					"method" : "GET",
-					"action" : "/menu/menuDelete"
-				});
-				$("#menu_form").submit();
-			});
-		
 		/* 메뉴 수정 */
 		$("#menuedit").click(function() {
-		
 			//입력값체크
 			if (!chkSubmit($('#menu_name'), "수정할 메뉴명을")) {
 				return;
@@ -143,7 +164,7 @@
 		});
 
 	});
-	/* 이미지 선택 출력 */
+	/* 선택 이미지 출력 */
 	function handleImgFileSelect(e) {
 		var files = e.target.files;
 		var filesArr = Array.prototype.slice.call(files);
@@ -162,22 +183,116 @@
 		});
 	}
 </script>
+<!-- ------------------------------- -->
+<!-- 메뉴 검색기능 -->
+<script type="text/javascript">
 
+	$(function() {
+		let alldiv = document.getElementById("alldiv");
+		let steakdiv = document.getElementById("steakdiv");
+		let pastadiv = document.getElementById("pastadiv");
+		let salladdiv = document.getElementById("salladdiv");
+		let coursediv = document.getElementById("coursediv");
+		let winediv = document.getElementById("winediv");
+		let beerdiv = document.getElementById("beerdiv");
+		let liquordiv = document.getElementById("liquordiv");
+		$("#menuAll").click(function() {
+			alldiv.classList.remove("hide");
+			steakdiv.classList.add("hide");
+			pastadiv.classList.add("hide");
+			salladdiv.classList.add("hide");
+			coursediv.classList.add("hide");
+			winediv.classList.add("hide");
+			beerdiv.classList.add("hide");
+			liquordiv.classList.add("hide");
+		});
+		$("#menuSteak").click(function() {
+			alldiv.classList.add("hide");
+			steakdiv.classList.remove("hide");
+			pastadiv.classList.add("hide");
+			salladdiv.classList.add("hide");
+			coursediv.classList.add("hide");
+			winediv.classList.add("hide");
+			beerdiv.classList.add("hide");
+			liquordiv.classList.add("hide");
+		});
+		$("#menuPasta").click(function() {
+			alldiv.classList.add("hide");
+			steakdiv.classList.add("hide");
+			pastadiv.classList.remove("hide");
+			salladdiv.classList.add("hide");
+			coursediv.classList.add("hide");
+			winediv.classList.add("hide");
+			beerdiv.classList.add("hide");
+			liquordiv.classList.add("hide");
+		});
+
+		$("#menuSallad").click(function() {
+			alldiv.classList.add("hide");
+			steakdiv.classList.add("hide");
+			pastadiv.classList.add("hide");
+			salladdiv.classList.remove("hide");
+			coursediv.classList.add("hide");
+			winediv.classList.add("hide");
+			beerdiv.classList.add("hide");
+			liquordiv.classList.add("hide");
+		});
+		$("#menuCourse").click(function() {
+			alldiv.classList.add("hide");
+			steakdiv.classList.add("hide");
+			pastadiv.classList.add("hide");
+			salladdiv.classList.add("hide");
+			coursediv.classList.remove("hide");
+			winediv.classList.add("hide");
+			beerdiv.classList.add("hide");
+			liquordiv.classList.add("hide");
+		});
+		$("#menuWine").click(function() {
+			alldiv.classList.add("hide");
+			steakdiv.classList.add("hide");
+			pastadiv.classList.add("hide");
+			salladdiv.classList.add("hide");
+			coursediv.classList.add("hide");
+			winediv.classList.remove("hide");
+			beerdiv.classList.add("hide");
+			liquordiv.classList.add("hide");
+		});
+		$("#menuBeer").click(function() {
+			alldiv.classList.add("hide");
+			steakdiv.classList.add("hide");
+			pastadiv.classList.add("hide");
+			salladdiv.classList.add("hide");
+			coursediv.classList.add("hide");
+			winediv.classList.add("hide");
+			beerdiv.classList.remove("hide");
+			liquordiv.classList.add("hide");
+		});
+		$("#menuLiquor").click(function() {
+			alldiv.classList.add("hide");
+			steakdiv.classList.add("hide");
+			pastadiv.classList.add("hide");
+			salladdiv.classList.add("hide");
+			coursediv.classList.add("hide");
+			winediv.classList.add("hide");
+			beerdiv.classList.add("hide");
+			liquordiv.classList.remove("hide");
+		});
+	});
+</script>
 <!-- CSS -->
 <style type="text/css">
 .list {
 	list-style-type: none;
-	margin: 0;
-	padding: 0;
+	margin: 1;
+	padding: 1;
 	overflow: hidden;
 	background-color: #333;
 }
 
-.menulist {
-	width: 10;
-	height: 50;
-}
-
+ .menulist {
+	width: 100px;
+	height: 500px;
+} 
 li {
 	float: left;
 	border-right: 1px solid #bbb;
@@ -196,11 +311,11 @@ li a {
 }
 
 .menuset {
-	width: 100;
-	padding: 10px;
+	width: 160px;
+	padding: 0px;
 }
-/* 전체 메뉴 버튼 색 */
-/* li a gallery :hover :not(.active){background-color:#111;} */
+/* 전체 메뉴 버튼 색 */ /* 주석 풀고 사용할것 */
+ li a gallery :hover :not(.active){background-color:#111;} 
 .active {
 	background-color: #4CAF50;
 }
@@ -254,9 +369,10 @@ li a {
 }
 
 #tablelist {
-	float: right;
-	max-width: 800px;
-	padding-right: 300px;
+	float: center;
+	max-width: 1000px;
+	
+	padding-right: 270px;
 }
 
 .hr {
@@ -267,11 +383,14 @@ li a {
 <body>
 	<ul class="list">
 		<!-- 메뉴 목록 -->
-		<li class="active"><a href="#" class="menu" id="all">전체</a></li>
-		<li class=""><a href="#" class="menu" id=""> 식사</a></li>
-		<li class=""><a href="#" class="menu">코스요리</a></li>
-		<li class=""><a href="#" class="menu">주류</a></li>
-
+		<li class="active"><a href="#" class="menu" id="menuAll">전체</a></li>
+		<li class=""><a href="#" class="menu" id="menuSteak">스테이크</a></li>
+		<li class=""><a href="#" class="menu" id="menuPasta">파스타</a></li>
+		<li class=""><a href="#" class="menu" id="menuSallad">샐러드</a></li>
+		<li class=""><a href="#" class="menu" id="menuCourse">코스요리</a></li>
+		<li class=""><a href="#" class="menu" id="menuWine">와인</a></li>
+		<li class=""><a href="#" class="menu" id="menuBeer">맥주</a></li>
+		<li class=""><a href="#" class="menu" id="menuLiquor">양주</a></li>
 	</ul>
 
 	<div id="menusetting">
@@ -291,8 +410,16 @@ li a {
 					class="menuset">
 				<textarea name="menu_text" id="menu_text" placeholder="메뉴설명"
 					class="menuset"></textarea>
-				<input type="text" placeholder="메뉴종류" name="menu_kind"
-					id="menu_kind" class="menuset">
+				<select name="menu_kind" id="menu_kind" class="menuset">
+					<option id="noSelected" value="">메뉴종류</option>
+					<option value="steak" id="steak">스테이크</option>
+					<option value="pasta" id="pasta">파스타</option>
+					<option value="sallad" id="sallad">샐러드</option>
+					<option value="course" id="course">코스요리</option>
+					<option value="wine" id="wine">와인</option>
+					<option value="beer" id="beer">맥주</option>
+					<option value="liquor" id="liquor">양주</option>
+				</select>
 			</div>
 		</form>
 
@@ -309,23 +436,149 @@ li a {
 	<div class="panel-group" id="tablelist" role="tablist"
 		aria-multiselectable="true">
 		<!-- 데이터 출력 -->
-		<c:choose>
-			<c:when test="${not empty menulist}">
-				<c:forEach var="menu" items="${menulist}" varStatus="status">
-
-					<img class="menuclick" alt="메뉴사진자리임"
-						src="/uploadStorage/menu/thumbnail/${menu.menu_menufile }"
-						data-num="${menu.menu_no }">
-
-
-				</c:forEach>
-			</c:when>
-			<c:otherwise>
-				<tr>
-					<td colspan="4" class="tac">등록된 게시 물이 존재하지 않습니다.</td>
-				</tr>
-			</c:otherwise>
-		</c:choose>
+		<div id="alldiv" class="abc">
+			<c:choose>
+				<c:when test="${not empty menulist}">
+					<c:forEach var="menu" items="${menulist}" varStatus="status">
+						<img class="menuclick" alt="메뉴 이미지"
+							src="/uploadStorage/menu/thumbnail/${menu.menu_menufile}"
+							data-num="${menu.menu_no}">
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<tr>
+						<td colspan="4" class="tac">등록된 메뉴가 존재하지 않습니다.</td>
+					</tr>
+				</c:otherwise>
+			</c:choose>
+		</div>
+		<div id="steakdiv" class="abc hide">
+			<c:choose>
+				<c:when test="${not empty menulist}">
+					<c:forEach var="menu" items="${menulist}" varStatus="status">
+						<c:if test="${menu.menu_kind == 'steak'}">
+							<img class="menuclick" alt="메뉴 이미지"
+								src="/uploadStorage/menu/thumbnail/${menu.menu_menufile}"
+								data-num="${menu.menu_no}">
+						</c:if>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<tr>
+						<td colspan="4" class="tac">등록된 메뉴가 존재하지 않습니다.</td>
+					</tr>
+				</c:otherwise>
+			</c:choose>
+		</div>
+		<div id="pastadiv" class="abc hide">
+			<c:choose>
+				<c:when test="${not empty menulist}">
+					<c:forEach var="menu" items="${menulist}" varStatus="status">
+						<c:if test="${menu.menu_kind == 'pasta'}">
+							<img class="menuclick" alt="메뉴 이미지"
+								src="/uploadStorage/menu/thumbnail/${menu.menu_menufile}"
+								data-num="${menu.menu_no}">
+						</c:if>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<tr>
+						<td colspan="4" class="tac">등록된 메뉴가 존재하지 않습니다.</td>
+					</tr>
+				</c:otherwise>
+			</c:choose>
+		</div>
+		<div id="salladdiv" class="abc hide">
+			<c:choose>
+				<c:when test="${not empty menulist}">
+					<c:forEach var="menu" items="${menulist}" varStatus="status">
+						<c:if test="${menu.menu_kind == 'sallad'}">
+							<img class="menuclick" alt="메뉴 이미지"
+								src="/uploadStorage/menu/thumbnail/${menu.menu_menufile}"
+								data-num="${menu.menu_no}">
+						</c:if>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<tr>
+						<td colspan="4" class="tac">등록된 메뉴가 존재하지 않습니다.</td>
+					</tr>
+				</c:otherwise>
+			</c:choose>
+		</div>
+		<div id="coursediv" class="abc hide">
+			<c:choose>
+				<c:when test="${not empty menulist}">
+					<c:forEach var="menu" items="${menulist}" varStatus="status">
+						<c:if test="${menu.menu_kind == 'course'}">
+							<img class="menuclick" alt="메뉴 이미지"
+								src="/uploadStorage/menu/thumbnail/${menu.menu_menufile}"
+								data-num="${menu.menu_no}">
+						</c:if>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<tr>
+						<td colspan="4" class="tac">등록된 메뉴가 존재하지 않습니다.</td>
+					</tr>
+				</c:otherwise>
+			</c:choose>
+		</div>
+		<div id="winediv" class="abc hide">
+			<c:choose>
+				<c:when test="${not empty menulist}">
+					<c:forEach var="menu" items="${menulist}" varStatus="status">
+						<c:if test="${menu.menu_kind == 'wine'}">
+							<img class="menuclick" alt="메뉴 이미지"
+								src="/uploadStorage/menu/thumbnail/${menu.menu_menufile}"
+								data-num="${menu.menu_no}">
+						</c:if>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<tr>
+						<td colspan="4" class="tac">등록된 메뉴가 존재하지 않습니다.</td>
+					</tr>
+				</c:otherwise>
+			</c:choose>
+		</div>
+		<div id="beerdiv" class="abc hide">
+			<c:choose>
+				<c:when test="${not empty menulist}">
+					<c:forEach var="menu" items="${menulist}" varStatus="status">
+						<c:if test="${menu.menu_kind == 'beer'}">
+							<img class="menuclick" alt="메뉴 이미지"
+								src="/uploadStorage/menu/thumbnail/${menu.menu_menufile}"
+								data-num="${menu.menu_no}">
+						</c:if>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<tr>
+						<td colspan="4" class="tac">등록된 메뉴가 존재하지 않습니다.</td>
+					</tr>
+				</c:otherwise>
+			</c:choose>
+		</div>
+		<div id="liquordiv" class="abc hide">
+			<c:choose>
+				<c:when test="${not empty menulist}">
+					<c:forEach var="menu" items="${menulist}" varStatus="status">
+						<!-- 검색 조건 양주 -->
+						<c:if test="${menu.menu_kind == 'liquor'}">
+							<img class="menuclick" alt="메뉴 이미지"
+								src="/uploadStorage/menu/thumbnail/${menu.menu_menufile}"
+								data-num="${menu.menu_no}">
+						</c:if>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<tr>
+						<td colspan="4" class="tac">등록된 메뉴가 존재하지 않습니다.</td>
+					</tr>
+				</c:otherwise>
+			</c:choose>
+		</div>
 	</div>
 	<div class="hr"></div>
 	<div class="hr"></div>
@@ -337,5 +590,7 @@ li a {
 	<script type="text/javascript" src="/resources/include/js/common.js"></script>
 	<script type="text/javascript"
 		src="/resources/include/js/jquery-3.3.1.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="/resources/include/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
