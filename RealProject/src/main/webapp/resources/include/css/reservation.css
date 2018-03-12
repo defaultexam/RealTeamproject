@@ -62,3 +62,22 @@ body {
 	border: 1px solid red;
 	color: black;
 }
+
+input:invalid+span:after {
+	content: '✖';
+	padding-left: 5px;
+}
+
+input:valid+span:after {
+	content: '✓';
+	padding-left: 5px;
+}
+
+.imgs {
+	padding-left: 0;
+	width: 1137px;
+}
+
+.borderstyle {
+	border: 1px solid #d3d3d3;
+}

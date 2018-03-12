@@ -1,6 +1,7 @@
 /*자바 스크립트*/
 var selectedMenu;
 var allprice;
+// 장바구니 추가시 배열에 하나씩 추가, 쿼리로 데이터 이동.
 var cart_menuno = new Array();
 var cart_name = new Array();
 var cart_text = new Array();
@@ -8,6 +9,10 @@ var cart_price = new Array();
 var cart_kind = new Array();
 var cart_amount = new Array();
 var cart_seq = 0;
+// 이용 시간의 Default 값
+var time = "12:00 ~ 14:00";
+var selectOption = 1;
+
 function makecomma(num) {
 	var str = num + '';
 	var leng = str.length;
@@ -49,34 +54,57 @@ function inputVerifyAlert(index, data, text) {
 		return true;
 	}
 }
-
+// 이용시간 체크 변경시, 스피너도 변경됨.
+var numberic1 = document.getElementById("#numberic1");
+var numberic2 = document.getElementById("#numberic2");
+var numberic3 = document.getElementById("#numberic3");
+var numberic4 = document.getElementById("#numberic4");
 function toggleSpinners(options) {
-	switch (options) {
-	case 1:
-		spinner1.spinner("enable");
-		spinner2.spinner("disable");
-		spinner3.spinner("disable");
-		spinner4.spinner("disable");
-		break;
-	case 2:
-		spinner2.spinner("enable");
-		spinner1.spinner("disable");
-		spinner3.spinner("disable");
-		spinner4.spinner("disable");
-		break;
-	case 3:
-		spinner3.spinner("enable");
-		spinner2.spinner("disable");
-		spinner1.spinner("disable");
-		spinner4.spinner("disable");
-		break;
-	case 4:
-		spinner4.spinner("enable");
-		spinner2.spinner("disable");
-		spinner3.spinner("disable");
-		spinner1.spinner("disable");
-		break;
-	}
+	$(function() {
+		switch (options) {
+		case 1:
+			$("#numberic1").removeAttr("disabled");
+			$("#numberic2").attr("disabled", "disabled");
+			$("#numberic3").attr("disabled", "disabled");
+			$("#numberic4").attr("disabled", "disabled");
+			$("#numberic1").val("1");
+			$("#numberic2").val("");
+			$("#numberic3").val("");
+			$("#numberic4").val("");
+			break;
+		case 2:
+			$("#numberic2").removeAttr("disabled");
+			$("#numberic1").attr("disabled", "disabled");
+			$("#numberic3").attr("disabled", "disabled");
+			$("#numberic4").attr("disabled", "disabled");
+			$("#numberic1").val("");
+			$("#numberic2").val("1");
+			$("#numberic3").val("");
+			$("#numberic4").val("");
+			break;
+		case 3:
+			$("#numberic3").removeAttr("disabled");
+			$("#numberic2").attr("disabled", "disabled");
+			$("#numberic1").attr("disabled", "disabled");
+			$("#numberic4").attr("disabled", "disabled");
+			$("#numberic1").val("");
+			$("#numberic2").val("");
+			$("#numberic3").val("1");
+			$("#numberic4").val("");
+			break;
+		case 4:
+			$("#numberic4").removeAttr("disabled");
+			$("#numberic2").attr("disabled", "disabled");
+			$("#numberic3").attr("disabled", "disabled");
+			$("#numberic1").attr("disabled", "disabled");
+			$("#numberic1").val("");
+			$("#numberic2").val("");
+			$("#numberic3").val("");
+			$("#numberic4").val("1");
+			break;
+		}
+	});
+	$("#reservationpeople").html("1");
 }
 
 function addList() {
@@ -139,32 +167,67 @@ function checkMenu(menu_no) {
 		}
 	});
 }
-var time = "12:00 ~ 14:00";
-var selectOption = 1;
-var spinner1 = $("#spinner1").spinner();
-var spinner2 = $("#spinner2").spinner();
-var spinner3 = $("#spinner3").spinner();
-var spinner4 = $("#spinner4").spinner();
 
+
+$("#datepicker").datepicker({
+	minDate : "-d",
+	maxDate : "+14d",
+	dateFormat : 'yy-mm-dd',
+	dayNamesMin : [ "일", "월", "화", "수", "목", "금", "토" ],
+	monthNames : [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월" ],
+	defaultDate : "+1d",
+	prevText : "이전달",
+	nextText : "다음달",
+	dateFormat : "yy년 mm월 dd일",
+	onSelect : function(dateText, inst) {
+		$("#reservationdate").html(dateText);
+	}
+});
+$("#accordion").accordion({
+	collapsible : true,
+	active : false
+});
 /*JQuery 제이쿼리*/
 $(function() {
 	$("#btn_reservation").click(function() {
+
 		/*이메일 1 , 2 합체!!!*/
 		$("#email").val($("#email1").val() + "@" + $("#email2").val());
 		$("#phone").val($("#phone1").val() + "-" + $("#phone2").val() + "-" + $("#phone3").val());
-		if ($("#email1").val() == "" || $("#email2").val() == "") {
+		if (cart_menuno == null || cart_menuno == "") {
+			alert("장바구니가 비었습니다."); 
+			return;
+		} else if ($("#email1").val() == "" || $("#email2").val() == "") {
 			alert('이메일 입력란이 비어있습니다.');
+			$("#email1").focus();
 			return;
 		} else if ($("#phone1").val() == "" || $("#phone2").val() == "" || $("#phone3").val() == "") {
 			alert("연락처 입력란이 비어있습니다.");
+			$("#phone1").focus();
 			return;
 		} else if (!inputVerifyAlert(2, '#phone', '존재하지 않는 연락처 형식입니다, 다시 입력해주세요.')) {
+			$("#phone1").focus();
 			$("#phone").val("");
 			$("#phone1").val("");
 			$("#phone2").val("");
 			$("#phone3").val("");
 			return;
 		}
+		$.ajaxSettings.traditional = true;
+		$.ajax({
+			url : "/reservation/reserve",
+			type : "post",
+			data : {
+				"cart_menuno" : cart_menuno,
+				"cart_name" : cart_name
+			},
+			error : function() {
+				alert('사이트 접속 문제로 정상 작동하지 못하였습니다. 잠시 후 다시 시도해 주세요.');
+			},
+			success : function(resultdata) {
+				window.location.href = '/';
+			}
+		});
 		alert("아~ 예약 ~ 되셨구요~ 시간 맞춰서~ 오세요~");
 	});
 
@@ -185,51 +248,17 @@ $(function() {
 		toggleSpinners(selectOption);
 		$("#reservationtime").html(time);
 	});
-});
 
-$("#datepicker").datepicker({
-	minDate : "-d",
-	maxDate : "+14d",
-	dateFormat : 'yy-mm-dd',
-	dayNamesMin : [ "일", "월", "화", "수", "목", "금", "토" ],
-	monthNames : [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월" ],
-	defaultDate : "+1d",
-	prevText : "이전달",
-	nextText : "다음달",
-	dateFormat : "yy년 mm월 dd일",
-	onSelect : function(dateText, inst) {
-		$("#reservationdate").html(dateText);
-	}
-});
-$("#accordion").accordion({
-	collapsible : true,
-	active : false
-});
-$("#spinner1").spinner({
-	min : "1",
-	max : "30",
-	change : function(event, ui) {
-		$("#reservationpeople").html($("#spinner1").val());
-	}
-});
-$("#spinner2").spinner({
-	min : "1",
-	max : "30",
-	change : function(event, ui) {
-		$("#reservationpeople").html($("#spinner2").val());
-	}
-});
-$("#spinner3").spinner({
-	min : "1",
-	max : "30",
-	change : function(event, ui) {
-		$("#reservationpeople").html($("#spinner3").val());
-	}
-});
-$("#spinner4").spinner({
-	min : "1",
-	max : "30",
-	change : function(event, ui) {
-		$("#reservationpeople").html($("#spinner4").val());
-	}
+	$("#numberic1").bind("click", function() {
+		$("#reservationpeople").html($("#numberic1").val());
+	});
+	$("#numberic2").bind("click", function() {
+		$("#reservationpeople").html($("#numberic2").val());
+	});
+	$("#numberic3").bind("click", function() {
+		$("#reservationpeople").html($("#numberic3").val());
+	});
+	$("#numberic4").bind("click", function() {
+		$("#reservationpeople").html($("#numberic4").val());
+	});
 });

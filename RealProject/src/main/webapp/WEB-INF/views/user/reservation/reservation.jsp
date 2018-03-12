@@ -34,10 +34,12 @@
 				<h1 class="text-center">
 					<strong>RESERVATION</strong>
 				</h1>
-				<br />
 			</div>
 		</div>
-		<div class="row">
+		<br />
+		<div class="row borderstyle">
+			<img src="/resources/include/css/images/reserv1.jpg" class="imgs">
+			<br /> <br />
 			<div class="col-md-6">
 				<div id="datepicker" class="sizeup"></div>
 			</div>
@@ -55,36 +57,46 @@
 							<td><input type="radio" name="timetable" value="1"
 								checked="checked" /> 12:00 ~ 14:00</td>
 							<td>30</td>
-							<td><input id="spinner1" name="spinner1" class="sizedown"
-								value="1"></td>
+							<td class="form-inline"><input type="number" min="1"
+								max="30" class="form-control"
+								style="width: 100px; height: 25px;" id="numberic1"><span
+								class="validity"></span></td>
 						</tr>
 						<tr class="active">
 							<td><input type="radio" name="timetable" value="2" /> 17:30
 								~ 19:20</td>
 							<td>40</td>
-							<td><input id="spinner2" name="spinner2" class="sizedown"
-								value="1"></td>
+							<td class="form-inline"><input type="number" min="1"
+								max="40" class="form-control"
+								style="width: 100px; height: 25px;" id="numberic2"><span
+								class="validity"></span></td>
 						</tr>
 						<tr class="active">
 							<td><input type="radio" name="timetable" value="3" /> 20:00
 								~ 22:00</td>
 							<td>50</td>
-							<td><input id="spinner3" name="spinner3" class="sizedown"
-								value="1"></td>
+							<td class="form-inline"><input type="number" min="1"
+								max="50" class="form-control"
+								style="width: 100px; height: 25px;" id="numberic3"><span
+								class="validity"></span></td>
 						</tr>
 						<tr class="active">
 							<td><input type="radio" name="timetable" value="4" /> 21:15
 								~ 23:15</td>
 							<td>20</td>
-							<td><input id="spinner4" name="spinner4" class="sizedown"
-								value="1"></td>
+							<td class="form-inline"><input type="number" min="1"
+								max="20" class="form-control"
+								style="width: 100px; height: 25px;" id="numberic4"><span
+								class="validity"></span></td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 		</div>
 		<br /> <br />
-		<div class="row">
+		<div class="row borderstyle">
+			<img src="/resources/include/css/images/reserv2.jpg" class="imgs" id="imgset">
+			<br /> <br />
 			<div class="col-md-12">
 				<div id="accordion">
 					<h3>스테이크</h3>
@@ -243,11 +255,14 @@
 							</c:choose>
 						</div>
 					</div>
+					<br />
 				</div>
 			</div>
 		</div>
 		<br /> <br />
-		<div class="row">
+		<div class="row borderstyle">
+			<img src="/resources/include/css/images/reserv3.jpg" class="imgs">
+			<br /> <br />
 			<div class="col-md-12 form-group container-fluid">
 				<table class="table table-bordered table-hover" id="selectMenuTable">
 					<tr class="table-detail1">
@@ -274,7 +289,9 @@
 			</div>
 		</div>
 		<br />
-		<div class="row">
+		<div class="row borderstyle">
+			<img src="/resources/include/css/images/reserv4.jpg" class="imgs">
+			<br /> <br />
 			<div class="col-md-12">
 				<table
 					class="table table-hover table-striped table-bordered table-user">
@@ -297,7 +314,7 @@
 						</tr>
 						<tr class="active">
 							<td>ㆍ남기실 말씀</td>
-							<td colspan="3" class="memosize"><input type="text"
+							<td colspan="3" class="memosize"><input type="text" id="memo"
 								class="form-control memosize"></td>
 						</tr>
 					</tbody>
