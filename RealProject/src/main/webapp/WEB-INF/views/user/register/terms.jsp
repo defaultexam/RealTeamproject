@@ -24,7 +24,7 @@ input[type=checkbox]:not(old) {
 	margin: 0;
 	padding: 0;
 	opacity: 0;
-	background: url(/resources/include/css/images/check_on.jpg) no-repeat 0
+	background: url(/resources/include/css/images/checkon.jpg) no-repeat 0
 		0;
 	width: 0;
 }
@@ -34,21 +34,21 @@ input[type=checkbox]:not(old)+label {
 	text-align: left;
 	height: 20px;
 	padding-left: 25px;
-	background: url(/resources/include/css/images/check_off.jpg) no-repeat 0
+	background: url(/resources/include/css/images/checkoff.jpg) no-repeat 0
 		0;
 	line-height: 130%;
 	vertical-align: top;
 }
 
 input[type=checkbox]:not(old):checked+label {
-	background: url(/resources/include/css/images/check_on.jpg) no-repeat 0
+	background: url(/resources/include/css/images/checkon.jpg) no-repeat 0
 		0;
 }
 </style>
 </head>
 <body>
 	<!-- 개인정보이용 정보이용동의 마케팅 동의 -->
-	<img src="/resources/include/css/images/terms.jpg" class="center-block"
+	<img src="/resources/include/css/images/terms_logo.jpg" class="center-block"
 		id="img" />
 	<br />
 	<br />
