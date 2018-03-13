@@ -26,10 +26,17 @@ public class RegisterController {
 	private MailService mailService;
 
 	/* 주소/register (GET 메소드) */
-	@RequestMapping(value = "", method = RequestMethod.GET)
+	@RequestMapping(value = "", method = RequestMethod.POST)
 	public String register() {
 		logger.info("register get 호출 성공");
 		return "user/register/register";
+	}
+
+	/* 주소/register (GET 메소드) */
+	@RequestMapping(value = "/terms", method = RequestMethod.GET)
+	public String registerterms() {
+		logger.info(" /terms get 호출 성공");
+		return "user/register/terms";
 	}
 
 	/* 사용자 아이디 중복 체크 메서드 */

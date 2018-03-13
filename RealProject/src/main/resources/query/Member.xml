@@ -62,7 +62,7 @@
 		</choose>
 		#{job},
 		'1', '1',
-		'1', '활동중',
+		#{agreement3}, '활동중',
 		'일반', sysdate)
 	</insert>
 	<update id="memberUpdate" parameterType="member">

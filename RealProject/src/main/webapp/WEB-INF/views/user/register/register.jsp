@@ -23,9 +23,26 @@
 	padding-top: 25px;
 	padding-left: 30%;
 }
+
+input:invalid+span:after {
+	content: '✖';
+	padding-left: 5px;
+}
+
+input:valid+span:after {
+	content: '✓';
+	padding-left: 5px;
+}
 </style>
+<link rel="stylesheet" href="/resources/include/css/jquery-ui.min.css">
 </head>
 <body>
+	<script type="text/javascript">
+	var agreement3 = <%=request.getParameter("check_3")%>;
+	$(function(){
+		$("#agreement3").val(agreement3);
+	});
+	</script>
 	<!-- 아이디 중복체크 모달창 -->
 	<div id="idcheck" class="modal fade">
 		<div class="modal-dialog">
@@ -56,6 +73,7 @@
 	</div>
 	<div class="container-fluid contentalign">
 		<form id="registerForm" class="form-inline">
+			<input type="hidden" id="agreement3" name="agreement3">
 			<div class="row">
 				<div class="col-md-12 form-group" id="iddiv">
 					<table class="table-hover">
@@ -131,8 +149,9 @@
 					<table class="table-hover">
 						<tr>
 							<td class="tdsize"><label for="birthday">생년월일*</label></td>
-							<td class="tdsize2"><input type="date" id="birthday"
-								name="birthday" required="required" class="form-control"></td>
+							<td class="tdsize2"><input id="birthday" name="birthday"
+								type="text" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
+								class="form-control"> <span class="validity"></span></td>
 						</tr>
 					</table>
 				</div>
@@ -177,7 +196,8 @@
 									<div class="input-group">
 										<input type="text" class="form-control" name="postcode"
 											id="postcode" placeholder="우편번호" required="required"
-											disabled="disabled"> <span class="input-group-btn">
+											style="z-index: 0;" readonly="readonly"> <span
+											class="input-group-btn">
 											<button class="btn btn-outline-secondary"
 												onclick="execDaumPostcode()" type="button">
 												<span class="glyphicon glyphicon-search" aria-hidden="true">
@@ -187,10 +207,11 @@
 									</div>
 									<input type="text" class="form-control" name="roadAddress"
 										id="roadAddress" placeholder="도로명주소" required="required"
-										disabled="disabled"><br /> <input type="text"
-										class="form-control" name="jibunAddress" id="jibunAddress"
-										placeholder="추가 입력" required="required"> <input
-										type="hidden" id="address" name="address">
+										style="z-index: 0;" readonly="readonly"><br /> <input
+										type="text" class="form-control" name="jibunAddress"
+										id="jibunAddress" placeholder="추가 입력" required="required"
+										style="z-index: 0;"> <input type="hidden" id="address"
+										name="address">
 									<p class="form-control-static error"></p>
 								</div>
 							</td>
@@ -216,8 +237,9 @@
 					<table class="table-hover">
 						<tr>
 							<td class="tdsize"><label for="weddingdate">결혼 기념일</label></td>
-							<td class="tdsize2"><input type="date" class="form-control"
-								id="weddingdate" name="weddingdate"></td>
+							<td class="tdsize2"><input type="text" class="form-control"
+								required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" id="weddingdate"
+								name="weddingdate"></td>
 						</tr>
 					</table>
 				</div>
@@ -278,5 +300,39 @@
 	<script type="text/javascript" src="/resources/include/js/common.js"></script>
 	<script type="text/javascript" src="/resources/include/js/register.js"></script>
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-		<script src="/resources/include/dist/js/bootstrap.min.js"></script>
+	<script src="/resources/include/dist/js/bootstrap.min.js"></script>
+	<script type="text/javascript"
+		src="/resources/include/js/jquery-ui.min.js"></script>
+	<script type="text/javascript">
+		$("#birthday").datepicker({
+			maxDate : "+d",
+			dateFormat : 'yy-mm-dd',
+			dayNamesMin : [ "일", "월", "화", "수", "목", "금", "토" ],
+			monthNames : [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월" ],
+			monthNamesShort : [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월" ],
+			defaultDate : "1990-01-01",
+			prevText : "이전달",
+			nextText : "다음달",
+			changeMonth : true,
+			changeYear : true,
+			yearRange : "1900:2018",
+			dateFormat : "yy-mm-dd",
+			onSelect : function(dateText, inst) {}
+		});
+		$("#weddingdate").datepicker({
+			maxDate : "+d",
+			dateFormat : 'yy-mm-dd',
+			dayNamesMin : [ "일", "월", "화", "수", "목", "금", "토" ],
+			monthNames : [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월" ],
+			monthNamesShort : [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월" ],
+			defaultDate : "1990-01-01",
+			prevText : "이전달",
+			nextText : "다음달",
+			changeMonth : true,
+			changeYear : true,
+			yearRange : "1900:2018",
+			dateFormat : "yy-mm-dd",
+			onSelect : function(dateText, inst) {}
+		});
+	</script>
 </body>

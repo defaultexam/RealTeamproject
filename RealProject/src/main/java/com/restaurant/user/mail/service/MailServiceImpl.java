@@ -36,6 +36,7 @@ public class MailServiceImpl implements MailService {
 			helper.setFrom("00aaaa00@naver.com");
 			helper.setTo(to);
 			javaMailSender.send(message);
+			System.out.println("½ÂÀÎ¹øÈ£ : " + joinCode);
 			return joinCode;
 		} catch (MessagingException e) {
 			e.printStackTrace();

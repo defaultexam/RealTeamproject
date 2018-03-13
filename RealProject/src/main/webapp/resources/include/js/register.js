@@ -71,6 +71,7 @@ function idPwdCheck() {
 
 var idConfirm = 1;
 var emailChecked = 0;
+
 $(function() {
 	errCodeCheck();
 	// 사용자에게 요구사항에 대한 문자열로 배열 초기화.
@@ -308,6 +309,7 @@ $(function() {
 				alert("이메일 인증을 진행해주세요.");
 				return;
 			} else {
+				
 				$("#email").val($("#email1").val() + "@" + $("#email2").val());
 				$("#address").val(
 					$("#postcode").val() + " " + $("#roadAddress").val() + " " + $("#jibunAddress").val()

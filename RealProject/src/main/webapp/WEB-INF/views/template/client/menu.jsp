@@ -22,6 +22,7 @@
 			<div class="collapse navbar-collapse" id="alignment-example">
 				<!-- Links -->
 				<ul class="nav navbar-nav navbar-left">
+					<li style="padding-left: 10%;"></li>
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"
 						aria-expanded="false">소개 <span class="caret"></span></a>
@@ -58,7 +59,7 @@
 						</c:when>
 						<c:otherwise>
 							<li class="navbar-right"><a href="/login">로그인</a></li>
-							<li class="navbar-right"><a href="/register">회원가입</a></li>
+							<li class="navbar-right"><a href="/register/terms">회원가입</a></li>
 						</c:otherwise>
 					</c:choose>
 					<%-- <c:if test="${login.id == null and login.id == ''}">
