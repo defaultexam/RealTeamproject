@@ -57,7 +57,7 @@ footer {
 			</div>
 		</div>
 	</div> --%>
-
-
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="/resources/include/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
