@@ -12,7 +12,6 @@ var cart_seq = 0;
 // 이용 시간의 Default 값
 var time = "12:00 ~ 14:00";
 var selectOption = 1;
-
 function makecomma(num) {
 	var str = num + '';
 	var leng = str.length;

@@ -23,6 +23,7 @@
 			$("#getMenu").submit();
 		}
 	});
+	
 </script>
 <body>
 	<div class="container-fluid">

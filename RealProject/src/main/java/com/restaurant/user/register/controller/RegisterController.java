@@ -24,7 +24,6 @@ public class RegisterController {
 	private MemberService memberService;
 	@Autowired
 	private MailService mailService;
-
 	/* 주소/register (GET 메소드) */
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	public String register() {

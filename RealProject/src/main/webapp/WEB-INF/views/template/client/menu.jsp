@@ -18,6 +18,7 @@
 					src="/resources/images/logo.png" class="img-responsive"
 					width="30px" height="30px" alt="Logo"></a>
 			</div>
+			
 			<!-- COLLAPSIBLE NAVBAR -->
 			<div class="collapse navbar-collapse" id="alignment-example">
 				<!-- Links -->

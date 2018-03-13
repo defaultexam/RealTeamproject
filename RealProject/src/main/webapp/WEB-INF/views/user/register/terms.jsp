@@ -16,7 +16,6 @@ article.scrollspy-example {
 	border: 1px solid #d9d9d9;
 	background-color: #f7f3f0;
 }
-
 #img {
 	padding-left: 50px;
 }

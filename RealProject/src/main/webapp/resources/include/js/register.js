@@ -11,7 +11,6 @@ function errCodeCheck() {
 		}
 	}
 }
-
 function sendMail(email) {
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {

@@ -18,7 +18,6 @@
 		security_user
 		where userId = #{userId}
 	</delete>
-
 	<select id="memberSelect" parameterType="String" resultType="member">
 		select member_no, id, password, name, gender, birthday,
 		email, phone,

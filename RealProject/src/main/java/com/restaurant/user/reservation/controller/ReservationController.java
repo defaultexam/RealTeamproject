@@ -22,7 +22,6 @@ public class ReservationController {
 	Logger logger = Logger.getLogger(RegisterController.class);
 	@Autowired
 	private MenuService menuService;
-
 	/* 주소/register (GET 메소드) */
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String reservation() {

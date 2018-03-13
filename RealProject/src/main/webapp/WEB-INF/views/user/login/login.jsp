@@ -72,19 +72,19 @@
 	<script type="text/javascript" src="/resources/include/js/login.js"></script>
 	<script src="/resources/include/dist/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
-	if (errCode != "") {
-		// 명확한 자료형 명시를 위해 errCode의 타입을 정수형으로 변환. 
-		switch (parseInt(errCode)) {
-		case 1:
-			alert("아이디 또는 비밀번호 일치 하지 않거나 존재하지 않는 \n회원입니다. 다시 로그인해 주세요.");
-			break;
-		case 3:
-			alert("회원탈퇴에 문제가 있어 정상 처리하지 못하였습니다.\n다시 시도해 주세요");
-			break;
-		case 6:
-			alert("5번이상 로그인 시도로 30초동안 로그인 할 수 없습니다.\n잠시 후 다시 시도해 주세요");
-			break;
+		if (errCode != "") {
+			// 명확한 자료형 명시를 위해 errCode의 타입을 정수형으로 변환. 
+			switch (parseInt(errCode)) {
+			case 1:
+				alert("아이디 또는 비밀번호 일치 하지 않거나 존재하지 않는 \n회원입니다. 다시 로그인해 주세요.");
+				break;
+			case 3:
+				alert("회원탈퇴에 문제가 있어 정상 처리하지 못하였습니다.\n다시 시도해 주세요");
+				break;
+			case 6:
+				alert("5번이상 로그인 시도로 30초동안 로그인 할 수 없습니다.\n잠시 후 다시 시도해 주세요");
+				break;
+			}
 		}
-	}
 	</script>
 </body>
