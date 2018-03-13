@@ -327,7 +327,6 @@
 		</where>
 		order by member_no desc
 	</sql>
-
 	<select id="memberList" parameterType="adminMember" resultType="adminMember">
 		select * from ( select list.*, rownum as rnum from(
 		<include refid="searchMember"></include>
@@ -354,19 +353,92 @@
 		from member where member_no = #{member_no}
 	</select>
 
+	<select id="memberCoupon" parameterType="int" resultType="couponhistory">
+		select * from couponhistory where member_no = #{member_no} and <![CDATA[ coupon_status = '사용가능쿠폰' ]]>
+		order by couponHistory_no desc
+	</select>
+
 	<update id="memberUpdate" parameterType="adminMember">
 		update member set
-		point=#{point}, rank=#{rank}, b_coupon_no=#{b_coupon_no},
-		b_coupon_start=#{b_coupon_start,jdbcType=DATE},
-		b_coupon_end=#{b_coupon_end,jdbcType=DATE},
-		m_coupon_no=#{m_coupon_no},
-		m_coupon_start=#{m_coupon_start,jdbcType=DATE},
-		m_coupon_end=#{m_coupon_end,jdbcType=DATE},
-		v_coupon_no=#{v_coupon_no},
-		v_coupon_start=#{v_coupon_start,jdbcType=DATE},
-		v_coupon_end=#{v_coupon_end,jdbcType=DATE}
-		where
-		member_no =
-		#{member_no}
+		point=#{point}, rank=#{rank}
+		where member_no = #{member_no}
 	</update>
+
+	<select id="giveBirthCnt" resultType="adminMember">
+		select * from member where <![CDATA[ to_char(birthday,'mm/dd') = to_char(sysdate,'mm/dd') and condition = '활동중']]>
+	</select>
+
+	<insert id="giveBirth" parameterType="adminMember">
+		insert into
+		couponhistory(couponhistory_no,member_no,coupon_name,coupon_start,coupon_end,coupon_status,coupon_discountrate)
+		values(couponhistory_seq.nextval,
+		#{member_no}, '생일기념쿠폰',
+		sysdate,
+		sysdate+(select coupon_term
+		from coupon where coupon_name =
+		'생일기념쿠폰'),'사용가능쿠폰',(select
+		coupon_discountRate from coupon where
+		coupon_name = '생일기념쿠폰'))
+	</insert>
+
+	<select id="giveMarryCnt" resultType="adminMember">
+		select * from member where <![CDATA[ to_char(weddingdate,'mm/dd') = to_char(sysdate,'mm/dd') and condition = '활동중' ]]>
+	</select>
+
+	<insert id="giveMarry" parameterType="adminMember">
+		insert into
+		couponhistory(couponhistory_no,member_no,coupon_name,coupon_start,coupon_end,coupon_status,coupon_discountrate)
+		values(couponhistory_seq.nextval,
+		#{member_no}, '결혼기념쿠폰',
+		sysdate,
+		sysdate+(select coupon_term
+		from coupon where coupon_name =
+		'결혼기념쿠폰'),'사용가능쿠폰',(select
+		coupon_discountRate from coupon where
+		coupon_name = '결혼기념쿠폰'))
+	</insert>
+
+	<select id="giveVIPCnt" resultType="adminMember">
+		select * from member where <![CDATA[ rank = 'VIP' and condition = '활동중' ]]>
+	</select>
+
+	<insert id="giveVIP" parameterType="adminMember">
+		insert into
+		couponhistory(couponhistory_no,member_no,coupon_name,coupon_start,coupon_end,coupon_status,coupon_discountrate)
+		values(couponhistory_seq.nextval, #{member_no}, 'VIP쿠폰', sysdate,
+		sysdate+(select coupon_term from coupon where coupon_name =
+		'VIP쿠폰'),'사용가능쿠폰',(select
+		coupon_discountRate from coupon where
+		coupon_name = 'VIP쿠폰'))
+	</insert>
+
+	<update id="deleteCoupon">
+		update couponhistory
+		set coupon_status = '기한만료', deletedate = sysdate
+		where <![CDATA[ to_char(coupon_end,'mm/dd') < to_char(sysdate,'mm/dd') ]]>
+	</update>
+
+	<update id="adminDeleteCoupon" parameterType="couponhistory">
+		update
+		couponhistory
+		set coupon_status = '삭제처리쿠폰', deletedate = sysdate where
+		member_no = #{member_no} and coupon_name = #{coupon_name}
+	</update>
+
+	<select id="couponNameList" resultType="java.lang.String">
+		select distinct coupon_name from coupon where coupon_active=<![CDATA['사용가능쿠폰' and coupon_name != '생일기념쿠폰' and coupon_name != '결혼기념쿠폰' and coupon_name != 'VIP쿠폰']]>
+	</select>
+
+	<insert id="newCouponGive" parameterType="couponhistory">
+		insert into
+		couponhistory(couponhistory_no,member_no,coupon_name,coupon_start,coupon_end,coupon_status,coupon_discountrate)
+		values(couponhistory_seq.nextval,
+		#{member_no},#{coupon_name},#{coupon_start,jdbcType=DATE},to_date(#{coupon_start,jdbcType=DATE},'yy/MM/dd')+(select
+		coupon_term from coupon where
+		coupon_name=#{coupon_name}),'사용가능쿠폰',(select
+		coupon_discountRate from
+		coupon where
+		coupon_name=#{coupon_name}))
+	</insert>
 </mapper>
+

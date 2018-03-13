@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.restaurant.admin.coupon.vo.CouponDao">
+	<select id="couponList" resultType="coupon">
+		select * from coupon order by coupon_no desc
+	</select>
+
+	<select id="couponOne" parameterType="int" resultType="coupon">
+		select * from coupon where coupon_no = #{coupon_no}
+	</select>
+
+	<insert id="insertCoupon" parameterType="coupon">
+		INSERT INTO coupon
+		VALUES(coupon_seq.nextval,#{coupon_name},#{coupon_term},#{coupon_discountrate},'사용가능쿠폰')
+	</insert>
+
+	<update id="updateCoupon" parameterType="coupon">
+		update coupon set
+		coupon_term = #{coupon_term} ,
+		coupon_discountrate =
+		#{coupon_discountrate},
+		coupon_active = #{coupon_active}
+		where coupon_no
+		= #{coupon_no}
+	</update>
+
+</mapper>

@@ -25,18 +25,23 @@ li < a {
 	<div id="header">
 
 		<div>
-			<img align="middle" alt="" src="/resources/image/1.jpg" width="200"
+			<img align="middle" alt="" src="/resources/images/logo.png" width="200"
 				height="200" onclick='location.href="/afterAdminLogin.do"'>
 			<div id="adminHello">
 				<label>관리자님 반갑습니다.</label> <a href="/admin/logout.do">로그아웃</a>
 			</div>
 		</div>
-		<div id="headerMenu" class="center-block">
+		<div id="headerMenu" class="">
+			<ul class="nav nav-tabs" style="padding-left: 35%">
+				<li id="menutab1" class="dropdown"><a href="#"
+					class="dropdown-toggle" data-toggle="dropdown" role="button"
+					aria-haspopup="true" aria-expanded="false"><font color="black">회원관리</font><span
+						class="caret"></span></a>
+					<ul class="dropdown-menu" aria-labelledby="about-us">
+						<li><a href="/adminMember/list.do" onclick="tab();">회원조회</a></li>
+						<li><a href="/adminCoupon/couponList">쿠폰관리</a></li>
+					</ul></li>
 
-			<ul class="nav nav-tabs">
-				<li id="menutab1" style="padding-left: 35%"><a
-					href="/adminMember/list.do" onclick="tab();"><font
-						color="black">회원관리</font></a></li>
 				<li id="menutab2"><a href="/menu/menuSelect"><font
 						color="black">메뉴관리</font></a></li>
 				<li id="menutab3" class="dropdown"><a href="#"
@@ -53,7 +58,7 @@ li < a {
 					aria-haspopup="true" aria-expanded="false"><font color="black">고객센터관리</font><span
 						class="caret"></span></a>
 					<ul class="dropdown-menu" aria-labelledby="about-us">
-						<li><a href="#">공지사항관리</a></li>
+						<li><a href="/adminNotice">공지사항관리</a></li>
 						<li><a href="#">FAQ관리</a></li>
 						<li><a href="#">1:1문의관리</a></li>
 					</ul></li>
