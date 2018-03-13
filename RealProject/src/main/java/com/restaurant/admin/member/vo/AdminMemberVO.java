@@ -26,15 +26,6 @@ public class AdminMemberVO extends CommonVO {
 	private String address = "";
 	private String memo = "";
 	private int point = 0;
-	private String b_coupon_no = "";
-	private String b_coupon_start = null;
-	private String b_coupon_end = null;
-	private String m_coupon_no = "";
-	private String m_coupon_start = null;
-	private String m_coupon_end = null;
-	private String v_coupon_no = "";
-	private String v_coupon_start = null;
-	private String v_coupon_end = null;
 	private Date member_outdate = null;
 	private int password_confirm = 0;
 
@@ -44,7 +35,6 @@ public class AdminMemberVO extends CommonVO {
 		java.util.Date date = new java.util.Date();
 		date = new SimpleDateFormat("yyyy-mm-dd").parse(oldString);
 		Date sqlDate = new java.sql.Date(date.getTime());
-
 		this.birthday = sqlDate;
 		this.weddingdate = sqlDate;
 	}
@@ -209,78 +199,6 @@ public class AdminMemberVO extends CommonVO {
 		this.point = point;
 	}
 
-	public String getB_coupon_no() {
-		return b_coupon_no;
-	}
-
-	public void setB_coupon_no(String b_coupon_no) {
-		this.b_coupon_no = b_coupon_no;
-	}
-
-	public String getB_coupon_start() {
-		return b_coupon_start;
-	}
-
-	public void setB_coupon_start(String b_coupon_start) {
-		this.b_coupon_start = b_coupon_start;
-	}
-
-	public String getB_coupon_end() {
-		return b_coupon_end;
-	}
-
-	public void setB_coupon_end(String b_coupon_end) {
-		this.b_coupon_end = b_coupon_end;
-	}
-
-	public String getM_coupon_no() {
-		return m_coupon_no;
-	}
-
-	public void setM_coupon_no(String m_coupon_no) {
-		this.m_coupon_no = m_coupon_no;
-	}
-
-	public String getM_coupon_start() {
-		return m_coupon_start;
-	}
-
-	public void setM_coupon_start(String m_coupon_start) {
-		this.m_coupon_start = m_coupon_start;
-	}
-
-	public String getM_coupon_end() {
-		return m_coupon_end;
-	}
-
-	public void setM_coupon_end(String m_coupon_end) {
-		this.m_coupon_end = m_coupon_end;
-	}
-
-	public String getV_coupon_no() {
-		return v_coupon_no;
-	}
-
-	public void setV_coupon_no(String v_coupon_no) {
-		this.v_coupon_no = v_coupon_no;
-	}
-
-	public String getV_coupon_start() {
-		return v_coupon_start;
-	}
-
-	public void setV_coupon_start(String v_coupon_start) {
-		this.v_coupon_start = v_coupon_start;
-	}
-
-	public String getV_coupon_end() {
-		return v_coupon_end;
-	}
-
-	public void setV_coupon_end(String v_coupon_end) {
-		this.v_coupon_end = v_coupon_end;
-	}
-
 	public Date getMember_outdate() {
 		return member_outdate;
 	}
@@ -299,16 +217,13 @@ public class AdminMemberVO extends CommonVO {
 
 	@Override
 	public String toString() {
-		return "MemberVO [member_no=" + member_no + ", id=" + id + ", password=" + password + ", name=" + name
+		return "AdminMemberVO [member_no=" + member_no + ", id=" + id + ", password=" + password + ", name=" + name
 				+ ", gender=" + gender + ", birthday=" + birthday + ", email=" + email + ", phone=" + phone
 				+ ", agreement1=" + agreement1 + ", agreement2=" + agreement2 + ", agreement3=" + agreement3
 				+ ", condition=" + condition + ", rank=" + rank + ", member_date=" + member_date + ", marriage="
 				+ marriage + ", weddingdate=" + weddingdate + ", job=" + job + ", address=" + address + ", memo=" + memo
-				+ ", point=" + point + ", b_coupon_no=" + b_coupon_no + ", b_coupon_start=" + b_coupon_start
-				+ ", b_coupon_end=" + b_coupon_end + ", m_coupon_no=" + m_coupon_no + ", m_coupon_start="
-				+ m_coupon_start + ", m_coupon_end=" + m_coupon_end + ", v_coupon_no=" + v_coupon_no
-				+ ", v_coupon_start=" + v_coupon_start + ", v_coupon_end=" + v_coupon_end + ", member_outdate="
-				+ member_outdate + ", password_confirm=" + password_confirm + "]";
+				+ ", point=" + point + ", member_outdate=" + member_outdate + ", password_confirm=" + password_confirm
+				+ "]";
 	}
 
 }

@@ -1,3 +1,4 @@
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -19,6 +20,9 @@
 	margin-top: 20px;
 }
 </style>
+<%
+	Date today = new Date();
+%>
 <script type="text/javascript">
 	$(function() {
 
@@ -184,11 +188,19 @@
 		$("#f_search").submit();
 	}
 </script>
+<style type="text/css">
+#span {
+	float: right;
+}
+</style>
 </head>
 <body>
 	<div id="memberTable">
-		<h3>회원관리(기본 정보 조회)</h3>
-		<hr>
+		<div>
+			<h3>회원관리(기본 정보 조회)</h3>
+			<p id="span">* 회원이름 클릭 시 정보상세보기 및 수정페이지로 이동합니다.</p>
+			<hr>
+		</div>
 		<!-- ============== 상세 페이지 이동을 위한 form =========== -->
 		<form name="datailForm" id="detailForm">
 			<input type="hidden" name="member_no" id="member_no"> <input
@@ -206,45 +218,55 @@
 					name="rank" id="rank"><input type="hidden" name="condition"
 					id="condition">
 
-				<table summary="검색" style="width: 600px;">
+				<table summary="검색" style="width: 800px;">
+					<colgroup>
+						<col width="25%"></col>
+						<col width="30%"></col>
+						<col width="10%"></col>
+						<col width="10%"></col>
+						<col width="25%"></col>
+					</colgroup>
 					<tr>
 						<td align="right"><label>생일 :&nbsp;</label></td>
-						<td><input type="date" id="birthday" name="birthday"
-							class="form-control" style="width: 400px;"></td>
+						<td align="center"><input type="date" id="birthday"
+							name="birthday" class="form-control" style="width: 200px;"></td>
+						<td rowspan="4" align="center"><input type="button"
+							value="조회" id="memberSearch" class="btn btn-default"></td>
+						<td rowspan="4" align="center"><input type="button"
+							value="전체보기" id="memberSearchTotal" class="btn btn-default"></td>
+						<td rowspan="4"></td>
+
 					</tr>
 					<tr>
 						<td align="right"><label>결혼기념일 :&nbsp;</label></td>
-						<td><input type="date" id="weddingdate" name="weddingdate"
-							class="form-control" style="width: 400px;"></td>
-
+						<td align="center"><input type="date" id="weddingdate"
+							name="weddingdate" class="form-control" style="width: 200px;">
+						</td>
 					</tr>
 
 					<tr>
 						<td align="right"><label>이름 :&nbsp;</label></td>
-						<td><input type="text" id="name" name="name"
-							class="form-control" style="width: 400px;"></td>
+						<td align="center"><input type="text" id="name" name="name"
+							class="form-control" style="width: 200px;"></td>
 					</tr>
 
 					<tr>
 						<td align="right"><label>전화번호 뒷자리 :&nbsp;</label></td>
-						<td><input type="text" id="phone" name="phone"
-							class="form-control" style="width: 400px;"></td>
+						<td align="center"><input type="text" id="phone" name="phone"
+							class="form-control" style="width: 200px;"></td>
 					</tr>
 				</table>
 			</div>
 			<div style="padding-left: 79%;">
 				<table>
 					<tr>
-						<td><input type="button" value="조회" id="memberSearch"
-							class="btn btn-default"></td>
-						<td><input type="button" value="전체보기" id="memberSearchTotal"
-							class="btn btn-default"></td>
 						<td><select id="pageSize" name="pageSize"
 							class="form-control">
 								<option value="10">10개씩 보기</option>
 								<option value="30">30개씩 보기</option>
 								<option value="50">50개씩 보기</option>
 						</select></td>
+						<td>&nbsp;</td>
 						<td>
 							<button type="button" id="excelMemberList"
 								class="btn btn-default">Excel문서화</button>
@@ -314,7 +336,7 @@
 							</c:when>
 							<c:otherwise>
 								<tr>
-									<td colspan="10" class="tac">등록된 회원이 존재하지 않습니다.</td>
+									<td colspan="11" class="tac">등록된 회원이 존재하지 않습니다.</td>
 								</tr>
 							</c:otherwise>
 						</c:choose>

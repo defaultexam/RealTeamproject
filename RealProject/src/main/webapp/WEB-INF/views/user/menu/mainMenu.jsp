@@ -34,13 +34,25 @@
 	text-decoration: underline;
 }
 
-#div {
+.steakdiv {
 	width: 100%;
 }
+
 #steak #div{
     height: 500px;
 }
-#content {
+
+.pastadiv {
+	width: 100%;
+	height: 500px;
+}
+
+.salladdiv {
+	width: 100%;
+	height: 500px;
+}
+
+.content {
 	padding-top: 30px;
 }
 
@@ -93,12 +105,12 @@
 			<c:choose>
 				<c:when test="${not empty menulist}">
 					<c:forEach var="menu" items="${menulist}" varStatus="status">
-						<div id="div">
-							<c:if test="${menu.menu_kind == 'steak'}">
+						<c:if test="${menu.menu_kind == 'steak'}">
+							<div class="steakdiv">
 								<div>
 									<img src="/uploadStorage/menu/thumbnail/${menu.menu_menufile }"
 										data-num="${menu.menu_no }" alt="..." id="file">
-									<div id="content">
+									<div class="content">
 										<br> <br>
 										<h3 id="name">${menu.menu_name }</h3>
 										<p id="text">${menu.menu_text }</p>
@@ -107,8 +119,8 @@
 										</p>
 									</div>
 								</div>
-							</c:if>
-						</div>
+							</div>
+						</c:if>
 					</c:forEach>
 				</c:when>
 				<c:otherwise>
@@ -127,13 +139,13 @@
 				<c:choose>
 					<c:when test="${not empty menulist}">
 						<c:forEach var="menu" items="${menulist}" varStatus="status">
-							<div id="div">
-								<c:if test="${menu.menu_kind == 'pasta'}">
+							<c:if test="${menu.menu_kind == 'pasta'}">
+								<div class="pastadiv">
 									<div>
 										<img
 											src="/uploadStorage/menu/thumbnail/${menu.menu_menufile }"
 											data-num="${menu.menu_no }" alt="..." id="file">
-										<div id="content">
+										<div class="content">
 											<br> <br>
 											<h3 id="name">${menu.menu_name }</h3>
 											<p id="text">${menu.menu_text }</p>
@@ -142,8 +154,8 @@
 											</p>
 										</div>
 									</div>
-								</c:if>
-							</div>
+								</div>
+							</c:if>
 						</c:forEach>
 					</c:when>
 					<c:otherwise>
@@ -163,13 +175,13 @@
 				<c:choose>
 					<c:when test="${not empty menulist}">
 						<c:forEach var="menu" items="${menulist}" varStatus="status">
-							<div id="div">
-								<c:if test="${menu.menu_kind == 'sallad'}">
+							<c:if test="${menu.menu_kind == 'sallad'}">
+								<div class="salladdiv">
 									<div>
 										<img
 											src="/uploadStorage/menu/thumbnail/${menu.menu_menufile }"
 											data-num="${menu.menu_no }" alt="..." id="file">
-										<div id="content">
+										<div class="content">
 											<br> <br>
 											<h3 id="name">${menu.menu_name }</h3>
 											<p id="text">${menu.menu_text }</p>
@@ -178,8 +190,8 @@
 											</p>
 										</div>
 									</div>
-								</c:if>
-							</div>
+								</div>
+							</c:if>
 						</c:forEach>
 					</c:when>
 					<c:otherwise>

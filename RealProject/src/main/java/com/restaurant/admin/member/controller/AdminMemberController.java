@@ -2,15 +2,20 @@ package com.restaurant.admin.member.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.restaurant.admin.couponhistory.vo.CouponHistoryVO;
 import com.restaurant.admin.member.service.AdminMemberService;
 import com.restaurant.admin.member.vo.AdminMemberVO;
 import com.restaurant.common.excel.ListExcelView;
@@ -44,7 +49,7 @@ public class AdminMemberController {
 		logger.info("count = " + count);
 
 		List<AdminMemberVO> list = adminMemberService.memberList(avo);
-		
+
 		mav.addObject("memberList", list);
 		mav.addObject("count", count);
 		mav.addObject("total", total);
@@ -58,24 +63,20 @@ public class AdminMemberController {
 	@RequestMapping(value = "/memberInfo.do", method = RequestMethod.GET)
 	public String memberOne(@ModelAttribute AdminMemberVO avo, Model model) throws Exception {
 		AdminMemberVO memberInfo = new AdminMemberVO();
+		List<CouponHistoryVO> memberCouponInfo = null;
 
 		memberInfo = adminMemberService.memberOne(avo);
-		logger.info("memberOne 선택 아이디" + memberInfo.getId());
+		memberCouponInfo = adminMemberService.memberCoupon(avo);
 
-		if (memberInfo.getB_coupon_start() != null) {
-			memberInfo.setB_coupon_start(memberInfo.getB_coupon_start().substring(0, 10));
-			memberInfo.setB_coupon_end(memberInfo.getB_coupon_end().substring(0, 10));
-		}
-		if (memberInfo.getM_coupon_start() != null) {
-			memberInfo.setM_coupon_start(memberInfo.getM_coupon_start().substring(0, 10));
-			memberInfo.setM_coupon_end(memberInfo.getM_coupon_end().substring(0, 10));
-		}
-		if (memberInfo.getV_coupon_start() != null) {
-			memberInfo.setV_coupon_start(memberInfo.getV_coupon_start().substring(0, 10));
-			memberInfo.setV_coupon_end(memberInfo.getV_coupon_end().substring(0, 10));
+		for (int i = 0; i < memberCouponInfo.size(); i++) {
+			if (memberCouponInfo.get(i).getCoupon_start() != null) {
+				memberCouponInfo.get(i).setCoupon_start(memberCouponInfo.get(i).getCoupon_start().substring(0, 10));
+				memberCouponInfo.get(i).setCoupon_end(memberCouponInfo.get(i).getCoupon_end().substring(0, 10));
+			}
 		}
 
 		model.addAttribute("memberInfo", memberInfo);
+		model.addAttribute("memberCouponInfo", memberCouponInfo);
 
 		return "admin/member/adminMemberInfo";
 	}
@@ -88,16 +89,26 @@ public class AdminMemberController {
 		result = adminMemberService.memberUpdate(avo);
 		if (result == 1) {
 			url = "/adminMember/list.do";
+		} else {
+			logger.info("회원정보 수정 오류");
 		}
 		return "redirect:" + url;
 	}
-	
+
+	@ResponseBody
+	@RequestMapping(value = "/couponDelete", method = RequestMethod.GET)
+	public int adminDeleteCoupon(@ModelAttribute CouponHistoryVO cvo) {
+		int result = 0;
+		result = adminMemberService.adminDeleteCoupon(cvo);
+		return result;
+	}
+
 	/******************************************************
 	 * 액셀 다운로드 구현하기 참고 : ListExcelView 클래스에서 맵타입으로 Model에 접근하게 된다.
 	 *****************************************************/
 
 	@RequestMapping(value = "/memberExcel", method = RequestMethod.GET)
-	public ModelAndView boardExcel(@ModelAttribute AdminMemberVO avo) {
+	public ModelAndView memberExcel(@ModelAttribute AdminMemberVO avo) {
 		logger.info("boardExcel 호출 성공");
 
 		List<AdminMemberVO> memberList = adminMemberService.memberList(avo);
@@ -108,4 +119,18 @@ public class AdminMemberController {
 		mv.addObject("file_name", "memberList");
 		return mv;
 	}
+
+	@ResponseBody
+	@RequestMapping(value = "/couponNameList", method = RequestMethod.GET)
+	public List<String> couponNameList() {
+		List<String> list = adminMemberService.couponNameList();
+		return list;
+	};
+
+	@ResponseBody
+	@RequestMapping(value = "/newCouponGive", method = RequestMethod.POST)
+	public void newCouponGive(@ModelAttribute CouponHistoryVO cvo) {
+		adminMemberService.newCouponGive(cvo);
+	}
+
 }

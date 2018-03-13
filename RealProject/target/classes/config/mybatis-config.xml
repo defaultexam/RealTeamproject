@@ -17,5 +17,9 @@
 			alias="bvo" />
 		<typeAlias type="com.restaurant.admin.notice.vo.AdminNoticeVO"
 			alias="notice" />
+		<typeAlias type="com.restaurant.admin.coupon.vo.CouponVO"
+			alias="coupon" />
+		<typeAlias type="com.restaurant.admin.couponhistory.vo.CouponHistoryVO"
+			alias="couponhistory" />
 	</typeAliases>
 </configuration> 

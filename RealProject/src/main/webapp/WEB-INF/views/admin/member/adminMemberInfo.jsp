@@ -6,11 +6,17 @@
 <head>
 <meta charset="UTF-8">
 <title>회원정보 상세보기 페이지</title>
-<script type="text/javascript"
-	src="/resources/include/js/jquery-3.3.1.min.js"></script>
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link href="/resources/include/dist/css/bootstrap.min.css"
+	rel="stylesheet">
 <style type="text/css">
-#memberInfoTable {
-	height: 500px;
+#memberInfoTabel {
+	width: 1000px;
+	height: auto;
+	margin-bottom: 50px;
+	margin-top: 20px;
+	border-radius:
 }
 
 .intbName {
@@ -19,32 +25,30 @@
 </style>
 <script type="text/javascript">
 	$(function() {
+		/* n이 한자리 수가되면 앞에 0을 추가하는 함수 */
+		function addzero(n) {
+			return n < 10 ? "0" + n : n;
+		}
 
-		/* 생일 쿠폰 기간설정 */
-		$("#b_coupon_start").attr({
-			"value" : "${memberInfo.b_coupon_start}"
-		});
-
-		$("#b_coupon_end").attr({
-			"value" : "${memberInfo.b_coupon_end}"
-		});
-
-		/* 결혼기념 쿠폰 기간설정 */
-		$("#m_coupon_start").attr({
-			"value" : "${memberInfo.m_coupon_start}"
-		});
-
-		$("#m_coupon_end").attr({
-			"value" : "${memberInfo.m_coupon_end}"
-		});
-
-		/* vip 쿠폰 기간설정 */
-		$("#v_coupon_start").attr({
-			"value" : "${memberInfo.v_coupon_start}"
-		});
-
-		$("#v_coupon_end").attr({
-			"value" : "${memberInfo.v_coupon_end}"
+		// 추가쿠폰지급 쿠폰이름 콤보박스 생성 
+		var list;
+		$.ajax({
+			method : "get",
+			url : "/adminMember/couponNameList",
+			dataType : "json",
+			error : function() {
+				alert("사이트 접속 문제로 정상작동하지 못하였습니다. 잠시후 다시 시도해주세요");
+			},
+			success : function(resultData) {
+				console.log(resultData);
+				list = resultData;
+				$("#selectCouponName").empty();
+				for (var i = 0; i < list.length; i++) {
+					$("#selectCouponName").append(
+							"<option id='option"+i+"' value='"+list[i]+"'>"
+									+ list[i] + "</option>");
+				}
+			}
 		});
 
 		/* 등급이 일반일때 콤보박스 셀렉트처리 */
@@ -58,145 +62,81 @@
 			});
 		}
 
-		/* 취소버튼 클릭시 메소드 */
-		/* $("#memInfoCancel").click(function() {
-			sessionStorage.removeItem("tab");
-			location.href = "/adminMember/list.do";
-		}); */
-
-		/* 쿠폰 기간 초기화 */
-		$("#b_coupon_clear").click(function() {
-			$("#b_coupon_start").attr({
-				"value" : null
-			});
-			$("#b_coupon_end").attr({
-				"value" : null
-			});
+		// 쿠폰 삭제버튼 이벤트 
+		$(".deleteCoupon").click(function() {
+			var couponname = $(this).parents("tr").attr("data-value");
+			var confirmSelect = confirm("쿠폰삭제 시 복구 불가능합니다. 삭제하시겟습니까?");
+			if (confirmSelect == true) {
+				$.ajax({
+					method : "get",
+					url : "/adminMember/couponDelete",
+					data : {
+						"member_no" : $("#member_no").val(),
+						"coupon_name" : couponname
+					},
+					error : function() {
+						alert("사이트 접속 문제로 정상 작동하지 못하였습니다. 잠시후 다시 시도해 주세요");
+					},
+					success : function() {
+						alert("쿠폰 삭제 완료");
+						window.history.go(0);
+					}
+				});
+			} else {
+			}
 		});
 
-		$("#v_coupon_clear").click(function() {
-			$("#v_coupon_start").attr({
-				"value" : null
-			});
-			$("#v_coupon_end").attr({
-				"value" : null
-			});
-		});
-
-		$("#m_coupon_clear").click(function() {
-			$("#m_coupon_start").attr({
-				"value" : null
-			});
-			$("#m_coupon_end").attr({
-				"value" : null
-			});
-		});
-
-		/* n이 한자리 수가되면 앞에 0을 추가하는 함수 */
-		function addzero(n) {
-			return n < 10 ? "0" + n : n;
-		}
-
-		/* 쿠폰 지급 버튼 클릭 시 발동 함수  */
-		$("#b_coupon_give").click(
-				function() {
-					var giveDate = new Date($("#b_coupon_giveDate").val());
-
-					var endDate = new Date(Date.parse(giveDate) + 180 * 1000
-							* 60 * 60 * 24);
-					var endDateString = endDate.getFullYear().toString() + '-'
-							+ addzero(endDate.getMonth() + 1) + '-'
-							+ addzero(endDate.getDate());
-
-					$("#b_coupon_start").attr({
-						"value" : $("#b_coupon_giveDate").val()
-					});
-					$("#b_coupon_end").attr({
-						"value" : endDateString
-					});
-				});
-
-		$("#v_coupon_give").click(
-				function() {
-					var giveDate = new Date($("#v_coupon_giveDate").val());
-
-					var endDate = new Date(Date.parse(giveDate) + 180 * 1000
-							* 60 * 60 * 24);
-					var endDateString = endDate.getFullYear().toString() + '-'
-							+ addzero(endDate.getMonth() + 1) + '-'
-							+ addzero(endDate.getDate());
-
-					$("#v_coupon_start").attr({
-						"value" : $("#v_coupon_giveDate").val()
-					});
-					$("#v_coupon_end").attr({
-						"value" : endDateString
-					});
-				});
-
-		$("#m_coupon_give").click(
-				function() {
-
-					var giveDate = new Date($("#m_coupon_giveDate").val());
-
-					var endDate = new Date(Date.parse(giveDate) + 180 * 1000
-							* 60 * 60 * 24);
-					var endDateString = endDate.getFullYear().toString() + '-'
-							+ addzero(endDate.getMonth() + 1) + '-'
-							+ addzero(endDate.getDate());
-
-					$("#m_coupon_start").attr({
-						"value" : $("#m_coupon_giveDate").val()
-					});
-					$("#m_coupon_end").attr({
-						"value" : endDateString
-					});
-
-				});
+		// 신규 쿠폰 지급 버튼 클릭 이벤트
+		$("#newCouponGiveBtn")
+				.click(
+						function() {
+							var giveDate = new Date($("#newCouponGiveDate")
+									.val());
+							var giveCouponName = $(
+									"#selectCouponName option:selected").val();
+							if (giveCouponName == null || giveCouponName == "") {
+								alert("지급가능한 쿠폰명을 선택해주세요");
+								return;
+							} else if (giveDate == null || giveDate == "") {
+								alert("지급날짜를 선택해주세요");
+								return;
+							} else {
+								var giveDateString = giveDate.getFullYear()
+										.toString()
+										+ '-'
+										+ addzero(giveDate.getMonth() + 1)
+										+ '-' + addzero(giveDate.getDate());
+								$
+										.ajax({
+											method : "post",
+											url : "/adminMember/newCouponGive",
+											data : {
+												"member_no" : $("#member_no")
+														.val(),
+												"coupon_name" : $(
+														"#selectCouponName option:selected")
+														.val(),
+												"coupon_start" : giveDateString
+											},
+											error : function() {
+												alert("사이트 접속 문제로 정상작동하지 못하였습니다. 잠시후 다시 시도해주세요");
+											},
+											success : function() {
+												alert("신규쿠폰 지급완료");
+												window.history.go(0);
+											}
+										});
+							}
+						});
 
 		/* 수정완료 버튼 클릭 시 발생 함수 */
 		$("#memInfoUpdate").click(function() {
-
-			if (!$("#b_coupon_start").val()) {
-
-				$("#b_coupon_start").removeAttr("value");
-				$("#b_coupon_end").removeAttr("value");
-
-			} else {
-
-				$("#b_coupon_no").attr({
-					"value" : "0001"
-				});
-			}
-
-			if (!$("#v_coupon_start").val()) {
-
-				$("#v_coupon_start").removeAttr("value");
-				$("#v_coupon_end").removeAttr("value");
-
-			} else {
-				$("#v_coupon_no").attr({
-					"value" : "0001"
-				});
-			}
-
-			if (!$("#m_coupon_start").val()) {
-
-				$("#m_coupon_start").removeAttr("value");
-				$("#m_coupon_end").removeAttr("value");
-
-			} else {
-				$("#m_coupon_no").attr({
-					"value" : "0001"
-				});
-			}
 			sessionStorage.removeItem("tab");
 			$("#memInfoForm").attr({
 				"method" : "post",
 				"action" : "/adminMember/memberUpdate.do"
 			});
 			$("#memInfoForm").submit();
-
 		});
 	});
 </script>
@@ -205,15 +145,10 @@
 	<div id="memberInfoTabel">
 		<h3>회원관리(상세정보조회 / 수정)</h3>
 		<hr>
-
 		<form id="memInfoForm">
-			<input type="hidden" name="member_no"
-				value="${memberInfo.member_no }"> <input type="hidden"
-				name="b_coupon_no" id="b_coupon_no"> <input type="hidden"
-				name="v_coupon_no" id="v_coupon_no"> <input type="hidden"
-				name="m_coupon_no" id="m_coupon_no">
-
-			<table border="1">
+			<input type="hidden" name="member_no" id="member_no"
+				value="${memberInfo.member_no }">
+			<table class="table table-bordered table-hover">
 				<tr>
 					<td><label class="intbName">회원번호</label></td>
 					<td colspan="3">${memberInfo.member_no }</td>
@@ -309,48 +244,45 @@
 					<td colspan="3"><input name="point" type="number"
 						value="${memberInfo.point}"> P</td>
 				</tr>
+
 				<tr>
-					<td><label class="intbName">생일쿠폰기간</label></td>
-					<td><input readonly="readonly" name="b_coupon_start"
-						id="b_coupon_start" type="text"> ~ <input
-						name="b_coupon_end" id="b_coupon_end" type="text"
-						readonly="readonly"> <input type="button" value="삭제"
-						id="b_coupon_clear"></td>
-					<td></td>
-					<td><input id="b_coupon_giveDate" type="date"><input
-						type="button" id="b_coupon_give" value="지급"></td>
+					<td><label class="intbName">추가쿠폰지급</label></td>
+					<td><select id="selectCouponName"></select></td>
+					<td><input type="date" id="newCouponGiveDate"></td>
+					<td><input type="button" id="newCouponGiveBtn" value="지급">
+					</td>
+
 				</tr>
-				<tr>
-					<td><label class="intbName">결혼기념쿠폰기간</label></td>
-					<td><input readonly="readonly" name="m_coupon_start"
-						id="m_coupon_start" type="text"> ~ <input
-						name="m_coupon_end" id="m_coupon_end" type="text"
-						readonly="readonly"> <input type="button" value="삭제"
-						id="m_coupon_clear"></td>
-					<td></td>
-					<td><input id="m_coupon_giveDate" type="date"><input
-						type="button" id="m_coupon_give" value="지급"></td>
-				</tr>
-				<tr>
-					<td><label class="intbName">VIP쿠폰기간</label></td>
-					<td><input readonly="readonly" name="v_coupon_start"
-						id="v_coupon_start" type="text"> ~ <input
-						name="v_coupon_end" id="v_coupon_end" type="text"
-						readonly="readonly"> <input type="button" value="삭제"
-						id="v_coupon_clear"></td>
-					<td></td>
-					<td><input id="v_coupon_giveDate" type="date"><input
-						type="button" id="v_coupon_give" value="지급"></td>
-				</tr>
-				<tr>
-					<td><label class="intbName">추가메모</label></td>
-					<td colspan="3">${memberInfo.memo }</td>
-				</tr>
+
+				<c:choose>
+					<c:when test="${not empty memberCouponInfo}">
+						<c:forEach var="couponList" items="${memberCouponInfo}"
+							varStatus="status">
+							<tr data-value="${couponList.coupon_name}">
+								<td><label class="intbName">쿠폰명</label></td>
+								<td>${couponList.coupon_name}</td>
+								<td><label class="intbName">유효기간</label></td>
+								<td>${couponList.coupon_start}~${couponList.coupon_end}
+									<button class="deleteCoupon">삭제</button>
+								</td>
+							</tr>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<tr>
+							<td colspan="4">사용가능한 쿠폰이 존재하지 않습니다.</td>
+						</tr>
+					</c:otherwise>
+				</c:choose>
 			</table>
 		</form>
 		<input id="memInfoUpdate" type="button" value="수정완료"> <input
-			id="memInfoCancel" type="button" value="취소" onclick="window.history.go(-1); return false;">
+			id="memInfoCancel" type="button" value="취소"
+			onclick="window.history.go(-1); return false;">
 	</div>
-
+	<script type="text/javascript"
+		src="/resources/include/js/jquery-3.3.1.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="/resources/include/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

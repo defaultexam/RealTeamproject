@@ -47,8 +47,8 @@ a {
 		<table border="1">
 			<tr class="menu">
 				<td class="menu" align="center">
-					<h2>회원관리</h2> <a href="/adminMember/list.do" onclick="tab();">회원조회</a><br> <a
-					href="#">쿠폰관리</a><br> <a href="#">등급관리</a>
+					<h2>회원관리</h2> <a href="/adminMember/list.do" onclick="tab();">회원조회</a><br>
+					<a href="/adminCoupon/couponList">쿠폰관리</a>
 				</td>
 				<td class="none"></td>
 				<td class="menu" align="center">
@@ -68,8 +68,8 @@ a {
 				</td>
 				<td class="none"></td>
 				<td class="menu" align="center">
-					<h2>고객센터관리</h2> <a href="/adminNotice"">공지사항관리</a><br> <a href="#">FAQ관리</a><br>
-					<a href="#">1:1문의관리</a>
+					<h2>고객센터관리</h2> <a href="/adminNotice"">공지사항관리</a><br> <a
+					href="#">FAQ관리</a><br> <a href="#">1:1문의관리</a>
 				</td>
 				<td class="none"></td>
 				<td class="menu" align="center">
