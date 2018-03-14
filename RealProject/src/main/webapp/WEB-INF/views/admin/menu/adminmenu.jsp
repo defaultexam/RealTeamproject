@@ -500,7 +500,7 @@ li a:active {
 				<div id="menuset">
 					<div style="width: auto; height: auto;">
 						<!-- 이미지추가 시 출력되는 이미지 -->
-						<img id="menu_img" width="auto" height="auto">
+						<img id="menu_img" width="auto" height="250px">
 					</div>
 					<br /> <input type="hidden" id="menu_no" name="menu_no"> <input
 						type="hidden" id="menu_menufile" name="menu_menufile"> <input
