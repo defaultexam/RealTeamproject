@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.restaurant.admin.menu.service.MenuService;
 import com.restaurant.admin.menu.vo.AdminMenuVO;
@@ -28,21 +29,11 @@ public class menuController {
 
 	/* 메뉴 전체 */
 	@RequestMapping(value = "/menuSelect", method = RequestMethod.GET)
-	public String boardList(@ModelAttribute AdminMenuVO bvo, Model model) {
-
-		// logger.info(menulist.get(0).getMenu_no());
-		// 페이지 세팅
-		// 전체 레코드수 구현
-		/*
-		 * Paging.setPage(bvo); int total = menuService.menuListCnt(bvo);
-		 * logger.info("total = " + total);
-		 */
+	public String menuList(@ModelAttribute AdminMenuVO bvo, Model model) {
 
 		List<AdminMenuVO> menulist = menuService.menuSelect();
 
-		model.addAttribute("menulist", menulist);
-		/* model.addAttribute("total", total); */
-		model.addAttribute("adminvo", null);
+		model.addAttribute("menulist", menulist);		
 		return "admin/menu/adminmenu";
 
 	}
@@ -81,8 +72,9 @@ public class menuController {
 	}
 
 	/* 메뉴 이동 */
+	@ResponseBody
 	@RequestMapping(value = "/menuclick", method = RequestMethod.GET)
-	public String menuclick(Model model, HttpServletRequest request) {
+	public AdminMenuVO menuclick(/*Model model,*/ HttpServletRequest request) {
 		logger.info("menuclick 호출 성공");
 		int num = 0;
 		num = Integer.parseInt(request.getParameter("menu_no"));
@@ -90,13 +82,12 @@ public class menuController {
 		AdminMenuVO selectMenuVo = new AdminMenuVO();
 		selectMenuVo = menuService.menuClick(num);
 
-		List<AdminMenuVO> menulist = menuService.menuSelect();
+		//List<AdminMenuVO> menulist = menuService.menuSelect();
 		// logger.info(menulist.get(0).getMenu_no());
 
-		model.addAttribute("menulist", menulist);
-		model.addAttribute("selectMenuVo", selectMenuVo);
-		return "admin/menu/adminmenu";
-
+		//model.addAttribute("menulist", menulist);
+		//model.addAttribute("selectMenuVo", selectMenuVo);
+		return selectMenuVo;
 	}
 
 	/* 메뉴 수정 */

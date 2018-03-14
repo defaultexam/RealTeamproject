@@ -94,9 +94,9 @@ public class AdminMemberDaoImpl implements AdminMemberDao {
 	}
 
 	@Override
-	public List<String> couponNameList() {
+	public List<String> couponNameList(int no) {
 		// TODO Auto-generated method stub
-		return session.selectList("couponNameList");
+		return session.selectList("couponNameList", no);
 	}
 
 	@Override

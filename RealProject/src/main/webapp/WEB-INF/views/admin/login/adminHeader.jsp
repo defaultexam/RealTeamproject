@@ -14,6 +14,9 @@ li < a {
 	function tab() {
 		sessionStorage.removeItem("tab");
 	}
+	function menuTab(){
+		sessionStorage.removeItem("menu");
+	}
 </script>
 <link href="/resources/include/dist/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -42,7 +45,7 @@ li < a {
 						<li><a href="/adminCoupon/couponList">쿠폰관리</a></li>
 					</ul></li>
 
-				<li id="menutab2"><a href="/menu/menuSelect"><font
+				<li id="menutab2"><a href="/menu/menuSelect" onclick="menuTab();"><font
 						color="black">메뉴관리</font></a></li>
 				<li id="menutab3" class="dropdown"><a href="#"
 					class="dropdown-toggle" data-toggle="dropdown" role="button"

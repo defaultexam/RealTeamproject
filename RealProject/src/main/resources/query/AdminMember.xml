@@ -327,6 +327,7 @@
 		</where>
 		order by member_no desc
 	</sql>
+
 	<select id="memberList" parameterType="adminMember" resultType="adminMember">
 		select * from ( select list.*, rownum as rnum from(
 		<include refid="searchMember"></include>
@@ -425,8 +426,10 @@
 		member_no = #{member_no} and coupon_name = #{coupon_name}
 	</update>
 
-	<select id="couponNameList" resultType="java.lang.String">
-		select distinct coupon_name from coupon where coupon_active=<![CDATA['사용가능쿠폰' and coupon_name != '생일기념쿠폰' and coupon_name != '결혼기념쿠폰' and coupon_name != 'VIP쿠폰']]>
+	<select id="couponNameList" parameterType="int" resultType="java.lang.String">
+		select coupon_name from coupon where coupon_active=
+		<![CDATA['사용가능쿠폰' and coupon_name != '생일기념쿠폰' and coupon_name != '결혼기념쿠폰' and coupon_name != 'VIP쿠폰' ]]>
+		<![CDATA[and coupon_name not in (select distinct coupon_name from couponhistory where member_no = #{member_no} and coupon_status = '사용가능쿠폰') ]]>
 	</select>
 
 	<insert id="newCouponGive" parameterType="couponhistory">
