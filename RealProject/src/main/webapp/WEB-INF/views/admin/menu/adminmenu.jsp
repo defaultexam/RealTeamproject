@@ -324,6 +324,8 @@ li a:active {
 															});
 
 											var seMenuKind = result.menu_kind;
+											console.log(seMenuKind);
+											$("option").removeAttr("selected");
 											if (seMenuKind == "steak") {
 												$("#steak").attr({
 													"selected" : "selected"
