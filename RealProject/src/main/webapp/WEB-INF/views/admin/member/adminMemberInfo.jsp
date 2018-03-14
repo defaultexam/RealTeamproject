@@ -36,6 +36,9 @@
 			method : "get",
 			url : "/adminMember/couponNameList",
 			dataType : "json",
+			data : {
+				"member_no" : $("#member_no").val()
+			},
 			error : function() {
 				alert("사이트 접속 문제로 정상작동하지 못하였습니다. 잠시후 다시 시도해주세요");
 			},
@@ -43,11 +46,17 @@
 				console.log(resultData);
 				list = resultData;
 				$("#selectCouponName").empty();
-				for (var i = 0; i < list.length; i++) {
+				if (list.length > 0) {
+					for (var i = 0; i < list.length; i++) {
+						$("#selectCouponName").append(
+								"<option id='option"+i+"' value='"+list[i]+"'>"
+										+ list[i] + "</option>");
+					}
+				} else {
 					$("#selectCouponName").append(
-							"<option id='option"+i+"' value='"+list[i]+"'>"
-									+ list[i] + "</option>");
+							"<option value='noCoupon'>선택가능한 쿠폰이 존재하지 않습니다.</option>");
 				}
+
 			}
 		});
 
@@ -94,10 +103,10 @@
 									.val());
 							var giveCouponName = $(
 									"#selectCouponName option:selected").val();
-							if (giveCouponName == null || giveCouponName == "") {
+							if (giveCouponName.length == 0 || giveCouponName == 'noCoupon') {
 								alert("지급가능한 쿠폰명을 선택해주세요");
 								return;
-							} else if (giveDate == null || giveDate == "") {
+							} else if ($("#newCouponGiveDate").val().length == 0) {
 								alert("지급날짜를 선택해주세요");
 								return;
 							} else {
