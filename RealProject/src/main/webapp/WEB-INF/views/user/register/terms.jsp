@@ -16,6 +16,7 @@ article.scrollspy-example {
 	border: 1px solid #d9d9d9;
 	background-color: #f7f3f0;
 }
+
 #img {
 	padding-left: 50px;
 }
@@ -24,8 +25,7 @@ input[type=checkbox]:not(old) {
 	margin: 0;
 	padding: 0;
 	opacity: 0;
-	background: url(/resources/include/css/images/checkon.jpg) no-repeat 0
-		0;
+	background: url(/resources/include/css/images/checkon.jpg) no-repeat 0 0;
 	width: 0;
 }
 
@@ -41,15 +41,14 @@ input[type=checkbox]:not(old)+label {
 }
 
 input[type=checkbox]:not(old):checked+label {
-	background: url(/resources/include/css/images/checkon.jpg) no-repeat 0
-		0;
+	background: url(/resources/include/css/images/checkon.jpg) no-repeat 0 0;
 }
 </style>
 </head>
 <body>
 	<!-- 개인정보이용 정보이용동의 마케팅 동의 -->
-	<img src="/resources/include/css/images/terms_logo.jpg" class="center-block"
-		id="img" />
+	<img src="/resources/include/css/images/terms_logo.jpg"
+		class="center-block" id="img" />
 	<br />
 	<br />
 	<br />
@@ -347,6 +346,11 @@ input[type=checkbox]:not(old):checked+label {
 					check3.checked = false;
 				}
 			});
+			$("#btnno").click(function() {
+			//	alert("필수 사항을 체크하지 않으실 경우, 회원 가입을 하실 수 없습니다. \n메인 페이지로 이동합니다.");				
+				window.location.href = '/';
+			});
+	
 			$("#btnnext").click(function() {
 				if ($("#check1").is(':checked') == false) {
 					alert("YEOP'S Restaurant 이용약관 수집 동의 (필수) 를 체크해주십시오.");
