@@ -75,23 +75,7 @@
 		menu_no = #{menu_no}
 	</delete>
 
-	<!-- 메뉴 페이징 처리 -->
-	<sql id="menuCommon">
-		select menu_no,menu_name,menu_price,menu_menufile,menu_text,menu_kind
-		from
-		menu
-		<where>
-			<if test="search == 'menu_no'">
-				<![CDATA[ menu_name LIKE '%'|| #{keyword} ||'%' ]]>
-			</if>
-			<if test="search=='menu_name'">
-				<![CDATA[ menu_name LIKE '%'|| #{keyword} ||'%' ]]>
-			</if>
-			<if test="search=='menu_price'">
-				<![CDATA[ menu_price LIKE '%'|| #{keyword} ||'%' ]]>
-			</if>
-		</where>
-	</sql>
+
 
 	<!-- <select id="menuListCnt" parameterType="bvo" resultType="int"> SELECT 
 		NVL(count(1), 0) FROM ( SELECT list.*, ROWNUM AS RNUM FROM ( <include refid="boardCommon"></include> 

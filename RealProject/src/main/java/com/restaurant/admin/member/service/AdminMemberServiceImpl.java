@@ -125,9 +125,9 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 	}
 
 	@Override
-	public List<String> couponNameList() {
+	public List<String> couponNameList(int no) {
 		// TODO Auto-generated method stub
-		List<String> list = adminMemberDao.couponNameList();
+		List<String> list = adminMemberDao.couponNameList(no);
 		return list;
 	}
 

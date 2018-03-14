@@ -4,7 +4,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.restaurant.common.vo.CommonVO;
 
-public class AdminMenuVO extends CommonVO{
+public class AdminMenuVO{
 	private int menu_no = 0;// 메뉴번호
 	private String menu_name = "";// 메뉴 이름
 	private String menu_text = "";// 메뉴 내용

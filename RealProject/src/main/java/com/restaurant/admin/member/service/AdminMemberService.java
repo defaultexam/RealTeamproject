@@ -27,7 +27,7 @@ public interface AdminMemberService {
 
 	public int adminDeleteCoupon(CouponHistoryVO cvo);
 
-	public List<String> couponNameList();
+	public List<String> couponNameList(int no);
 
 	public void newCouponGive(CouponHistoryVO cvo);
 
