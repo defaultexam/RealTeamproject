@@ -58,22 +58,22 @@ li a:active {
 <script type="text/javascript">
 	var sel_file;
 	/* 초기화 버튼 */
-	
-		$(function() {
-			$("#menureset").click(function() {
-				$("#menu_name").val("");
-				$("#menu_price").val("");
-				$("#file").val("");
-				$("#menu_text").val("");
-				$("#menu_kind").val("");
-				$("#menu_img").removeAttr("src");
-				/* 수정,삭제 비활성 추가 활성 */
-				$("#menuedit").prop("disabled", true);
-				$("#menudel").prop("disabled", true);
-				$("#menuadd").prop("disabled", false);
-			});
+
+	$(function() {
+		$("#menureset").click(function() {
+			$("#menu_name").val("");
+			$("#menu_price").val("");
+			$("#file").val("");
+			$("#menu_text").val("");
+			$("#menu_kind").val("");
+			$("#menu_img").removeAttr("src");
+			/* 수정,삭제 비활성 추가 활성 */
+			$("#menuedit").prop("disabled", true);
+			$("#menudel").prop("disabled", true);
+			$("#menuadd").prop("disabled", false);
 		});
-	
+	});
+
 	$(function() {
 		let alldiv = document.getElementById("alldiv");
 		let steakdiv = document.getElementById("steakdiv");
@@ -83,6 +83,82 @@ li a:active {
 		let winediv = document.getElementById("winediv");
 		let beerdiv = document.getElementById("beerdiv");
 		let liquordiv = document.getElementById("liquordiv");
+
+		var menuTab = sessionStorage.getItem("menu");
+		if (menuTab == 'all') {
+			alldiv.classList.remove("hide");
+			steakdiv.classList.add("hide");
+			pastadiv.classList.add("hide");
+			salladdiv.classList.add("hide");
+			coursediv.classList.add("hide");
+			winediv.classList.add("hide");
+			beerdiv.classList.add("hide");
+			liquordiv.classList.add("hide");
+		} else if (menuTab == 'steak') {
+			alldiv.classList.add("hide");
+			steakdiv.classList.remove("hide");
+			pastadiv.classList.add("hide");
+			salladdiv.classList.add("hide");
+			coursediv.classList.add("hide");
+			winediv.classList.add("hide");
+			beerdiv.classList.add("hide");
+			liquordiv.classList.add("hide");
+		} else if (menuTab == 'pasta') {
+			alldiv.classList.add("hide");
+			steakdiv.classList.add("hide");
+			pastadiv.classList.remove("hide");
+			salladdiv.classList.add("hide");
+			coursediv.classList.add("hide");
+			winediv.classList.add("hide");
+			beerdiv.classList.add("hide");
+			liquordiv.classList.add("hide");
+		} else if (menuTab == 'sallad') {
+			alldiv.classList.add("hide");
+			steakdiv.classList.add("hide");
+			pastadiv.classList.add("hide");
+			salladdiv.classList.remove("hide");
+			coursediv.classList.add("hide");
+			winediv.classList.add("hide");
+			beerdiv.classList.add("hide");
+			liquordiv.classList.add("hide");
+		} else if (menuTab == 'course') {
+			alldiv.classList.add("hide");
+			steakdiv.classList.add("hide");
+			pastadiv.classList.add("hide");
+			salladdiv.classList.add("hide");
+			coursediv.classList.remove("hide");
+			winediv.classList.add("hide");
+			beerdiv.classList.add("hide");
+			liquordiv.classList.add("hide");
+		} else if (menuTab == 'wine') {
+			alldiv.classList.add("hide");
+			steakdiv.classList.add("hide");
+			pastadiv.classList.add("hide");
+			salladdiv.classList.add("hide");
+			coursediv.classList.add("hide");
+			winediv.classList.remove("hide");
+			beerdiv.classList.add("hide");
+			liquordiv.classList.add("hide");
+		} else if (menuTab == 'bear') {
+			alldiv.classList.add("hide");
+			steakdiv.classList.add("hide");
+			pastadiv.classList.add("hide");
+			salladdiv.classList.add("hide");
+			coursediv.classList.add("hide");
+			winediv.classList.add("hide");
+			beerdiv.classList.remove("hide");
+			liquordiv.classList.add("hide");
+		} else if (menuTab == 'liquor') {
+			alldiv.classList.add("hide");
+			steakdiv.classList.add("hide");
+			pastadiv.classList.add("hide");
+			salladdiv.classList.add("hide");
+			coursediv.classList.add("hide");
+			winediv.classList.add("hide");
+			beerdiv.classList.add("hide");
+			liquordiv.classList.remove("hide");
+		}
+
 		$("#menuAll").click(function() {
 			sessionStorage.setItem("menu", 'all');
 			alldiv.classList.remove("hide");
@@ -205,77 +281,89 @@ li a:active {
 		/* 파일선택 했을때 출력되는 이미지 스크립트 */
 		$("#file").on("change", handleImgFileSelect);
 
-
 		/* 메뉴 선택시 발생 이벤트*/
-		$(".menuclick").click(function() {
-			var menu_no = $(this).attr("data-num");
-			var result = {};
-			$("#menu_no").val(menu_no);
-			$.ajax({
-				url : "/menu/menuclick",
-				type : "get",
-				dataType : "json",
-				data : {
-					"menu_no" : menu_no
-				},
-				error : function() {
-					alert("사이트 접속 문제로 정상 작동하지 못하였습니다. 잠시후 다시 시도해 주세요");
-				},
-				success : function(data) {
-					result = data;
-					$("#menuedit").prop("disabled", false);
-					$("#menudel").prop("disabled", false);
-					$("#menuadd").prop("disabled", true);
-					$("#menu_no").val(result.menu_no);
-					$("#menu_menufile").val(result.menu_menufile);
-					$("#menu_name").val(result.menu_name);
-					$("#menu_price").val(result.menu_price);
-					$("#menu_text").val(result.menu_text);
-					$("#menu_img")
-						.attr(
-							{
-								"src" : "/uploadStorage/menu/thumbnail/" + result.menu_menufile
-							});
+		$(".menuclick")
+			.click(
+				function() {
+					var menu_no = $(this).attr("data-num");
+					var result = {};
+					$("#menu_no").val(menu_no);
+					$
+						.ajax({
+							url : "/menu/menuclick",
+							type : "get",
+							dataType : "json",
+							data : {
+								"menu_no" : menu_no
+							},
+							error : function() {
+								alert("사이트 접속 문제로 정상 작동하지 못하였습니다. 잠시후 다시 시도해 주세요");
+							},
+							success : function(data) {
+								result = data;
+								$("#menuedit").prop("disabled",
+									false);
+								$("#menudel").prop("disabled",
+									false);
+								$("#menuadd")
+									.prop("disabled", true);
+								$("#menu_no").val(result.menu_no);
+								$("#menu_menufile").val(
+									result.menu_menufile);
+								$("#menu_name").val(
+									result.menu_name);
+								$("#menu_price").val(
+									result.menu_price);
+								$("#menu_text").val(
+									result.menu_text);
+								$("#menu_img")
+									.attr(
+										{
+											"src" : "/uploadStorage/menu/thumbnail/"
+												+ result.menu_menufile
+										});
 
-					var seMenuKind = result.menu_text;
-					if (seMenuKind == "steak") {
-						$("#steak").attr({
-							"selected" : "selected"
+								var seMenuKind = result.menu_kind;
+								console.log(seMenuKind);
+								$("option").removeAttr("selected");
+								if (seMenuKind == "steak") {
+									$("#steak").attr({
+										"selected" : "selected"
+									});
+								} else if (seMenuKind == "pasta") {
+									$("#pasta").attr({
+										"selected" : "selected"
+									});
+								} else if (seMenuKind == "sallad") {
+									$("#sallad").attr({
+										"selected" : "selected"
+									});
+								} else if (seMenuKind == "course") {
+									$("#course").attr({
+										"selected" : "selected"
+									});
+								} else if (seMenuKind == "wine") {
+									$("#wine").attr({
+										"selected" : "selected"
+									});
+								} else if (seMenuKind == "beer") {
+									$("#beer").attr({
+										"selected" : "selected"
+									});
+								} else {
+									$("#liquor").attr({
+										"selected" : "selected"
+									});
+								}
+							}
 						});
-					} else if (seMenuKind == "pasta") {
-						$("#pasta").attr({
-							"selected" : "selected"
-						});
-					} else if (seMenuKind == "sallad") {
-						$("#sallad").attr({
-							"selected" : "selected"
-						});
-					} else if (seMenuKind == "course") {
-						$("#course").attr({
-							"selected" : "selected"
-						});
-					} else if (seMenuKind == "wine") {
-						$("#wine").attr({
-							"selected" : "selected"
-						});
-					} else if (seMenuKind == "beer") {
-						$("#beer").attr({
-							"selected" : "selected"
-						});
-					} else {
-						$("#liquor").attr({
-							"selected" : "selected"
-						});
-					}
-				}
-			});
 
-		/* $("#menu_form").attr({
-			"method" : "get",
-			"action" : "/menu/menuclick"
-		});
-		$("#menu_form").submit(); */
-		});
+				/* $("#menu_form").attr({
+				   "method" : "get",
+				   "action" : "/menu/menuclick"
+				});
+				$("#menu_form").submit(); */
+				});
 		/* 메뉴 삭제 */
 		$("#menudel").click(function() {
 
@@ -528,8 +616,7 @@ li a:active {
 				<input type="button" id="menuedit" class="btn btn-default"
 					value="수정"> <input type="button" id="menudel"
 					class="btn btn-default" value="삭제"> <input type="button"
-					id="menureset" onclick="menureset();" class="btn btn-default"
-					value="초기화">
+					id="menureset" class="btn btn-default" value="초기화">
 			</form>
 		</div>
 	</div>
