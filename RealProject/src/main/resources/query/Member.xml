@@ -65,11 +65,17 @@
 		'일반', sysdate)
 	</insert>
 	<update id="memberUpdate" parameterType="member">
-		update member set password= #{password} where id=#{id}
+		update member set
+		password= #{password} where id=#{id}
 	</update>
 	<delete id="memberDelete" parameterType="String">
 		delete from
 		member where
 		id = #{id}
 	</delete>
+
+	<select id="memberCoupon" parameterType="int" resultType="couponhistory">
+		select * from couponhistory where member_no = #{member_no} and <![CDATA[ coupon_status = '사용가능쿠폰' ]]>
+		order by couponHistory_no desc
+	</select>
 </mapper>

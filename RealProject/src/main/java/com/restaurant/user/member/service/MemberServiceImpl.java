@@ -1,10 +1,13 @@
 package com.restaurant.user.member.service;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.restaurant.admin.couponhistory.vo.CouponHistoryVO;
 import com.restaurant.common.util.OpenCrypt;
 import com.restaurant.common.util.Util;
 import com.restaurant.user.member.dao.MemberDAO;
@@ -108,5 +111,13 @@ public class MemberServiceImpl implements MemberService {
 		mvo.setId(id);
 		mvo.setEmail(email);
 		return memberDAO.memberSearchByID(mvo);
+	}
+
+	@Override
+	public List<CouponHistoryVO> memberCoupon(int member_no) {
+		// TODO Auto-generated method stub
+		List<CouponHistoryVO> result = null;
+		result = memberDAO.memberCoupon(member_no);
+		return result;
 	}
 }

@@ -13,21 +13,30 @@
 </head>
 <script type="text/javascript">
 	var menuList = '${menulist}';
+	var login = '${login}';
+	var memberCouponList = '${memberCouponList}';
 	$(document).ready(function() {
 		toggleSpinners(1);
-		if (menuList == null || menuList == '') {
+		if ((menuList == null || menuList == '') && login != null) {
 			$("#getMenu").attr({
 				"method" : "post",
-				"action" : "/reservation/menu"
+				"action" : "/reservation/menus"
 			});
 			$("#getMenu").submit();
+		} else {
+			if (menuList == null || menuList == '') {
+				$("#getMenu").attr({
+					"method" : "post",
+					"action" : "/reservation/menu"
+				});
+				$("#getMenu").submit();
+			}
 		}
 	});
-	
 </script>
 <body>
 	<div class="container-fluid">
-		<form method="get" id="getMenu">
+		<form method="post" id="getMenu">
 			<input type="hidden" id="transfer_menu_id">
 		</form>
 		<div class="row">
@@ -96,8 +105,8 @@
 		</div>
 		<br /> <br />
 		<div class="row borderstyle">
-			<img src="/resources/include/css/images/reserv2.jpg" class="imgs" id="imgset">
-			<br /> <br />
+			<img src="/resources/include/css/images/reserv2.jpg" class="imgs"
+				id="imgset"> <br /> <br />
 			<div class="col-md-12">
 				<div id="accordion">
 					<h3>스테이크</h3>
@@ -294,6 +303,41 @@
 			<img src="/resources/include/css/images/reserv4.jpg" class="imgs">
 			<br /> <br />
 			<div class="col-md-12">
+				<table class="table table-bordered table-hover">
+					<c:choose>
+						<c:when test="${not empty memberCouponInfo}">
+							<c:forEach var="couponList" items="${memberCouponInfo}"
+								varStatus="status">
+								<tr data-num="${couponList.couponhistory_no}"
+									id="coupon${couponList.couponhistory_no}" class="selectCoupon">
+									<td><label>쿠폰명</label></td>
+									<td>${couponList.coupon_name}</td>
+									<td><label>할인율</label></td>
+									<td id=${couponList.couponhistory_no }>${couponList.coupon_discountrate * 100}%</td>
+									<td><label>유효기간</label></td>
+									<td>${couponList.coupon_start}부터~${couponList.coupon_end}까지</td>
+								</tr>
+								<script type="text/javascript">
+									var rate = '${couponList.coupon_discountrate * 100}';
+									var result = rate.split(".0");
+									$("#"+${couponList.couponhistory_no }).html(result[0] + " %");
+								</script>
+							</c:forEach>
+						</c:when>
+						<c:otherwise>
+							<tr>
+								<td colspan="4">사용가능한 쿠폰이 존재하지 않습니다.</td>
+							</tr>
+						</c:otherwise>
+					</c:choose>
+
+				</table>
+			</div>
+		</div>
+		<div class="row borderstyle">
+			<img src="/resources/include/css/images/reserv5.jpg" class="imgs">
+			<br /> <br />
+			<div class="col-md-12">
 				<table
 					class="table table-hover table-striped table-bordered table-user">
 					<tbody>
@@ -315,15 +359,16 @@
 						</tr>
 						<tr class="active">
 							<td>ㆍ남기실 말씀</td>
-							<td colspan="3" class="memosize"><input type="text" id="memo"
-								class="form-control memosize"></td>
+							<td colspan="3" class="memosize"><input type="text"
+								id="memo" class="form-control memosize"></td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 		</div>
-		<input type="hidden" id="email"> <input type="hidden"
-			id="phone">
+		<input type="hidden" id="email" name="email"> <input
+			type="hidden" id="phone" name="phone"> <input type="hidden"
+			id="couponhistory_no">
 		<div class="row" align="center">
 			<input type="button" value="예약하기" class="btn btn-default"
 				style="width: 200px; height: 50px;" id="btn_reservation">
@@ -334,4 +379,11 @@
 		src="/resources/include/js/jquery-ui.min.js"></script>
 	<script src="/resources/include/dist/js/bootstrap.min.js"></script>
 	<script src="/resources/include/js/reservation.js"></script>
+	<script type="text/javascript">
+		$(".selectCoupon").click(function() {
+			var couponhistory_no = $(this).attr("data-num");
+			$("#couponhistory_no").val(couponhistory_no);
+			console.log($("#couponhistory_no").val());
+		});
+	</script>
 </body>

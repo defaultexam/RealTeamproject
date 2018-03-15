@@ -1,9 +1,12 @@
 package com.restaurant.user.member.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.restaurant.admin.couponhistory.vo.CouponHistoryVO;
 import com.restaurant.user.member.vo.MemberSecurity;
 import com.restaurant.user.member.vo.MemberVO;
 
@@ -56,6 +59,12 @@ public class MemberDAOImpl implements MemberDAO {
 	@Override
 	public String memberSearchByName(MemberVO mvo) {
 		return session.selectOne("memberSearchByName", mvo);
+	}
+
+	@Override
+	public List<CouponHistoryVO> memberCoupon(int member_no) {
+		// TODO Auto-generated method stub
+		return session.selectList("memberCoupon", member_no);
 	}
 
 }
