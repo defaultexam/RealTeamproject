@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.restaurant.user.reservation.dao.ReservationDAO">
+	<insert id="reservationInsert" parameterType="reservation">
+		insert into
+		booking(book_no, member_no, seat_no, book_people, totalpay,
+		book_condition, coupon_no, discount, pay_way, pay_date,
+		choice_menu1,choice_menu2,choice_menu3,choice_menu4,
+		choice_menu5,choice_menu6,choice_menu7,choice_menu8,
+		choice_menu_number1,choice_menu_number2,choice_menu_number3,choice_menu_number4,
+		choice_menu_number5,choice_menu_number6,choice_menu_number7,choice_menu_number8,
+		choice_menu_price1,choice_menu_price2,choice_menu_price3,choice_menu_price4,
+		choice_menu_price5,choice_menu_price6,choice_menu_price7,choice_menu_price8,
+		book_name,book_phone,book_email,book_memo)
+		values(booking_seq.nextval,
+		#{member_no},
+		#{seat_no},#{book_people},#{totalpay},#{book_condition},#{coupon_no},#{discount},#{pay_way},sysdate
+		,#{choice_menu1},#{choice_menu2},#{choice_menu3},#{choice_menu4},#{choice_menu5},#{choice_menu6},#{choice_menu7},#{choice_menu8}
+		,#{choice_menu_number1},#{choice_menu_number2},#{choice_menu_number3},#{choice_menu_number4},#{choice_menu_number5}
+		,#{choice_menu_number6},#{choice_menu_number7},#{choice_menu_number8}
+		,#{choice_menu_price1},#{choice_menu_price2},#{choice_menu_price3},#{choice_menu_price4},#{choice_menu_price5}
+		,#{choice_menu_price6},#{choice_menu_price7},#{choice_menu_price8}
+		,#{book_name},#{book_phone},#{book_email},#{book_memo})
+	</insert>
+</mapper>

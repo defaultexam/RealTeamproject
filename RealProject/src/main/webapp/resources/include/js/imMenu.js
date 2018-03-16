@@ -43,7 +43,6 @@ jQuery.fn.imTabMenu = function($btn, $cont, $activeClass, $activeFn) {
 		active(_index, _this);
 		return false;
 	});
-
 	function active($index, $this) {
 		if ($this) { // 클릭시			
 			$this.siblings().removeClass($activeClass); // 버튼 초기화
@@ -180,7 +179,6 @@ jQuery.fn.imGNBactive = function($activeClass, $activeFN) {
 		'display' : 'none'
 	});
 	active(_depth1, _depth2);
-
 	// // 이벤트  
 	// over 뎁스1  이벤트
 	_dep1_ul.find(' > li  a').on('mouseenter focusin', function() {
@@ -196,7 +194,6 @@ jQuery.fn.imGNBactive = function($activeClass, $activeFN) {
 		var index1 = _dep2_ul.index($(this).parent().parent());
 		var index2 = $(this).parent().parent().find('li a').index(this);
 		active(index1, index2, true);
-
 	});
 
 
@@ -213,7 +210,6 @@ jQuery.fn.imGNBactive = function($activeClass, $activeFN) {
 			return
 		}
 		; // false 값이 넘어오면 아래를 실행하지 않음
-
 		// subindex, other
 		if ($("#header").hasClass("dep2-off") && $active) {
 			$("#header.dep2-off .header_inner").css({
@@ -239,8 +235,6 @@ jQuery.fn.imGNBactive = function($activeClass, $activeFN) {
 			}
 			return;
 		}
-
-
 		_dep1_ul.find(' li > a').removeClass($activeClass);
 		_dep1_ul.find(' > li').eq($dep1).find(' > a').addClass($activeClass);
 

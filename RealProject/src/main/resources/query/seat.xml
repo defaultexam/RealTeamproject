@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.restaurant.user.seat.dao.SeatDAO">
+
+	<select id="selectSeat" parameterType="Date" resultType="seat">
+		select
+		seat_no, seat_date, seat_time, seat_extra from seat
+		where
+		seat_date=#{seat_date}
+	</select>
+
+
+	<update id="updateSeat" parameterType="seat">
+		update seat set
+		seat_extra=#{seat_extra} where seat_date = #{seat_date} and seat_time
+		= #{seat_time}
+	</update>
+</mapper>

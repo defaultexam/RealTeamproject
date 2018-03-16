@@ -21,5 +21,8 @@
 			alias="coupon" />
 		<typeAlias type="com.restaurant.admin.couponhistory.vo.CouponHistoryVO"
 			alias="couponhistory" />
+		<typeAlias type="com.restaurant.user.reservation.vo.ReservationVO"
+			alias="reservation" />
+		<typeAlias type="com.restaurant.user.seat.vo.SeatVO" alias="seat" />
 	</typeAliases>
 </configuration> 

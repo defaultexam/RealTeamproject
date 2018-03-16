@@ -1,5 +1,7 @@
 package com.restaurant.user.reservation.controller;
 
+import java.sql.Date;
+import java.text.ParseException;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.restaurant.admin.couponhistory.vo.CouponHistoryVO;
 import com.restaurant.admin.menu.service.MenuService;
 import com.restaurant.admin.menu.vo.AdminMenuVO;
@@ -20,6 +23,10 @@ import com.restaurant.user.login.vo.LoginVO;
 import com.restaurant.user.member.service.MemberService;
 import com.restaurant.user.member.vo.MemberVO;
 import com.restaurant.user.register.controller.RegisterController;
+import com.restaurant.user.reservation.service.ReservationService;
+import com.restaurant.user.reservation.vo.ReservationVO;
+import com.restaurant.user.seat.service.SeatService;
+import com.restaurant.user.seat.vo.SeatVO;
 
 @Controller
 @RequestMapping("/reservation")
@@ -29,6 +36,11 @@ public class ReservationController {
 	private MenuService menuService;
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private SeatService seatService;
+	@Autowired
+	private ReservationService reservationService;
+
 	// ReservationController 전체적인 곳에서 사용할 수 있게 밖으로 빼서 선언함.
 	LoginVO loginvo = new LoginVO();
 
@@ -110,16 +122,26 @@ public class ReservationController {
 
 	/* 예약 */
 	@ResponseBody
+	@RequestMapping(value = "/date", method = RequestMethod.POST)
+	public List<SeatVO> date(@RequestParam("seat_date") Date seat_date, Model model) throws ParseException {
+		logger.info("reservation/date POST 호출 성공");
+		List<SeatVO> seatvo = null;
+		seatvo = seatService.selectSeat(seat_date);
+		model.addAttribute("seatInfo", seatvo);
+		return seatvo;
+	}
+
+	/* 예약 */
+	@ResponseBody
 	@RequestMapping(value = "/reserve", method = RequestMethod.POST)
-	public String reserve(@RequestParam("cart_menuno") List<String> cart_menuno,
-			@RequestParam("cart_name") List<String> cart_name, @RequestParam("cart_price") List<String> cart_price,
-			@RequestParam("cart_amount") List<String> cart_amount, Model model) {
-		System.out.println("cart_menuno : " + cart_menuno);
-		System.out.println("cart_name : " + cart_name);
-		System.out.println("cart_price : " + cart_price);
-		System.out.println("cart_amount : " + cart_amount);
+	public String reserve(@ModelAttribute ReservationVO rvo, Model model) {
+		logger.info("/reservation/reserve POST 호출 성공");
 		String result;
-		result = "아~";
+		int resultnumber = reservationService.reservationInsert(rvo);
+		if (resultnumber == 1)
+			result = "성공";
+		else
+			result = "실패";
 		return result;
 	}
 }

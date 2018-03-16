@@ -14,7 +14,9 @@
 <script type="text/javascript">
 	var menuList = '${menulist}';
 	var login = '${login}';
+	var loginno = '${login.member_no}';
 	var memberCouponList = '${memberCouponList}';
+	var alerts = 0;
 	$(document).ready(function() {
 		toggleSpinners(1);
 		if ((menuList == null || menuList == '') && login != null) {
@@ -31,6 +33,14 @@
 				});
 				$("#getMenu").submit();
 			}
+		}
+		$("#memberno").val(loginno);
+	});
+	$(document).click(function() {
+		if ((login == '' || login == null) && alerts <= 1) {
+			alert("로그인 후 이용하실 수 있습니다.");
+			alerts++;
+			return;
 		}
 	});
 </script>
@@ -66,7 +76,7 @@
 						<tr class="active">
 							<td><input type="radio" name="timetable" value="1"
 								checked="checked" /> 12:00 ~ 14:00</td>
-							<td>30</td>
+							<td id="extra1">30</td>
 							<td class="form-inline"><input type="number" min="1"
 								max="30" class="form-control"
 								style="width: 100px; height: 25px;" id="numberic1"><span
@@ -75,7 +85,7 @@
 						<tr class="active">
 							<td><input type="radio" name="timetable" value="2" /> 17:30
 								~ 19:20</td>
-							<td>40</td>
+							<td id="extra2">40</td>
 							<td class="form-inline"><input type="number" min="1"
 								max="40" class="form-control"
 								style="width: 100px; height: 25px;" id="numberic2"><span
@@ -84,7 +94,7 @@
 						<tr class="active">
 							<td><input type="radio" name="timetable" value="3" /> 20:00
 								~ 22:00</td>
-							<td>50</td>
+							<td id="extra3">50</td>
 							<td class="form-inline"><input type="number" min="1"
 								max="50" class="form-control"
 								style="width: 100px; height: 25px;" id="numberic3"><span
@@ -93,7 +103,7 @@
 						<tr class="active">
 							<td><input type="radio" name="timetable" value="4" /> 21:15
 								~ 23:15</td>
-							<td>20</td>
+							<td id="extra4">20</td>
 							<td class="form-inline"><input type="number" min="1"
 								max="20" class="form-control"
 								style="width: 100px; height: 25px;" id="numberic4"><span
@@ -232,7 +242,7 @@
 							<c:choose>
 								<c:when test="${not empty menulist}">
 									<c:forEach var="menu" items="${menulist}" varStatus="status">
-										<c:if test="${menu.menu_kind == 'drink'}">
+										<c:if test="${menu.menu_kind == 'beer'}">
 											<div class="col-sm-6 col-md-4">
 												<div class="thumbnail">
 													<img
@@ -325,9 +335,16 @@
 							</c:forEach>
 						</c:when>
 						<c:otherwise>
-							<tr>
-								<td colspan="4">사용가능한 쿠폰이 존재하지 않습니다.</td>
-							</tr>
+							<c:if test="${login.id == null}">
+								<tr>
+									<td colspan="4" align="center">로그인 후 쿠폰을 사용하실 수 있습니다.</td>
+								</tr>
+							</c:if>
+							<c:if test="${login.id != null and login.id != ''}">
+								<tr>
+									<td colspan="4" align="center">사용가능한 쿠폰이 존재하지 않습니다.</td>
+								</tr>
+							</c:if>
 						</c:otherwise>
 					</c:choose>
 
@@ -343,7 +360,7 @@
 					<tbody>
 						<tr class="active">
 							<td>ㆍ예약자 성명</td>
-							<td><input type="text" class="form-control"></td>
+							<td><input type="text" class="form-control" id="book_name" name="book_name"></td>
 							<td style="padding-left: 2%; padding-right: 2%;">ㆍ연락처</td>
 							<td class="form-inline"><input type="text"
 								class="form-control telephone" id="phone1" style="width: 100px">-<input
@@ -360,15 +377,19 @@
 						<tr class="active">
 							<td>ㆍ남기실 말씀</td>
 							<td colspan="3" class="memosize"><input type="text"
-								id="memo" class="form-control memosize"></td>
+								id="book_memo" name="book_memo" class="form-control memosize"></td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 		</div>
+
+
+
 		<input type="hidden" id="email" name="email"> <input
 			type="hidden" id="phone" name="phone"> <input type="hidden"
 			id="couponhistory_no">
+		<input type="hidden" id="memberno" name="memberno">
 		<div class="row" align="center">
 			<input type="button" value="예약하기" class="btn btn-default"
 				style="width: 200px; height: 50px;" id="btn_reservation">

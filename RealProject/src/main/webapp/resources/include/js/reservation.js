@@ -1,5 +1,6 @@
 /*자바 스크립트*/
 var selectedMenu;
+var seats;
 var allprice;
 // 장바구니 추가시 배열에 하나씩 추가, 쿼리로 데이터 이동.
 var cart_menuno = new Array();
@@ -9,9 +10,17 @@ var cart_price = new Array();
 var cart_kind = new Array();
 var cart_amount = new Array();
 var cart_seq = 0;
+
+var seat_no = 9999;
+var book_people = 1;
+
 // 이용 시간의 Default 값
 var time = "12:00 ~ 14:00";
 var selectOption = 1;
+
+// DataPicker을 통해 선택한 날짜
+var selectedDay;
+
 function makecomma(num) {
 	var str = num + '';
 	var leng = str.length;
@@ -120,6 +129,10 @@ function addList() {
 			}
 		}
 		if (resultnum == 9999) {
+			if (cart_seq >= 8 && cart_menuno[i] != selectedMenu.menu_no) {
+				alert("최대 8개의 메뉴만 주문하실 수 있습니다.")
+				return;
+			}
 			cart_menuno[cart_seq] = selectedMenu.menu_no;
 			cart_name[cart_seq] = selectedMenu.menu_name;
 			cart_text[cart_seq] = selectedMenu.menu_text;
@@ -145,6 +158,7 @@ function addList() {
 			$("#allprice").html(makecomma(allprice));
 		}
 		cart_seq += 1;
+		alert("장바구니에 추가되었습니다 !")
 	});
 }
 
@@ -160,7 +174,6 @@ function checkMenu(menu_no) {
 		},
 		success : function(resultdata) {
 			console.log("정보 받아오기 성공");
-			alert("장바구니에 추가되었습니다 !")
 			selectedMenu = resultdata;
 			addList();
 		}
@@ -180,6 +193,42 @@ $("#datepicker").datepicker({
 	dateFormat : "yy년 mm월 dd일",
 	onSelect : function(dateText, inst) {
 		$("#reservationdate").html(dateText);
+		var sus = dateText.split("년 ");
+		var dnjf = sus[1].split("월 ");
+		var dlf = dnjf[1].split("일");
+		var date = sus[0] + "-" + dnjf[0] + "-" + dlf[0];
+		// yy년 mm월 dd일 String 값을 배열로 나누어 yy-mm-dd 포멧으로 변경.
+		selectedDay = date;
+		console.log("예약 일시/인원 선택 날짜 : " + date);
+		$.ajax({
+			url : "/reservation/date",
+			type : "post",
+			data : {
+				"seat_date" : date
+			},
+			error : function() {
+				alert('사이트 접속 문제로 정상 작동하지 못하였습니다. 잠시 후 다시 시도해 주세요.');
+			},
+			success : function(resultdata) {
+				console.log(resultdata);
+				if (resultdata != null) {
+					/*for(var i=0; i<resultdata.length; i++){
+					}*/
+					seats = resultdata;
+					seat_no = resultdata[0].seat_no;
+					$("#extra1").html(resultdata[0].seat_extra);
+					$("#extra2").html(resultdata[1].seat_extra);
+					$("#extra3").html(resultdata[2].seat_extra);
+					$("#extra4").html(resultdata[3].seat_extra);
+				/*if (resultdata.seat_time == "12:00 ~ 14:00") {
+				} else if (resultdata.seat_time == "17:30 ~ 19:20") {
+				} else if (resultdata.seat_time == "20:00 ~ 22:00") {
+				} else if (resultdata.seat_time == "21:15 ~ 23:15") {
+				}*/
+				}
+			}
+		});
+
 	}
 });
 $("#accordion").accordion({
@@ -189,12 +238,16 @@ $("#accordion").accordion({
 /*JQuery 제이쿼리*/
 $(function() {
 	$("#btn_reservation").click(function() {
-
 		/*이메일 1 , 2 합체!!!*/
+		if ((login == '' || login == null) && alerts != 0) {
+			alert("로그인 후 이용하실 수 있습니다.");
+			alerts++;
+			return;
+		}
 		$("#email").val($("#email1").val() + "@" + $("#email2").val());
 		$("#phone").val($("#phone1").val() + "-" + $("#phone2").val() + "-" + $("#phone3").val());
 		if (cart_menuno == null || cart_menuno == "") {
-			alert("장바구니가 비었습니다."); 
+			alert("장바구니가 비었습니다.");
 			return;
 		} else if ($("#email1").val() == "" || $("#email2").val() == "") {
 			alert('이메일 입력란이 비어있습니다.');
@@ -217,8 +270,42 @@ $(function() {
 			url : "/reservation/reserve",
 			type : "post",
 			data : {
-				"cart_menuno" : cart_menuno,
-				"cart_name" : cart_name
+				"member_no" : $("#memberno").val(),
+				"seat_no" : seat_no,
+				"book_people" : book_people,
+				"totalpay" : allprice,
+				"book_condition" : '예약 대기',
+				"coupon_no" : '9999',
+				"discount" : '0',
+				"pay_way" : '현금',
+				"choice_menu1" : cart_menuno[0],
+				"choice_menu2" : cart_menuno[1],
+				"choice_menu3" : cart_menuno[2],
+				"choice_menu4" : cart_menuno[3],
+				"choice_menu5" : cart_menuno[4],
+				"choice_menu6" : cart_menuno[5],
+				"choice_menu7" : cart_menuno[6],
+				"choice_menu8" : cart_menuno[7],
+				"choice_menu_number1" : cart_amount[0],
+				"choice_menu_number2" : cart_amount[1],
+				"choice_menu_number3" : cart_amount[2],
+				"choice_menu_number4" : cart_amount[3],
+				"choice_menu_number5" : cart_amount[4],
+				"choice_menu_number6" : cart_amount[5],
+				"choice_menu_number7" : cart_amount[6],
+				"choice_menu_number8" : cart_amount[7],
+				"choice_menu_price1" : cart_price[0],
+				"choice_menu_price2" : cart_price[1],
+				"choice_menu_price3" : cart_price[2],
+				"choice_menu_price4" : cart_price[3],
+				"choice_menu_price5" : cart_price[4],
+				"choice_menu_price6" : cart_price[5],
+				"choice_menu_price7" : cart_price[6],
+				"choice_menu_price8" : cart_price[7],
+				"book_name" : $("#book_name").val(),
+				"book_phone" : phone,
+				"book_email" : email,
+				"book_memo" : $("#book_memo").val()
 			},
 			error : function() {
 				alert('사이트 접속 문제로 정상 작동하지 못하였습니다. 잠시 후 다시 시도해 주세요.');
@@ -229,35 +316,41 @@ $(function() {
 		});
 		alert("아~ 예약 ~ 되셨구요~ 시간 맞춰서~ 오세요~");
 	});
-
 	$('input:radio[name="timetable"]').change(function() {
 		if ($(this).val() == '1') {
 			selectOption = 1;
 			time = "12:00 ~ 14:00";
+			seat_no = seats[0].seat_no;
 		} else if ($(this).val() == '2') {
 			selectOption = 2;
 			time = "17:30 ~ 19:20"
+			seat_no = seats[1].seat_no;
 		} else if ($(this).val() == '3') {
 			selectOption = 3;
 			time = "20:00 ~ 22:00";
+			seat_no = seats[2].seat_no;
 		} else if ($(this).val() == '4') {
 			selectOption = 4;
 			time = "21:15 ~ 23:15";
+			seat_no = seats[3].seat_no;
 		}
 		toggleSpinners(selectOption);
 		$("#reservationtime").html(time);
 	});
-
 	$("#numberic1").bind("click", function() {
 		$("#reservationpeople").html($("#numberic1").val());
+		book_people = $("#numberic1").val();
 	});
 	$("#numberic2").bind("click", function() {
 		$("#reservationpeople").html($("#numberic2").val());
+		book_people = $("#numberic2").val();
 	});
 	$("#numberic3").bind("click", function() {
 		$("#reservationpeople").html($("#numberic3").val());
+		book_people = $("#numberic3").val();
 	});
 	$("#numberic4").bind("click", function() {
 		$("#reservationpeople").html($("#numberic4").val());
+		book_people = $("#numberic4").val();
 	});
 });
