@@ -59,7 +59,7 @@ li < a {
 						class="caret"></span></a>
 					<ul class="dropdown-menu" aria-labelledby="about-us">
 						<li><a href="/adminNotice">공지사항관리</a></li>
-						<li><a href="#">FAQ관리</a></li>
+						<li><a href="/adminFaq/adminFaqList">FAQ관리</a></li>
 						<li><a href="#">1:1문의관리</a></li>
 					</ul></li>
 				<li id="menutab6"><a href="#"><font color="black">통계</font></a></li>

@@ -30,7 +30,9 @@
 		<put-attribute name="main"
 			value="/WEB-INF/views/admin/notice/{1}.jsp" />
 	</definition>
-
+	<definition name="admin/faq/*" extends="afterLogin">
+		<put-attribute name="main" value="/WEB-INF/views/admin/faq/{1}.jsp" />
+	</definition>
 	<definition name="admin/coupon/*" extends="afterLogin">
 		<put-attribute name="main"
 			value="/WEB-INF/views/admin/coupon/{1}.jsp" />
