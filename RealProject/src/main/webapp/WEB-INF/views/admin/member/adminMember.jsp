@@ -49,7 +49,7 @@
 		}
 		// 이름클릭시 상세 페이지 이동을 위한 처리 이벤트
 		$(".memberInfo").click(function() {
-			var m_no = $(this).parents("tr").attr("data-num");
+			var m_no = $(this).attr("data-num");
 			$("#member_no").val(m_no);
 			// 상세 페이지로 이동하기위한 form에 액션과 전송방식 추가
 			$("#detailForm").attr({
@@ -305,13 +305,13 @@
 						<c:choose>
 							<c:when test="${not empty memberList}">
 								<c:forEach var="member" items="${memberList}" varStatus="status">
-									<tr data-num="${member.member_no}">
+									<tr data-num="${member.member_no}" class="memberInfo">
 										<td>${count - status.index}</td>
 										<td>${member.member_no}</td>
 										<td>${member.condition}</td>
 										<td>${member.rank}</td>
 										<td>${member.id}</td>
-										<td class="memberInfo">${member.name}</td>
+										<td>${member.name}</td>
 										<td><c:set value="${member.gender }" var="gender"></c:set>
 											<c:choose>
 												<c:when test="${gender == '1'}">

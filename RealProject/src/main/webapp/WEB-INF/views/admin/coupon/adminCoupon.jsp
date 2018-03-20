@@ -63,8 +63,7 @@
 		});
 		$(".couponInfo").click(
 				function() {
-					var selectedCouponNo = $(this).parents("tr").attr(
-							"data-num");
+					var selectedCouponNo = $(this).attr("data-num");
 					$.ajax({
 						method : "get",
 						url : "/adminCoupon/selectCoupon",
@@ -207,9 +206,9 @@
 					<c:choose>
 						<c:when test="${not empty couponList}">
 							<c:forEach var="coupon" items="${couponList}" varStatus="status">
-								<tr data-num="${coupon.coupon_no}">
+								<tr data-num="${coupon.coupon_no}" class="couponInfo">
 									<td>${coupon.coupon_no}</td>
-									<td class="couponInfo">${coupon.coupon_name}</td>
+									<td>${coupon.coupon_name}</td>
 									<td>${coupon.coupon_term}</td>
 									<td>${coupon.coupon_discountrate}</td>
 									<td><c:if test="${coupon.coupon_active == '사용가능쿠폰'}">
