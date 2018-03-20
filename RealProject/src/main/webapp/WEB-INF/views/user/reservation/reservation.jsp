@@ -15,7 +15,9 @@
 	var menuList = '${menulist}';
 	var login = '${login}';
 	var loginno = '${login.member_no}';
-	var memberCouponList = '${memberCouponList}';
+	var loginname = '${login.name}';
+	var loginphone = '${login.phone}';
+	var loginemail = '${login.email}';
 	var alerts = 0;
 	$(document).ready(function() {
 		toggleSpinners(1);
@@ -35,6 +37,31 @@
 			}
 		}
 		$("#memberno").val(loginno);
+		var dt;
+		dt = new Date();
+		dt = dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + (dt.getDate() + 1);
+		// 오늘 날짜 기준으로 DatePicker 업데이트 및 갱신
+		$.ajax({
+			url : "/reservation/date",
+			type : "post",
+			data : {
+				"seat_date" : dt
+			},
+			error : function() {
+				alert('사이트 접속 문제로 정상 작동하지 못하였습니다. 잠시 후 다시 시도해 주세요.');
+			},
+			success : function(resultdata) {
+				console.log(resultdata);
+				if (resultdata != null) {
+					seats = resultdata;
+					seat_no = resultdata[0].seat_no;
+					$("#extra1").html(resultdata[0].seat_extra);
+					$("#extra2").html(resultdata[1].seat_extra);
+					$("#extra3").html(resultdata[2].seat_extra);
+					$("#extra4").html(resultdata[3].seat_extra);
+				}
+			}
+		});
 	});
 	$(document).click(function() {
 		if ((login == '' || login == null) && alerts <= 1) {
@@ -42,6 +69,21 @@
 			alerts++;
 			return;
 		}
+	});
+	$(function() {
+		$("#inputid").bind("change", function() {
+			if (document.getElementById("inputid").checked == true) {
+				var phonesplit = loginphone.split("-");
+				var emailsplit = loginemail.split("@");
+				$("#book_name").val(loginname);
+				$("#phone1").val(phonesplit[0]);
+				$("#phone2").val(phonesplit[1]);
+				$("#phone3").val(phonesplit[2]);
+				$("#email1").val(emailsplit[0]);
+				$("#email2").val(emailsplit[1]);
+			}
+		});
+
 	});
 </script>
 <body>
@@ -76,7 +118,7 @@
 						<tr class="active">
 							<td><input type="radio" name="timetable" value="1"
 								checked="checked" /> 12:00 ~ 14:00</td>
-							<td id="extra1">30</td>
+							<td id="extra1">0</td>
 							<td class="form-inline"><input type="number" min="1"
 								max="30" class="form-control"
 								style="width: 100px; height: 25px;" id="numberic1"><span
@@ -85,7 +127,7 @@
 						<tr class="active">
 							<td><input type="radio" name="timetable" value="2" /> 17:30
 								~ 19:20</td>
-							<td id="extra2">40</td>
+							<td id="extra2">0</td>
 							<td class="form-inline"><input type="number" min="1"
 								max="40" class="form-control"
 								style="width: 100px; height: 25px;" id="numberic2"><span
@@ -94,7 +136,7 @@
 						<tr class="active">
 							<td><input type="radio" name="timetable" value="3" /> 20:00
 								~ 22:00</td>
-							<td id="extra3">50</td>
+							<td id="extra3">0</td>
 							<td class="form-inline"><input type="number" min="1"
 								max="50" class="form-control"
 								style="width: 100px; height: 25px;" id="numberic3"><span
@@ -103,7 +145,7 @@
 						<tr class="active">
 							<td><input type="radio" name="timetable" value="4" /> 21:15
 								~ 23:15</td>
-							<td id="extra4">20</td>
+							<td id="extra4">0</td>
 							<td class="form-inline"><input type="number" min="1"
 								max="20" class="form-control"
 								style="width: 100px; height: 25px;" id="numberic4"><span
@@ -134,9 +176,16 @@
 													<div class="caption" style="height: 250px;">
 														<h3 class="text-center">${menu.menu_name }</h3>
 														<p>${menu.menu_text }</p>
-														<p class="text-right"
+														<p class="text-left"
 															style="position: absolute; bottom: 30px;">
-															<font size="3.5">${menu.menu_price } 원</font>
+															<font size="3.5">정상가 <script>
+																var originalPrice = '${menu.menu_price + (menu.menu_price/10)}';
+																var writePrice = originalPrice.split(".0");
+																console.log(writePrice);
+																document.write(writePrice[0]);
+															</script> 원
+															</font><br /> <strong><font size="3">회원가
+																	${menu.menu_price } 원</font></strong>
 														</p>
 														<p style="padding-left: 59%">
 															<input type="button" class="btn btn-primary"
@@ -173,9 +222,16 @@
 													<div class="caption" style="height: 250px;">
 														<h3 class="text-center">${menu.menu_name }</h3>
 														<p>${menu.menu_text }</p>
-														<p class="text-right"
+														<p class="text-left"
 															style="position: absolute; bottom: 30px;">
-															<font size="3.5">${menu.menu_price } 원</font>
+															<font size="3.5">정상가 <script>
+																var originalPrice = '${menu.menu_price + (menu.menu_price/10)}';
+																var writePrice = originalPrice.split(".0");
+																console.log(writePrice);
+																document.write(writePrice[0]);
+															</script> 원
+															</font><br /> <strong><font size="3">회원가
+																	${menu.menu_price } 원</font></strong>
 														</p>
 														<p style="padding-left: 59%">
 															<input type="button" class="btn btn-primary"
@@ -212,9 +268,16 @@
 													<div class="caption" style="height: 250px;">
 														<h3 class="text-center">${menu.menu_name }</h3>
 														<p>${menu.menu_text }</p>
-														<p class="text-right"
+														<p class="text-left"
 															style="position: absolute; bottom: 30px;">
-															<font size="3.5">${menu.menu_price } 원</font>
+															<font size="3.5">정상가 <script>
+																var originalPrice = '${menu.menu_price + (menu.menu_price/10)}';
+																var writePrice = originalPrice.split(".0");
+																console.log(writePrice);
+																document.write(writePrice[0]);
+															</script> 원
+															</font><br /> <strong><font size="3">회원가
+																	${menu.menu_price } 원</font></strong>
 														</p>
 														<p style="padding-left: 59%">
 															<input type="button" class="btn btn-primary"
@@ -251,9 +314,16 @@
 													<div class="caption" style="height: 250px;">
 														<h3 class="text-center">${menu.menu_name }</h3>
 														<p>${menu.menu_text }</p>
-														<p class="text-right"
+														<p class="text-left"
 															style="position: absolute; bottom: 30px;">
-															<font size="3.5">${menu.menu_price } 원</font>
+															<font size="3.5">정상가 <script>
+																var originalPrice = '${menu.menu_price + (menu.menu_price/10)}';
+																var writePrice = originalPrice.split(".0");
+																console.log(writePrice);
+																document.write(writePrice[0]);
+															</script> 원
+															</font><br /> <strong><font size="3">회원가
+																	${menu.menu_price } 원</font></strong>
 														</p>
 														<p style="padding-left: 59%">
 															<input type="button" class="btn btn-primary"
@@ -308,7 +378,7 @@
 				</table>
 			</div>
 		</div>
-		<br />
+		<br /> <br />
 		<div class="row borderstyle">
 			<img src="/resources/include/css/images/reserv4.jpg" class="imgs">
 			<br /> <br />
@@ -318,20 +388,24 @@
 						<c:when test="${not empty memberCouponInfo}">
 							<c:forEach var="couponList" items="${memberCouponInfo}"
 								varStatus="status">
-								<tr data-num="${couponList.couponhistory_no}"
-									id="coupon${couponList.couponhistory_no}" class="selectCoupon">
-									<td><label>쿠폰명</label></td>
-									<td>${couponList.coupon_name}</td>
-									<td><label>할인율</label></td>
-									<td id=${couponList.couponhistory_no }>${couponList.coupon_discountrate * 100}%</td>
-									<td><label>유효기간</label></td>
-									<td>${couponList.coupon_start}부터~${couponList.coupon_end}까지</td>
-								</tr>
-								<script type="text/javascript">
+								<c:if test="${couponList.coupon_status == '사용가능쿠폰'}">
+									<tr data-num="${couponList.couponhistory_no}"
+										id="coupon${couponList.couponhistory_no}" class="selectCoupon">
+										<td><label>쿠폰명</label></td>
+										<td>${couponList.coupon_name}</td>
+										<td><label>할인율</label></td>
+										<td id=${couponList.couponhistory_no }>${couponList.coupon_discountrate * 100}%</td>
+										<td><label>유효기간</label></td>
+										<td>${couponList.coupon_start}부터~${couponList.coupon_end}까지</td>
+										<td style="width: 50px;" align="center"><span role="no"
+											id="span${couponList.couponhistory_no }"></span></td>
+									</tr>
+									<script type="text/javascript">
 									var rate = '${couponList.coupon_discountrate * 100}';
 									var result = rate.split(".0");
-									$("#"+${couponList.couponhistory_no }).html(result[0] + " %");
+									$("#"+${couponList.couponhistory_no }).html(result[0] + "%");
 								</script>
+								</c:if>
 							</c:forEach>
 						</c:when>
 						<c:otherwise>
@@ -351,19 +425,24 @@
 				</table>
 			</div>
 		</div>
+		<br /> <br />
 		<div class="row borderstyle">
 			<img src="/resources/include/css/images/reserv5.jpg" class="imgs">
-			<br /> <br />
+			<br />
+			<div align="right">
+				<input type="checkbox" id="inputid" value="">회원 정보와 같습니다.
+			</div>
 			<div class="col-md-12">
 				<table
 					class="table table-hover table-striped table-bordered table-user">
 					<tbody>
 						<tr class="active">
 							<td>ㆍ예약자 성명</td>
-							<td><input type="text" class="form-control" id="book_name" name="book_name"></td>
+							<td><input type="text" class="form-control" id="book_name"
+								name="book_name"></td>
 							<td style="padding-left: 2%; padding-right: 2%;">ㆍ연락처</td>
 							<td class="form-inline"><input type="text"
-								class="form-control telephone" id="phone1" style="width: 100px">-<input
+								class="form-control telephone" id="phone1" style="width: 120px">-<input
 								type="text" class="form-control telephone" id="phone2"
 								style="width: 150px">-<input type="text"
 								class="form-control telephone" id="phone3" style="width: 150px"></td>
@@ -383,13 +462,56 @@
 				</table>
 			</div>
 		</div>
-
-
-
-		<input type="hidden" id="email" name="email"> <input
+		<br /> <br />
+		<div class="row borderstyle">
+			<img src="/resources/include/css/images/reserv6.jpg" class="imgs">
+			<br /> <br />
+			<div class="col-md-12">
+				<table
+					class="table table-hover table-striped table-bordered table-user">
+					<tbody>
+						<tr class="active">
+							<td align="center" style="padding-top: 25px; width: 40%;"><input
+								type="radio" name="payway" value="신용카드" checked="checked" />
+								신용카드 &nbsp;<input type="radio" name="payway" value="계좌이체" />
+								실시간 계좌이체&nbsp;</td>
+							<td style="width: 59%;">
+								<table style="width: 100%;">
+									<tr>
+										<td style="padding-left: 10px;"><strong>주문금액</strong></td>
+										<td align="right" style="padding-right: 7%;"><font
+											size="4px"><span id="payment_ordered">0</span></font>원</td>
+									</tr>
+									<tr>
+										<td style="padding-left: 10px;"><strong>할인금액</strong></td>
+										<td align="right" style="padding-right: 7%;"><font
+											size="4px"><span id="payment_discount">0</span></font>원</td>
+									</tr>
+									<tr>
+										<td style="padding-left: 10px;">총 결제금액</td>
+										<td align="right" style="padding-right: 7%;"><font
+											size="4px"><span id="payment_whole">0</span></font>원(VAT포함)</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<ul>
+					<li><font size="2.5px"><strong>온라인 주문시 기본적으로
+								10% 할인된 회원값이 적용됩니다.</strong></font></li>
+					<li><font size="2.5px"><strong>쿠폰은 중복 사용이
+								불가능하며, 최대 1개까지 사용하실 수 있습니다.</strong></font></li>
+					<li><font size="2.5px"><strong>이용약관 제 16조에 의거
+								이용일 당일 취소 및 환불 불가합니다.</strong></font></li>
+					<li><font size="2px">이용방법 : 예약한 시간에 맞춰 레스토랑에 방문해 주세요.</font></li>
+				</ul>
+			</div>
+		</div>
+		<br /> <input type="hidden" id="email" name="email"> <input
 			type="hidden" id="phone" name="phone"> <input type="hidden"
-			id="couponhistory_no">
-		<input type="hidden" id="memberno" name="memberno">
+			id="couponhistory_no" value="9999"> <input type="hidden"
+			id="memberno" name="memberno">
 		<div class="row" align="center">
 			<input type="button" value="예약하기" class="btn btn-default"
 				style="width: 200px; height: 50px;" id="btn_reservation">
@@ -401,10 +523,6 @@
 	<script src="/resources/include/dist/js/bootstrap.min.js"></script>
 	<script src="/resources/include/js/reservation.js"></script>
 	<script type="text/javascript">
-		$(".selectCoupon").click(function() {
-			var couponhistory_no = $(this).attr("data-num");
-			$("#couponhistory_no").val(couponhistory_no);
-			console.log($("#couponhistory_no").val());
-		});
+		
 	</script>
 </body>

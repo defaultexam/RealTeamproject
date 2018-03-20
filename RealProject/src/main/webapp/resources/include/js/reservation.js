@@ -10,10 +10,10 @@ var cart_price = new Array();
 var cart_kind = new Array();
 var cart_amount = new Array();
 var cart_seq = 0;
-
 var seat_no = 9999;
 var book_people = 1;
-
+var discountrate = 0;
+var discountPrice = 0;
 // 이용 시간의 Default 값
 var time = "12:00 ~ 14:00";
 var selectOption = 1;
@@ -157,6 +157,13 @@ function addList() {
 			allprice = allprice + selectedMenu.menu_price;
 			$("#allprice").html(makecomma(allprice));
 		}
+		if (discountrate != "0") {
+			var discounts = discountrate.split("%");
+			discountPrice = ((allprice / 100) * discounts[0]);
+		}
+		$("#payment_discount").html(makecomma(discountPrice));
+		$("#payment_whole").html(allprice - discountPrice);
+		$("#payment_ordered").html($("#allprice").html());
 		cart_seq += 1;
 		alert("장바구니에 추가되었습니다 !")
 	});
@@ -210,21 +217,13 @@ $("#datepicker").datepicker({
 				alert('사이트 접속 문제로 정상 작동하지 못하였습니다. 잠시 후 다시 시도해 주세요.');
 			},
 			success : function(resultdata) {
-				console.log(resultdata);
 				if (resultdata != null) {
-					/*for(var i=0; i<resultdata.length; i++){
-					}*/
 					seats = resultdata;
 					seat_no = resultdata[0].seat_no;
 					$("#extra1").html(resultdata[0].seat_extra);
 					$("#extra2").html(resultdata[1].seat_extra);
 					$("#extra3").html(resultdata[2].seat_extra);
 					$("#extra4").html(resultdata[3].seat_extra);
-				/*if (resultdata.seat_time == "12:00 ~ 14:00") {
-				} else if (resultdata.seat_time == "17:30 ~ 19:20") {
-				} else if (resultdata.seat_time == "20:00 ~ 22:00") {
-				} else if (resultdata.seat_time == "21:15 ~ 23:15") {
-				}*/
 				}
 			}
 		});
@@ -235,8 +234,26 @@ $("#accordion").accordion({
 	collapsible : true,
 	active : false
 });
+
 /*JQuery 제이쿼리*/
 $(function() {
+	// 쿠폰 선택시
+	$(".selectCoupon").click(function() {
+		var couponhistory_no = $(this).attr("data-num");
+		$("#couponhistory_no").val(couponhistory_no);
+		discountrate = $("#" + couponhistory_no).html();
+		if (allprice == 0) $("#" + couponhistory_no).html("0");
+		$("span[role=no]").html("");
+		$("#span" + couponhistory_no).html("✓");
+
+		if (discountrate != "0" && allprice != 0) {
+			var discounts = discountrate.split("%");
+			discountPrice = ((allprice / 100) * discounts[0]);
+		}
+		$("#payment_discount").html(makecomma(discountPrice));
+		$("#payment_whole").html(allprice - discountPrice);
+	});
+
 	$("#btn_reservation").click(function() {
 		/*이메일 1 , 2 합체!!!*/
 		if ((login == '' || login == null) && alerts != 0) {
@@ -273,11 +290,11 @@ $(function() {
 				"member_no" : $("#memberno").val(),
 				"seat_no" : seat_no,
 				"book_people" : book_people,
-				"totalpay" : allprice,
-				"book_condition" : '예약 대기',
-				"coupon_no" : '9999',
-				"discount" : '0',
-				"pay_way" : '현금',
+				"totalpay" : $("#payment_whole").html(),
+				"book_condition" : '미사용',
+				"coupon_no" : $("#couponhistory_no").val(),
+				"discount" : discountPrice,
+				"pay_way" : $('input:radio[name="payway"]').val(),
 				"choice_menu1" : cart_menuno[0],
 				"choice_menu2" : cart_menuno[1],
 				"choice_menu3" : cart_menuno[2],
@@ -303,12 +320,13 @@ $(function() {
 				"choice_menu_price7" : cart_price[6],
 				"choice_menu_price8" : cart_price[7],
 				"book_name" : $("#book_name").val(),
-				"book_phone" : phone,
-				"book_email" : email,
+				"book_phone" : $("#phone").val(),
+				"book_email" : $("#email").val(),
 				"book_memo" : $("#book_memo").val()
 			},
-			error : function() {
+			error : function(e) {
 				alert('사이트 접속 문제로 정상 작동하지 못하였습니다. 잠시 후 다시 시도해 주세요.');
+				console.log(e);
 			},
 			success : function(resultdata) {
 				window.location.href = '/';

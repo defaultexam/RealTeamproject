@@ -120,4 +120,18 @@ public class MemberServiceImpl implements MemberService {
 		result = memberDAO.memberCoupon(member_no);
 		return result;
 	}
+
+	@Override
+	public int memberCouponUpdate(MemberVO mvo) {
+		int result;
+		try {
+			memberDAO.memberCouponUpdate(mvo);
+			result = 1;
+			logger.info("memberCouponUpdate 성공, 쿠폰번호: " + mvo.getAgreement1());
+		} catch (Exception e) {
+			result = 0;
+			logger.info("memberCouponUpdate 실패, 쿠폰번호: " + mvo.getAgreement1());
+		}
+		return result;
+	}
 }

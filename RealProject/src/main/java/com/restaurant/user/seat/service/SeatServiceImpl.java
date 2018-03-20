@@ -28,10 +28,7 @@ public class SeatServiceImpl implements SeatService {
 	@Override
 	public boolean updateSeat(SeatVO svo) {
 		try {
-			if (!svo.getSeat_time().isEmpty()) {
-				seatDAO.updateSeat(svo);
-			}
-
+			seatDAO.updateSeat(svo);
 		} catch (Exception e) {
 			return false;
 		}

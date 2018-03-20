@@ -21,4 +21,6 @@ public interface MemberService {
 	public String memberSearchByID(String id, String email);
 	
 	public List<CouponHistoryVO> memberCoupon(int member_no);
+	
+	public int memberCouponUpdate(MemberVO mvo);
 }

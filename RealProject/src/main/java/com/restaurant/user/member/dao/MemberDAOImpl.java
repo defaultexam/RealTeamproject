@@ -63,8 +63,11 @@ public class MemberDAOImpl implements MemberDAO {
 
 	@Override
 	public List<CouponHistoryVO> memberCoupon(int member_no) {
-		// TODO Auto-generated method stub
 		return session.selectList("memberCoupon", member_no);
 	}
 
+	@Override
+	public int memberCouponUpdate(MemberVO mvo) {
+		return session.update("memberCouponUpdate", mvo);
+	}
 }

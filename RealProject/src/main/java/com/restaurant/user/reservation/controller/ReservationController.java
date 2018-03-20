@@ -138,10 +138,27 @@ public class ReservationController {
 		logger.info("/reservation/reserve POST 호출 성공");
 		String result;
 		int resultnumber = reservationService.reservationInsert(rvo);
-		if (resultnumber == 1)
+		if (resultnumber == 1) {
+			// SEAT SERVICE -> book_people 수 만큼 줄여야함.
+			SeatVO svo = new SeatVO();
+			svo.setSeat_no(rvo.getSeat_no());
+			svo.setSeat_extra(rvo.getBook_people());
+			boolean seatResult = seatService.updateSeat(svo);
+			logger.info(seatResult + " seatService.updateSeat 결과, true or false");
 			result = "성공";
-		else
+		} else {
 			result = "실패";
+		}
+		if (rvo.getCoupon_no() != 9999) {
+			// 쿠폰 -> coupon_status = '사용 완료'
+			MemberVO mvo = new MemberVO();
+			// 2개 이상의 값을 update로 넘겨야하기 때문에, 임시방편으로 MemberVO를 사용.
+			// agreement1 = 쿠폰번호
+			mvo.setAgreement1(rvo.getCoupon_no());
+			// agreement2 = 할인 값 (discountprice)
+			mvo.setAgreement2(rvo.getDiscount());
+			memberService.memberCouponUpdate(mvo);
+		}
 		return result;
 	}
 }
