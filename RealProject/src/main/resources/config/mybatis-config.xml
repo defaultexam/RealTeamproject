@@ -17,7 +17,7 @@
 			alias="bvo" />
 		<typeAlias type="com.restaurant.admin.notice.vo.AdminNoticeVO"
 			alias="notice" />
-			<typeAlias type="com.restaurant.admin.faq.vo.AdminFaqVO"
+		<typeAlias type="com.restaurant.admin.faq.vo.AdminFaqVO"
 			alias="faq" />
 		<typeAlias type="com.restaurant.admin.coupon.vo.CouponVO"
 			alias="coupon" />
@@ -26,5 +26,7 @@
 		<typeAlias type="com.restaurant.user.reservation.vo.ReservationVO"
 			alias="reservation" />
 		<typeAlias type="com.restaurant.user.seat.vo.SeatVO" alias="seat" />
+		<typeAlias type="com.restaurant.admin.reservation.vo.AdminReservationVO"
+			alias="adminreservation" />
 	</typeAliases>
 </configuration> 

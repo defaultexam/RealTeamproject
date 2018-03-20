@@ -37,5 +37,9 @@
 		<put-attribute name="main"
 			value="/WEB-INF/views/admin/coupon/{1}.jsp" />
 	</definition>
+	<definition name="admin/reservation/*" extends="afterLogin">
+		<put-attribute name="main"
+			value="/WEB-INF/views/admin/reservation/{1}.jsp" />
+	</definition>
 
 </tiles-definitions> 

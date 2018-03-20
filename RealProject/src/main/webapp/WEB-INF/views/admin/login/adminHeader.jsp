@@ -14,6 +14,12 @@ li < a {
 	function tab() {
 		sessionStorage.removeItem("tab");
 	}
+	function menuTab() {
+		sessionStorage.removeItem("menu");
+	}
+	function reservationTab() {
+		sessionStorage.removeItem("reservation");
+	}
 </script>
 <link href="/resources/include/dist/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -25,8 +31,9 @@ li < a {
 	<div id="header">
 
 		<div>
-			<img align="middle" alt="" src="/resources/images/logo.png" width="200"
-				height="200" onclick='location.href="/afterAdminLogin.do"'>
+			<img align="middle" alt="" src="/resources/images/logo.png"
+				width="200" height="200"
+				onclick='location.href="/afterAdminLogin.do"'>
 			<div id="adminHello">
 				<label>관리자님 반갑습니다.</label> <a href="/admin/logout.do">로그아웃</a>
 			</div>
@@ -42,14 +49,15 @@ li < a {
 						<li><a href="/adminCoupon/couponList">쿠폰관리</a></li>
 					</ul></li>
 
-				<li id="menutab2"><a href="/menu/menuSelect"><font
-						color="black">메뉴관리</font></a></li>
+				<li id="menutab2"><a href="/menu/menuSelect"
+					onclick="menuTab();"><font color="black">메뉴관리</font></a></li>
 				<li id="menutab3" class="dropdown"><a href="#"
 					class="dropdown-toggle" data-toggle="dropdown" role="button"
 					aria-haspopup="true" aria-expanded="false"><font color="black">예약관리</font><span
 						class="caret"></span></a>
 					<ul class="dropdown-menu" aria-labelledby="about-us">
-						<li><a href="#">예약내역관리</a></li>
+						<li><a href="/adminReservation/list"
+							onclick="reservationTab();">예약내역관리</a></li>
 						<li><a href="#">취소내역관리</a></li>
 					</ul></li>
 				<li id="menutab4"><a href="#"><font color="black">방문후기관리</font></a></li>

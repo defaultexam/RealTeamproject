@@ -5,6 +5,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link href="/resources/include/dist/css/bootstrap.min.css"
+	rel="stylesheet">
 <style type="text/css">
 table, .none, .nonev {
 	border: 0;
@@ -39,6 +43,12 @@ a {
 	function tab() {
 		sessionStorage.removeItem("tab");
 	}
+	function menuTab() {
+		sessionStorage.removeItem("menu");
+	}
+	function reservationTab() {
+		sessionStorage.removeItem("reservation");
+	}
 </script>
 <title>관리자컨텐츠부분</title>
 </head>
@@ -52,11 +62,12 @@ a {
 				</td>
 				<td class="none"></td>
 				<td class="menu" align="center">
-					<h2>메뉴관리</h2> <a href="/menu/menuSelect">메뉴관리</a>
+					<h2>메뉴관리</h2> <a href="/menu/menuSelect" onclick="menuTab();">메뉴관리</a>
 				</td>
 				<td class="none"></td>
 				<td class="menu" align="center">
-					<h2>예약관리</h2> <a href="#">예약내역정보</a><br> <a href="#">취소내역정보</a>
+					<h2>예약관리</h2> <a href="/adminReservation/list"
+					onclick="reservationTab();">예약내역정보</a><br> <a href="#">취소내역정보</a>
 				</td>
 			</tr>
 			<tr>
@@ -79,5 +90,9 @@ a {
 			</tr>
 		</table>
 	</div>
+	<script type="text/javascript"
+		src="/resources/include/js/jquery-3.3.1.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="/resources/include/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

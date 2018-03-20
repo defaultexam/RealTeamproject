@@ -60,6 +60,8 @@
 
 	<beans:bean id="memberdao"
 		class="com.restaurant.admin.member.dao.AdminMemberDaoImpl" />
+	<beans:bean id="adminreservationdao"
+		class="com.restaurant.admin.reservation.dao.AdminReservationDaoImpl" />
 
 	<context:component-scan base-package="com.restaurant.**.**.**" />
 </beans:beans>

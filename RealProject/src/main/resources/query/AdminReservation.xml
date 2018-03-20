@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.restaurant.admin.reservation.dao.AdminReservationDao">
+
+	<!-- 조건설정 -->
+	<sql id="searchReservation">
+		select book_no, seat_no, member_no, coupon_no, rownum as rnum from
+		booking
+		<where>
+			<if test="name != '' ">
+				(#{name} in (select m.name from member m,booking b where
+				m.member_no=b.member_no) or book_name like #{name}) and
+				<if test="phone != '' ">
+					(member_no in (select member_no from member where phone like
+					concat('%',#{phone}))) and
+					<if test="!searchStart.toString().substring(0,10).contains('9999')">
+						(seat_no in (select s.seat_no from seat s, booking b where
+						s.seat_no=b.seat_no and s.seat_date between #{searchStart} and
+						#{searchEnd})) and
+						<if test="book_condition != ''">
+							book_condition = #{book_condition}
+						</if>
+						<if test="book_condition == ''">
+							<![CDATA[ 1=1 ]]>
+						</if>
+					</if>
+					<if test="searchStart.toString().substring(0,10).contains('9999')">
+						<if test="book_condition != ''">
+							book_condition = #{book_condition}
+						</if>
+						<if test="book_condition == ''">
+							<![CDATA[ 1=1 ]]>
+						</if>
+					</if>
+				</if>
+				<if test="phone == '' ">
+					<if test="!searchStart.toString().substring(0,10).contains('9999')">
+						(seat_no in (select s.seat_no from seat s, booking b where
+						s.seat_no=b.seat_no and s.seat_date between #{searchStart} and
+						#{searchEnd})) and
+						<if test="book_condition != ''">
+							book_condition = #{book_condition}
+						</if>
+						<if test="book_condition == ''">
+							<![CDATA[ 1=1 ]]>
+						</if>
+					</if>
+					<if test="searchStart.toString().substring(0,10).contains('9999')">
+						<if test="book_condition != ''">
+							book_condition = #{book_condition}
+						</if>
+						<if test="book_condition == ''">
+							<![CDATA[ 1=1 ]]>
+						</if>
+					</if>
+				</if>
+			</if>
+			<if test="name == '' ">
+				<if test="phone != '' ">
+					(member_no in (select member_no from member where phone like
+					concat('%',#{phone}))) and
+					<if test="!searchStart.toString().substring(0,10).contains('9999')">
+						(seat_no in (select s.seat_no from seat s, booking b where
+						s.seat_no=b.seat_no and s.seat_date between #{searchStart} and
+						#{searchEnd})) and
+						<if test="book_condition != ''">
+							book_condition = #{book_condition}
+						</if>
+						<if test="book_condition == ''">
+							<![CDATA[ 1=1 ]]>
+						</if>
+					</if>
+					<if test="searchStart.toString().substring(0,10).contains('9999')">
+						<if test="book_condition != ''">
+							book_condition = #{book_condition}
+						</if>
+						<if test="book_condition == ''">
+							<![CDATA[ 1=1 ]]>
+						</if>
+					</if>
+				</if>
+				<if test="phone == '' ">
+					<if test="!searchStart.toString().substring(0,10).contains('9999')">
+						(seat_no in (select s.seat_no from seat s, booking b where
+						s.seat_no=b.seat_no and s.seat_date between #{searchStart} and
+						#{searchEnd})) and
+						<if test="book_condition != ''">
+							book_condition = #{book_condition}
+						</if>
+						<if test="book_condition == ''">
+							<![CDATA[ 1=1 ]]>
+						</if>
+					</if>
+					<if test="searchStart.toString().substring(0,10).contains('9999')">
+						<if test="book_condition != ''">
+							book_condition = #{book_condition}
+						</if>
+						<if test="book_condition == ''">
+							<![CDATA[ 1=1 ]]>
+						</if>
+					</if>
+				</if>
+			</if>
+		</where>
+		order by book_no desc
+	</sql>
+
+	<!-- 조건에 맞는 예약내역의 seat_no, member_no, coupon_no 출력 -->
+	<select id="reservationNumberList" parameterType="adminreservation"
+		resultType="adminreservation">
+		select list.book_no, list.seat_no, list.member_no, list.coupon_no
+		from
+		(
+		<include refid="searchReservation"></include>
+		) list
+		<where>
+			<if test="start_row != null and start_row != ''">
+				<if test="end_row != null and end_row != ''">
+					rnum between #{start_row} and #{end_row}
+				</if>
+			</if>
+		</where>
+	</select>
+
+
+	<!-- 예약정보 한개뽑기 -->
+	<select id="reservationOne" parameterType="adminreservation"
+		resultType="adminreservation">
+		select book_condition,(select seat_date from seat where
+		seat_no = #{seat_no}) seat_date,(select seat_time from seat where
+		seat_no =#{seat_no}) seat_time, (select name from member where
+		member_no = #{member_no}) name, book_name,
+		(select menu_name from menu
+		where menu_no = choice_menu1 ) menu_name1,(select
+		menu_name from menu
+		where menu_no = choice_menu2 ) menu_name2 ,
+		(select
+		menu_name from menu
+		where menu_no = choice_menu3 ) menu_name3 ,
+		(select
+		menu_name from menu
+		where menu_no = choice_menu4 ) menu_name4 ,
+		(select
+		menu_name from menu
+		where menu_no = choice_menu5 ) menu_name5 ,
+		(select
+		menu_name from menu
+		where menu_no = choice_menu6 ) menu_name6 ,
+		(select
+		menu_name from menu
+		where menu_no = choice_menu7 ) menu_name7 ,
+		(select
+		menu_name from menu
+		where menu_no = choice_menu8 ) menu_name8 ,
+		book_people, (select
+		coupon_name from coupon where coupon_no =
+		#{coupon_no}) coupon_name,
+		pay_way, pay_date, totalPay, book_memo, discount , book_no from
+		(select * from booking where book_no = #{book_no})
+	</select>
+
+	<!-- 게시물 개수 구하는 쿼리 -->
+	<select id="reservationListCnt" parameterType="adminreservation"
+		resultType="int">
+		select nvl(count(1),0) from (select list.* from (
+		<include refid="searchReservation"></include>
+		) list )
+	</select>
+
+	<update id="reservationEdit" parameterType="adminreservation">
+		update booking set
+		book_condition = #{book_condition} where book_no =
+		#{book_no}
+	</update>
+
+	<update id="lateReservationEdit">
+		update booking set book_condition = '기간만료' where seat_no in (select seat_no from seat where seat_date <![CDATA[<= sysdate ) and book_condition = '미사용' ]]>
+	</update>
+</mapper>
