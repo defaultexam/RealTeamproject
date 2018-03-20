@@ -334,12 +334,12 @@
 		/* 엑셀다운로드 버튼 클릭 시 처리 이벤트 */
 		$("#excelReservationList").click(
 				function() {
-					if ($("#searchStartDate").val() == ""
-							|| $("#searchStartDate").val() == null)
-						$("#searchStartDate").removeAttr("name");
-					if ($("#searchEndDate").val() == ""
-							|| $("#searchEndDate").val() == null)
-						$("#searchEndDate").removeAttr("name");
+					if ($("#searchStart").val() == ""
+							|| $("#searchStart").val() == null)
+						$("#searchStart").removeAttr("name");
+					if ($("#searchEnd").val() == ""
+							|| $("#searchEnd").val() == null)
+						$("#searchEnd").removeAttr("name");
 					$("#page").val(page);
 					$("#f_search").attr({
 						"method" : "get",
