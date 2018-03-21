@@ -195,7 +195,7 @@
 														</p>
 														<p style="padding-left: 59%">
 															<input type="button" class="btn btn-primary"
-																role="button" id="${menu.menu_no }"
+																role="button" id="menu${menu.menu_no }"
 																style="width: 130px; position: absolute; bottom: 30px;"
 																value="선택" onclick="checkMenu(${menu.menu_no });">
 														</p>
@@ -240,7 +240,7 @@
 														</p>
 														<p style="padding-left: 59%">
 															<input type="button" class="btn btn-primary"
-																role="button" id="${menu.menu_no }"
+																role="button" id="menu${menu.menu_no }"
 																style="width: 130px; position: absolute; bottom: 30px;"
 																value="선택" onclick="checkMenu(${menu.menu_no });">
 														</p>
@@ -285,7 +285,7 @@
 														</p>
 														<p style="padding-left: 59%">
 															<input type="button" class="btn btn-primary"
-																role="button" id="${menu.menu_no }"
+																role="button" id="menu${menu.menu_no }"
 																style="width: 130px; position: absolute; bottom: 30px;"
 																value="선택" onclick="checkMenu(${menu.menu_no });">
 														</p>
@@ -330,7 +330,7 @@
 														</p>
 														<p style="padding-left: 59%">
 															<input type="button" class="btn btn-primary"
-																role="button" id="${menu.menu_no }"
+																role="button" id="menu${menu.menu_no }"
 																style="width: 130px; position: absolute; bottom: 30px;"
 																value="선택" onclick="checkMenu(${menu.menu_no });">
 														</p>
@@ -424,7 +424,11 @@
 							</c:if>
 						</c:otherwise>
 					</c:choose>
-
+					<tr class="selectCoupon" data-num="9999">
+						<td colspan="6" align="right"><strong>쿠폰을 사용하지 않겠습니다.</strong></td>
+						<td style="width: 50px;" align="center"><span role="no"
+							id="span9999"></span></td>
+					</tr>
 				</table>
 			</div>
 		</div>
@@ -433,7 +437,7 @@
 			<img src="/resources/include/css/images/reserv5.jpg" class="imgs">
 			<br />
 			<div align="right">
-				<input type="checkbox" id="inputid" value="">회원 정보와 같습니다.
+				<input type="checkbox" id="inputid" value="">회원 정보와 동일합니다.
 			</div>
 			<div class="col-md-12">
 				<table

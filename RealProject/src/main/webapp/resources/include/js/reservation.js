@@ -289,30 +289,38 @@ $("#accordion").accordion({
 
 /*JQuery 제이쿼리*/
 $(function() {
-	// 쿠폰 선택시
+	// .selectCoupon 클래스 지정(tr), 쿠폰 선택시
 	$(".selectCoupon").click(function() {
+		// tr에 지정되있는 data-num을 통해 값을 가져옴.
 		var couponhistory_no = $(this).attr("data-num");
+		// hidden으로 만들어 놓은 저장소에 저장, /reservation/reserve로 값을 옮길때 사용.
 		$("#couponhistory_no").val(couponhistory_no);
+		// 4번째 td의 id값인 #쿠폰번호의 값을 가져와 할인율을 확인함.
 		discountrate = $("#" + couponhistory_no).html();
-		if (allprice == 0) $("#" + couponhistory_no).html("0");
+		// 체크 표시 전용 span값 초기화.
 		$("span[role=no]").html("");
+		// span에 선택 표시.
 		$("#span" + couponhistory_no).html("✓");
-
+		if (couponhistory_no == 9999) {
+			discountrate = "0%";
+		}
 		if (discountrate != "0" && allprice != 0) {
+			// 10%와 같은 표기에서 %를 떼어 상수로 표기.
 			var discounts = discountrate.split("%");
 			discountPrice = ((allprice / 100) * discounts[0]);
 		}
-		$("#payment_discount").html(makecomma(discountPrice));
-		$("#payment_whole").html(allprice - discountPrice);
+		// makecomma를 통해 단위를 나누어 표기함, 예) 40,000
+		if (discountPrice >= 0) $("#payment_discount").html(makecomma(discountPrice));
+		if (allprice - discountPrice >= 0) $("#payment_whole").html(allprice - discountPrice);
 	});
 
 	$("#btn_reservation").click(function() {
-		/*이메일 1 , 2 합체!!!*/
 		if ((login == '' || login == null) && alerts != 0) {
 			alert("로그인 후 이용하실 수 있습니다.");
 			alerts++;
 			return;
 		}
+		// 00aaaa00 naver.com 와 같은 분리된 이메일과 전화번호에 추가 기호를 붙여 병합시킴.
 		$("#email").val($("#email1").val() + "@" + $("#email2").val());
 		$("#phone").val($("#phone1").val() + "-" + $("#phone2").val() + "-" + $("#phone3").val());
 		if (cart_menuno == null || cart_menuno == "") {
