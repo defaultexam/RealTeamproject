@@ -19,6 +19,8 @@
 	var loginphone = '${login.phone}';
 	var loginemail = '${login.email}';
 	var alerts = 0;
+	var _dep1 = $("body").attr("data-dep1", "2");
+	var _dep2 = $("body").attr("data-dep2", "-1");
 	$(document).ready(function() {
 		toggleSpinners(1);
 		if ((menuList == null || menuList == '') && login != null) {
@@ -51,7 +53,6 @@
 				alert('사이트 접속 문제로 정상 작동하지 못하였습니다. 잠시 후 다시 시도해 주세요.');
 			},
 			success : function(resultdata) {
-				console.log(resultdata);
 				if (resultdata != null) {
 					seats = resultdata;
 					seat_no = resultdata[0].seat_no;
@@ -65,11 +66,16 @@
 	});
 	$(document).click(function() {
 		if ((login == '' || login == null) && alerts <= 1) {
-			alert("로그인 후 이용하실 수 있습니다.");
+			var guestConfirm = confirm("로그인 후 이용하실 수 있습니다. \n확인을 누르시면 로그인 화면으로 이동합니다.");
+			if (guestConfirm) {
+				window.location.href = "/login";
+			} else {
+			}
 			alerts++;
 			return;
 		}
 	});
+
 	$(function() {
 		$("#inputid").bind("change", function() {
 			if (document.getElementById("inputid").checked == true) {
@@ -87,13 +93,14 @@
 	});
 </script>
 <body>
+
 	<div class="container-fluid">
 		<form method="post" id="getMenu">
 			<input type="hidden" id="transfer_menu_id">
 		</form>
 		<div class="row">
 			<div class="col-md-12">
-				<h1 class="text-center">
+				<h1 class="text-center" id="headerh1">
 					<strong>RESERVATION</strong>
 				</h1>
 			</div>
@@ -181,7 +188,6 @@
 															<font size="3.5">정상가 <script>
 																var originalPrice = '${menu.menu_price + (menu.menu_price/10)}';
 																var writePrice = originalPrice.split(".0");
-																console.log(writePrice);
 																document.write(writePrice[0]);
 															</script> 원
 															</font><br /> <strong><font size="3">회원가
@@ -227,7 +233,6 @@
 															<font size="3.5">정상가 <script>
 																var originalPrice = '${menu.menu_price + (menu.menu_price/10)}';
 																var writePrice = originalPrice.split(".0");
-																console.log(writePrice);
 																document.write(writePrice[0]);
 															</script> 원
 															</font><br /> <strong><font size="3">회원가
@@ -273,7 +278,6 @@
 															<font size="3.5">정상가 <script>
 																var originalPrice = '${menu.menu_price + (menu.menu_price/10)}';
 																var writePrice = originalPrice.split(".0");
-																console.log(writePrice);
 																document.write(writePrice[0]);
 															</script> 원
 															</font><br /> <strong><font size="3">회원가
@@ -319,7 +323,6 @@
 															<font size="3.5">정상가 <script>
 																var originalPrice = '${menu.menu_price + (menu.menu_price/10)}';
 																var writePrice = originalPrice.split(".0");
-																console.log(writePrice);
 																document.write(writePrice[0]);
 															</script> 원
 															</font><br /> <strong><font size="3">회원가
@@ -517,12 +520,29 @@
 				style="width: 200px; height: 50px;" id="btn_reservation">
 		</div>
 		<br /> <br />
+
 	</div>
 	<script type="text/javascript"
 		src="/resources/include/js/jquery-ui.min.js"></script>
 	<script src="/resources/include/dist/js/bootstrap.min.js"></script>
 	<script src="/resources/include/js/reservation.js"></script>
 	<script type="text/javascript">
-		
+		var _dep1 = $("body").attr("data-dep1");
+		var _dep2 = $("body").attr("data-dep2");
+		$('.gnb').imGNBactive("on", gnbActiave).setBtn([ _dep1, _dep2 ]);
+		function gnbActiave($index1, $index2) {
+			if ($("body #wrap").hasClass("main")) {
+				return;
+			}
+			;
+			// 메인이면 실행 안함; 
+			return true;
+		}
+		// 2뎁 보기 버튼
+		$("#header a.btn-dep1").on("click", function($e) {
+			$e.preventDefault();
+			$("#header").removeClass("fixeds");
+			gnbMotion(false);
+		})
 	</script>
 </body>

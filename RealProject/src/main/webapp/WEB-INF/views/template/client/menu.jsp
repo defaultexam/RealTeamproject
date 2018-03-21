@@ -286,8 +286,7 @@
 }
 </style>
 </head>
-<body data-dep1="0" data-dep2="-1" class="black">
-	== $0
+<body data-dep1="" data-dep2="">
 	<div id="header" class="dep2-off">
 		<div class="header_inner" style="top: 0px; height: 84px;">
 			<!-- BRAND -->
@@ -298,29 +297,28 @@
 			</h1>
 			<nav class="gnb">
 				<ul class="gnb-list">
-					<li><a href="/info/info" target="" id="id_gnb_06002"
-						class="on">RESTAURANT</a>
-						<ul style="display: block;">
+					<li><a href="/info/info" target="" id="id_gnb_06002" class="">RESTAURANT</a>
+						<ul style="display: none;">
 							<li><a href="/info/info"><span>INTRODUCE</span></a></li>
 							<li><a href="/info/way"><span>WAY</span></a></li>
 						</ul></li>
 					<li><a href="/usermenu/mainMenu" target="" id="id_gnb_06003"
-						class="on">MENU</a>
+						class="">MENU</a>
 						<ul style="display: none;">
 							<li><a href="/usermenu/mainMenu"><span>MAIN MENU</span></a></li>
 							<li><a href="/usermenu/course"><span>COURSE</span></a></li>
 							<li><a href="/usermenu/drink"><span>LIQUOR</span></a></li>
 						</ul></li>
 					<li><a href="/reservation" target="" id="id_gnb_06004"
-						class="on">RESERVATION</a>
+						class="">RESERVATION</a>
 						<ul style="display: none;">
-							<li></li>
+							<li><a href="/reservation"><span>RESERVE</span></a></li>
 						</ul></li>
-					<li><a href="#" target="" id="id_gnb_06005" class="on">REVIEW</a>
+					<li><a href="#" target="" id="id_gnb_06005" class="">REVIEW</a>
 						<ul style="display: none;">
-							<li></li>
+							<li><a href="#"><span>REVIEW</span></a></li>
 						</ul></li>
-					<li><a href="#" target="" id="id_gnb_06006" class="on">고객센터</a>
+					<li><a href="#" target="" id="id_gnb_06006" class="">고객센터</a>
 						<ul style="display: none;">
 							<li><a href="/userNotice"><span>공지사항</span></a></li>
 							<li><a href="#"><span>FAQ</span></a></li>
@@ -346,6 +344,12 @@
 					</c:if>
 				</ul>
 			</div>
+			<!-- 스크롤을 내렸을때 우측에 생성되는 네모 버튼 -->
+			<div class="dep1view">
+				<a href="#" class="btn-dep1"> <span></span><span></span><span></span>
+					<span></span><span></span><span></span> <span></span><span></span><span></span>
+				</a>
+			</div>
 		</div>
 	</div>
 	<script src="/resources/include/js/jquery-3.3.1.min.js"></script>
@@ -357,12 +361,7 @@
 		var _dep1 = $("body").attr("data-dep1");
 		var _dep2 = $("body").attr("data-dep2");
 		$('.gnb').imGNBactive("on", gnbActiave).setBtn([ _dep1, _dep2 ]);
-	
 		function gnbActiave($index1, $index2) {
-			if ($("body #wrap").hasClass("main")) {
-				return;
-			}
-			; // 메인이면 실행 안함; 
 			return true;
 		}
 		// 2뎁 보기 버튼

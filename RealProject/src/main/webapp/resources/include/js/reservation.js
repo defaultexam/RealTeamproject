@@ -189,22 +189,30 @@ function checkMenu(menu_no) {
 
 
 $("#datepicker").datepicker({
-	minDate : "-d",
+	// 최소 날짜 (자동 disabled)
+	minDate : "+1d",
+	// 최대 날짜 (자동 disabled)
 	maxDate : "+14d",
-	dateFormat : 'yy-mm-dd',
+	// 위에 뜨는 Month 포멧 형태
 	dayNamesMin : [ "일", "월", "화", "수", "목", "금", "토" ],
+	// 월별 이름 지정
 	monthNames : [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월" ],
+	// 초기값 지정
 	defaultDate : "+1d",
+	// < 버튼 hover시 뜨는 문구
 	prevText : "이전달",
+	// > 버튼 hover시 뜨는 문구
 	nextText : "다음달",
+	// 출력시 사용할 포멧 값
 	dateFormat : "yy년 mm월 dd일",
+	// 날짜를 선택했을 경우 메소드
 	onSelect : function(dateText, inst) {
 		$("#reservationdate").html(dateText);
 		var sus = dateText.split("년 ");
 		var dnjf = sus[1].split("월 ");
 		var dlf = dnjf[1].split("일");
 		var date = sus[0] + "-" + dnjf[0] + "-" + dlf[0];
-		// yy년 mm월 dd일 String 값을 배열로 나누어 yy-mm-dd 포멧으로 변경.
+		// 지정한 dateFormat 'yy년 mm월 dd일'을 배열로 나누어 yy-mm-dd 포멧으로 변경.
 		selectedDay = date;
 		console.log("예약 일시/인원 선택 날짜 : " + date);
 		$.ajax({
@@ -219,15 +227,59 @@ $("#datepicker").datepicker({
 			success : function(resultdata) {
 				if (resultdata != null) {
 					seats = resultdata;
-					seat_no = resultdata[0].seat_no;
-					$("#extra1").html(resultdata[0].seat_extra);
-					$("#extra2").html(resultdata[1].seat_extra);
-					$("#extra3").html(resultdata[2].seat_extra);
-					$("#extra4").html(resultdata[3].seat_extra);
+					// 출력 초기값 설정
+					$("#extra1").html("데이터 없음");
+					$("#extra2").html("데이터 없음");
+					$("#extra3").html("데이터 없음");
+					$("#extra4").html("데이터 없음");
+					// 예외 처리
+					if (resultdata[0] != null) {
+						if (resultdata[0].seat_time == "12:00 ~ 14:00") {
+							$("#extra1").html(resultdata[0].seat_extra);
+						} else if (resultdata[0].seat_time == "17:30 ~ 19:20") {
+							$("#extra2").html(resultdata[0].seat_extra);
+						} else if (resultdata[0].seat_time == "20:00 ~ 22:00") {
+							$("#extra3").html(resultdata[0].seat_extra);
+						} else if (resultdata[0].seat_time == "21:15 ~ 23:15") {
+							$("#extra4").html(resultdata[0].seat_extra);
+						}
+					}
+					if (resultdata[1] != null) {
+						if (resultdata[1].seat_time == "12:00 ~ 14:00") {
+							$("#extra1").html(resultdata[1].seat_extra);
+						} else if (resultdata[1].seat_time == "17:30 ~ 19:20") {
+							$("#extra2").html(resultdata[1].seat_extra);
+						} else if (resultdata[1].seat_time == "20:00 ~ 22:00") {
+							$("#extra3").html(resultdata[1].seat_extra);
+						} else if (resultdata[1].seat_time == "21:15 ~ 23:15") {
+							$("#extra4").html(resultdata[1].seat_extra);
+						}
+					}
+					if (resultdata[2] != null) {
+						if (resultdata[2].seat_time == "12:00 ~ 14:00") {
+							$("#extra1").html(resultdata[2].seat_extra);
+						} else if (resultdata[2].seat_time == "17:30 ~ 19:20") {
+							$("#extra2").html(resultdata[2].seat_extra);
+						} else if (resultdata[2].seat_time == "20:00 ~ 22:00") {
+							$("#extra3").html(resultdata[2].seat_extra);
+						} else if (resultdata[2].seat_time == "21:15 ~ 23:15") {
+							$("#extra4").html(resultdata[2].seat_extra);
+						}
+					}
+					if (resultdata[3] != null) {
+						if (resultdata[3].seat_time == "12:00 ~ 14:00") {
+							$("#extra1").html(resultdata[3].seat_extra);
+						} else if (resultdata[3].seat_time == "17:30 ~ 19:20") {
+							$("#extra2").html(resultdata[3].seat_extra);
+						} else if (resultdata[3].seat_time == "20:00 ~ 22:00") {
+							$("#extra3").html(resultdata[3].seat_extra);
+						} else if (resultdata[3].seat_time == "21:15 ~ 23:15") {
+							$("#extra4").html(resultdata[3].seat_extra);
+						}
+					}
 				}
 			}
 		});
-
 	}
 });
 $("#accordion").accordion({
