@@ -7,6 +7,8 @@ public class LoginVO extends LoginHistory {
 	private String name = "";
 	private String email = "";
 	private String phone = "";
+	private String rank = "";
+	private int point = 0;
 
 	public LoginVO() {
 	}
@@ -57,6 +59,22 @@ public class LoginVO extends LoginHistory {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getRank() {
+		return rank;
+	}
+
+	public void setRank(String rank) {
+		this.rank = rank;
+	}
+
+	public int getPoint() {
+		return point;
+	}
+
+	public void setPoint(int point) {
+		this.point = point;
 	}
 
 }
