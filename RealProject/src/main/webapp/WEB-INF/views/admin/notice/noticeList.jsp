@@ -10,7 +10,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>공지사항 목록</title>
 </head>
-
+<link href="/resources/include/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="/resources/include/dist/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript"
 	src="/resources/include/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript"
@@ -35,19 +40,18 @@
 			if ($("#search").val() != 'notice_text') {
 
 				//:contains()는 특정 텍스트를 포함한 요소반환   
-				 if ($("#search").val() == 'notice_title')
+				if ($("#search").val() == 'notice_title')
 					value = "#list tr td.goDetail";
-					$(value + ":contains('" + word + "')").each(
-							function() {
-								var regex = new RegExp(word, 'gi');
-								$(this).html(
-										$(this).text().replace(
-												regex,
-												"<span class='required'>"
-														+ word + "</span>"));
-							});
-					
-					
+				$(value + ":contains('" + word + "')").each(
+						function() {
+							var regex = new RegExp(word, 'gi');
+							$(this).html(
+									$(this).text().replace(
+											regex,
+											"<span class='required'>" + word
+													+ "</span>"));
+						});
+
 			}
 		}
 
@@ -86,7 +90,6 @@
 		$(".goDetail").click(function() {
 			console.log("ㅇ어디까지오니");
 
-			
 			var notice_no = $(this).parents("tr").attr("data-num");
 			$("#notice_no").val(notice_no);
 			console.log("글번호 : " + notice_no);
