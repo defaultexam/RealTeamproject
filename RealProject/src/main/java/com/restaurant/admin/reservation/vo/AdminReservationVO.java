@@ -6,33 +6,42 @@ import java.text.SimpleDateFormat;
 import com.restaurant.common.vo.CommonVO;
 
 public class AdminReservationVO extends CommonVO {
-	private int book_no = 0;
-	private int seat_no = 0;
-	private int member_no = 0;
-	private int coupon_no = 0;
-	private String book_condition = "";
-	private String seat_date = "";
-	private String seat_time = "";
-	private String name = "";
-	private String book_name = "";
-	private String menu_name1 = "";
-	private String menu_name2 = "";
-	private String menu_name3 = "";
-	private String menu_name4 = "";
-	private String menu_name5 = "";
-	private String menu_name6 = "";
-	private String menu_name7 = "";
-	private String menu_name8 = "";
-	private int book_people = 0;
-	private String coupon_name = "";
-	private String pay_way = "";
-	private String pay_date = "";
-	private int discount = 0;
-	private int totalpay = 0;
-	private String book_memo = "";
-	private Date searchEnd = null;
-	private Date searchStart = null;
-	private String phone = "";
+	private int book_no = 0; // 예약번호
+	private int seat_no = 0; // 예약날짜/타임 번호
+	private int member_no = 0; // 회원번호
+	private int coupon_no = 0; // 사용쿠폰번호
+	private String book_condition = ""; // 예약상태
+	private String seat_date = ""; // 예약날짜
+	private String seat_time = ""; // 예약타임
+	private String name = ""; // 예약자명(로그인회원)
+	private String book_name = ""; // 예약자명(실사용자)
+	private String menu_name1 = ""; // 메뉴1
+	private String menu_name2 = ""; // 메뉴2
+	private String menu_name3 = ""; // 메뉴3
+	private String menu_name4 = ""; // 메뉴4
+	private String menu_name5 = ""; // 메뉴5
+	private String menu_name6 = ""; // 메뉴6
+	private String menu_name7 = ""; // 메뉴7
+	private String menu_name8 = ""; // 메뉴8
+	private int book_people = 0; // 예약인원수
+	private String coupon_name = ""; // 사용쿠폰명
+	private String pay_way = ""; // 결제방법
+	private String pay_date = ""; // 결제날짜
+	private int discount = 0; // 할인금액
+	private int totalpay = 0; // 결제금액
+	private String book_memo = ""; // 추가메모
+	private Date searchEnd = null; // 조회 시작기간
+	private Date searchStart = null; // 조회종료기간
+	private String phone = ""; // 연락처 뒷자리 (검색용)
+
+	// 취소내역 관련 변수선언
+	private String cancel_condition = ""; // 환불상태
+	private String cancel_date = ""; // 취소날짜
+	
+	private int cancel_total = 0; // 환불금액
+	private String cancel_reciver = ""; // 환불예금주
+	private String cancel_bank = ""; // 환불은행
+	private String cancel_account = ""; // 환불계좌
 
 	public AdminReservationVO() throws Exception {
 		super();
@@ -258,6 +267,54 @@ public class AdminReservationVO extends CommonVO {
 
 	public void setBook_memo(String book_memo) {
 		this.book_memo = book_memo;
+	}
+
+	public String getCancel_condition() {
+		return cancel_condition;
+	}
+
+	public void setCancel_condition(String cancel_condition) {
+		this.cancel_condition = cancel_condition;
+	}
+
+	public String getCancel_date() {
+		return cancel_date;
+	}
+
+	public void setCancel_date(String cancel_date) {
+		this.cancel_date = cancel_date;
+	}
+
+	public int getCancel_total() {
+		return cancel_total;
+	}
+
+	public void setCancel_total(int cancel_total) {
+		this.cancel_total = cancel_total;
+	}
+
+	public String getCancel_reciver() {
+		return cancel_reciver;
+	}
+
+	public void setCancel_reciver(String cancel_reciver) {
+		this.cancel_reciver = cancel_reciver;
+	}
+
+	public String getCancel_bank() {
+		return cancel_bank;
+	}
+
+	public void setCancel_bank(String cancel_bank) {
+		this.cancel_bank = cancel_bank;
+	}
+
+	public String getCancel_account() {
+		return cancel_account;
+	}
+
+	public void setCancel_account(String cancel_account) {
+		this.cancel_account = cancel_account;
 	}
 
 }

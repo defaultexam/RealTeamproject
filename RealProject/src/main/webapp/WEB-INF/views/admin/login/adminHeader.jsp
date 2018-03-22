@@ -51,15 +51,8 @@ li < a {
 
 				<li id="menutab2"><a href="/menu/menuSelect"
 					onclick="menuTab();"><font color="black">메뉴관리</font></a></li>
-				<li id="menutab3" class="dropdown"><a href="#"
-					class="dropdown-toggle" data-toggle="dropdown" role="button"
-					aria-haspopup="true" aria-expanded="false"><font color="black">예약관리</font><span
-						class="caret"></span></a>
-					<ul class="dropdown-menu" aria-labelledby="about-us">
-						<li><a href="/adminReservation/list"
-							onclick="reservationTab();">예약내역관리</a></li>
-						<li><a href="#">취소내역관리</a></li>
-					</ul></li>
+				<li id="menutab3"><a href="/adminReservation/list"
+					onclick="reservationTab();"><font color="black">예약관리</font></a></li>
 				<li id="menutab4"><a href="#"><font color="black">방문후기관리</font></a></li>
 				<li id="menutab5" class="dropdown"><a href="#"
 					class="dropdown-toggle" data-toggle="dropdown" role="button"
@@ -70,7 +63,14 @@ li < a {
 						<li><a href="/adminFaq/adminFaqList">FAQ관리</a></li>
 						<li><a href="#">1:1문의관리</a></li>
 					</ul></li>
-				<li id="menutab6"><a href="#"><font color="black">통계</font></a></li>
+				<li id="menutab6" class="dropdown"><a href="#"
+					class="dropdown-toggle" data-toggle="dropdown" role="button"
+					aria-haspopup="true" aria-expanded="false"><font color="black">통계</font><span
+						class="caret"></span></a>
+					<ul class="dropdown-menu" aria-labelledby="about-us">
+						<li><a href="/adminChart/member">회원통계</a></li>
+						<li><a href="/adminChart/reservation">예약통계</a></li>
+					</ul></li>
 			</ul>
 		</div>
 		<br />

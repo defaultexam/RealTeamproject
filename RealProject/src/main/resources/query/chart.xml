@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.restaurant.admin.chart.dao.AdminChartDao">
+
+	<select id="chartMemberCnt" resultType="adminchart">
+		select (select
+		nvl(count(*),0) from member where gender = 1
+		) as manCnt, (select
+		nvl(count(*),0) from member where gender = 2 ) as
+		womanCnt
+		from dual
+	</select>
+
+	<select id="chartRankCnt" resultType="adminchart">
+		select (select
+		nvl(count(*),0) from member where rank = '일반') as normalCnt,
+		(select
+		nvl(count(*),0) from member where rank = 'VIP') as VIPCnt,(select
+		nvl(count(*),0) from member) as totalCnt from
+		dual
+	</select>
+
+	<select id="chartSeatDate" parameterType="adminchart" resultType="adminchart">
+		select seat_date from seat
+		<where>
+			<if test="!chartStartDate.toString().substring(0, 10).contains('9999')">
+				seat_date between #{chartStartDate} and #{chartEndDate}
+			</if>
+			<if test="chartStartDate.toString().substring(0, 10).contains('9999')">
+			</if>
+		</where>
+		group by seat_date 
+		order by seat_date
+	</select>
+
+	<select id="chartSeatExtra" parameterType="adminchart" resultType="adminchart">
+		select
+		(select seat_extra from seat where seat_date = #{seat_date}
+		and seat_time =
+		<![CDATA['12:00 ~ 14:00') as firstSeat,]]>
+		(select seat_extra from seat where seat_date = #{seat_date} and
+		seat_time =
+		<![CDATA['17:30 ~ 19:20') as secondSeat,]]>
+		(select seat_extra from seat where seat_date = #{seat_date} and
+		seat_time =
+		<![CDATA['20:00 ~ 22:00') as thirdSeat,]]>
+		(select seat_extra from seat where seat_date = #{seat_date} and
+		seat_time =
+		<![CDATA['21:15 ~ 23:15') as fourthSeat]]>
+		from dual
+	</select>
+
+</mapper>

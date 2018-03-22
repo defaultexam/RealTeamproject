@@ -67,7 +67,7 @@ a {
 				<td class="none"></td>
 				<td class="menu" align="center">
 					<h2>예약관리</h2> <a href="/adminReservation/list"
-					onclick="reservationTab();">예약내역정보</a><br> <a href="#">취소내역정보</a>
+					onclick="reservationTab();">예약관리</a>
 				</td>
 			</tr>
 			<tr>
@@ -84,8 +84,8 @@ a {
 				</td>
 				<td class="none"></td>
 				<td class="menu" align="center">
-					<h2>통계</h2> <a href="#">시간대별 예약현황</a><br> <a href="#">회원연령대비
-						남녀비율</a>
+					<h2>통계</h2> <a href="/adminChart/reservation">예약통계</a><br> <a
+					href="/adminChart/member">회원통계</a>
 				</td>
 			</tr>
 		</table>

@@ -10,49 +10,46 @@
 		booking
 		<where>
 			<if test="name != '' ">
-				(#{name} in (select m.name from member m,booking b where
-				m.member_no=b.member_no) or book_name like #{name}) and
+				(member_no in (select m.member_no from member m, booking b where
+				m.member_no = b.member_no and m.name = #{name}) or (book_name like
+				#{name}))
 				<if test="phone != '' ">
-					(member_no in (select member_no from member where phone like
-					concat('%',#{phone}))) and
+					and (member_no in (select member_no from member where phone like
+					concat('%',#{phone})))
 					<if test="!searchStart.toString().substring(0,10).contains('9999')">
-						(seat_no in (select s.seat_no from seat s, booking b where
+						and (seat_no in (select s.seat_no from seat s, booking b where
 						s.seat_no=b.seat_no and s.seat_date between #{searchStart} and
-						#{searchEnd})) and
+						#{searchEnd}))
 						<if test="book_condition != ''">
-							book_condition = #{book_condition}
+							and book_condition = #{book_condition}
 						</if>
 						<if test="book_condition == ''">
-							<![CDATA[ 1=1 ]]>
 						</if>
 					</if>
 					<if test="searchStart.toString().substring(0,10).contains('9999')">
 						<if test="book_condition != ''">
-							book_condition = #{book_condition}
+							and book_condition = #{book_condition}
 						</if>
 						<if test="book_condition == ''">
-							<![CDATA[ 1=1 ]]>
 						</if>
 					</if>
 				</if>
 				<if test="phone == '' ">
 					<if test="!searchStart.toString().substring(0,10).contains('9999')">
-						(seat_no in (select s.seat_no from seat s, booking b where
+						and (seat_no in (select s.seat_no from seat s, booking b where
 						s.seat_no=b.seat_no and s.seat_date between #{searchStart} and
-						#{searchEnd})) and
+						#{searchEnd}))
 						<if test="book_condition != ''">
-							book_condition = #{book_condition}
+							and book_condition = #{book_condition}
 						</if>
 						<if test="book_condition == ''">
-							<![CDATA[ 1=1 ]]>
 						</if>
 					</if>
 					<if test="searchStart.toString().substring(0,10).contains('9999')">
 						<if test="book_condition != ''">
-							book_condition = #{book_condition}
+							and book_condition = #{book_condition}
 						</if>
 						<if test="book_condition == ''">
-							<![CDATA[ 1=1 ]]>
 						</if>
 					</if>
 				</if>
@@ -60,24 +57,22 @@
 			<if test="name == '' ">
 				<if test="phone != '' ">
 					(member_no in (select member_no from member where phone like
-					concat('%',#{phone}))) and
+					concat('%',#{phone})))
 					<if test="!searchStart.toString().substring(0,10).contains('9999')">
-						(seat_no in (select s.seat_no from seat s, booking b where
+						and (seat_no in (select s.seat_no from seat s, booking b where
 						s.seat_no=b.seat_no and s.seat_date between #{searchStart} and
-						#{searchEnd})) and
+						#{searchEnd}))
 						<if test="book_condition != ''">
-							book_condition = #{book_condition}
+							and book_condition = #{book_condition}
 						</if>
 						<if test="book_condition == ''">
-							<![CDATA[ 1=1 ]]>
 						</if>
 					</if>
 					<if test="searchStart.toString().substring(0,10).contains('9999')">
 						<if test="book_condition != ''">
-							book_condition = #{book_condition}
+							and book_condition = #{book_condition}
 						</if>
 						<if test="book_condition == ''">
-							<![CDATA[ 1=1 ]]>
 						</if>
 					</if>
 				</if>
@@ -85,12 +80,11 @@
 					<if test="!searchStart.toString().substring(0,10).contains('9999')">
 						(seat_no in (select s.seat_no from seat s, booking b where
 						s.seat_no=b.seat_no and s.seat_date between #{searchStart} and
-						#{searchEnd})) and
+						#{searchEnd}))
 						<if test="book_condition != ''">
-							book_condition = #{book_condition}
+							and book_condition = #{book_condition}
 						</if>
 						<if test="book_condition == ''">
-							<![CDATA[ 1=1 ]]>
 						</if>
 					</if>
 					<if test="searchStart.toString().substring(0,10).contains('9999')">
@@ -98,7 +92,6 @@
 							book_condition = #{book_condition}
 						</if>
 						<if test="book_condition == ''">
-							<![CDATA[ 1=1 ]]>
 						</if>
 					</if>
 				</if>
@@ -157,8 +150,11 @@
 		book_people, (select
 		coupon_name from coupon where coupon_no =
 		#{coupon_no}) coupon_name,
-		pay_way, pay_date, totalPay, book_memo, discount , book_no from
-		(select * from booking where book_no = #{book_no})
+		pay_way, pay_date, totalPay, book_memo, discount , book_no,
+		cancel_condition, cancel_reciver, cancel_bank, cancel_account,
+		cancel_total from
+		(select * from booking where book_no =
+		#{book_no})
 	</select>
 
 	<!-- 게시물 개수 구하는 쿼리 -->
@@ -169,13 +165,54 @@
 		) list )
 	</select>
 
+	<!-- 예약상태 수정 -->
 	<update id="reservationEdit" parameterType="adminreservation">
 		update booking set
-		book_condition = #{book_condition} where book_no =
-		#{book_no}
+		<if test="book_condition.equals('사용')">
+			book_condition = #{book_condition} where book_no =
+			#{book_no}
+		</if>
+		<if test="book_condition.equals('취소')">
+			book_condition = #{book_condition}, cancel_condition =
+			'환불미완료',cancel_total = #{cancel_total}, cancel_date = sysdate,
+			cancel_reciver = #{cancel_reciver}, cancel_bank = #{cancel_bank},
+			cancel_account = #{cancel_account} where book_no =
+			#{book_no}
+		</if>
 	</update>
 
 	<update id="lateReservationEdit">
-		update booking set book_condition = '기간만료' where seat_no in (select seat_no from seat where seat_date <![CDATA[<= sysdate ) and book_condition = '미사용' ]]>
+		update booking set book_condition = '기간만료', cancel_condition = '환불불가'
+		where seat_no in (select
+		seat_no from seat where seat_date <![CDATA[<= sysdate ) and book_condition = '미사용' ]]>
 	</update>
+
+	<!-- 환불상태 수정 -->
+	<update id="cancelUpdate" parameterType="adminreservation">
+		update booking set
+		cancel_condition ='환불완료' where book_no = #{book_no}
+	</update>
+
+	<!-- 매일 0 시 예약가능좌석수 생성쿼리 -->
+	<insert id="insertSeatFirst">
+		insert into seat
+		values(seat_seq.nextval,<![CDATA[to_date(to_char(sysdate+16,'yyyy-MM-dd'),'yyyy-MM-dd'),'12:00 ~ 14:00',30)]]>
+	</insert>
+
+	<insert id="insertSeatSecond">
+		insert into seat
+		values(seat_seq.nextval,<![CDATA[to_date(to_char(sysdate+16,'yyyy-MM-dd'),'yyyy-MM-dd'),'17:30 ~ 19:20',40)]]>
+	</insert>
+
+	<insert id="insertSeatThird">
+		insert into seat
+		values(seat_seq.nextval,<![CDATA[to_date(to_char(sysdate+16,'yyyy-MM-dd'),'yyyy-MM-dd'),'20:00 ~ 22:00',50)]]>
+	</insert>
+
+	<insert id="insertSeatFourth">
+		insert into seat
+		values(seat_seq.nextval,<![CDATA[to_date(to_char(sysdate+16,'yyyy-MM-dd'),'yyyy-MM-dd'),'21:15 ~ 23:15',20)]]>
+	</insert>
+
+
 </mapper>

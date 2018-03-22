@@ -2,6 +2,7 @@ package com.restaurant.admin.reservation.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.annotation.RequestScope;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.restaurant.admin.reservation.service.AdminReservationService;
@@ -45,6 +47,7 @@ public class AdminReservationController {
 		// 글번호 설정
 		int count = total - (Util.nvl(rvo.getPage()) - 1) * Util.nvl(rvo.getPageSize());
 		logger.info("count : " + count);
+		logger.info("name : "+rvo.getName());
 
 		List<AdminReservationVO> numberList = adminreservationservice.reservationNumberList(rvo);
 		List<AdminReservationVO> reservationList = new ArrayList<>();
@@ -65,13 +68,11 @@ public class AdminReservationController {
 		return mav;
 	}
 
+	// 예약상태 수정
 	@ResponseBody
 	@RequestMapping(value = "/reservationEdit", method = RequestMethod.POST)
-	public int editReservationCondition(@RequestParam("no") int no, @RequestParam("condition") String con) throws Exception {
+	public int editReservationCondition(@ModelAttribute AdminReservationVO rvo) throws Exception {
 		int result = 0;
-		AdminReservationVO rvo = new AdminReservationVO();
-		rvo.setBook_no(no);
-		rvo.setBook_condition(con);
 		result = adminreservationservice.reservationEdit(rvo);
 		return result;
 	}
@@ -94,5 +95,14 @@ public class AdminReservationController {
 		mv.addObject("template", "reservation.xlsx");
 		mv.addObject("file_name", "reservationList");
 		return mv;
+	}
+	
+	@RequestMapping(value = "/cancelUpdate", method=RequestMethod.GET)
+	public String cancelUpdate(@ModelAttribute AdminReservationVO rvo) {
+		logger.info("cancelUpdate 호출성공");
+		
+		adminreservationservice.cancelUpdate(rvo);
+		
+		return "redirect:/adminReservation/list";
 	}
 }

@@ -181,13 +181,19 @@
 #span {
 	float: right;
 }
+#couponTable {
+	width: 1750px;
+	height: auto;
+	margin-bottom: 50px;
+	margin-top: 20px;
+}
 </style>
 </head>
 <body>
-	<div>
+	<div id="couponTable">
 		<div>
 			<h2>쿠폰관리</h2>
-			<span id="span">* 쿠폰명 클릭 시 쿠폰수정이 가능합니다.</span>
+			<span id="span">* 쿠폰 클릭 시 쿠폰수정이 가능합니다.</span>
 			<hr>
 		</div>
 		<div id="table-result">
@@ -196,7 +202,7 @@
 					<tr>
 						<th class="tac">쿠폰넘버</th>
 						<th class="tac">쿠폰이름</th>
-						<th class="tac">쿠폰기간</th>
+						<th class="tac">사용가능쿠폰기간</th>
 						<th class="tac">쿠폰할인률</th>
 						<th class="tac">쿠폰사용가능상태</th>
 					</tr>
@@ -209,8 +215,8 @@
 								<tr data-num="${coupon.coupon_no}" class="couponInfo">
 									<td>${coupon.coupon_no}</td>
 									<td>${coupon.coupon_name}</td>
-									<td>${coupon.coupon_term}</td>
-									<td>${coupon.coupon_discountrate}</td>
+									<td>${coupon.coupon_term}일</td>
+									<td>${coupon.coupon_discountrate*100}%</td>
 									<td><c:if test="${coupon.coupon_active == '사용가능쿠폰'}">
 											<label style="color: blue;">${coupon.coupon_active}</label>
 										</c:if> <c:if test="${coupon.coupon_active == '사용불가쿠폰'}">
@@ -327,7 +333,6 @@
 			</div>
 		</div>
 	</div>
-
 	<script type="text/javascript"
 		src="/resources/include/js/jquery.form.min.js"></script>
 	<script type="text/javascript"

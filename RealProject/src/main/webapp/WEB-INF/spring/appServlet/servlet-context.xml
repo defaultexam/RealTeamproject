@@ -54,14 +54,14 @@
 
 	<beans:bean id="menudao"
 		class="com.restaurant.admin.menu.dao.AdminMenuDAOImpl" />
-
 	<beans:bean id="coupondao"
 		class="com.restaurant.admin.coupon.dao.CouponDaoImpl" />
-
 	<beans:bean id="memberdao"
 		class="com.restaurant.admin.member.dao.AdminMemberDaoImpl" />
 	<beans:bean id="adminreservationdao"
 		class="com.restaurant.admin.reservation.dao.AdminReservationDaoImpl" />
+	<beans:bean id="chartdao"
+		class="com.restaurant.admin.chart.dao.AdminChartDaoImpl" />
 
 	<context:component-scan base-package="com.restaurant.**.**.**" />
 </beans:beans>

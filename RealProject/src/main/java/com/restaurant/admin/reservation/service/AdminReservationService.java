@@ -13,7 +13,11 @@ public interface AdminReservationService {
 	public int reservationListCnt(AdminReservationVO rvo);
 
 	public int reservationEdit(AdminReservationVO rvo);
-	
+
 	public void lateReservationEdit();
+
+	public void cancelUpdate(AdminReservationVO rvo);
+	
+	public void insertSeat();
 
 }

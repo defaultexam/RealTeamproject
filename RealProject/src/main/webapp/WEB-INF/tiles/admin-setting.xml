@@ -41,5 +41,8 @@
 		<put-attribute name="main"
 			value="/WEB-INF/views/admin/reservation/{1}.jsp" />
 	</definition>
+	<definition name="admin/chart/*" extends="afterLogin">
+		<put-attribute name="main" value="/WEB-INF/views/admin/chart/{1}.jsp" />
+	</definition>
 
 </tiles-definitions> 

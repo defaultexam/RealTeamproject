@@ -23,7 +23,7 @@
 
 <script type="text/javascript">
 	$(function() {
-
+		$('#table-result tr').removeAttr("data-value");
 		var tab1 = document.getElementById("tab1");
 		var tab2 = document.getElementById("tab2");
 		var tab3 = document.getElementById("tab3");
@@ -104,9 +104,7 @@
 				goPage(1);
 			}
 		});
-
 		$("#searchEnd").attr("readonly", true);
-
 		// 전체보기 버튼 클릭시 발생 이벤트
 		$("#reservationSearchTotal").click(function() {
 			$("#resSearchName").val("");
@@ -117,12 +115,10 @@
 			sessionStorage.removeItem("reservation");
 			goPage(1);
 		});
-
 		/* n이 한자리 수가되면 앞에 0을 추가하는 함수 */
 		function addzero(n) {
 			return n < 10 ? "0" + n : n;
 		}
-
 		// 기간선택버튼 클릭시 발생 이벤트
 		$("#searchToday").click(
 				function() {
@@ -136,23 +132,6 @@
 									+ addzero((now.getMonth() + 1)) + '-'
 									+ addzero(now.getDate()));
 				});
-		/*
-		$("searchOneMonthAfter").click(
-				function() {
-					// 1개월더하기
-					var now = new Date();
-					var after = new Date(Date.parse(now) + (30 * 1000 * 60 * 60
-		 * 24));
-					$("#searchStart").val(
-							now.getFullYear() + '-'
-									+ addzero((now.getMonth() + 1)) + '-'
-									+ addzero(now.getDate()));
-					$("#searchEnd").val(
-							after.getFullYear() + '-'
-									+ addzero((after.getMonth() + 1)) + '-'
-									+ addzero(after.getDate()));
-				}); */
-
 		// 한페이지에 보여줄 갯수 변경될때 처리 이벤트
 		$("#pageSize").change(function() {
 			goPage(1);
@@ -192,7 +171,6 @@
 		/* 예약 행 클릭시 라디오박스 선택처리 이벤트 */
 		$(".reservationInfo").click(function() {
 			var pressCheck = $(this).attr("data-value");
-			console.log(pressCheck);
 			if (pressCheck != null) {
 				alert("수정 중일때 행이동은 불가합니다. 수정완료/취소를 진행후 다시 선택해주세요 ");
 				return;
@@ -224,7 +202,6 @@
 										.siblings("tr").attr({
 											"data-value" : 1
 										});
-
 								/* 콤보박스 생성 */
 								$('.checkResBtn:checked').parents("td")
 										.siblings(".conditionTd").empty();
@@ -244,55 +221,84 @@
 									"#conditionEdit option:selected").val();
 							var checkedNum = $('.checkResBtn:checked').parents(
 									"tr").attr("data-num");
+							var cancelTrBook_date = $('.checkResBtn:checked')
+									.parents("td").siblings(".seatDateTd")
+									.attr("data-value");
+							var cancelTrPayDate = $('.checkResBtn:checked')
+									.parents("td").siblings(".payDateTd").attr(
+											"data-value");
+							var totalPayValue = $('.checkResBtn:checked')
+									.parents("td").siblings(".totalPayTd")
+									.attr("data-value");
+
 							if (changeConditionVal != null) {
 								if (changeConditionVal == '잘못선택') {
 									alert("사용/취소 혹은 수정취소 버튼을 선택하세요");
 									return;
 								} else if (changeConditionVal == '취소') {
-									var cancelConfirm = confirm("예약 취소 선택 시 복구할 수 없습니다. 진행하시겠습니까?");
-									if (cancelConfirm) {
-										$
-												.ajax({
-													url : "/adminReservation/reservationEdit",
-													type : "post",
-													data : {
-														"no" : checkedNum,
-														"condition" : '취소'
-													},
-													error : function() {
-														alert("사이트 접속 문제로 정상작동하지 못하였습니다. 잠시후 다시 시도해주세요");
-													},
-													success : function(result) {
-														if (result == 1) {
-															alert("예약내역이 취소처리 완료되었습니다. 예약내역은 취소내역으로 이동되었습니다.");
-															
-															$('#table-result tr').removeAttr("data-value");
-															
-															window.history
-																	.go(0);
-														} else {
-															alert("예약취소처리 실패");
-														}
-													}
-												});
+									var cancelTotalPay = 0;
+									var now = new Date();
+									var nowString = (now.getMonth() + 1) + "-"
+											+ now.getDate();
+									var currDay = 24 * 60 * 60 * 1000;
+									var bookdate = new Date(cancelTrBook_date);
+									var paydate = new Date(cancelTrPayDate);
+									/* 일주일전 날짜 */
+									var sevenTerm = new Date(bookdate - 7
+											* currDay);
+									var sevenTermString = (sevenTerm.getMonth() + 1)
+											+ "-" + sevenTerm.getDate();
+									/* 4일전날짜 */
+									var fourTerm = new Date(bookdate - 4
+											* currDay);
+									var fourTermString = (fourTerm.getMonth() + 1)
+											+ "-" + fourTerm.getDate();
+									/* 2일전날짜 */
+									var twoTerm = new Date(bookdate - 2
+											* currDay);
+									var twoTermString = (twoTerm.getMonth() + 1)
+											+ "-" + twoTerm.getDate();
+									/* 하루전날짜 */
+									var oneTerm = new Date(bookdate - 1
+											* currDay);
+									var oneTermString = (oneTerm.getMonth() + 1)
+											+ "-" + oneTerm.getDate();
+
+									if (((now.getMonth() + 1) + "-" + now
+											.getDate()) == ((paydate.getMonth() + 1)
+											+ "-" + paydate.getDate())) {
+										cancelTotalPay = totalPayValue;
+									} else if (sevenTermString >= nowString) {
+										cancelTotalPay = totalPayValue;
+									} else if (fourTermString >= nowString) {
+										cancelTotalPay = totalPayValue * 0.9;
+									} else if (twoTermString >= nowString) {
+										cancelTotalPay = totalPayValue * 0.8;
+									} else if (oneTermString == nowString) {
+										cancelTotalPay = totalPayValue * 0.7;
 									} else {
-										return;
+										cancelTotalPay = totalPayValue * 0;
 									}
+									$("#inputcancel_total").val(cancelTotalPay);
+									// 환불정보 입력 모달 창 출력
+									$("#cancelPayInsertModal").modal('show');
 								} else {
 									$
 											.ajax({
 												url : "/adminReservation/reservationEdit",
 												type : "post",
 												data : {
-													"no" : checkedNum,
-													"condition" : '사용'
+													"book_no" : checkedNum,
+													"book_condition" : '사용'
 												},
 												error : function() {
 													alert("사이트 접속 문제로 정상작동하지 못하였습니다. 잠시후 다시 시도해주세요");
 												},
 												success : function(result) {
 													if (result == 1) {
-														$('#table-result tr').removeAttr("data-value");
+														$('#table-result tr')
+																.removeAttr(
+																		"data-value");
 														alert("예약내역 사용처리 완료되었습니다.");
 														window.history.go(0);
 													} else {
@@ -303,6 +309,56 @@
 								}
 							} else {
 								alert("예약상태수정 버튼 클릭 후 다시 시도해주세요 ");
+								return;
+							}
+						});
+
+		/* 모달 수정하기 버튼 클릭 이벤트 */
+		$("#cancelPayInsertModalBtn")
+				.click(
+						function() {
+							var checkedNum = $('.checkResBtn:checked').parents(
+									"tr").attr("data-num");
+							var cancelConfirm = confirm("예약 취소 선택 시 복구할 수 없습니다. 진행하시겠습니까?");
+							if (cancelConfirm) {
+								$
+										.ajax({
+											url : "/adminReservation/reservationEdit",
+											type : "post",
+											data : {
+												"book_no" : checkedNum,
+												"book_condition" : '취소',
+												"cancel_total" : $(
+														"#inputcancel_total")
+														.val(),
+												"cancel_reciver" : $(
+														"#inputcancel_reciver")
+														.val(),
+												"cancel_bank" : $(
+														"#inputcancel_bank")
+														.val(),
+												"cancel_account" : $(
+														"#inputcancel_account")
+														.val()
+											},
+											error : function() {
+												alert("사이트 접속 문제로 정상작동하지 못하였습니다. 잠시후 다시 시도해주세요");
+											},
+											success : function(result) {
+												if (result == 1) {
+													alert("예약내역이 취소처리 완료되었습니다. 예약내역은 취소내역으로 이동되었습니다.");
+
+													$('#table-result tr')
+															.removeAttr(
+																	"data-value");
+
+													window.history.go(0);
+												} else {
+													alert("예약취소처리 실패");
+												}
+											}
+										});
+							} else {
 								return;
 							}
 						});
@@ -330,7 +386,40 @@
 								return;
 							}
 						});
+		/* 환불버튼 클릭시 발생 이벤트 */
+		$(".cancelPayBtn").click(
+				function() {
+					var cancelPayNo = $(this).parents("tr").attr("data-num");
+					var cancelReciver = $(this).parents("td").siblings(
+							".cancelreciverTd").attr("data-value");
+					var cancelBank = $(this).parents("td").siblings(
+							".cancelbankTd").attr("data-value");
+					var cancelAccount = $(this).parents("td").siblings(
+							".cancelaccountTd").attr("data-value");
+					var cancelTotal = $(this).parents("td").siblings(
+							".canceltotalTd").attr("data-value");
 
+					$("#selected_Book_no").val(cancelPayNo);
+					$("#cancel_reciver").val(cancelReciver);
+					$("#cancel_bank").val(cancelBank);
+					$("#cancel_account").val(cancelAccount);
+					$("#cancel_total").val(cancelTotal);
+					$("#cancelPayModal").modal('show');
+				});
+
+		/* 환불모달 환불버튼 클릭 이벤트 */
+		$("#cancelPayModalBtn").click(function() {
+			alert("환불처리 완료 ");
+			$("#f_Form").attr({
+				"method" : "get",
+				"action" : "/adminReservation/cancelUpdate"
+			});
+			$("#f_Form").submit();
+		});
+		/* 환불모달 취소창 버튼 클릭시 이벤트  */
+		$(".bye").click(function() {
+			resetData();
+		});
 		/* 엑셀다운로드 버튼 클릭 시 처리 이벤트 */
 		$("#excelReservationList").click(
 				function() {
@@ -348,6 +437,11 @@
 					$("#f_search").submit();
 				});
 	});
+	function resetData() {
+		$("#f_writeForm").each(function() {
+			this.reset();
+		});
+	}
 	// 데이터피커 활성화
 	function endDateOn() {
 		$("#searchEnd").attr("readonly", false);
@@ -405,10 +499,6 @@
 				<input type="hidden" id="page" name="page" value="${data.page }" />
 				<input type="hidden" name="book_condition" id="book_condition">
 				<table summary="검색" style="width: 800px;">
-					<%-- <colgroup>
-						<col width="10%"></col>
-						<col width="25%"></col>
-					</colgroup> --%>
 					<tr>
 						<td><label>조회기간 : </label></td>
 						<td colspan="3" align="center" valign="middle"><input
@@ -423,23 +513,11 @@
 							id="reservationSearch" class="btn btn-default"></td>
 						<td rowspan="3"><input type="button" value="전체보기"
 							id="reservationSearchTotal" class="btn btn-default"></td>
-
 					</tr>
-
-					<!-- <tr>
-						<td colspan="4" align="center"> <input
-							type="button" value="오늘 ~ 한달뒤" id="searchOneMonthAfter"
-							class="btn btn-default"><input type="button"
-							value="오늘 ~ 3개월뒤" id="searchThreeMonthAfter"
-							class="btn btn-default"><input type="button"
-							value="오늘 ~ 6개월" id="searchSixMonthAfter" class="btn btn-default"></td>
-					</tr> -->
-
 					<tr>
 						<td><label for="resSearchName">이름 : </label></td>
 						<td><input type="text" id="resSearchName" name="name"
-							class="form-control"> <input type="hidden"
-							id="resSearchBookName" name="book_name"></td>
+							class="form-control"></td>
 					</tr>
 					<tr>
 						<td><label for="resSearchPhone">전화번호 뒷 4자리 : </label></td>
@@ -507,6 +585,7 @@
 							<th class="tac">선택</th>
 							<th class="tac">NO</th>
 							<th class="tac">예약상태</th>
+							<th class="tac">환불상태</th>
 							<th class="tac">예약날짜</th>
 							<th class="tac">예약타임</th>
 							<th class="tac">예약자명</th>
@@ -541,11 +620,20 @@
 												<c:when test="${reservation.book_condition == '취소'}">
 													<label style="color: red;">${reservation.book_condition}</label>
 												</c:when>
+												<c:when test="${reservation.book_condition == '기한만료'}">
+													<label style="color: purple;">${reservation.book_condition}</label>
+												</c:when>
 												<c:otherwise>
 													<label>${reservation.book_condition}</label>
 												</c:otherwise>
 											</c:choose></td>
-										<td>${reservation.seat_date.substring(0,10)}</td>
+										<td>${reservation.cancel_condition}<c:if
+												test="${reservation.cancel_condition == '환불미완료'}">
+												<button type="button" class="btn btn-default cancelPayBtn">환불하기</button>
+											</c:if>
+										</td>
+										<td class="seatDateTd"
+											data-value="${reservation.seat_date.substring(0,10)}">${reservation.seat_date.substring(0,10)}</td>
 										<td>${reservation.seat_time}</td>
 										<td>${reservation.name}</td>
 										<td>${reservation.book_name}</td>
@@ -586,9 +674,18 @@ ${reservation.menu_name1} , ${reservation.menu_name2} 외 6종
 										<td>${reservation.book_people}명</td>
 										<td>${reservation.coupon_name}</td>
 										<td>${reservation.pay_way}</td>
-										<td>${reservation.pay_date.substring(0,10)}</td>
+										<td class="payDateTd"
+											data-value="${reservation.pay_date.substring(0,10)}">${reservation.pay_date.substring(0,10)}</td>
 										<td>${reservation.discount}</td>
-										<td>${reservation.totalpay}</td>
+										<td class="totalPayTd" data-value="${reservation.totalpay}">${reservation.totalpay}</td>
+										<td hidden="" class="cancelreciverTd"
+											data-value="${reservation.cancel_reciver }"></td>
+										<td hidden="" class="cancelbankTd"
+											data-value="${reservation.cancel_bank }"></td>
+										<td hidden="" class="cancelaccountTd"
+											data-value="${reservation.cancel_account }"></td>
+										<td hidden="" class="canceltotalTd"
+											data-value="${reservation.cancel_total }"></td>
 
 									</tr>
 								</c:forEach>
@@ -610,6 +707,102 @@ ${reservation.menu_name1} , ${reservation.menu_name2} 외 6종
 				list_size="${data.pageSize }" />
 		</div>
 	</div>
+
+	<!-- 환불 화면 영역(modal) -->
+	<div class="modal fade" id="cancelPayModal" tabindex="-1" role="dialog"
+		aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">환불 정보</h4>
+				</div>
+				<div class="modal-body">
+					<form id="f_Form">
+						<input type="hidden" id="selected_Book_no" name="book_no">
+						<div class="form-group">
+							<label for="cancel_reciver" class="control-label">환불예금주</label> <input
+								type="text" class="form-control" id="cancel_reciver"
+								maxlength="5" readonly="readonly" />
+						</div>
+						<div class="form-group">
+							<label for="cancel_bank" class="control-label">환불은행</label> <input
+								type="text" class="form-control" id="cancel_bank" maxlength="50"
+								readonly="readonly" />
+						</div>
+						<div class="form-group">
+							<label for="cancel_account" class="control-label">환불계좌</label> <input
+								type="text" class="form-control" id="cancel_account"
+								readonly="readonly"></input>
+						</div>
+						<div class="form-group">
+							<label for="cancel_total" class="control-label">환불금액(원)</label> <input
+								type="text" class="form-control" id="cancel_total"
+								readonly="readonly"></input>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary"
+						id="cancelPayModalBtn">환불</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal"
+						class="bye">취소</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 예약취소 환불정보 입력 화면 영역(modal) -->
+	<div class="modal fade" id="cancelPayInsertModal" tabindex="-1"
+		role="dialog" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">예약취소 환불 정보입력창</h4>
+				</div>
+				<div class="modal-body">
+					<form id="f_Form">
+						<input type="hidden" id="cancelBook_no">
+						<div class="form-group">
+							<label for="inputcancel_reciver" class="control-label">환불예금주</label>
+							<input type="text" class="form-control" id="inputcancel_reciver"
+								maxlength="50" required="required" />
+						</div>
+						<div class="form-group">
+							<label for="inputcancel_bank" class="control-label">환불은행</label>
+							<input type="text" class="form-control" id="inputcancel_bank"
+								maxlength="50" required="required" />
+						</div>
+						<div class="form-group">
+							<label for="inputcancel_account" class="control-label">환불계좌</label>
+							<input type="text" class="form-control" id="inputcancel_account"
+								required="required"></input>
+						</div>
+						<div class="form-group">
+							<label for="inputcancel_total" class="control-label">환불금액(원)</label>
+							<input type="text" class="form-control" id="inputcancel_total"
+								readonly="readonly"></input>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary"
+						id="cancelPayInsertModalBtn">예약취소</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal"
+						class="bye">취소</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
 	<script type="text/javascript"
 		src="/resources/include/js/jquery-3.3.1.min.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>

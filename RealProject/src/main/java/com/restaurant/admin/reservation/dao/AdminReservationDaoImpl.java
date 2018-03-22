@@ -44,4 +44,36 @@ public class AdminReservationDaoImpl implements AdminReservationDao {
 		session.update("lateReservationEdit");
 	}
 
+	@Override
+	public void cancelUpdate(AdminReservationVO rvo) {
+		// TODO Auto-generated method stub
+		session.update("cancelUpdate", rvo);
+		
+	}
+
+	@Override
+	public void insertSeatFirst() {
+		// TODO Auto-generated method stub
+		session.insert("insertSeatFirst");
+		
+	}
+
+	@Override
+	public void insertSeatSecond() {
+		// TODO Auto-generated method stub
+		session.insert("insertSeatSecond");
+	}
+
+	@Override
+	public void insertSeatThird() {
+		// TODO Auto-generated method stub
+		session.insert("insertSeatThird");
+	}
+
+	@Override
+	public void insertSeatFourth() {
+		// TODO Auto-generated method stub
+		session.insert("insertSeatFourth");
+	}
+
 }
