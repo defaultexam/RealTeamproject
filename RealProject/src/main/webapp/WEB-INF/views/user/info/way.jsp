@@ -22,44 +22,55 @@
 	}
 	var map = new naver.maps.Map('map', {
 		center : new naver.maps.LatLng(37.3595704, 127.105399),
-		zoom : 17
+		zoom : 20
 	});
 </script>
 <style type="text/css">
+p {
+	font-weight: 700;
+	font-family: "Courier New";
+}
+
 #map {
 	height: 400px;
 	width: 60%;
 }
 
-.way, .info, .font {
-	font-size: 20px;
+#menunav .gnb a span {
+	display: inline-block;
+	height: 33px;
+	color: #a8a9ad;
+	font-size: 14px;
+	letter-spacing: 1.5px;
+	font-family: 'Open Sans', "Spoqa Han Sans", 'sans-serif', 'Arial';
+	font-weight: 500;
+	vertical-align: top;
 }
 
-.way {
-	font-weight: 900;
-	text-decoration: underline;
+#menunav .gnb a span:hover {
+	zoom: 1.05;
+	border-bottom-color: black;
+	border-bottom: 1px solid #231f20;
 }
+
 </style>
 </head>
 <body>
-	<div align="center">
-		<a href="/info/info" class="info"><span class="info">소개</span></a>&nbsp;&nbsp;<span class="font">l</span>&nbsp;&nbsp;<a
-			href="/info/way" class="way"><span class="way">오시는 길</span></a>
+	<!-- Info 관련 네비게이션 -->
+	<div id="menunav" align="center">
+		<nav class="gnb">
+			<a href="/info/info"><span>소개</span></a> &nbsp;&nbsp;<span>|</span>
+			&nbsp;&nbsp;<a href="/info/way"><span>오시는 길</span></a>
+		</nav>
 	</div>
 	<br>
 	<br>
-	<div align="center">
-		<div id="map"></div>
-		<br> <br>
-		<p>주 소 : 서울시 성동구 무학로2길 54 신방빌딩</p>
-		<p>전화번호 : 02-441-6006</p>
-		<br>
-		<hr>
-		<h5 style="padding-right: 50%">
-			<b>ㆍ대중교통 이용시</b>
-		</h5>
-		<br> <img src="/resources/infoImage/busInfo.png"> <br>
-		<br>
+	<div style="width: 1250px;">
+		<div id="map" style="width: 550px; float: left;"></div>
+		<img src="/resources/infoImage/busInfo.png" style="float: right;">
+		<div style="float: left; padding-top: 5px;">
+			<p>주 소 : 서울시 성동구 무학로2길 54 신방빌딩 ㆍContact: 02-441-6006</p>
+		</div>
 	</div>
 	<!-- 구글키 -->
 	<script async defer

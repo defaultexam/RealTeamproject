@@ -11,51 +11,81 @@
 
 
 <style>
-#image {
-	height: 400px;
-	width: 400px;
-	float: left;
-	margin-left: 5%;
-	margin-right: 5%;
-	margin-bottom: 5%;
-	float: left;
+#wrap {
+	width: 1200px auto;
+	padding-top: 70px;
 }
 
-.way, .info, .font {
-	font-size: 20px;
+#mainImg {
+	padding-top: 20px;
+	width: 400px;
+	height: 400px;
+	float: left;
+	display: block;
+	padding-right: 50px;
+}
+
+#menunav .gnb a span {
+	display: inline-block;
+	height: 33px;
+	color: #a8a9ad;
+	font-size: 14px;
+	letter-spacing: 1.5px;
+	font-family: 'Open Sans', "Spoqa Han Sans", 'sans-serif', 'Arial';
+	font-weight: 500;
+	vertical-align: top;
+}
+
+#menunav .gnb a span:hover {
+	zoom: 1.05;
+	border-bottom-color: black;
+	border-bottom: 1px solid #231f20;
 }
 
 .info {
 	font-weight: 900;
 	text-decoration: underline;
 }
+
+#introduce {
+	padding-top: 100px;
+	width: 100%;
+	height: 450px;
+}
+
+h2 {
+	font-family: Raleway, Georgia, serif;
+}
+
+p {
+	font-family: "Courier New";
+}
 </style>
 </head>
 <body>
-	<div align="center">
-		<a href="/info/info" ><span class="info">소개</span></a>&nbsp;&nbsp;<span class="font">l</span>&nbsp;&nbsp;<a
-			href="/info/way" ><span class="way">오시는 길</span></a>
+	<!-- Info 관련 네비게이션 -->
+	<div id="menunav" align="center">
+		<nav class="gnb">
+			<a href="/info/info"><span>소개</span></a> &nbsp;&nbsp;<span>|</span>
+			&nbsp;&nbsp;<a href="/info/way"><span>오시는 길</span></a>
+		</nav>
 	</div>
-	<br>
-	<br>
-	<!-- 레스토랑 이미지 -->
-	<img src="/resources/images/logo.png" width="400" height="400"
-		id="image">
-
-	<!-- 레스토랑 인사말 -->
-	<br>
-	<br>
-	<br>
-	<h2>식사는 오페라나 영화처럼 예술이자</h2>
-	<h2>경험이어야 합니다.</h2>
-	<br>
-	<p>단순히 배를 채우는 것이 아닌 더 나아가 자신의 영혼을 만족시켜줘야 합니다.</p>
-	<p>그동안 잠들어 있던 여러분들의 시각, 후각, 촉각을 최대한 살려 특별한 식사를</p>
-	<p>할 수 있는 곳입니다.</p>
-	<p>그리고 그 신비로움을 연인, 가족, 친구, 동료들과 함께 만끽할 수 있는 곳이기도 합니다.</p>
-	<p>이제까지 접해보지 못한 멋진 경험을 하게 되실 겁니다.</p>
-	<p>최고의 셰프가 최고의 재료로 만든 최고의 음식을 느껴보세요!</p>
-	<br>
-	<br>
+	<div id="wrap">
+		<!-- 레스토랑 이미지 -->
+		<div id="mainImg">
+			<img src="/resources/images/logo.png" width="400" height="400"
+				id="image">
+		</div>
+		<!-- 레스토랑 인사말 -->
+		<div id="introduce">
+			<h2>식사는 오페라나 영화처럼 예술이자 경험이어야 합니다.</h2>
+			<br>
+			<p>단순히 배를 채우는 것이 아닌 더 나아가 자신의 영혼을 만족시켜줘야 합니다.</p>
+			<p>그동안 잠들어 있던 여러분들의 시각, 후각, 촉각을 최대한 살려 특별한 식사를 할 수 있는 곳입니다.</p>
+			<p>그리고 그 신비로움을 연인, 가족, 친구, 동료들과 함께 만끽할 수 있는 곳이기도 합니다.</p>
+			<p>이제까지 접해보지 못한 멋진 경험을 하게 되실 겁니다.</p>
+			<p>최고의 셰프가 최고의 재료로 만든 최고의 음식을 느껴보세요!</p>
+		</div>
+	</div>
 </body>
 </html>

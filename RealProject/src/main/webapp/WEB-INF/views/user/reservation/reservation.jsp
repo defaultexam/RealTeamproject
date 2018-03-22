@@ -22,6 +22,7 @@
 	var _dep1 = $("body").attr("data-dep1", "2");
 	var _dep2 = $("body").attr("data-dep2", "-1");
 	$(document).ready(function() {
+		$("#span9999").html("✓");
 		toggleSpinners(1);
 		if ((menuList == null || menuList == '') && login != null) {
 			$("#getMenu").attr({
@@ -50,16 +51,23 @@
 				"seat_date" : dt
 			},
 			error : function() {
-				alert('사이트 접속 문제로 정상 작동하지 못하였습니다. 잠시 후 다시 시도해 주세요.');
+				return;
+			/* 	alert('사이트 접속 문제로 정상 작동하지 못하였습니다. 잠시 후 다시 시도해 주세요.'); */
 			},
 			success : function(resultdata) {
 				if (resultdata != null) {
 					seats = resultdata;
 					seat_no = resultdata[0].seat_no;
-					$("#extra1").html(resultdata[0].seat_extra);
-					$("#extra2").html(resultdata[1].seat_extra);
-					$("#extra3").html(resultdata[2].seat_extra);
-					$("#extra4").html(resultdata[3].seat_extra);
+					if (resultdata.length == 1)
+						$("#extra1").html(resultdata[0].seat_extra);
+					if (resultdata.length == 2)
+						$("#extra2").html(resultdata[1].seat_extra);
+					if (resultdata.length == 3)
+						$("#extra3").html(resultdata[2].seat_extra);
+					if (resultdata.length == 4)
+						$("#extra4").html(resultdata[3].seat_extra);
+				} else {
+					return;
 				}
 			}
 		});
@@ -425,7 +433,8 @@
 						</c:otherwise>
 					</c:choose>
 					<tr class="selectCoupon" data-num="9999">
-						<td colspan="6" align="right"><strong>쿠폰을 사용하지 않겠습니다.</strong></td>
+						<td colspan="6" align="right"><strong>쿠폰을 사용하지
+								않겠습니다.</strong></td>
 						<td style="width: 50px;" align="center"><span role="no"
 							id="span9999"></span></td>
 					</tr>

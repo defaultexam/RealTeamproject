@@ -17,6 +17,7 @@ var discountPrice = 0;
 // 이용 시간의 Default 값
 var time = "12:00 ~ 14:00";
 var selectOption = 1;
+var maxCart = 0;
 
 // DataPicker을 통해 선택한 날짜
 var selectedDay;
@@ -120,16 +121,18 @@ function addList() {
 	$(function() {
 		for (var i = 0; i <= cart_seq; i++) {
 			/* cart 리스트에 이미 값이 있을 경우 */
-			if (cart_menuno[i] == selectedMenu.menu_no) {
+			if (cart_menuno[i] == selectedMenu.menu_no && cart_amount[i] != 0) {
 				resultnum = i;
 				break;
 			} else {
-				/* cart 리스트에 값이 없을 경우 */
-				resultnum = 9999;
+				if (cart_menuno[i] == selectedMenu.menu_no && cart_amount[i] == 0)
+					/* cart 리스트에 값이 없을 경우 */
+					resultnum = 9999;
 			}
 		}
 		if (resultnum == 9999) {
-			if (cart_seq >= 8 && cart_menuno[i] != selectedMenu.menu_no) {
+			maxCart++;
+			if (maxCart > 8) {
 				alert("최대 8개의 메뉴만 주문하실 수 있습니다.")
 				return;
 			}
@@ -140,14 +143,17 @@ function addList() {
 			cart_kind[cart_seq] = selectedMenu.menu_kind;
 			cart_amount[cart_seq] = 1;
 			/* 테이블 생성 */
-			$("#afterhere").after("<tr id='tr" + selectedMenu.menu_no + "'>");
+			$("#afterhere").after("<tr data-num='" + selectedMenu.menu_no + "' id='tr" + selectedMenu.menu_no + "'>");
 			$("#tr" + selectedMenu.menu_no).append("<td id='td1_" + selectedMenu.menu_no + "'>" + "ㆍ" + selectedMenu.menu_name + "</td>" + "<br>");
 			$("#td1_" + selectedMenu.menu_no).after("<td id='td2_" + selectedMenu.menu_no + "'>" + selectedMenu.menu_price + " 원" + "</td>" + "<br>");
-			$("#td2_" + selectedMenu.menu_no).after("<td id='" + "cartamount" + selectedMenu.menu_no + "'>" + cart_amount[cart_seq] + "개" + "</td>" + "<br>");
+			$("#td2_" + selectedMenu.menu_no).after("<td id='" + "cartamount" + selectedMenu.menu_no + "'>" + "<span id='amount" + selectedMenu.menu_no + "'>" + cart_amount[cart_seq] + "개</span>"
+				+ "<a onclick='cartMinus(" + selectedMenu.menu_no + ");' style='float: right;'><span class='glyphicon glyphicon-minus' aria-hidden='true'></span></a>"
+				+ "<a onclick='cartPlus(" + selectedMenu.menu_no + ");' style='float: right;'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span></a>"
+				+ "</td>");
 			$(".table-detail3").before("</tr>");
 		} else {
 			cart_amount[resultnum] = cart_amount[resultnum] + 1;
-			$("#cartamount" + selectedMenu.menu_no).html(cart_amount[i] + "개");
+			$("#amount" + selectedMenu.menu_no).html(cart_amount[i] + "개");
 		}
 		/* 테이블 전체 금액 계산 및 콤마 */
 		if (allprice == '' || allprice == null) {
@@ -164,9 +170,62 @@ function addList() {
 		$("#payment_discount").html(makecomma(discountPrice));
 		$("#payment_whole").html(allprice - discountPrice);
 		$("#payment_ordered").html($("#allprice").html());
+		alert("장바구니에 추가되었습니다 !");
 		cart_seq += 1;
-		alert("장바구니에 추가되었습니다 !")
 	});
+}
+
+function setPrice(cart_no, calcu) {
+	/* 테이블 전체 금액 계산 및 콤마 */
+	if (calcu == 1) {
+		allprice = allprice + cart_price[cart_no];
+	} else {
+		allprice = allprice - cart_price[cart_no];
+	}
+	$("#allprice").html(makecomma(allprice));
+	if (discountrate != "0") {
+		var discounts = discountrate.split("%");
+		discountPrice = ((allprice / 100) * discounts[0]);
+	}
+	$("#payment_discount").html(makecomma(discountPrice));
+	$("#payment_whole").html(allprice - discountPrice);
+	$("#payment_ordered").html($("#allprice").html());
+}
+
+function cartPlus(menu_no) {
+	var originalNo = menu_no;
+	for (var i = 0; i < cart_name.length; i++) {
+		if (cart_menuno[i] == menu_no) {
+			menu_no = i;
+		}
+	}
+	cart_amount[menu_no] = cart_amount[menu_no] + 1;
+	$("#amount" + originalNo).html(cart_amount[menu_no] + "개");
+	setPrice(menu_no, 1);
+}
+
+function cartMinus(menu_no) {
+	var originalNo = menu_no;
+	for (var i = 0; i < cart_name.length; i++) {
+		if (cart_menuno[i] == menu_no) {
+			menu_no = i;
+		}
+	}
+	if (cart_amount[menu_no] > 1) {
+		cart_amount[menu_no] = cart_amount[menu_no] - 1;
+	} else {
+		cart_menuno.splice(menu_no, 1);
+		cart_name.splice(menu_no, 1);
+		cart_text.splice(menu_no, 1);
+		cart_price.splice(menu_no, 1);
+		cart_kind.splice(menu_no, 1);
+		cart_amount.splice(menu_no, 1);
+		maxCart--;
+		cart_seq--;
+		$("#tr" + originalNo).remove();
+	}
+	$("#amount" + originalNo).html(cart_amount[menu_no] + "개");
+	setPrice(menu_no, 2);
 }
 
 function checkMenu(menu_no) {

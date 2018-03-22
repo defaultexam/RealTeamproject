@@ -94,7 +94,8 @@
 }
 
 #header .gnb ul li:first-child>a {
-	padding-left: 27px;
+	/* 	padding-left: 27px;*/
+	
 }
 
 #header .gnb ul li.last-child>a {
@@ -305,12 +306,13 @@
 					<li><a href="/usermenu/mainMenu" target="" id="id_gnb_06003"
 						class="">MENU</a>
 						<ul style="display: none;">
-							<li><a href="/usermenu/mainMenu"><span>MAIN MENU</span></a></li>
-							<li><a href="/usermenu/course"><span>COURSE</span></a></li>
-							<li><a href="/usermenu/drink"><span>LIQUOR</span></a></li>
+							<li><a href="/usermenu/mainMenu"
+								onclick="activeImote(1,-1);"><span>MAIN MENU</span></a></li>
+							<li><a href="/usermenu/course" onclick="activeImote(1,-1);"><span>COURSE</span></a></li>
+							<li><a href="/usermenu/drink" onclick="activeImote(1,-1);"><span>LIQUOR</span></a></li>
 						</ul></li>
 					<li><a href="/reservation" target="" id="id_gnb_06004"
-						class="">RESERVATION</a>
+						onclick="activeImote(2,-1);" class="">RESERVATION</a>
 						<ul style="display: none;">
 							<li><a href="/reservation"><span>RESERVE</span></a></li>
 						</ul></li>
@@ -318,7 +320,7 @@
 						<ul style="display: none;">
 							<li><a href="#"><span>REVIEW</span></a></li>
 						</ul></li>
-					<li><a href="#" target="" id="id_gnb_06006" class="">고객센터</a>
+					<li><a href="#" target="" id="id_gnb_06006" class="" onclick="activeImote(4,-1);">고객센터</a>
 						<ul style="display: none;">
 							<li><a href="/userNotice"><span>공지사항</span></a></li>
 							<li><a href="#"><span>FAQ</span></a></li>
@@ -370,5 +372,10 @@
 			$("#header").removeClass("fixeds");
 			gnbMotion(false);
 		})
+	
+		function activeImote(a, b) {
+			_dep1 = $("body").attr("data-dep1", a);
+			_dep2 = $("body").attr("data-dep2", b);
+		}
 	</script>
 </body>
