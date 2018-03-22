@@ -9,14 +9,18 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>공지사항 글 추가</title>
 </head>
-
+<link href="/resources/include/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script type="text/javascript"
 	src="/resources/include/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript"
 	src="/resources/include/js/jquery.form.min.js"></script>
 <script type="text/javascript" src="/resources/include/js/common.js"></script>
+<script src="/resources/include/dist/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
-
 	$(function() {
 
 		/* 공지사항 글쓰기 폼에서 목록으로 버튼 클릭 시 */
@@ -24,7 +28,7 @@
 			alert("작성 중이던 공지사항 글 등록이 취소됩니다.");
 			location.href = "/adminNotice";
 		});
-		
+
 		/* 공지사항 글쓰기 폼에서 공지글 등록 버튼 클릭 시 */
 		$("#noticeInsertBtn").click(function() {
 
@@ -33,14 +37,14 @@
 				return;
 			else if (!chkSubmit($('#notice_text'), "작성할 공지사항 글내용을"))
 				return;
-			
-				$("#n_writeForm").attr({
-					"method" : "POST",
-					"action" : "/adminNotice/noticeInsert.do"
-				});
 
-				$("#n_writeForm").submit();
-				alert("관리자님의 공지사항 글이 등록되었습니다.");
+			$("#n_writeForm").attr({
+				"method" : "POST",
+				"action" : "/adminNotice/noticeInsert.do"
+			});
+
+			$("#n_writeForm").submit();
+			alert("관리자님의 공지사항 글이 등록되었습니다.");
 		});
 	});
 </script>

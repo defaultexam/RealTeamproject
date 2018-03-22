@@ -8,12 +8,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>공지사항 상세보기</title>
 </head>
-
+<link href="/resources/include/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script type="text/javascript"
 	src="/resources/include/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript"
 	src="/resources/include/js/jquery.form.min.js"></script>
 <script type="text/javascript" src="/resources/include/js/common.js"></script>
+<script src="/resources/include/dist/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script type="text/javascript">
 	$(function() {
@@ -45,7 +50,7 @@
 			if (!chkSubmit($('#notice_text'), "수정할 공지사항 공지글 내용을 "))
 				return;
 
-			else{
+			else {
 				$("#n_data").attr({
 					"method" : "POST",
 					"action" : "/adminNotice/noticeUpdate.do"
@@ -67,9 +72,9 @@
 			<div class="contentTB">
 				<form id="n_data" name="n_data">
 					<input type="hidden" id="notice_no" name="notice_no"
-						value="${detail.notice_no}" />
-						<input type="hidden" name="page" id="page" value="${param.page}">
-						
+						value="${detail.notice_no}" /> <input type="hidden" name="page"
+						id="page" value="${param.page}">
+
 					<table id="noticeupdate">
 						<tr>
 							<td class="ac"><h3>공지글 제목</h3></td>
