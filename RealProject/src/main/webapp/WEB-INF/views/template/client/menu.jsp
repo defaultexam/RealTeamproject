@@ -3,6 +3,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page trimDirectiveWhitespaces="true"%>
 <head>
+<script type="text/javascript">
+	//텝 세션 삭제
+	function faqTabClear() {
+		sessionStorage.removeItem("faqtab");
+	}
+</script>
 <style>
 #header {
 	position: relative;
@@ -322,7 +328,7 @@
 					<li><a href="/userNotice" target="" id="id_gnb_06006" class="">고객센터</a>
 						<ul style="display: none;">
 							<li><a href="/userNotice"><span>공지사항</span></a></li>
-							<li><a href="#"><span>FAQ</span></a></li>
+							<li><a href="/faq/faqList" onclick="faqTabClear();"><span>FAQ</span></a></li>
 							<li><c:if test="${login.id != null and login.id != ''}">
 									<a
 										href="/question/questionList.do?member_no=${login.member_no}"><span>1:1
@@ -365,4 +371,5 @@
 	<script src="/resources/include/js/imMenu.js"></script>
 	<script src="/resources/include/js/TweenMax.min.js"></script>
 	<script src="/resources/include/js/scrollActive.js"></script>
+
 </body>

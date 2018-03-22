@@ -43,5 +43,8 @@
 	<definition name="user/notice/*" extends="intro">
 		<put-attribute name="body" value="/WEB-INF/views/user/notice/{1}.jsp" />
 	</definition>
+	<definition name="user/faq/*" extends="intro">
+		<put-attribute name="body" value="/WEB-INF/views/user/faq/{1}.jsp" />
+	</definition>
 
 </tiles-definitions> 

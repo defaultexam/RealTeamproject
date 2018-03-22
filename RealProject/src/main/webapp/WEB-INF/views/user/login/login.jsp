@@ -73,7 +73,7 @@
 	<script src="/resources/include/dist/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
 	$(function(){
-		var errCode = ${errCode};
+		var errCode = '${errCode}';
 		if (errCode != "") {
 			// 명확한 자료형 명시를 위해 errCode의 타입을 정수형으로 변환. 
 			switch (parseInt(errCode)) {

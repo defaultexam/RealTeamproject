@@ -30,5 +30,7 @@
 			alias="adminreservation" />
 		<typeAlias type="com.restaurant.admin.chart.vo.AdminChartVO"
 			alias="adminchart" />
+		<typeAlias type="com.restaurant.user.faq.vo.faqVO"
+			alias="userfaq" />
 	</typeAliases>
 </configuration> 

@@ -20,6 +20,11 @@ li < a {
 	function reservationTab() {
 		sessionStorage.removeItem("reservation");
 	}
+	//텝 세션 삭제
+	function faqTabClear() {
+		sessionStorage.removeItem("faqtab");
+	}
+</script>
 </script>
 <link href="/resources/include/dist/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -60,7 +65,7 @@ li < a {
 						class="caret"></span></a>
 					<ul class="dropdown-menu" aria-labelledby="about-us">
 						<li><a href="/adminNotice">공지사항관리</a></li>
-						<li><a href="/adminFaq/adminFaqList">FAQ관리</a></li>
+						<li><a href="/adminFaq/adminFaqList" onclick="faqTabClear();">FAQ관리</a></li>
 						<li><a href="#">1:1문의관리</a></li>
 					</ul></li>
 				<li id="menutab6" class="dropdown"><a href="#"

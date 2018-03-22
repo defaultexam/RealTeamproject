@@ -62,6 +62,8 @@
 		class="com.restaurant.admin.reservation.dao.AdminReservationDaoImpl" />
 	<beans:bean id="chartdao"
 		class="com.restaurant.admin.chart.dao.AdminChartDaoImpl" />
+		<beans:bean id="userfaqdao" class="com.restaurant.user.faq.dao.faqDAOImpl" />
+		
 
 	<context:component-scan base-package="com.restaurant.**.**.**" />
 </beans:beans>

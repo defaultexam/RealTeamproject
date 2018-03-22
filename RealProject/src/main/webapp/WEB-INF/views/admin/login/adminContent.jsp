@@ -49,7 +49,13 @@ a {
 	function reservationTab() {
 		sessionStorage.removeItem("reservation");
 	}
+	//텝 세션 삭제
+	function faqTabClear() {
+		sessionStorage.removeItem("faqtab");
+	}
 </script>
+</script>
+
 <title>관리자컨텐츠부분</title>
 </head>
 <body>
@@ -80,7 +86,7 @@ a {
 				<td class="none"></td>
 				<td class="menu" align="center">
 					<h2>고객센터관리</h2> <a href="/adminNotice"">공지사항관리</a><br> <a
-					href="/adminFaq/adminFaqList">FAQ관리</a><br> <a
+					href="/adminFaq/adminFaqList" onclick="faqTabClear();">FAQ관리</a><br> <a
 					href="/adminQuestion">1:1문의관리</a>
 				</td>
 				<td class="none"></td>

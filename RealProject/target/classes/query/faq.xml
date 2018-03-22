@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.restaurant.user.faq.dao.faqDAO">
+
+	<!-- 검색 조건 -->
+	<sql id="userfaqCommon">
+		select *
+		from faq
+		<if test="faq_type != ''">
+			<where>faq_type = #{faq_type}</where>
+		</if>
+		<if test="faq_type == ''"></if>
+	</sql>
+	<!-- faq 목록 -->
+	<select id="userfaqList" resultType="userfaq" parameterType="userfaq">
+		select faq_no, faq_title,faq_text,faq_type, faq_date
+		from (SELECT
+		list.*, ROWNUM AS RNUM FROM (
+		<include refid="userfaqCommon"></include>
+		) list)
+		<where>
+			<if test="start_row != null and start_row != ''">
+				<if test="end_row != null and end_row != ''"> RNUM BETWEEN #{start_row} AND
+					#{end_row}
+				</if>
+			</if>
+		</where>
+	</select>
+	<!-- 게시물 전체 개수 -->
+	<select id="userfaqListCnt" parameterType="userfaq" resultType="int">
+		SELECT NVL(count(1), 0) FROM (SELECT list.*, ROWNUM AS RNUM FROM (
+		<include refid="userfaqCommon"></include>
+		ORDER BY faq_no desc) list )
+	</select>
+</mapper>

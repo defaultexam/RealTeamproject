@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="tag" uri="/WEB-INF/tld/custom_tag.tld"%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,6 +12,7 @@
 <style type="text/css">
 li a:hover {
 	color: black;
+	text-decoration: none;
 }
 
 li a:active {
@@ -47,112 +47,8 @@ textarea {
 	src="/resources/include/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="/resources/include/js/common.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="/resources/include/dist/js/bootstrap.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
 <script type="text/javascript">
 	$(function() {
-
-		/* 닫기 버튼 */
-		$(".bye").click(function() {
-			resetData();
-		});
-
-		/* 추가 버튼 클릭 시 */
-		$("#faqInsertBtn").click(function() {
-			$("#faqInsert").modal('show');
-		});
-
-		/* 추가 창 추가버튼 */
-		$("#faqInsertBtnIn")
-			.click(
-				function() {
-					// 입력값 체크
-					if (!formCheck($('#faq_title'),
-							$('.error:eq(0)'), "제목을")) {
-						return;
-					} else if (!formCheck($('#faq_text'),
-							$('.error:eq(1)'), "내용을")) {
-						return;
-					} else if (!formCheck($('#faq_type'),
-							$('.error:eq(1)'), "종류를")) {
-						return;
-					} else {
-						$
-							.ajax({
-								method : "post",
-								url : "/adminFaq/faqInsert",
-								data : {
-									"faq_title" : $(
-										"#faq_title").val(),
-									"faq_text" : $(
-										"#faq_text").val(),
-									"faq_type" : $(
-										"#faq_type")
-										.val()
-								},
-								dataType : "text",
-								error : function() {
-									alert("사이트 접속 문제로 정상 작동하지 못하였습니다. 잠시후 다시 시도해주세요");
-								},
-								success : function() {
-									alert("신규 FAQ 등록 성공");
-									$("#faqInsert")
-										.modal('hide');
-									window.history.go(0);
-								}
-							});
-					}
-				});
-		/* 수정 버튼 */
-		$("#faqUpdateBtnIn").click(
-			function() {
-				// 입력값 체크
-				if (!formCheck($('#updatefaq_title'),
-						$('.error:eq(1)'), "제목을")) {
-					return;
-				} else if (!formCheck(
-						$('#updatefaq_text'),
-						$('.error:eq(1)'), "내용을")) {
-					return;
-				} else if (!formCheck($('#updatefaq_type'),
-						$('.error:eq(1)'), "종류를")) {
-					return;
-				} else {
-					$.ajax({
-						method : "post",
-						url : "/adminFaq/faqUpdate",
-						data : {
-							"faq_title" : $(
-								"#updatefaq_title")
-								.val(),
-							"faq_text" : $(
-								"#updatefaq_text")
-								.val(),
-							"faq_type" : $(
-								"#updatefaq_type")
-								.val(),
-							"faq_no" : $("#selectfaq_no").val()
-						},
-						dataType : "json",
-						error : function() {
-							alert("사이트 접속 문제로 정상 작동하지 못하였습니다. 잠시후 다시 시도해주세요");
-						},
-						success : function(data) {
-							console.log(data);
-							if (data == 1) {
-								alert("FAQ 수정 등록 성공");
-								$("#faqupdate").modal(
-									'hide');
-								window.history.go(0);
-							} else {
-								alert("페이지를 불러오는데 실패하였습니다.");
-							}
-
-						}
-					});
-				}
-			});
 
 		var tab1 = document.getElementById("전체");
 		var tab2 = document.getElementById("레스토랑 이용");
@@ -180,31 +76,22 @@ textarea {
 			tab3.classList.remove("active");
 			tab4.classList.remove("active");
 		}
-		/* 삭제버튼 */
-		$("#deleteBtn").click(
-			function() {
-
-				var select_no = $("#selectfaq_no").val();
-
-				$("#f_Form").attr({
-					"method" : "GET",
-					"action" : "/adminFaq/faqDelete"
-				});
-				$("#f_Form").submit();
-				alert("삭제처리완료");
-			});
-		/* 탭버튼전체 */
+		/* 닫기 버튼 */
+		$(".bye").click(function() {
+			resetData();
+		});
+		/* 전체 탭버튼 */
 		$("#alllist").click(function() {
 			$("#type").val("");
 			console.log($("#type").val());
 			sessionStorage.removeItem("faqtab");
 			$("#pageset").attr({
 				"method" : "get",
-				"action" : "/adminFaq/adminFaqList"
+				"action" : "/faq/faqList"
 			});
-
 			$("#pageset").submit();
 		});
+
 		/* 레스토랑 이용 탭버튼 */
 		$("#list1").click(function() {
 			$("#type").val("레스토랑 이용");
@@ -212,9 +99,8 @@ textarea {
 			sessionStorage.setItem("faqtab", "레스토랑 이용");
 			$("#pageset").attr({
 				"method" : "get",
-				"action" : "/adminFaq/adminFaqList"
+				"action" : "/faq/faqList"
 			});
-
 			$("#pageset").submit();
 		});
 		/* 홈페이지 이용 탭버튼 */
@@ -224,11 +110,11 @@ textarea {
 			sessionStorage.setItem("faqtab", "홈페이지 이용");
 			$("#pageset").attr({
 				"method" : "get",
-				"action" : "/adminFaq/adminFaqList"
+				"action" : "/faq/faqList"
 			});
-
 			$("#pageset").submit();
 		});
+
 		/* 예약 문의 탭버튼 */
 		$("#list3").click(function() {
 			$("#type").val("예약 문의");
@@ -236,7 +122,7 @@ textarea {
 			sessionStorage.setItem("faqtab", "예약 문의");
 			$("#pageset").attr({
 				"method" : "get",
-				"action" : "/adminFaq/adminFaqList"
+				"action" : "/faq/faqList"
 			});
 
 			$("#pageset").submit();
@@ -247,37 +133,9 @@ textarea {
 		$("#page").val(page);
 		$("#pageset").attr({
 			"method" : "get",
-			"action" : "/adminFaq/AdminFaqList"
+			"action" : "/faq/faqList"
 		});
 		$("#pageset").submit();
-	}
-
-	/* 수정창 */
-	function update(index) {
-		var select_no = $("#select_" + index).val();
-		$.ajax({
-			method : "get",
-			url : "/adminFaq/faqDetail",
-			data : {
-				"faq_no" : select_no
-			},
-			dataType : "json",
-			error : function() {
-				alert("사이트 접속 문제로 정상 작동하지 못하였습니다. 잠시후 다시 시도해주세요");
-			},
-			success : function(data) {
-				console.log(data.faq_no);
-				console.log("데이터 이동완료");
-				var result = data;
-
-				$("#selectfaq_no").val(data.faq_no);
-				$("#updatefaq_title").val(result.faq_title);
-				$("#updatefaq_text").val(result.faq_text);
-				$("#updatefaq_type").val(result.faq_type);
-				$("#faqupdate").modal('show');
-
-			}
-		});
 	}
 </script>
 </head>
@@ -332,8 +190,7 @@ textarea {
 									<div class="clear"></div>
 									<input type="hidden" id="select_${status.index}"
 										value="${faq.faq_no}">
-									<button type="button" class="btn btn-primary"
-										onclick="update(${status.index});">수정/삭제</button>
+
 								</div>
 							</div>
 						</div>
@@ -442,7 +299,6 @@ textarea {
 
 	<!-- 버튼 -->
 	<div id="tar">
-		<button type="button" id="faqInsertBtn" class="btn btn-default">추가</button>
 
 		<div id="faqPage">
 			<tag:paging page="${param.page}" total="${total}" list_size="10" />
