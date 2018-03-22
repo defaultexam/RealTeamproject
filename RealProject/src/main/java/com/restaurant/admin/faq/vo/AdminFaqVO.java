@@ -4,14 +4,14 @@ import java.util.Date;
 
 import com.restaurant.common.vo.CommonVO;
 
-public class AdminFaqVO extends CommonVO{
+public class AdminFaqVO extends CommonVO {
 
-	private int faq_no;
-	private String faq_title;
-	private String faq_text;
-	private String faq_type;
-	private Date faq_date;
-	
+	private int faq_no = 0;
+	private String faq_title = "";
+	private String faq_text = "";
+	private String faq_type = "";
+	private Date faq_date = null;
+
 	public int getFaq_no() {
 		return faq_no;
 	}

@@ -8,12 +8,16 @@
 	<sql id="faqCommon">
 		select *
 		from faq
+		<if test="faq_type != ''">
+			<where>faq_type = #{faq_type}</where>
+		</if>
+		<if test="faq_type == ''"></if>
 	</sql>
-
 	<!-- faq 목록 -->
 	<select id="faqList" resultType="faq" parameterType="faq">
 		select faq_no, faq_title,faq_text,faq_type, faq_date
-		from (SELECT list.*, ROWNUM AS RNUM FROM (
+		from (SELECT
+		list.*, ROWNUM AS RNUM FROM (
 		<include refid="faqCommon"></include>
 		<choose>
 			<when test="order_by=='faq_no'"> ORDER BY faq_no</when>
@@ -38,17 +42,14 @@
 		<include refid="faqCommon"></include>
 		ORDER BY faq_no desc) list )
 	</select>
-	<!-- faq 상세보기 -->
-	<select id="faqDetail">
+	<!-- faq 수정 상세 -->
+	<select id="faqDetail" parameterType="int" resultType="faq">
 		select
-		faq_no,
-		faq_title,
+		faq_no, faq_title,
 		faq_text,
 		faq_type,
-		faq_date
-		from faq
-		where faq_no =
-		#{faq_no}
+		faq_date from faq where faq_no =
+		#{fno}
 	</select>
 	<!-- faq 추가 -->
 	<insert id="faqInsert">
@@ -67,19 +68,18 @@
 	</insert>
 	<!-- faq 수정 -->
 	<update id="faqUpdate" parameterType="faq">
-		update faq
-		faq_no,
+		update faq set
 		faq_title
-		= #{faq_title},
+		=
+		#{faq_title},
 		faq_text =
 		#{faq_text},
 		faq_type = #{faq_type},
 		faq_date =
 		sysdate
-		from faq
-		where faq_no =
-		#{faq_no}
+		where faq_no = #{faq_no}
 	</update>
+
 	<!-- faq 삭제 -->
 	<delete id="faqDelete" parameterType="faq">
 		delete from FAQ

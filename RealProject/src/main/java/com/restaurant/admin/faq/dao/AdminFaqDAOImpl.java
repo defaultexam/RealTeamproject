@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import com.restaurant.admin.faq.vo.AdminFaqVO;
 
+import oracle.net.aso.i;
+
 @Repository("faqdao")
 public class AdminFaqDAOImpl implements AdminFaqDAO {
 
@@ -23,13 +25,32 @@ public class AdminFaqDAOImpl implements AdminFaqDAO {
 
 	/* 글개수 */
 	@Override
-	public int boardListCnt(AdminFaqVO fvo) {
+	public int faqListCnt(AdminFaqVO fvo) {
 		return (Integer) session.selectOne("faqListCnt", fvo);
 	}
 
+	/* 글 추가 */
 	@Override
 	public void faqInsert(AdminFaqVO fvo) {
 		session.insert("faqInsert", fvo);
-
 	}
+
+	/* 수정 상세 */
+	@Override
+	public AdminFaqVO faqDetail(int fno) {
+		return (AdminFaqVO) session.selectOne("faqDetail", fno);
+	}
+
+	/* 글 수정 */
+	@Override
+	public int faqUpdate(AdminFaqVO fvo) {
+		return (Integer) session.update("faqUpdate", fvo);
+	}
+
+	/* 글삭제 */
+	@Override
+	public void faqDelete(int fno) {
+		session.delete("faqDelete", fno);
+	}
+
 }

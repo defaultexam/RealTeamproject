@@ -27,35 +27,35 @@ public class AdminFaqServiceImpl implements AdminFaqService {
 	/* 전체 레코드 수 구현 */
 	@Override
 	public int faqListCnt(AdminFaqVO fvo) {
-		return faqdao.boardListCnt(fvo);
+		return faqdao.faqListCnt(fvo);
 	}
 
 	/* 추가기능 */
 	@Override
 	public void faqInsert(AdminFaqVO fvo) {
 		faqdao.faqInsert(fvo);
-	
 	}
 
-	/* 상세보기 삭제 예정 */
+	/* 수정 상세보기 */
 	@Override
-	public AdminFaqVO faqDetail(AdminFaqVO fvo) {
-		// TODO Auto-generated method stub
-		return null;
+	public AdminFaqVO faqDetail(int fno) {
+		AdminFaqVO fvo = new AdminFaqVO();
+		fvo = faqdao.faqDetail(fno);
+		return fvo;
 	}
 
 	/* 수정기능 */
 	@Override
 	public int faqUpdate(AdminFaqVO fvo) {
-		// TODO Auto-generated method stub
-		return 0;
+		int resert = 0;
+		resert = faqdao.faqUpdate(fvo);
+		return resert;
 	}
 
 	/* 삭제기능 */
 	@Override
-	public int faqDelete(int faq_no) {
-		// TODO Auto-generated method stub
-		return 0;
+	public void faqDelete(int faq_no) {
+		faqdao.faqDelete(faq_no);
 	}
 
 }

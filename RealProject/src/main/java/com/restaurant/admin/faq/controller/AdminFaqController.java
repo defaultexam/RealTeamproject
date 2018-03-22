@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -55,13 +56,6 @@ public class AdminFaqController {
 		return "admin/faq/adminfaq";
 	}
 
-	/* 글쓰기 폼 출력 */
-	@RequestMapping(value = "/writeForm")
-	public String writeForm(HttpSession session) {
-		logger.info("writeForm 호출 성공");
-		return "adminFaq/writeForm";
-	}
-
 	/* 글쓰기 구현 */
 	@ResponseBody
 	@RequestMapping(value = "/faqInsert", method = RequestMethod.POST)
@@ -70,69 +64,38 @@ public class AdminFaqController {
 	}
 
 	/* 글 상세보기 구현 */
+	@ResponseBody
 	@RequestMapping(value = "/faqDetail", method = RequestMethod.GET)
-	public String faqDetail(@ModelAttribute AdminFaqVO fvo, Model model) {
+	public AdminFaqVO faqDetail(@RequestParam("faq_no") int fno) {
 		logger.info("faqDetail 호출 성공");
-		logger.info("상세 번호 = " + fvo.getFaq_no());
 
-		AdminFaqVO detail = new AdminFaqVO();
-		detail = adminFaqService.faqDetail(fvo);
+		AdminFaqVO fvo = new AdminFaqVO();
 
-		if (detail != null && (!detail.equals(""))) {
-			detail.setFaq_text(detail.getFaq_text().toString().replaceAll("\n", "<br>"));
-		}
+		fvo = adminFaqService.faqDetail(fno);
 
-		model.addAttribute("detail", detail);
-
-		return "adminFaq/faqDetail";
-	}
-
-	/* 글수정 폼 출력 */
-	@RequestMapping(value = "/updateForm.do")
-	public String updateForm(@ModelAttribute AdminFaqVO fvo, Model model) {
-		logger.info("updateForm 호출 성공");
-
-		logger.info("수정 번호 = " + fvo.getFaq_no());
-
-		AdminFaqVO updateData = new AdminFaqVO();
-		updateData = adminFaqService.faqDetail(fvo);
-
-		model.addAttribute("updateData", updateData);
-
-		return "adminFaq/updateForm";
+		/*
+		 * if (detail != null && (!detail.equals(""))) {
+		 * detail.setFaq_text(detail.getFaq_text().toString().replaceAll("\n", "<br>"));
+		 * }
+		 */
+		return fvo;
 	}
 
 	/* 글수정 구현 */
+	@ResponseBody
 	@RequestMapping(value = "/faqUpdate", method = RequestMethod.POST)
-	public String faqUpdate(@ModelAttribute AdminFaqVO fvo, HttpServletRequest request)
-			throws IllegalStateException, IOException {
+	public int faqUpdate(@ModelAttribute AdminFaqVO avo) throws IllegalStateException, IOException {
 		logger.info("faqUpdate 호출 성공");
-
-		int result = 0;
-		String url = "";
-
-		result = adminFaqService.faqUpdate(fvo);
-		if (result == 1) {
-			url = "/adminFaq/adminFaqList.do"; // 수정 후 목록으로 이동
-			// 아래 url은 수정 후 상세 페이지로 이동
-		}
-		return "redirect:" + url;
+		int result = adminFaqService.faqUpdate(avo);
+		return result;
 	}
 
 	/* 글삭제 구현 */
-	@RequestMapping(value = "/faqDelete.do")
+	@RequestMapping(value = "/faqDelete")
 	public String faqDelete(@ModelAttribute AdminFaqVO fvo, HttpServletRequest request) throws IOException {
+		logger.info(fvo.getFaq_no());
 		logger.info("faqDelete 호출 성공");
-
-		// 아래 변수에는 입력 성공에 대한 상태값 담습니다.(1 or 0)
-		int result = 0;
-		String url = "";
-
-		result = adminFaqService.faqDelete(fvo.getFaq_no());
-		if (result == 1) {
-			url = "/adminFaq/adminFaqList.do";
-		}
-		return "redirect:" + url;
+		adminFaqService.faqDelete(fvo.getFaq_no());
+		return "redirect:/adminFaq/adminFaqList";
 	}
-
 }

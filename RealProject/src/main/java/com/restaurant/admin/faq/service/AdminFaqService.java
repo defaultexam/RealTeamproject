@@ -12,11 +12,11 @@ public interface AdminFaqService {
 
 	public void faqInsert(AdminFaqVO fvo);
 
-	public AdminFaqVO faqDetail(AdminFaqVO fvo);
+	public AdminFaqVO faqDetail(int fno);
 
 	public int faqUpdate(AdminFaqVO fvo);
 
-	public int faqDelete(int faq_no);
+	public void faqDelete(int faq_no);
 
 
 }
