@@ -70,4 +70,10 @@ public class MemberDAOImpl implements MemberDAO {
 	public int memberCouponUpdate(MemberVO mvo) {
 		return session.update("memberCouponUpdate", mvo);
 	}
+
+	@Override
+	public MemberVO memberNoSearch(int member_no) {
+		// TODO Auto-generated method stub
+		return session.selectOne("memberNoSearch", member_no);
+	}
 }

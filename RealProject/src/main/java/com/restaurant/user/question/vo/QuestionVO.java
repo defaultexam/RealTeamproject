@@ -2,7 +2,9 @@ package com.restaurant.user.question.vo;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public class QuestionVO {
+import com.restaurant.common.vo.CommonVO;
+
+public class QuestionVO extends CommonVO{
 
 	private int question_no = 0;
 	private int member_no = 0;
@@ -11,7 +13,14 @@ public class QuestionVO {
 	private String question_date = "";
 	private String question_text = "";
 	private String question_file = "";
+	private String question_thumb = "";
+	private String question_process = "";
 	private MultipartFile file;
+	private String answer_title = "";
+	private String answer_text = "";
+	private String answer_date = "";
+	private String answer_file = "";
+	private String answer_thumb = "";
 
 	public QuestionVO() {
 		super();
@@ -80,5 +89,63 @@ public class QuestionVO {
 	public void setFile(MultipartFile file) {
 		this.file = file;
 	}
+
+	public String getAnswer_title() {
+		return answer_title;
+	}
+
+	public void setAnswer_title(String answer_title) {
+		this.answer_title = answer_title;
+	}
+
+	public String getAnswer_text() {
+		return answer_text;
+	}
+
+	public void setAnswer_text(String answer_text) {
+		this.answer_text = answer_text;
+	}
+
+	public String getAnswer_date() {
+		return answer_date;
+	}
+
+	public void setAnswer_date(String answer_date) {
+		this.answer_date = answer_date;
+	}
+
+	public String getAnswer_file() {
+		return answer_file;
+	}
+
+	public void setAnswer_file(String answer_file) {
+		this.answer_file = answer_file;
+	}
+
+	public String getQuestion_thumb() {
+		return question_thumb;
+	}
+
+	public void setQuestion_thumb(String question_thumb) {
+		this.question_thumb = question_thumb;
+	}
+
+	public String getAnswer_thumb() {
+		return answer_thumb;
+	}
+
+	public void setAnswer_thumb(String answer_thumb) {
+		this.answer_thumb = answer_thumb;
+	}
+
+	public String getQuestion_process() {
+		return question_process;
+	}
+
+	public void setQuestion_process(String question_process) {
+		this.question_process = question_process;
+	}
+	
+	
 
 }

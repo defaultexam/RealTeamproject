@@ -78,4 +78,20 @@
 		select * from couponhistory where member_no = #{member_no} and <![CDATA[ coupon_status = '사용가능쿠폰' ]]>
 		order by couponHistory_no desc
 	</select>
+
+	<update id="memberCouponUpdate" parameterType="member">
+		update
+		couponhistory set
+		coupon_status= '사용 완료', discountprice =
+		#{agreement2}, useddate
+		= sysdate where
+		couponhistory_no=#{agreement1}
+	</update>
+
+	<select id="memberNoSearch" parameterType="int" resultType="member">
+		select *
+		from
+		member
+		where member_no = #{member_no}
+	</select>
 </mapper>

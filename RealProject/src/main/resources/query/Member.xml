@@ -87,4 +87,11 @@
 		= sysdate where
 		couponhistory_no=#{agreement1}
 	</update>
+
+	<select id="memberNoSearch" parameterType="int" resultType="member">
+		select *
+		from
+		member
+		where member_no = #{member_no}
+	</select>
 </mapper>

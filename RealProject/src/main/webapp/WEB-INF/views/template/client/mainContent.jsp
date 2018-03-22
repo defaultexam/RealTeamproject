@@ -35,6 +35,7 @@ h4, p {
 </style>
 </head>
 <body>
+
 	<div class="container">
 		<div class="row">
 			<div class="align">
@@ -105,6 +106,7 @@ h4, p {
 			</div>
 		</div>
 	</div>
+
 	<script src="/resources/include/js/jquery-3.3.1.min.js"></script>
 	<script src="/resources/include/dist/js/bootstrap.min.js"></script>
 </body>
