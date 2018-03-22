@@ -311,7 +311,7 @@
 							<li><a href="/usermenu/drink"><span>LIQUOR</span></a></li>
 						</ul></li>
 					<li><a href="/reservation" target="" id="id_gnb_06004"
-						onclick="activeImote(2,-1);" class="">RESERVATION</a>
+						class="">RESERVATION</a>
 						<ul style="display: none;">
 							<li><a href="/reservation"><span>RESERVE</span></a></li>
 						</ul></li>
