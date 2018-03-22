@@ -170,8 +170,8 @@ jQuery.fn.imGNBactive = function($activeClass, $activeFN) {
 	var _depth1 = -1;
 	var _depth2 = -1;
 	var _this = this;
-	var _dep1_ul = $(_this).find('>ul '); //   뎁스 1 ul
-	var _dep2_ul = $(_this).find('>ul>li>ul'); //   뎁스 2 ul
+	var _dep1_ul = $(_this).find('>ul '); //   뎁스 1 ul, gnb-list
+	var _dep2_ul = $(_this).find('>ul>li>ul'); //   뎁스 2 ul, 하위 네비게이션
 
 	$activeClass = ($activeClass) ? $activeClass : "on"; // activeClass 없으면 on으로 체크
 	//초기화
@@ -228,7 +228,6 @@ jQuery.fn.imGNBactive = function($activeClass, $activeFN) {
 				'display' : 'none'
 			});
 			_dep2_ul.eq($dep1).find(' li a').removeClass($activeClass);
-
 			// subindex, other
 			if ($("#header").hasClass("dep2-off")) {
 				$("#header.dep2-off .header_inner").height("84px");
@@ -237,8 +236,6 @@ jQuery.fn.imGNBactive = function($activeClass, $activeFN) {
 		}
 		_dep1_ul.find(' li > a').removeClass($activeClass);
 		_dep1_ul.find(' > li').eq($dep1).find(' > a').addClass($activeClass);
-
-
 		_dep2_ul.each(function($$index) {
 			if ($$index == $dep1) {
 				_dep2_ul.eq($$index).css({
@@ -258,9 +255,6 @@ jQuery.fn.imGNBactive = function($activeClass, $activeFN) {
 			_dep2_ul.eq($dep1).find(' li a').removeClass($activeClass);
 			_dep2_ul.eq($dep1).find(' li:eq(' + ($dep2) + ') a').addClass($activeClass);
 		}
-
-
-
 	} // active/
 
 	return {

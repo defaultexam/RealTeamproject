@@ -323,9 +323,16 @@
 						<ul style="display: none;">
 							<li><a href="/userNotice"><span>공지사항</span></a></li>
 							<li><a href="#"><span>FAQ</span></a></li>
-							<li><a href="/question"><span>1:1 문의</span></a></li>
+							<li><c:if test="${login.id != null and login.id != ''}">
+									<a
+										href="/question/questionList.do?member_no=${login.member_no}"><span>1:1
+											문의</span></a>
+								</c:if> <c:if test="${login.id == null or login.id == ''}">
+									<a href="/login"
+										onclick="alert('로그인 후 이용 가능한 서비스입니다. \n로그인 페이지로 이동합니다.');"><span>1:1
+											문의</span></a>
+								</c:if></li>
 						</ul></li>
-
 				</ul>
 			</nav>
 			<div class="utility">

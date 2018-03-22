@@ -8,8 +8,6 @@
 <link href="/resources/include/css/sticky-footer-navbar.css"
 	rel="stylesheet">
 <link href="/resources/include/css/reservation.css" rel="stylesheet">
-<!-- 03/09 - 달력 모양새 살짝 변형 , 메뉴 기능 추가 ^^ 이상훈 -->
-<!-- 다음 번에는 ..... 음 .... 예약하기 .... 음 ..... 쿼리를 만들어야해 ..... 기억해야해 ...... -->
 </head>
 <script type="text/javascript">
 	var menuList = '${menulist}';
@@ -19,8 +17,6 @@
 	var loginphone = '${login.phone}';
 	var loginemail = '${login.email}';
 	var alerts = 0;
-	var _dep1 = $("body").attr("data-dep1", "2");
-	var _dep2 = $("body").attr("data-dep2", "-1");
 	$(document).ready(function() {
 		$("#span9999").html("✓");
 		toggleSpinners(1);
@@ -97,11 +93,9 @@
 				$("#email2").val(emailsplit[1]);
 			}
 		});
-
 	});
 </script>
 <body>
-
 	<div class="container-fluid">
 		<form method="post" id="getMenu">
 			<input type="hidden" id="transfer_menu_id">
@@ -176,8 +170,53 @@
 				id="imgset"> <br /> <br />
 			<div class="col-md-12">
 				<div id="accordion">
+					<h3>코스 요리</h3>
+					<div style="height: auto;">
+						<div class="row">
+							<c:choose>
+								<c:when test="${not empty menulist}">
+									<c:forEach var="menu" items="${menulist}" varStatus="status">
+										<c:if test="${menu.menu_kind == 'course'}">
+											<div class="col-sm-6 col-md-4">
+												<div class="thumbnail">
+													<img
+														src="/uploadStorage/menu/thumbnail/${menu.menu_menufile }"
+														data-num="${menu.menu_no }" alt="...">
+													<div class="caption" style="height: 250px;">
+														<h3 class="text-center">${menu.menu_name }</h3>
+														<p>${menu.menu_text }</p>
+														<p class="text-left"
+															style="position: absolute; bottom: 30px;">
+															<font size="3.5">정상가 <script>
+																var originalPrice = '${menu.menu_price + (menu.menu_price/10)}';
+																var writePrice = originalPrice.split(".0");
+																document.write(writePrice[0]);
+															</script> 원
+															</font><br /> <strong><font size="3">회원가
+																	${menu.menu_price } 원</font></strong>
+														</p>
+														<p style="padding-left: 59%">
+															<input type="button" class="btn btn-primary"
+																role="button" id="menu${menu.menu_no }"
+																style="width: 130px; position: absolute; bottom: 30px;"
+																value="선택" onclick="checkMenu(${menu.menu_no });">
+														</p>
+													</div>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
+								</c:when>
+								<c:otherwise>
+									<tr>
+										<td colspan="4" class="tac">등록된 메뉴가 존재하지 않습니다.</td>
+									</tr>
+								</c:otherwise>
+							</c:choose>
+						</div>
+					</div>
 					<h3>스테이크</h3>
-					<div style="height: 900px">
+					<div style="height: auto;">
 						<div class="row">
 							<c:choose>
 								<c:when test="${not empty menulist}">
@@ -222,7 +261,7 @@
 						</div>
 					</div>
 					<h3>파스타</h3>
-					<div>
+					<div style="height: auto;">
 						<div class="row">
 							<c:choose>
 								<c:when test="${not empty menulist}">
@@ -267,7 +306,7 @@
 						</div>
 					</div>
 					<h3>샐러드</h3>
-					<div>
+					<div style="height: auto;">
 						<div class="row">
 							<c:choose>
 								<c:when test="${not empty menulist}">
@@ -311,13 +350,103 @@
 							</c:choose>
 						</div>
 					</div>
-					<h3>음료</h3>
-					<div>
+					<h3>맥주</h3>
+					<div style="height: auto;">
 						<div class="row">
 							<c:choose>
 								<c:when test="${not empty menulist}">
 									<c:forEach var="menu" items="${menulist}" varStatus="status">
 										<c:if test="${menu.menu_kind == 'beer'}">
+											<div class="col-sm-6 col-md-4">
+												<div class="thumbnail">
+													<img
+														src="/uploadStorage/menu/thumbnail/${menu.menu_menufile }"
+														data-num="${menu.menu_no }" alt="...">
+													<div class="caption" style="height: 250px;">
+														<h3 class="text-center">${menu.menu_name }</h3>
+														<p>${menu.menu_text }</p>
+														<p class="text-left"
+															style="position: absolute; bottom: 30px;">
+															<font size="3.5">정상가 <script>
+																var originalPrice = '${menu.menu_price + (menu.menu_price/10)}';
+																var writePrice = originalPrice.split(".0");
+																document.write(writePrice[0]);
+															</script> 원
+															</font><br /> <strong><font size="3">회원가
+																	${menu.menu_price } 원</font></strong>
+														</p>
+														<p style="padding-left: 59%">
+															<input type="button" class="btn btn-primary"
+																role="button" id="menu${menu.menu_no }"
+																style="width: 130px; position: absolute; bottom: 30px;"
+																value="선택" onclick="checkMenu(${menu.menu_no });">
+														</p>
+													</div>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
+								</c:when>
+								<c:otherwise>
+									<tr>
+										<td colspan="4" class="tac">등록된 메뉴가 존재하지 않습니다.</td>
+									</tr>
+								</c:otherwise>
+							</c:choose>
+						</div>
+					</div>
+					<h3>와인</h3>
+					<div style="height: auto;">
+						<div class="row">
+							<c:choose>
+								<c:when test="${not empty menulist}">
+									<c:forEach var="menu" items="${menulist}" varStatus="status">
+										<c:if test="${menu.menu_kind == 'wine'}">
+											<div class="col-sm-6 col-md-4">
+												<div class="thumbnail">
+													<img
+														src="/uploadStorage/menu/thumbnail/${menu.menu_menufile }"
+														data-num="${menu.menu_no }" alt="...">
+													<div class="caption" style="height: 250px;">
+														<h3 class="text-center">${menu.menu_name }</h3>
+														<p>${menu.menu_text }</p>
+														<p class="text-left"
+															style="position: absolute; bottom: 30px;">
+															<font size="3.5">정상가 <script>
+																var originalPrice = '${menu.menu_price + (menu.menu_price/10)}';
+																var writePrice = originalPrice.split(".0");
+																document.write(writePrice[0]);
+															</script> 원
+															</font><br /> <strong><font size="3">회원가
+																	${menu.menu_price } 원</font></strong>
+														</p>
+														<p style="padding-left: 59%">
+															<input type="button" class="btn btn-primary"
+																role="button" id="menu${menu.menu_no }"
+																style="width: 130px; position: absolute; bottom: 30px;"
+																value="선택" onclick="checkMenu(${menu.menu_no });">
+														</p>
+													</div>
+												</div>
+											</div>
+										</c:if>
+									</c:forEach>
+								</c:when>
+								<c:otherwise>
+									<tr>
+										<td colspan="4" class="tac">등록된 메뉴가 존재하지 않습니다.</td>
+									</tr>
+								</c:otherwise>
+							</c:choose>
+						</div>
+					</div>
+					<h3>양주</h3>
+					<div style="height: auto;">
+						<div class="row">
+							<c:choose>
+								<c:when test="${not empty menulist}">
+									<c:forEach var="menu" items="${menulist}" varStatus="status">
+										<c:if test="${menu.menu_kind == 'liquor'}">
 											<div class="col-sm-6 col-md-4">
 												<div class="thumbnail">
 													<img
@@ -540,22 +669,7 @@
 	<script src="/resources/include/dist/js/bootstrap.min.js"></script>
 	<script src="/resources/include/js/reservation.js"></script>
 	<script type="text/javascript">
-		var _dep1 = $("body").attr("data-dep1");
-		var _dep2 = $("body").attr("data-dep2");
-		$('.gnb').imGNBactive("on", gnbActiave).setBtn([ _dep1, _dep2 ]);
-		function gnbActiave($index1, $index2) {
-			if ($("body #wrap").hasClass("main")) {
-				return;
-			}
-			;
-			// 메인이면 실행 안함; 
-			return true;
-		}
-		// 2뎁 보기 버튼
-		$("#header a.btn-dep1").on("click", function($e) {
-			$e.preventDefault();
-			$("#header").removeClass("fixeds");
-			gnbMotion(false);
-		})
+		$("body").attr("data-dep1", 2);
+		$("body").attr("data-dep2", 0);
 	</script>
 </body>

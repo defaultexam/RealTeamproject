@@ -41,14 +41,14 @@
 				if ($("#search").val() == 'notice_title')
 					value = "#list tr td.goDetail";
 				$(value + ":contains('" + word + "')").each(
-						function() {
-							var regex = new RegExp(word, 'gi');
-							$(this).html(
-									$(this).text().replace(
-											regex,
-											"<span class='required'>" + word
-													+ "</span>"));
-						});
+					function() {
+						var regex = new RegExp(word, 'gi');
+						$(this).html(
+							$(this).text().replace(
+								regex,
+								"<span class='required'>" + word
+								+ "</span>"));
+					});
 
 			}
 		}
@@ -115,7 +115,6 @@
 </script>
 
 </head>
-
 <body>
 	<div class="contentContainer" id="noticeTotalDiv">
 		<h2>공지사항</h2>
@@ -194,5 +193,9 @@
 	</div>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script src="/resources/include/dist/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		$("body").attr("data-dep1", "4");
+		$("body").attr("data-dep2", "0");
+	</script>
 </body>
 </html>

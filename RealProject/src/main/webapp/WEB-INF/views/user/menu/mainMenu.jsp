@@ -2,16 +2,13 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page trimDirectiveWhitespaces="true"%>
-<!DOCTYPE html>
-<html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
 <script type="text/javascript">
 	var menuList = '${menulist}';
 	var selectedMenu;
-	var _dep1 = $("body").attr("data-dep1", "1");
-	var _dep2 = $("body").attr("data-dep2", "-1");
+	$("body").attr("data-dep1", "1");
+	$("body").attr("data-dep2", "0");
 	$(document).ready(function() {
 		if (menuList == null || menuList == '') {
 			$("#getMenu").attr({
@@ -46,23 +43,6 @@
 	width: 100%;
 }
 
-#menunav .gnb a span {
-	display: inline-block;
-	height: 33px;
-	color: #a8a9ad;
-	font-size: 14px;
-	letter-spacing: 1.5px;
-	font-family: 'Open Sans', "Spoqa Han Sans", 'sans-serif', 'Arial';
-	font-weight: 500;
-	vertical-align: top;
-}
-
-#menunav .gnb a span:hover {
-	zoom: 1.05;
-	border-bottom-color: black;
-	border-bottom: 1px solid #231f20;
-}
-
 #menusub a span {
 	display: inline-block;
 	height: 33px;
@@ -81,6 +61,10 @@
 }
 </style>
 </head>
+<script type="text/javascript">
+	var _dep1 = $("body").attr("data-dep1", 1);
+	var _dep2 = $("body").attr("data-dep2", 0);
+</script>
 <body>
 	<form id="getMenu"></form>
 	<div class="alert alert-success alert-dismissible" role="alert">
@@ -91,16 +75,6 @@
 		<strong>자리가 금방 사라져요!</strong> 둘러보시고 예약해주세요! <a href="../reservation"
 			class="alert-link" style="float: right;">예약하기</a>.
 	</div>
-	<div id="menunav" align="center">
-		<nav class="gnb">
-			<a href="/usermenu/mainMenu"><span class="menu">단일 메뉴</span></a>
-			&nbsp;&nbsp;<span class="font">|</span> &nbsp;&nbsp;<a
-				href="/usermenu/course"><span class="course">코스 요리</span></a>
-			&nbsp;&nbsp;<span class="font">|</span> &nbsp;&nbsp;<a
-				href="/usermenu/drink"><span class="drink">주류</span></a>
-		</nav>
-	</div>
-	<br />
 	<div id="menusub" align="center">
 		<a href="#steak"><span>스테이크</span></a>&nbsp;&nbsp;<span>|</span>&nbsp;&nbsp;<a
 			href="#pasta"><span>파스타</span></a>&nbsp;&nbsp;<span>|</span>&nbsp;&nbsp;<a
@@ -245,6 +219,8 @@
 		</div>
 	</div>
 	<br>
+	<script type="text/javascript"
+		src="/resources/include/js/jquery-ui.min.js"></script>
 	<script src="/resources/include/dist/js/bootstrap.min.js"></script>
+	<script src="/resources/include/js/reservation.js"></script>
 </body>
-</html>

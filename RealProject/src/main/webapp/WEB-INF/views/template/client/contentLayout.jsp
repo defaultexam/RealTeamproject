@@ -37,5 +37,27 @@ body {
 		src="/resources/include/js/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript"
 		src="/resources/include/dist/js/bootstrap.min.js"></script>
+	<script src="/resources/include/js/imMenu.js"></script>
+	<script src="/resources/include/js/TweenMax.min.js"></script>
+	<script src="/resources/include/js/scrollActive.js"></script>
+	<script type="text/javascript">
+		var _dep1 = $("body").attr("data-dep1");
+		var _dep2 = $("body").attr("data-dep2");
+		$('.gnb').imGNBactive("on", gnbActiave).setBtn([ _dep1, _dep2 ]);
+		function gnbActiave($index1, $index2) {
+			if ($("body #wrap").hasClass("main")) {
+				return;
+			}
+			;
+			// 메인이면 실행 안함; 
+			return true;
+		}
+		// 2뎁 보기 버튼
+		$("#header a.btn-dep1").on("click", function($e) {
+			$e.preventDefault();
+			$("#header").removeClass("fixeds");
+			gnbMotion(false);
+		})
+	</script>
 </body>
 </html>

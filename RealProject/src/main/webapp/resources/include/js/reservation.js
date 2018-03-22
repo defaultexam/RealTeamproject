@@ -343,7 +343,8 @@ $("#datepicker").datepicker({
 });
 $("#accordion").accordion({
 	collapsible : true,
-	active : false
+	active : false,
+	heightStyle : "content"
 });
 
 /*JQuery 제이쿼리*/
