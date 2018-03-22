@@ -148,7 +148,7 @@
 		menu_name from menu
 		where menu_no = choice_menu8 ) menu_name8 ,
 		book_people, (select
-		coupon_name from coupon where coupon_no =
+		coupon_name from couponhistory where couponhistory_no =
 		#{coupon_no}) coupon_name,
 		pay_way, pay_date, totalPay, book_memo, discount , book_no,
 		cancel_condition, cancel_reciver, cancel_bank, cancel_account,
@@ -196,22 +196,22 @@
 	<!-- 매일 0 시 예약가능좌석수 생성쿼리 -->
 	<insert id="insertSeatFirst">
 		insert into seat
-		values(seat_seq.nextval,<![CDATA[to_date(to_char(sysdate+16,'yyyy-MM-dd'),'yyyy-MM-dd'),'12:00 ~ 14:00',30)]]>
+		values(seat_seq.nextval,<![CDATA[to_date(to_char(sysdate+15,'yyyy-MM-dd'),'yyyy-MM-dd'),'12:00 ~ 14:00',30)]]>
 	</insert>
 
 	<insert id="insertSeatSecond">
 		insert into seat
-		values(seat_seq.nextval,<![CDATA[to_date(to_char(sysdate+16,'yyyy-MM-dd'),'yyyy-MM-dd'),'17:30 ~ 19:20',40)]]>
+		values(seat_seq.nextval,<![CDATA[to_date(to_char(sysdate+15,'yyyy-MM-dd'),'yyyy-MM-dd'),'17:30 ~ 19:20',40)]]>
 	</insert>
 
 	<insert id="insertSeatThird">
 		insert into seat
-		values(seat_seq.nextval,<![CDATA[to_date(to_char(sysdate+16,'yyyy-MM-dd'),'yyyy-MM-dd'),'20:00 ~ 22:00',50)]]>
+		values(seat_seq.nextval,<![CDATA[to_date(to_char(sysdate+15,'yyyy-MM-dd'),'yyyy-MM-dd'),'20:00 ~ 22:00',50)]]>
 	</insert>
 
 	<insert id="insertSeatFourth">
 		insert into seat
-		values(seat_seq.nextval,<![CDATA[to_date(to_char(sysdate+16,'yyyy-MM-dd'),'yyyy-MM-dd'),'21:15 ~ 23:15',20)]]>
+		values(seat_seq.nextval,<![CDATA[to_date(to_char(sysdate+15,'yyyy-MM-dd'),'yyyy-MM-dd'),'21:15 ~ 23:15',20)]]>
 	</insert>
 
 
