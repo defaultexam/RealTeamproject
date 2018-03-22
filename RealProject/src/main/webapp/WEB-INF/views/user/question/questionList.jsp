@@ -3,12 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="tag" uri="/WEB-INF/tld/custom_tag.tld"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>1:1문의</title>
-
 <style type="text/css">
 .answer {
 	float: right;
@@ -31,7 +28,6 @@
 
 <script type="text/javascript">
 	$(function() {
-
 		// 첨부파일 이미지 보여주기 위한 속성 추가
 		var file = "<c:out value='${question.question_file}'/>";
 		if (file != "")
@@ -52,7 +48,7 @@
 				"method" : "get",
 				"action" : "question/questionDetail.do"
 			});
-			$("#questionDetail").sumbit();
+			$("#questionDetail").submit();
 		});
 
 		// 문의하기 버튼 클릭 시
@@ -81,8 +77,6 @@
 		$.getJSON("")
 	}
 </script>
-
-
 </head>
 
 <body>
@@ -104,11 +98,12 @@
 				value="${data.pageSize }" />
 		</form>
 
-		<div class="contentBtn" style="text-align: right;">
+		<div class="contentBtn"
+			style="text-align: right; padding-bottom: 20px;">
 			<input type="button" value="문의하기" class="btn btn-default"
 				id="questionInsertBtn" />
 		</div>
-		<table border="1" width="100%">
+		<table class="table table-bordered table-hover">
 			<thead>
 				<tr style="width: 100%;">
 					<th class="q_th" style="width: 20%; text-align: center;">No.</th>
@@ -119,60 +114,34 @@
 				</tr>
 			</thead>
 		</table>
-
-		<%-- <c:choose>
-						<c:when test="${not empty questionList}">
-							<c:forEach var="question" items="${questionList}"
-								varStatus="status">
-								<tr class="tac" data-num="${question.question_no}">
-									<td>${count - status.index}</td>
-									<td>${question.question_type}</td>
-									<td class="goDetail tal">${question.question_title}</td>
-									<td>${question.question_date}</td>
-									<td>${question.question_process}</td>
-								</tr>
-							</c:forEach>
-						</c:when>
-						<c:otherwise>
-							<tr>
-								<td colspan="5" class="tac">등록된 공지사항이 없습니다.</td>
-							</tr>
-						</c:otherwise>
-					</c:choose> --%>
 		<div class="panel-group" id="accordion" role="tablist"
-			aria-multiselectable="false">
+			aria-multiselectable="true">
 			<c:choose>
 				<c:when test="${not empty questionList}">
 					<c:forEach var="question" items="${questionList}"
 						varStatus="status">
-
 						<!-- panel -->
 						<div class="panel panel-default">
 							<!-- panel_heading -->
 							<div class="panel-heading" role="tab" id="heading${status.index}">
 								<!-- panel_title -->
-								<h4 class="panel-title">
-									<!-- title -->
-									<label id="test" data-toggle="collapse"
-										data-parent="#accordion" style="width: 100%;"
-										href="#collapse${status.index}"
-										aria-controls="collapse${status.index}" aria-expanded="true">
-
-										<div
-											style="width: 19%; display: inline-block; text-align: center;">${count - status.index}</div>
-										<div
-											style="width: 20%; display: inline-block; text-align: center;">${question.question_type}</div>
-										<div class=".goDetail"
-											style="width: 20%; display: inline-block; text-align: center;">${question.question_title}</div>
-										<div
-											style="width: 20%; display: inline-block; text-align: center;">${question.question_date}</div>
-										<div
-											style="width: 19%; display: inline-block; text-align: center;">${question.question_process}</div>
-									</label>
-								</h4>
+								<h4 class="panel-title"></h4>
+								<!-- title -->
+								<div id="test" data-toggle="collapse" data-parent="#accordion"
+									style="width: 100%;" href="#collapse${status.index}"
+									aria-controls="collapse${status.index}" aria-expanded="true">
+									<div
+										style="width: 19%; display: inline-block; text-align: center;">${count - status.index}</div>
+									<div
+										style="width: 20%; display: inline-block; text-align: center;">${question.question_type}</div>
+									<div class="goDetail"
+										style="width: 20%; display: inline-block; text-align: center;">${question.question_title}</div>
+									<div
+										style="width: 20%; display: inline-block; text-align: center;">${question.question_date}</div>
+									<div
+										style="width: 19%; display: inline-block; text-align: center;">${question.question_process}</div>
+								</div>
 							</div>
-
-
 							<!-- panel_body -->
 							<div class="panel-collapse collapse" id="collapse${status.index}"
 								role="tabpanel" aria-labelledby="heading${status.index}">
@@ -207,9 +176,7 @@
 									<c:if
 										test="${question.answer_text == null or question.answer_text == ''}">
 										<div class="noAnswer">
-											<center>
-												<h4>고객님의 문의 답변이 미완료 상태로 나중에 다시 확인해 주세요.</h4>
-											</center>
+											<h4 align="center">고객님의 문의 답변이 미완료 상태로 나중에 다시 확인해 주세요.</h4>
 										</div>
 									</c:if>
 								</div>
@@ -220,23 +187,21 @@
 				</c:when>
 				<c:otherwise>
 					<tr>
-						<td colspan="5" class="tac">등록된 공지사항이 없습니다.</td>
+						<td colspan="5" class="tac">등록된 1:1 문의 사항이 없습니다.</td>
 					</tr>
 				</c:otherwise>
 			</c:choose>
 		</div>
 
 		<!-- 페이징 처리 -->
-		<center>
-			<div id="questionPage">
-				<tag:paging page="${param.page}" total="${total}"
-					list_size="${data.pageSize }">
-				</tag:paging>
-			</div>
-		</center>
-		<script type="text/javascript">
-			$("body").attr("data-dep1", 4);
-			$("body").attr("data-dep2", 2);
-		</script>
+		<div id="questionPage" align="center">
+			<tag:paging page="${param.page}" total="${total}"
+				list_size="${data.pageSize }">
+			</tag:paging>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$("body").attr("data-dep1", 4);
+		$("body").attr("data-dep2", 2);
+	</script>
 </body>
-</html>

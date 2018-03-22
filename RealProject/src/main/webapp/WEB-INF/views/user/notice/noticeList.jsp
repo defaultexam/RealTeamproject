@@ -2,8 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="tag" uri="/WEB-INF/tld/custom_tag.tld"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>공지사항</title>
@@ -117,7 +115,7 @@
 </head>
 <body>
 	<div class="contentContainer" id="noticeTotalDiv">
-		<h2>공지사항</h2>
+		<h3 align="center">공지사항</h3>
 		<hr>
 		<div>
 
@@ -136,14 +134,16 @@
 					<table id="noticeTabel" class="table table-bordered table-hover">
 						<!-- 열의 디자인(배경색을 정해줄 수 있음) -->
 
-						<tr>
-							<td id="ntd1"><select id="search" name="search">
+						<tr class="form-inline">
+							<td id="ntd1"><select id="search" name="search"
+								class="form-control" style="width: 100px;">
 									<option value="all">전체</option>
 									<option value="notice_title">제목</option>
 									<option value="notice_text">내용</option>
 							</select> <input type="text" name="keyword" id="keyword"
-								value="검색어를 입력하시오." /> <input type="button" id="searchData"
-								value="검색" /></td>
+								style="width: 250px;" class="form-control"
+								placeholder="검색어를 입력하시오." /> <input type="button"
+								id="searchData" class="btn btn-default" value="검색" /></td>
 						</tr>
 					</table>
 				</form>
@@ -198,4 +198,3 @@
 		$("body").attr("data-dep2", "0");
 	</script>
 </body>
-</html>

@@ -8,14 +8,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>1:1 문의하기</title>
-
 <script type="text/javascript"
 	src="/resources/include/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript"
 	src="/resources/include/js/jquery.form.min.js"></script>
 <script type="text/javascript" src="/resources/include/js/common.js"></script>
-
-
 <script type="text/javascript">
 	$("body").attr("data-dep1", 4);
 	$("body").attr("data-dep2", 2);
@@ -54,54 +51,68 @@
 
 				$("#questionForm").submit();
 				alert("회원님의 문의가 전송되었습니다.");
-
 			}
-
 		});
-
 	});
 </script>
+<style type="text/css">
+.contentContainer {
+	width: 1000px;
+}
 
+.ac {
+	width: 100px;
+}
+
+.formsize {
+	width: 300px;
+}
+
+.contentTB {
+	width: 700px;
+}
+</style>
 </head>
 
 <body>
 	<!-- 1:1 문의 글쓰기 -->
-	<div class="contentContainer">
-		<h2>1:1 문의하기</h2>
+	<div class="contentContainer" align="center">
+		<h3 align="center">1:1 문의하기</h3>
 		<hr>
 		<c:if test="${login.id != null and login.id != ''}">
-			<ul>
-				<li>레스토랑의 이용 / 온라인 예약 / 홈페이지 관련 1:1 문의입니다.</li>
-				<li>1:1 문의는 평일 09:00 ~ 17:00까지 이며, 문의 답변은 3일 이내 가능합니다.<br>
-					<!-- font style="text-decoration: underline">(마이 페이지에서 확인하실 수
+			<div align="left" style="padding-left: 130px;">
+				<ul>
+					<li>레스토랑의 이용 / 온라인 예약 / 홈페이지 관련 1:1 문의입니다.</li>
+					<li>1:1 문의는 평일 09:00 ~ 17:00까지 이며, 문의 답변은 3일 이내 가능합니다.<br>
+						<!-- font style="text-decoration: underline">(마이 페이지에서 확인하실 수
 						있습니다.)</font> --></li>
-			</ul>
-
+				</ul>
+			</div>
 			<div class="contentTB">
 				<!-- enctype : 파일을 전송할 수 있는 타입으로 바꿔줌  -->
 				<form id="questionForm" enctype="multipart/form-data">
 
-					<table id="questionWrite">
+					<table id="questionWrite" class="table table-bordered table-hover">
 						<tr>
 							<th scope="row" class="ac">이름</th>
 							<td><input type="text" id="name" value="${login.name}"
-								readonly="readonly"><input type="hidden"
-								value="${login.member_no}" name="member_no"></td>
+								class="form-control formsize" readonly="readonly"><input
+								type="hidden" value="${login.member_no}" name="member_no"></td>
 						</tr>
 						<tr>
 							<th scope="row" class="ac"><label>이메일</label></th>
 							<td><input type="text" id="email" value="${login.email}"
-								readonly="readonly"></td>
+								class="form-control formsize" readonly="readonly"></td>
 						</tr>
 						<tr>
 							<th scope="row" class="ac"><label>연락처</label></th>
 							<td><input type="text" id="phone" value="${login.phone}"
-								readonly="readonly"></td>
+								class="form-control formsize" readonly="readonly"></td>
 						</tr>
 						<tr>
 							<th scope="row" class="ac"><label>문의유형</label></th>
 							<td><select id="question_type" name="question_type"
-								style="width: 238px">
+								class="form-control formsize" style="width: 238px">
 									<option value="레스토랑이용">레스토랑이용</option>
 									<option value="레스토랑예약">레스토랑예약</option>
 									<option value="홈페이지이용">홈페이지이용</option>
@@ -110,15 +121,17 @@
 						<tr>
 							<th scope="row" class="ac"><label for="question_title">제목</label></th>
 							<td><input type="text" name="question_title"
-								id="question_title"></td>
+								class="form-control formsize" id="question_title"></td>
 						</tr>
 						<tr>
 							<th scope="row" class="ac"><label for="question_text">문의내용</label></th>
-							<td><textarea name="question_text" id="question_text"></textarea></td>
+							<td><textarea name="question_text" id="question_text"
+									class="form-control formsize"></textarea></td>
 						</tr>
 						<tr>
 							<th scope="row" class="ac"><label for="question_file">첨부파일</label></th>
-							<td><input type="file" name="file" id="question_file"></td>
+							<td><input type="file" name="file" id="question_file"
+								class="form-control formsize"></td>
 						</tr>
 					</table>
 				</form>
