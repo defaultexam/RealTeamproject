@@ -4,6 +4,65 @@
 
 <mapper namespace="com.restaurant.user.question.dao.QuestionDAO">
 
+	<sql id="questionCommon">
+		select question_no, member_no ,question_type,
+		question_title,
+		question_date,
+		question_process
+		from question
+	</sql>
+
+	<sql id="questionSearch">
+		select question_no, member_no ,question_type,
+		question_title,
+		question_date,
+		question_process,
+		question_thumb,
+		question_file,
+		question_text,
+		answer_thumb,
+		answer_file,
+		answer_text
+		from question
+		<where>
+			<if test="member_no != '' || member_no != null">
+				member_no = #{member_no}
+			</if>
+			<if test="member_no == '' || member_no == null">
+			</if>
+		</where>
+		order by question_date desc
+	</sql>
+
+	<!-- <sql id="searchMember"> select * from question where member_ </sql> -->
+
+	<select id="questionList" resultType="question" parameterType="question">
+		select question_no,
+		member_no, question_type, question_title,
+		to_char(question_date,
+		'YYYY.MM.DD') as question_date,
+		question_process,
+		question_thumb,
+		question_file,
+		question_text,
+		answer_thumb,
+		answer_file,
+		answer_text
+		from (SELECT list.*, ROWNUM AS RNUM FROM (
+		<include refid="questionSearch"></include>
+		) list 
+		)
+
+		<where>
+			<if test="start_row != null and start_row != ''">
+				<if test="end_row != null and end_row != ''"> RNUM BETWEEN #{start_row} AND
+					#{end_row}
+				</if>
+			</if>
+		</where>
+	</select>
+
+
 	<!-- 1:1 문의 등록 -->
 	<insert id="questionInsert" parameterType="question">
 		<selectKey keyProperty="question_no" resultType="int" order="BEFORE">
@@ -17,27 +76,65 @@
 		question_date,
 		question_text,
 		<if test="question_file != null and question_file != ''">
-		question_file,
+			question_file,
 		</if>
+		question_thumb,
 		question_process
 		)
 		values(
 		#{question_no},
 		#{member_no},
-		#{question_type, jdbcType=VARCHAR},
+		#{question_type,
+		jdbcType=VARCHAR},
 		#{question_title},
 		sysdate,
 		#{question_text},
 		<if test="question_file != null and question_file != ''">
-		#{question_file},
+			#{question_file},
 		</if>
+		#{question_thumb},
 		'대기중'
 		)
-
 	</insert>
-	
-	<select id="userIdSelect" parameterType="String" resultType="login">
-		select id, password, name from member where id = #{id}
+
+	<select id="questionListCnt" parameterType="question"
+		resultType="int">
+		SELECT NVL(count(1), 0) FROM (SELECT list.*, ROWNUM AS RNUM FROM (
+		<include refid="questionSearch"></include>
+		) list )
 	</select>
+
+	<!-- 1:1 문의 상세보기 -->
+	<!-- <select id="questionDetail" parameterType="int" resultType="question">
+		select
+		question_type, question_title, question_date, question_text,
+		question_process,
+		<if test="question_file != null and question_file != ''">
+			question_file,
+		</if>
+		answer_text,
+		<if test="answer_file != null and answer_file != ''">
+			answer_file,
+		</if>
+		(select name
+		from member
+		where member_no = #{member_no}) name,
+		(select
+		phone
+		from member
+		where member_no = #{member_no}) phone
+		from question
+		where question_no =
+		#{question_no}
+	</select> -->
+
+
+	<!-- select question_no, member_no, question_title, question_text, <if test="question_file 
+		!= null and question_file != ''"> question_file, </if> answer_text <if test="answer_file 
+		!= null and answer_file != ''"> answer_file </if> from question where question_no 
+		= #{question_no} -->
+
+	
+
 
 </mapper>

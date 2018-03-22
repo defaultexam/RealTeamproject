@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.restaurant.admin.question.dao.AdminQuestionDAO">
+
+	<sql id="questionCommon">
+		select question_no,
+		member_no,
+		question_type,
+		question_title,
+		question_date,
+		question_process,
+		question_file,
+		question_text,
+		answer_file,
+		answer_text
+		from
+		question
+		<if test="question_type != ''">
+			<where>
+				question_type = #{question_type}
+			</where>
+		</if>
+		<if test="question_type == ''">
+		</if>
+		<if test="question_process != ''">
+			<where>
+				question_process = #{question_process}
+			</where>
+		</if>
+		<if test="question_type == ''">
+		</if>
+		order by
+		question_date desc
+
+	</sql>
+
+	<!-- <choose> <when test="question_type == '레스토랑이용' "> question_type = '레스토랑이용' 
+		</when> <when test="question_type == '홈페이지이용' "> question_type = '홈페이지이용' 
+		</when> <when test="question_type == '레스토랑예약' "> question_type = '레스토랑예약' 
+		</when> <when test="question_process == '미답변'"> question_type = '미답변' </when> 
+		<otherwise> </otherwise> </choose> -->
+
+	<select id="adminQuestionList" resultType="question"
+		parameterType="question">
+		select question_no,
+		member_no, question_type, question_title,
+		to_char(question_date,'YYYY.MM.DD') as question_date,
+		question_process,
+		question_file,
+		question_text,
+		answer_file,
+		answer_text
+		from (SELECT list.*, ROWNUM AS
+		RNUM FROM (
+		<include refid="questionCommon"></include>
+		) list)
+		<where>
+			<if test="start_row != null and start_row != ''">
+				<if test="end_row != null and end_row != ''"> RNUM BETWEEN #{start_row} AND
+					#{end_row}
+				</if>
+			</if>
+		</where>
+	</select>
+
+	<select id="adminQuestionListCnt" parameterType="question"
+		resultType="int">
+		SELECT NVL(count(1), 0) FROM (SELECT list.*, ROWNUM AS RNUM FROM (
+		<include refid="questionCommon"></include>
+		) list )
+	</select>
+
+	<select id="adminQuestionDetail" parameterType="int" resultType="question">
+		select
+		question_type, question_title, question_date, question_text,
+		question_process, question_file, answer_file, answer_text ,member_no,
+		question_no
+		from question
+		where question_no =
+		#{question_no}
+	</select>
+	<!-- <if test="question_file != null and question_file != ''"> question_file, 
+		</if> answer_text <if test="answer_file != null and answer_file != ''"> ,answer_file 
+		</if> -->
+
+	<!-- 1:1문의 관리자 답변달기 -->
+	<update id="adminQuestionUpdate" parameterType="question">
+		update question
+		set
+		answer_text = #{answer_text}
+		<if test="answer_file != null and answer_file != ''">
+			,answer_file =
+			#{answer_file}
+		</if>
+		,question_process = #{question_process}
+		where question_no =
+		#{question_no}
+	</update>
+
+</mapper>

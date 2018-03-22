@@ -19,4 +19,5 @@ public interface MemberDAO {
 	public String memberSearchByName(MemberVO mvo);
 	public List<CouponHistoryVO> memberCoupon(int member_no);
 	public int memberCouponUpdate(MemberVO mvo);
+	public MemberVO memberNoSearch(int member_no);
 }

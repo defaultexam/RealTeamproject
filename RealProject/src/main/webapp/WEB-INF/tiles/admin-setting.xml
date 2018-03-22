@@ -44,5 +44,9 @@
 	<definition name="admin/chart/*" extends="afterLogin">
 		<put-attribute name="main" value="/WEB-INF/views/admin/chart/{1}.jsp" />
 	</definition>
+	<definition name="admin/question/*" extends="afterLogin">
+		<put-attribute name="main"
+			value="/WEB-INF/views/admin/question/{1}.jsp" />
+	</definition>
 
 </tiles-definitions> 

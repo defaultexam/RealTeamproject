@@ -134,4 +134,10 @@ public class MemberServiceImpl implements MemberService {
 		}
 		return result;
 	}
+
+	@Override
+	public MemberVO memberNoSearch(int member_no) {
+		// TODO Auto-generated method stub
+		return memberDAO.memberNoSearch(member_no);
+	}
 }

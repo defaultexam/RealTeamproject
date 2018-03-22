@@ -7,17 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>1:1 문의</title>
-
-<style type="text/css">
-li {
-	font-size: 10pt;
-}
-</style>
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link href="/resources/include/dist/css/bootstrap.min.css"
-	rel="stylesheet">
+<title>1:1 문의하기</title>
 
 <script type="text/javascript"
 	src="/resources/include/js/jquery-3.3.1.min.js"></script>
@@ -69,13 +59,6 @@ li {
 		});
 
 	});
-
-	/* // 1:1 문의 글쓰기 초기화 작업
-	function resetData() {
-		$("#questionForm").each(function() {
-			this.reset();
-		});
-	} */
 </script>
 
 </head>
@@ -83,24 +66,21 @@ li {
 <body>
 	<!-- 1:1 문의 글쓰기 -->
 	<div class="contentContainer">
-		<h2>1:1 문의</h2>
+		<h2>1:1 문의하기</h2>
 		<hr>
 		<c:if test="${login.id != null and login.id != ''}">
 			<ul>
 				<li>레스토랑의 이용 / 온라인 예약 / 홈페이지 관련 1:1 문의입니다.</li>
 				<li>1:1 문의는 평일 09:00 ~ 17:00까지 이며, 문의 답변은 3일 이내 가능합니다.<br>
-				</li>
+					<!-- font style="text-decoration: underline">(마이 페이지에서 확인하실 수
+						있습니다.)</font> --></li>
 			</ul>
 
 			<div class="contentTB">
 				<!-- enctype : 파일을 전송할 수 있는 타입으로 바꿔줌  -->
 				<form id="questionForm" enctype="multipart/form-data">
 
-					<table id="questionWrite" class="table table-bordered table-hover">
-						<colgroup>
-							<col width="15%"></col>
-							<col width="85%"></col>
-						</colgroup>
+					<table id="questionWrite">
 						<tr>
 							<th scope="row" class="ac">이름</th>
 							<td><input type="text" id="name" value="${login.name}"
@@ -121,9 +101,9 @@ li {
 							<th scope="row" class="ac"><label>문의유형</label></th>
 							<td><select id="question_type" name="question_type"
 								style="width: 238px">
-									<option value="use">레스토랑 이용</option>
-									<option value="reg">레스토랑 예약</option>
-									<option value="site">홈페이지 이용</option>
+									<option value="레스토랑이용">레스토랑이용</option>
+									<option value="레스토랑예약">레스토랑예약</option>
+									<option value="홈페이지이용">홈페이지이용</option>
 							</select></td>
 						</tr>
 						<tr>
@@ -149,7 +129,7 @@ li {
 					class="btn btn-default" id="questionCancelBtn">
 			</div>
 		</c:if>
-		<c:if test="${login.id == null or login.id == ''}">
+		<c:if test="${login.member_no == null or login.member_no == ''}">
 			<div class="container">
 				<br> <font style="text-decoration: underline">1:1 문의는
 					회원만 이용할 수 있는 서비스입니다.</font><br> 로그인 후 이용하여 주세요<br> <br> <input
@@ -159,7 +139,6 @@ li {
 		</c:if>
 
 	</div>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script src="/resources/include/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
