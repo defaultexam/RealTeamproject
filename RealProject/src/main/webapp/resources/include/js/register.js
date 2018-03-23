@@ -178,7 +178,7 @@ $(function() {
 		function() {
 			if ($("#txtemail").val() == $("#emailsended").val() && $("#emailsended").val() != "" && $("#txtemail").val() != "") {
 				console.log($("#emailsended").val());
-				$('.error:eq(8)').css("color", "#000099").html("인증 성공!");
+				$('.error:eq(8)').css("color", "#2F9D27").html("인증 성공!");
 				emailChecked = 1;
 				$("#email1").attr("readonly", "readonly");
 				$("#email2").attr("readonly", "readonly");
@@ -308,7 +308,7 @@ $(function() {
 				alert("이메일 인증을 진행해주세요.");
 				return;
 			} else {
-				
+
 				$("#email").val($("#email1").val() + "@" + $("#email2").val());
 				$("#address").val(
 					$("#postcode").val() + " " + $("#roadAddress").val() + " " + $("#jibunAddress").val()

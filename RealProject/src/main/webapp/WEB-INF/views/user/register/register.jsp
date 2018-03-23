@@ -42,6 +42,14 @@ input:valid+span:after {
 	$(function(){
 		$("#agreement3").val(agreement3);
 	});
+	function dismissed() {
+		$("#iddiv").removeClass('has-warning');
+		$("#iddiv").removeClass('has-success');
+		$("#iddiv").addClass('form-group', 'has-error');
+		$("#modalid").parents(".idclass").find(".error").html("아이디를 입력해주십시오.");
+		$("#id").parents(".idclass").find(".error").html("아이디 중복체크를 진행해주세요.");
+		$("#id").parents(".idclass").find(".error").css("color", "red");
+	}
 	</script>
 	<!-- 아이디 중복체크 모달창 -->
 	<div id="idcheck" class="modal fade">
@@ -66,7 +74,7 @@ input:valid+span:after {
 					<button type="button" id="transferId"
 						class="btn btn-outline-secondary">확인</button>
 					<button type="button" class="btn btn-outline-secondary"
-						data-dismiss="modal">취소</button>
+						data-dismiss="modal" onclick="dismissed();">취소</button>
 				</div>
 			</div>
 		</div>
