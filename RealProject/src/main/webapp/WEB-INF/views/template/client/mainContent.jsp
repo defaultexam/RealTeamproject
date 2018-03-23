@@ -61,6 +61,9 @@ h3 {
 				try {
 					var id = /-(\d+)$/.exec(id_selector)[1];
 					jQuery('#myCarousel').carousel(parseInt(id));
+					$("#captionName").html($("#img" + id).attr("data-name"));
+					$("#captionText").html($("#img" + id).attr("data-text"));
+					$("#captionPrice").html($("#img" + id).attr("data-price") + " 원");
 				} catch (e) {
 					console.log('Regex failed!', e);
 				}
@@ -68,13 +71,21 @@ h3 {
 			// 슬라이드가 끝나면 내용을 변경함.
 			$('#myCarousel').on('slid.bs.carousel', function(e) {
 				var id = $('.item.active').data('slide-number');
-				$('#carousel-text').html($('#slide-content-' + id).html());
+			/* 	if ($('.item.active').length != 1) {
+					if ($(".item.active").hasClass("notthis") == false) {
+						$(".item.active").removeClass("active");
+					}
+					console.log($(this));
+					return;
+				} */
 				$("#captionName").html($("#img" + id).attr("data-name"));
 				$("#captionText").html($("#img" + id).attr("data-text"));
 				$("#captionPrice").html($("#img" + id).attr("data-price") + " 원");
 			});
 		});
 	</script>
+	<br />
+	<br />
 	<div class="container">
 		<div id="main_area">
 			<!-- Slider -->
@@ -161,23 +172,26 @@ h3 {
 			</div>
 		</div>
 		<br /> <br />
-		<div class="well" style="width: 1200px; height: 150px;" align="center">
-			<h3 align="center" id="captionName">
-				<script type="text/javascript">
-					document.write($("#img0").attr("data-name"));
-				</script>
-			</h3>
-			<p align="center" id="captionText">
-				<font></font>
-				<script type="text/javascript">
-					document.write($("#img0").attr("data-text"));
-				</script>
-			</p>
-			<p align="center" id="captionPrice">
-				<script type="text/javascript">
-					document.write($("#img0").attr("data-price") + " 원");
-				</script>
-			</p>
+		<div class=""
+			style="width: 1200px; height: 150px; box-shadow: rgba(156, 150, 150, 0.3) 1px 1px 1px 1px; border-radius: 10px; border: 2px solid rgba(228, 226, 226, 0.46);">
+			<div align="center" style="padding-top: 10px;">
+				<h3 align="center" id="captionName">
+					<script type="text/javascript">
+						document.write($("#img0").attr("data-name"));
+					</script>
+				</h3>
+				<p align="center" id="captionText">
+					<font></font>
+					<script type="text/javascript">
+						document.write($("#img0").attr("data-text"));
+					</script>
+				</p>
+				<p align="center" id="captionPrice">
+					<script type="text/javascript">
+						document.write($("#img0").attr("data-price") + " 원");
+					</script>
+				</p>
+			</div>
 		</div>
 	</div>
 

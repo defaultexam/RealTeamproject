@@ -18,6 +18,33 @@
 	var loginemail = '${login.email}';
 	var alerts = 0;
 	$(document).ready(function() {
+		$(function() {
+			$(".container-fluid").click(function() {
+				if ((login == '' || login == null) && alerts <= 1) {
+					var guestConfirm = confirm("로그인 후 이용하실 수 있습니다. \n확인을 누르시면 로그인 화면으로 이동합니다.");
+					if (guestConfirm) {
+						window.location.href = "/login";
+						return;
+					} else {
+					}
+					alerts++;
+					return;
+				}
+			});
+			$("#inputid").bind("change", function() {
+				if (document.getElementById("inputid").checked == true) {
+					var phonesplit = loginphone.split("-");
+					var emailsplit = loginemail.split("@");
+					$("#book_name").val(loginname);
+					$("#phone1").val(phonesplit[0]);
+					$("#phone2").val(phonesplit[1]);
+					$("#phone3").val(phonesplit[2]);
+					$("#email1").val(emailsplit[0]);
+					$("#email2").val(emailsplit[1]);
+				}
+			});
+		});
+
 		$("#span9999").html("✓");
 		toggleSpinners(1);
 		if ((menuList == null || menuList == '') && login != null) {
@@ -65,32 +92,6 @@
 				} else {
 					return;
 				}
-			}
-		});
-	});
-	$(document).click(function() {
-		if ((login == '' || login == null) && alerts <= 1) {
-			var guestConfirm = confirm("로그인 후 이용하실 수 있습니다. \n확인을 누르시면 로그인 화면으로 이동합니다.");
-			if (guestConfirm) {
-				window.location.href = "/login";
-			} else {
-			}
-			alerts++;
-			return;
-		}
-	});
-
-	$(function() {
-		$("#inputid").bind("change", function() {
-			if (document.getElementById("inputid").checked == true) {
-				var phonesplit = loginphone.split("-");
-				var emailsplit = loginemail.split("@");
-				$("#book_name").val(loginname);
-				$("#phone1").val(phonesplit[0]);
-				$("#phone2").val(phonesplit[1]);
-				$("#phone3").val(phonesplit[2]);
-				$("#email1").val(emailsplit[0]);
-				$("#email2").val(emailsplit[1]);
 			}
 		});
 	});

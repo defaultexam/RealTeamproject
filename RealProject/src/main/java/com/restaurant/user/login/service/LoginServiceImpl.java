@@ -1,5 +1,6 @@
 package com.restaurant.user.login.service;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +14,7 @@ import com.restaurant.user.member.vo.MemberSecurity;
 @Service("LoginService")
 @Transactional
 public class LoginServiceImpl implements LoginService {
+	Logger logger = Logger.getLogger(LoginServiceImpl.class);
 	@Autowired
 	private MemberDAO memberDAO;
 	@Autowired
@@ -54,11 +56,13 @@ public class LoginServiceImpl implements LoginService {
 
 	@Override
 	public int loginHistoryUpdate(LoginVO lvo) {
+		logger.info("loginHistoryUpdate 호출 성공.");
 		return loginDAO.loginHistoryUpdate(lvo);
 	}
 
 	@Override
 	public LoginVO loginHistorySelect(String userId) {
+		logger.info("loginHistorySelect 호출 성공.");
 		return loginDAO.loginHistorySelect(userId);
 	}
 

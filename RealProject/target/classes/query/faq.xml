@@ -12,6 +12,7 @@
 			<where>faq_type = #{faq_type}</where>
 		</if>
 		<if test="faq_type == ''"></if>
+		order by faq_no desc
 	</sql>
 	<!-- faq 목록 -->
 	<select id="userfaqList" resultType="userfaq" parameterType="userfaq">
@@ -32,6 +33,6 @@
 	<select id="userfaqListCnt" parameterType="userfaq" resultType="int">
 		SELECT NVL(count(1), 0) FROM (SELECT list.*, ROWNUM AS RNUM FROM (
 		<include refid="userfaqCommon"></include>
-		ORDER BY faq_no desc) list )
+		) list )
 	</select>
 </mapper>

@@ -53,6 +53,7 @@ public class AdminFaqController {
 		model.addAttribute("count", count);
 		model.addAttribute("total", total);
 		model.addAttribute("faqList", faqList);
+		model.addAttribute("data", fvo);
 		return "admin/faq/adminfaq";
 	}
 

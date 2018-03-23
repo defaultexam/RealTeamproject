@@ -43,6 +43,7 @@ public class faqController {
 		model.addAttribute("count", count);
 		model.addAttribute("total", total);
 		model.addAttribute("faqList", faqList);
+		model.addAttribute("data", fvo);
 		return "user/faq/faq";
 	}
 }
