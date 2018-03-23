@@ -52,6 +52,11 @@ textarea {
 
 <script type="text/javascript">
 	$(function() {
+		
+		var searchData = "<c:out value='${data.faq_type}' />";
+		if(searchData != ""){
+			$("#type").val(searchData);
+		}
 
 		/* 닫기 버튼 */
 		$(".bye").click(function() {
@@ -183,7 +188,6 @@ textarea {
 		/* 삭제버튼 */
 		$("#deleteBtn").click(
 			function() {
-
 				var select_no = $("#selectfaq_no").val();
 
 				$("#f_Form").attr({
@@ -202,7 +206,6 @@ textarea {
 				"method" : "get",
 				"action" : "/adminFaq/adminFaqList"
 			});
-
 			$("#pageset").submit();
 		});
 		/* 레스토랑 이용 탭버튼 */
@@ -214,7 +217,6 @@ textarea {
 				"method" : "get",
 				"action" : "/adminFaq/adminFaqList"
 			});
-
 			$("#pageset").submit();
 		});
 		/* 홈페이지 이용 탭버튼 */
@@ -231,14 +233,13 @@ textarea {
 		});
 		/* 예약 문의 탭버튼 */
 		$("#list3").click(function() {
-			$("#type").val("예약 문의");
+			$("#type").val("예약 문의"); 
 			console.log($("#type").val());
 			sessionStorage.setItem("faqtab", "예약 문의");
 			$("#pageset").attr({
 				"method" : "get",
 				"action" : "/adminFaq/adminFaqList"
 			});
-
 			$("#pageset").submit();
 		});
 	});
@@ -247,7 +248,7 @@ textarea {
 		$("#page").val(page);
 		$("#pageset").attr({
 			"method" : "get",
-			"action" : "/adminFaq/AdminFaqList"
+			"action" : "/adminFaq/adminFaqList"
 		});
 		$("#pageset").submit();
 	}
@@ -294,10 +295,10 @@ textarea {
 		</form>
 
 		<form id="pageset">
-			<input type="hidden" name="page" id="page"> <input
-				type="hidden" name="faq_type" id="type">
+			<input type="hidden" name="page" id="page">
+			<input type="hidden" name="faq_type" id="type">
 		</form>
-
+		
 		<!-- faq 게시판 시작 -->
 		<div class="panel-group" id="accordion" role="tablist"
 			aria-multiselectable="true">
@@ -315,13 +316,15 @@ textarea {
 								aria-controls="collapse${status.index}" aria-expanded="true">
 								<!-- panel_title -->
 								<!-- 글번호 출력 -->
-								<label style="padding-left: 5%;"> ${faq.faq_no} </label>
+								<label style="float: left;"> ${faq.faq_no} </label>
 								<!-- 글 타입출력 -->
-								<label style="padding-left: 10%;"> ${faq.faq_type}</label>
+								<label style="padding-left: 10%; float: left;">
+									${faq.faq_type}</label>
 								<!-- 제목 출력 -->
-								<label style="padding-right: 10%;"> ${faq.faq_title} </label>
+								<label style="padding-left: 10%;">
+									${faq.faq_title} </label>
 								<!-- 날짜출력 -->
-								<label style="padding-right: 5%;">${faq.faq_date}</label>
+								<label style="padding-right: 5%; float: right;">${faq.faq_date}</label>
 							</div>
 							<!-- 아코디언 내용 단-->
 							<div class="panel-collapse collapse" id="collapse${status.index}"
@@ -371,7 +374,7 @@ textarea {
 							<div class="form-group">
 								<label for="faq_text" class="control-label">내용</label>
 								<textarea class="form-control" name="faq_text" id="faq_text"
-									maxlength="50"></textarea>
+									maxlength="500" rows="10" cols=""></textarea>
 							</div>
 							<div class="form-group">
 								<label for="faq_type" class="control-label">종류</label> <select
@@ -415,7 +418,7 @@ textarea {
 							<div class="form-group">
 								<label for="updatefaq_text" class="control-label">내용</label>
 								<textarea class="form-control" id="updatefaq_text"
-									maxlength="50"></textarea>
+									maxlength="500" rows="10" cols=""></textarea>
 							</div>
 							<div class="form-group">
 								<label for="updatefaq_type" class="control-label">종류</label> <select
@@ -437,16 +440,14 @@ textarea {
 			</div>
 		</div>
 	</div>
-	<!-- 페이징 -->
-	<div id="pagingset"></div>
+
 
 	<!-- 버튼 -->
 	<div id="tar">
 		<button type="button" id="faqInsertBtn" class="btn btn-default">추가</button>
-
-		<div id="faqPage">
-			<tag:paging page="${param.page}" total="${total}" list_size="10" />
-		</div>
+	</div>
+	<div id="faqPage">
+		<tag:paging page="${param.page}" total="${total}" list_size="10" />
 	</div>
 
 </body>

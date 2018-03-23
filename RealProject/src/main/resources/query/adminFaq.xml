@@ -12,21 +12,15 @@
 			<where>faq_type = #{faq_type}</where>
 		</if>
 		<if test="faq_type == ''"></if>
+		order by faq_no desc
 	</sql>
+	
 	<!-- faq 목록 -->
 	<select id="faqList" resultType="faq" parameterType="faq">
 		select faq_no, faq_title,faq_text,faq_type, faq_date
 		from (SELECT
 		list.*, ROWNUM AS RNUM FROM (
 		<include refid="faqCommon"></include>
-		<choose>
-			<when test="order_by=='faq_no'"> ORDER BY faq_no</when>
-			<when test="order_by=='faq_date'"> ORDER BY faq_date</when>
-		</choose>
-		<choose>
-			<when test="order_sc=='ASC'"> ASC</when>
-			<when test="order_sc=='DESC'"> DESC</when>
-		</choose>
 		) list)
 		<where>
 			<if test="start_row != null and start_row != ''">
@@ -40,7 +34,7 @@
 	<select id="faqListCnt" parameterType="faq" resultType="int">
 		SELECT NVL(count(1), 0) FROM (SELECT list.*, ROWNUM AS RNUM FROM (
 		<include refid="faqCommon"></include>
-		ORDER BY faq_no desc) list )
+		) list )
 	</select>
 	<!-- faq 수정 상세 -->
 	<select id="faqDetail" parameterType="int" resultType="faq">
