@@ -4,6 +4,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,35 +30,52 @@ public class AdminNoticeController {
 
 	// 공지사항 관리자 글 목록
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String noticeList(@ModelAttribute AdminNoticeVO nvo, Model model) {
-		logger.info("noticeList 호출 성공");
+	public String noticeList(@ModelAttribute AdminNoticeVO nvo, Model model, HttpSession session) {
 
-		// 페이지 세팅
-		Paging.setPage(nvo);
+		String url = "";
+		if (session.getAttribute("admin") == null) {
+			url = "redirect:/adminSecurity";
+		} else {
 
-		// 전체 레코드 수 구현
-		int total = adminNoticeService.noticeListCnt(nvo);
-		logger.info("total =" + total);
+			logger.info("noticeList 호출 성공");
 
-		// 글 번호 재설정
-		int count = total - (Util.nvl(nvo.getPage()) - 1) * Util.nvl(nvo.getPageSize());
-		logger.info("count =" + count);
+			// 페이지 세팅
+			Paging.setPage(nvo);
 
-		List<AdminNoticeVO> noticeList = adminNoticeService.noticeList(nvo);
+			// 전체 레코드 수 구현
+			int total = adminNoticeService.noticeListCnt(nvo);
+			logger.info("total =" + total);
 
-		model.addAttribute("noticeList", noticeList);
-		model.addAttribute("count", count);
-		model.addAttribute("total", total);
-		model.addAttribute("data", nvo);
+			// 글 번호 재설정
+			int count = total - (Util.nvl(nvo.getPage()) - 1) * Util.nvl(nvo.getPageSize());
+			logger.info("count =" + count);
 
-		return "admin/notice/noticeList";
+			List<AdminNoticeVO> noticeList = adminNoticeService.noticeList(nvo);
+
+			model.addAttribute("noticeList", noticeList);
+			model.addAttribute("count", count);
+			model.addAttribute("total", total);
+			model.addAttribute("data", nvo);
+
+			url = "admin/notice/noticeList";
+		}
+
+		return url;
 	}
 
 	// 공지사항 관리자 글쓰기
 	@RequestMapping(value = "/noticeForm.do")
-	public String noticeForm() {
-		logger.info("noticeForm 호출 성공");
-		return "admin/notice/noticeWrite";
+	public String noticeForm(HttpSession session) {
+
+		String url = "";
+		if (session.getAttribute("admin") == null) {
+			url = "redirect:/adminSecurity";
+		} else {
+			logger.info("noticeForm 호출 성공");
+			url = "admin/notice/noticeWrite";
+		}
+
+		return url;
 	}
 
 	// 공지사항 관리자 글쓰기 구현
@@ -81,20 +100,28 @@ public class AdminNoticeController {
 
 	// 공지사항 관리자 글 상세보기 구현
 	@RequestMapping(value = "/noticeDetail.do", method = RequestMethod.GET)
-	public String noticeDetail(@ModelAttribute AdminNoticeVO nvo, Model model) {
-		logger.info("noticeDetail 호출 성공");
-		logger.info("notice_no =" + nvo.getNotice_no());
+	public String noticeDetail(@ModelAttribute AdminNoticeVO nvo, Model model, HttpSession session) {
 
-		AdminNoticeVO detail = new AdminNoticeVO();
-		detail = adminNoticeService.noticeDetail(nvo);
+		String url = "";
+		if (session.getAttribute("admin") == null) {
+			url = "redirect:/adminSecurity";
+		} else {
 
-		if (detail != null && (!detail.equals(""))) {
-			detail.setNotice_text(detail.getNotice_text().toString().replaceAll("\n", "<br>"));
+			logger.info("noticeDetail 호출 성공");
+			logger.info("notice_no =" + nvo.getNotice_no());
+
+			AdminNoticeVO detail = new AdminNoticeVO();
+			detail = adminNoticeService.noticeDetail(nvo);
+
+			if (detail != null && (!detail.equals(""))) {
+				detail.setNotice_text(detail.getNotice_text().toString().replaceAll("\n", "<br>"));
+			}
+
+			model.addAttribute("detail", detail);
+			url = "admin/notice/noticeDetail";
 		}
 
-		model.addAttribute("detail", detail);
-
-		return "admin/notice/noticeDetail";
+		return url;
 	}
 
 	// 공지사항 관리자 글 수정 구현
@@ -106,12 +133,14 @@ public class AdminNoticeController {
 		String url = "";
 
 		logger.info("notice_no=" + nvo.getNotice_no());
-		
-/*		AdminNoticeVO updateData = new AdminNoticeVO();
-		updateData = adminNoticeService.noticeDetail(nvo);
-		
-		model.addAttribute("updateData", updateData);*/
-		
+
+		/*
+		 * AdminNoticeVO updateData = new AdminNoticeVO(); updateData =
+		 * adminNoticeService.noticeDetail(nvo);
+		 * 
+		 * model.addAttribute("updateData", updateData);
+		 */
+
 		result = adminNoticeService.noticeUpdate(nvo);
 
 		if (result == 1) {
@@ -128,22 +157,29 @@ public class AdminNoticeController {
 
 	// 공지사항 관리자 글 삭제 구현
 	@RequestMapping(value = "/noticeDelete.do")
-	public String noticeDelete(@ModelAttribute AdminNoticeVO nvo) {
-		logger.info("noticeDelete 호출 성공");
+	public String noticeDelete(@ModelAttribute AdminNoticeVO nvo, HttpSession session) {
 
-		// 아래 변수는 삭제 성공에대한 상태값
-		int result = 0;
 		String url = "";
+		if (session.getAttribute("admin") == null) {
+			url = "/adminSecurity";
+		} else {
 
-		result = adminNoticeService.noticeDelete(nvo.getNotice_no());
+			logger.info("noticeDelete 호출 성공");
 
-		if (result == 1) {
-			// 삭제 후 공지사항 목록으로 이동
-			url = "/adminNotice";
-					/*+ "?page=" + nvo.getPage() + "&pageSize=" + nvo.getPageSize();*/
-		/*} else {
-			url = "/adminNotice/noticeDetail.do?notice_no=" + nvo.getNotice_no() + "&page=" + nvo.getPage()
-					+ "&pageSize=" + nvo.getPageSize();*/
+			// 아래 변수는 삭제 성공에대한 상태값
+			int result = 0;
+
+			result = adminNoticeService.noticeDelete(nvo.getNotice_no());
+
+			if (result == 1) {
+				// 삭제 후 공지사항 목록으로 이동
+				url = "/adminNotice";
+				/* + "?page=" + nvo.getPage() + "&pageSize=" + nvo.getPageSize(); */
+				/*
+				 * } else { url = "/adminNotice/noticeDetail.do?notice_no=" + nvo.getNotice_no()
+				 * + "&page=" + nvo.getPage() + "&pageSize=" + nvo.getPageSize();
+				 */
+			}
 		}
 
 		return "redirect:" + url;

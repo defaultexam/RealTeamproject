@@ -5,6 +5,9 @@
 
 	<definition name="admin" template="/WEB-INF/views/admin/login/adminLogin.jsp">
 	</definition>
+	
+	<definition name="adminSecurity" template="/WEB-INF/views/template/security/adminSecurity.jsp">
+	</definition>
 
 	<definition name="afterLogin"
 		template="/WEB-INF/views/admin/login/adminLayout.jsp">

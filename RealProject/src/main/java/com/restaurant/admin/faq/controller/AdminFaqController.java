@@ -38,23 +38,32 @@ public class AdminFaqController {
 
 	/* 글 목록 구현 */
 	@RequestMapping(value = "/adminFaqList", method = RequestMethod.GET)
-	public String AdminFaqList(@ModelAttribute AdminFaqVO fvo, Model model) {
-		logger.info("faq 리스트 호출");
-		/* 페이지 세팅 */
-		Paging.setPage(fvo);
-		/* 전체 레코드 수 구현 - service */
-		int total = adminFaqService.faqListCnt(fvo);
-		logger.info("total: " + total);
-		/* 글번호 재설정 */
-		int count = total - (Util.nvl(fvo.getPage()) - 1) * Util.nvl(fvo.getPageSize());
-		logger.info("count :" + count);
+	public String AdminFaqList(@ModelAttribute AdminFaqVO fvo, Model model, HttpSession session) {
 
-		List<AdminFaqVO> faqList = adminFaqService.faqList(fvo);
-		model.addAttribute("count", count);
-		model.addAttribute("total", total);
-		model.addAttribute("faqList", faqList);
-		model.addAttribute("data", fvo);
-		return "admin/faq/adminfaq";
+		String url = "";
+		if (session.getAttribute("admin") == null) {
+			url = "redirect:/adminSecurity";
+		} else {
+			logger.info("faq 리스트 호출");
+			/* 페이지 세팅 */
+			Paging.setPage(fvo);
+			/* 전체 레코드 수 구현 - service */
+			int total = adminFaqService.faqListCnt(fvo);
+			logger.info("total: " + total);
+			/* 글번호 재설정 */
+			int count = total - (Util.nvl(fvo.getPage()) - 1) * Util.nvl(fvo.getPageSize());
+			logger.info("count :" + count);
+
+			List<AdminFaqVO> faqList = adminFaqService.faqList(fvo);
+			model.addAttribute("count", count);
+			model.addAttribute("total", total);
+			model.addAttribute("faqList", faqList);
+			model.addAttribute("data", fvo);
+
+			url = "admin/faq/adminfaq";
+		}
+
+		return url;
 	}
 
 	/* 글쓰기 구현 */
@@ -93,10 +102,18 @@ public class AdminFaqController {
 
 	/* 글삭제 구현 */
 	@RequestMapping(value = "/faqDelete")
-	public String faqDelete(@ModelAttribute AdminFaqVO fvo, HttpServletRequest request) throws IOException {
-		logger.info(fvo.getFaq_no());
-		logger.info("faqDelete 호출 성공");
-		adminFaqService.faqDelete(fvo.getFaq_no());
-		return "redirect:/adminFaq/adminFaqList";
+	public String faqDelete(@ModelAttribute AdminFaqVO fvo, HttpServletRequest request, HttpSession session)
+			throws IOException {
+		String url = "";
+		if (session.getAttribute("admin") == null) {
+			url = "redirect:/adminSecurity";
+		} else {
+			logger.info(fvo.getFaq_no());
+			logger.info("faqDelete 호출 성공");
+			adminFaqService.faqDelete(fvo.getFaq_no());
+			url = "redirect:/adminFaq/adminFaqList";
+		}
+
+		return url;
 	}
 }

@@ -44,30 +44,39 @@ public class QuestionController {
 	// 1:1문의 목록
 	@RequestMapping(value = "/questionList.do", method = RequestMethod.GET)
 	public String questionData(@ModelAttribute QuestionVO qvo, Model model, HttpSession session) {
-		logger.info("questionList 호출 성공");
 
-		// 페이지 셋팅
-		Paging.setPage(qvo);
+		// 사용자 보안처리
+		String url = "";
+		if (session.getAttribute("admin") == null) {
+			url = "redirect:/security";
+		} else {
 
-		// 전체 레코드 수
-		LoginVO lvo = (LoginVO) session.getAttribute("login");
-		qvo.setMember_no(lvo.getMember_no());
+			logger.info("questionList 호출 성공");
 
-		int total = questionService.questionListCnt(qvo);
-		logger.info("total=" + total);
+			// 페이지 셋팅
+			Paging.setPage(qvo);
 
-		// 글 번호 재설정
-		int count = total - (Util.nvl(qvo.getPage()) - 1) * Util.nvl(qvo.getPageSize());
-		logger.info("count = " + count);
+			// 전체 레코드 수
+			LoginVO lvo = (LoginVO) session.getAttribute("login");
+			qvo.setMember_no(lvo.getMember_no());
 
-		List<QuestionVO> questionList = questionService.questionList(qvo);
+			int total = questionService.questionListCnt(qvo);
+			logger.info("total=" + total);
 
-		model.addAttribute("questionList", questionList);
-		model.addAttribute("total", total);
-		model.addAttribute("count", count);
-		model.addAttribute("data", qvo);
+			// 글 번호 재설정
+			int count = total - (Util.nvl(qvo.getPage()) - 1) * Util.nvl(qvo.getPageSize());
+			logger.info("count = " + count);
 
-		return "user/question/questionList";
+			List<QuestionVO> questionList = questionService.questionList(qvo);
+
+			model.addAttribute("questionList", questionList);
+			model.addAttribute("total", total);
+			model.addAttribute("count", count);
+			model.addAttribute("data", qvo);
+			url = "user/question/questionList";
+		}
+
+		return url;
 	}
 
 	// 나의 1:1 문의 상세보기

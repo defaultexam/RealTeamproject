@@ -41,4 +41,17 @@ public class MainController {
 	public String sub() {
 		return "adminSub";
 	}
+
+	// 관리자 화면 보안처리
+	@RequestMapping(value = "/adminSecurity", method = RequestMethod.GET)
+	public String adminSecurity() {
+		return "adminSecurity";
+	}
+	
+	// 사용자 화면 보안처리
+	@RequestMapping(value="/security",method=RequestMethod.GET)
+	public String security() {
+		return "security";
+	}
+	
 }

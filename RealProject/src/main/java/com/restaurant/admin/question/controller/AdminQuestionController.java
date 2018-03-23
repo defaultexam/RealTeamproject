@@ -41,47 +41,64 @@ public class AdminQuestionController {
 	// 관리자> 1:1 문의 목록
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String adminQustionList(@ModelAttribute QuestionVO qvo, Model model, HttpSession session) {
-		logger.info("adminQuestionList 호출 성공");
 
-		Paging.setPage(qvo);
+		String url = "";
+		if (session.getAttribute("admin") == null) {
+			url = "redirect:/adminSecurity";
+		} else {
 
-		// 전체 레코드 수 구현
-		int total = adminQuestionService.adminQuestionListCnt(qvo);
-		logger.info("total=" + total);
+			logger.info("adminQuestionList 호출 성공");
 
-		// 글 번호 재설정
-		int count = total - (Util.nvl(qvo.getPage()) - 1) * Util.nvl(qvo.getPageSize());
-		logger.info("count=" + count);
+			Paging.setPage(qvo);
 
-		List<QuestionVO> questionList = adminQuestionService.adminQuestionList(qvo);
+			// 전체 레코드 수 구현
+			int total = adminQuestionService.adminQuestionListCnt(qvo);
+			logger.info("total=" + total);
 
-		model.addAttribute("questionList", questionList);
-		model.addAttribute("count", count);
-		model.addAttribute("total", total);
-		model.addAttribute("data", qvo);
+			// 글 번호 재설정
+			int count = total - (Util.nvl(qvo.getPage()) - 1) * Util.nvl(qvo.getPageSize());
+			logger.info("count=" + count);
 
-		return "admin/question/AdminQuestionList";
+			List<QuestionVO> questionList = adminQuestionService.adminQuestionList(qvo);
+
+			model.addAttribute("questionList", questionList);
+			model.addAttribute("count", count);
+			model.addAttribute("total", total);
+			model.addAttribute("data", qvo);
+			url = "admin/question/AdminQuestionList";
+		}
+
+		return url;
 	}
 
 	// 관리자> 1:1 문의 상세보기(답변달기)
 	@RequestMapping(value = "/adminQuestionDetail.do", method = RequestMethod.GET)
-	public String adminQustionDetail(@ModelAttribute QuestionVO qvo, Model model) {
-		logger.info("adminQuestionDetail 호출 성공");
-		logger.info("question_no = " + qvo.getQuestion_no());
+	public String adminQustionDetail(@ModelAttribute QuestionVO qvo, Model model, HttpSession session) {
 
-		QuestionVO detail = new QuestionVO();
-		detail = adminQuestionService.adminQuestionDetail(qvo);
+		String url = "";
+		if (session.getAttribute("admin") == null) {
+			url = "redirect:/adminSecurity";
+		} else {
 
-		if (detail != null && (!detail.equals(""))) {
-			detail.setQuestion_text(detail.getQuestion_text().toString().replaceAll("\n", "<br>"));
+			logger.info("adminQuestionDetail 호출 성공");
+			logger.info("question_no = " + qvo.getQuestion_no());
+
+			QuestionVO detail = new QuestionVO();
+			detail = adminQuestionService.adminQuestionDetail(qvo);
+
+			if (detail != null && (!detail.equals(""))) {
+				detail.setQuestion_text(detail.getQuestion_text().toString().replaceAll("\n", "<br>"));
+			}
+
+			MemberVO mvo = memberService.memberNoSearch(detail.getMember_no());
+
+			model.addAttribute("detail", detail);
+			model.addAttribute("mvo", mvo);
+
+			url = "admin/question/AdminQuestionDetail";
 		}
 
-		MemberVO mvo = memberService.memberNoSearch(detail.getMember_no());
-
-		model.addAttribute("detail", detail);
-		model.addAttribute("mvo", mvo);
-
-		return "admin/question/AdminQuestionDetail";
+		return url;
 	}
 
 	@RequestMapping(value = "/adminQuestionUpdate.do", method = RequestMethod.POST)
@@ -97,15 +114,15 @@ public class AdminQuestionController {
 			String answer_file = FileUploadUtil.fileUpload(qvo.getFile(), request, "question");
 			qvo.setAnswer_file(answer_file);
 		}
-		
+
 		qvo.setQuestion_process("답변 완료");
-		
+
 		result = adminQuestionService.adminQuestionUpdate(qvo);
 
 		// 답변 후 1:1문의사항 목록으로 이동
 		logger.info("답변성공");
 		url = "/adminQuestion";
-		
+
 		return "redirect:" + url;
 	}
 

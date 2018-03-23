@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class menuController {
 
 	/* 메뉴 전체 */
 	@RequestMapping(value = "/menuSelect", method = RequestMethod.GET)
-	public String boardList(@ModelAttribute AdminMenuVO bvo, Model model) {
+	public String boardList(@ModelAttribute AdminMenuVO bvo, Model model, HttpSession session) {
 
 		// logger.info(menulist.get(0).getMenu_no());
 		// 페이지 세팅
@@ -39,12 +40,19 @@ public class menuController {
 		 * logger.info("total = " + total);
 		 */
 
-		List<AdminMenuVO> menulist = menuService.menuSelect();
+		String url = "";
+		if (session.getAttribute("admin") == null) {
+			url = "redirect:/adminSecurity";
+		} else {
+			List<AdminMenuVO> menulist = menuService.menuSelect();
 
-		model.addAttribute("menulist", menulist);
-		/* model.addAttribute("total", total); */
-		model.addAttribute("adminvo", null);
-		return "admin/menu/adminmenu";
+			model.addAttribute("menulist", menulist);
+			/* model.addAttribute("total", total); */
+			model.addAttribute("adminvo", null);
+			url = "admin/menu/adminmenu";
+		}
+
+		return url;
 
 	}
 
@@ -84,7 +92,7 @@ public class menuController {
 	/* 메뉴 이동 */
 	@ResponseBody
 	@RequestMapping(value = "/menuclick", method = RequestMethod.GET)
-	public AdminMenuVO menuclick(/*Model model,*/ HttpServletRequest request) {
+	public AdminMenuVO menuclick(/* Model model, */ HttpServletRequest request) {
 		logger.info("menuclick 호출 성공");
 		int num = 0;
 		num = Integer.parseInt(request.getParameter("menu_no"));
@@ -92,11 +100,11 @@ public class menuController {
 		AdminMenuVO selectMenuVo = new AdminMenuVO();
 		selectMenuVo = menuService.menuClick(num);
 
-		//List<AdminMenuVO> menulist = menuService.menuSelect();
+		// List<AdminMenuVO> menulist = menuService.menuSelect();
 		// logger.info(menulist.get(0).getMenu_no());
 
-		//model.addAttribute("menulist", menulist);
-		//model.addAttribute("selectMenuVo", selectMenuVo);
+		// model.addAttribute("menulist", menulist);
+		// model.addAttribute("selectMenuVo", selectMenuVo);
 		return selectMenuVo;
 	}
 
@@ -134,22 +142,26 @@ public class menuController {
 
 	/* 데이터 삭제 */
 	@RequestMapping(value = "/menuDelete", method = RequestMethod.GET)
-	public String menuDelete(@ModelAttribute AdminMenuVO bvo, Model model, HttpServletRequest request)
-			throws IOException {
+	public String menuDelete(@ModelAttribute AdminMenuVO bvo, Model model, HttpServletRequest request,
+			HttpSession session) throws IOException {
 		String url = "";
 		int result = 0;
-		logger.info("menudelete 호출 성공");
 
-		FileUploadUtil.fileDelete(bvo.getMenu_menufile(), request);
-		result = menuService.menuDelete(bvo.getMenu_no());
-		logger.info("파일 삭제 성공");
-		if (result == 1) {
-			url = "/menu/menuSelect";
+		if (session.getAttribute("admin") == null) {
+			url = "/adminSecurity";
 		} else {
-			model.addAttribute("code", 1);
-			url = "/menu/menuSelect";
-		}
+			logger.info("menudelete 호출 성공");
 
+			FileUploadUtil.fileDelete(bvo.getMenu_menufile(), request);
+			result = menuService.menuDelete(bvo.getMenu_no());
+			logger.info("파일 삭제 성공");
+			if (result == 1) {
+				url = "/menu/menuSelect";
+			} else {
+				model.addAttribute("code", 1);
+				url = "/menu/menuSelect";
+			}
+		}
 		return "redirect:" + url;
 	}
 

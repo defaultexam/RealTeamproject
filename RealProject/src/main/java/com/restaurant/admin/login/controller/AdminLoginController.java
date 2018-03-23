@@ -22,8 +22,6 @@ public class AdminLoginController {
 	@Autowired
 	private LoginService loginService;
 
-	
-
 	@RequestMapping(value = "/login.do", method = RequestMethod.GET)
 	public String login() {
 		logger.info("login.do get형식 호출성공");
@@ -31,13 +29,14 @@ public class AdminLoginController {
 	}
 
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
-	public ModelAndView loginProc(@ModelAttribute("LoginVO") LoginVO lvo, HttpServletRequest request) {
+	public ModelAndView loginProc(@ModelAttribute("LoginVO") LoginVO lvo, HttpServletRequest request, HttpSession session) {
 		logger.info("login.do post형식 호출성공");
 		ModelAndView mav = new ModelAndView();
 
 		String loginResult = loginService.loginSelect(lvo);
 
 		if (loginResult != null) {
+			session.setAttribute("admin", "admin");
 			mav.setViewName("adminSub");
 		} else {
 			mav.addObject("check", 1);

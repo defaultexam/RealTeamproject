@@ -2,6 +2,8 @@ package com.restaurant.admin.coupon.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,10 +25,16 @@ public class CouponController {
 	private CouponService couponservice;
 
 	@RequestMapping(value = "/couponList", method = RequestMethod.GET)
-	public String couponListView(Model model) {
-		List<CouponVO> couponList = couponservice.couponList();
-		model.addAttribute("couponList", couponList);
-		return "admin/coupon/adminCoupon";
+	public String couponListView(Model model, HttpSession session) {
+		String url = "";
+		if (session.getAttribute("admin") == null) {
+			url = "redirect:/adminSecurity";
+		} else {
+			List<CouponVO> couponList = couponservice.couponList();
+			model.addAttribute("couponList", couponList);
+			url = "admin/coupon/adminCoupon";
+		}
+		return url;
 	}
 
 	@ResponseBody

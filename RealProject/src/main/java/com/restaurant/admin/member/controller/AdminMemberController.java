@@ -2,6 +2,8 @@ package com.restaurant.admin.member.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,53 +32,66 @@ public class AdminMemberController {
 	private AdminMemberService adminMemberService;
 
 	@RequestMapping(value = "/list.do", method = RequestMethod.GET)
-	public ModelAndView memberList(@ModelAttribute AdminMemberVO avo) {
+	public ModelAndView memberList(@ModelAttribute AdminMemberVO avo, HttpSession session) {
 
 		ModelAndView mav = new ModelAndView();
-		logger.info("adminMember List 호출 성공");
-		logger.info(avo.getRank());
-		// 페이지 셋팅
-		Paging.setPage(avo);
-		logger.info("페이지" + avo.getPage());
-		logger.info("사이즈:" + avo.getPageSize());
-		// 전체 레코드수 조회
-		int total = adminMemberService.memberListCnt(avo);
-		logger.info("total = " + total);
-		// 글 번호 재설정
-		int count = total - (Util.nvl(avo.getPage()) - 1) * Util.nvl(avo.getPageSize());
-		logger.info("count = " + count);
+		if (session.getAttribute("admin") == null) {
+			mav.setViewName("redirect:/adminSecurity");
+			;
+		} else {
+			logger.info("adminMember List 호출 성공");
+			logger.info(avo.getRank());
+			// 페이지 셋팅
+			Paging.setPage(avo);
+			logger.info("페이지" + avo.getPage());
+			logger.info("사이즈:" + avo.getPageSize());
+			// 전체 레코드수 조회
+			int total = adminMemberService.memberListCnt(avo);
+			logger.info("total = " + total);
+			// 글 번호 재설정
+			int count = total - (Util.nvl(avo.getPage()) - 1) * Util.nvl(avo.getPageSize());
+			logger.info("count = " + count);
 
-		List<AdminMemberVO> list = adminMemberService.memberList(avo);
+			List<AdminMemberVO> list = adminMemberService.memberList(avo);
 
-		mav.addObject("memberList", list);
-		mav.addObject("count", count);
-		mav.addObject("total", total);
-		mav.addObject("data", avo);
+			mav.addObject("memberList", list);
+			mav.addObject("count", count);
+			mav.addObject("total", total);
+			mav.addObject("data", avo);
 
-		mav.setViewName("admin/member/adminMember");
+			mav.setViewName("admin/member/adminMember");
+		}
 
 		return mav;
 	}
 
 	@RequestMapping(value = "/memberInfo.do", method = RequestMethod.GET)
-	public String memberOne(@ModelAttribute AdminMemberVO avo, Model model) throws Exception {
-		AdminMemberVO memberInfo = new AdminMemberVO();
-		List<CouponHistoryVO> memberCouponInfo = null;
+	public String memberOne(@ModelAttribute AdminMemberVO avo, Model model, HttpSession session) throws Exception {
 
-		memberInfo = adminMemberService.memberOne(avo);
-		memberCouponInfo = adminMemberService.memberCoupon(avo);
+		String url = "";
+		if (session.getAttribute("admin") == null) {
+			url = "redirect:/adminSecurity";
+		} else {
 
-		for (int i = 0; i < memberCouponInfo.size(); i++) {
-			if (memberCouponInfo.get(i).getCoupon_start() != null) {
-				memberCouponInfo.get(i).setCoupon_start(memberCouponInfo.get(i).getCoupon_start().substring(0, 10));
-				memberCouponInfo.get(i).setCoupon_end(memberCouponInfo.get(i).getCoupon_end().substring(0, 10));
+			AdminMemberVO memberInfo = new AdminMemberVO();
+			List<CouponHistoryVO> memberCouponInfo = null;
+
+			memberInfo = adminMemberService.memberOne(avo);
+			memberCouponInfo = adminMemberService.memberCoupon(avo);
+
+			for (int i = 0; i < memberCouponInfo.size(); i++) {
+				if (memberCouponInfo.get(i).getCoupon_start() != null) {
+					memberCouponInfo.get(i).setCoupon_start(memberCouponInfo.get(i).getCoupon_start().substring(0, 10));
+					memberCouponInfo.get(i).setCoupon_end(memberCouponInfo.get(i).getCoupon_end().substring(0, 10));
+				}
 			}
+
+			model.addAttribute("memberInfo", memberInfo);
+			model.addAttribute("memberCouponInfo", memberCouponInfo);
+			url = "admin/member/adminMemberInfo";
 		}
 
-		model.addAttribute("memberInfo", memberInfo);
-		model.addAttribute("memberCouponInfo", memberCouponInfo);
-
-		return "admin/member/adminMemberInfo";
+		return url;
 	}
 
 	@RequestMapping(value = "/memberUpdate.do", method = RequestMethod.POST)
