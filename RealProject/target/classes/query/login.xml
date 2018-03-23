@@ -9,14 +9,13 @@
 	</select>
 
 	<select id="loginSelect" parameterType="login" resultType="login">
-		select member_no, id, password, name, email, phone, rank, point from
-		member where
+		select member_no, id, password, name, email, phone from member where
 		id = #{id} and password =
-		#{password}
+		#{password} and condition = '활동중'
 	</select>
 
 	<insert id="loginHistoryInsert" parameterType="login"> insert into
-		login_history_res( idx, userId, retry, lastFailedLogin,
+		login_history_res( idx, Id, retry, lastFailedLogin,
 		lastSuccessedLogin, clientIP) values( login_history_res_seq.nextval,
 		#{id}, #{retry,jdbcType=INTEGER},
 		#{lastFailedLogin,jdbcType=INTEGER},
@@ -26,13 +25,14 @@
 	<update id="loginHistoryUpdate" parameterType="login"> update
 		login_history_res set retry = #{retry}, lastFailedLogin =
 		#{lastFailedLogin}, lastSuccessedLogin = #{lastSuccessedLogin},
-		clientIP = #{clientIP,jdbcType=VARCHAR} where idx = #{idx} and userId
-		= #{id}
+		clientIP = #{clientIP,jdbcType=VARCHAR} where idx = #{idx} and Id
+		=
+		#{id}
 	</update>
 
 	<select id="loginHistorySelect" parameterType="String"
-		resultType="login"> select idx, userId, retry, lastFailedLogin,
-		lastSuccessedLogin, clientIP from login_history_res where userId =
+		resultType="login"> select idx, Id, retry, lastFailedLogin,
+		lastSuccessedLogin, clientIP from login_history_res where Id =
 		#{id}
 	</select>
 </mapper>
