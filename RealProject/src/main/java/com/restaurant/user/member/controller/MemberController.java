@@ -48,7 +48,6 @@ public class MemberController {
 			@RequestParam("searchpassword_email") String email) {
 		logger.info("searchPassword POST 호출 성공");
 		String result = memberService.memberSearchByID(id, email);
-		System.out.println(result);
 		return result;
 	}
 
@@ -58,17 +57,13 @@ public class MemberController {
 	public String passwordResetConfirm(@RequestParam("searchpassword_id") String id,
 			@RequestParam("reset_password1") String password, HttpSession session, HttpServletRequest request) {
 		logger.info("passwordreset POST 호출 성공");
-
 		/* 비밀번호 변경 메소드 */
 		MemberVO mvo = new MemberVO();
 		mvo.setId(id);
 		mvo.setPassword(password);
-		System.out.println(mvo.getId());
-		System.out.println(mvo.getPassword());
 		String result;
 		boolean parseresult = memberService.memberUpdate(mvo);
 		result = parseresult + "";
-
 		/* 세션 초기화 및 AJAX 리턴 */
 		session.invalidate();
 		session = request.getSession(true);
