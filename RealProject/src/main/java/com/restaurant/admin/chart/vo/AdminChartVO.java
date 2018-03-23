@@ -13,6 +13,7 @@ public class AdminChartVO {
 	private int VIPCnt = 0;
 
 	private int totalCnt = 0;
+	private int cancelCnt = 0;
 
 	// 예약 차트 생성시 필요 변수
 	private Date chartStartDate = null;
@@ -127,6 +128,14 @@ public class AdminChartVO {
 
 	public void setSeat_date(String seat_date) {
 		this.seat_date = seat_date;
+	}
+
+	public int getCancelCnt() {
+		return cancelCnt;
+	}
+
+	public void setCancelCnt(int cancelCnt) {
+		this.cancelCnt = cancelCnt;
 	}
 
 }

@@ -21,14 +21,24 @@
 						s.seat_no=b.seat_no and s.seat_date between #{searchStart} and
 						#{searchEnd}))
 						<if test="book_condition != ''">
+							<if test="book_condition.equals('취소')">
+							and (book_condition = '취소' or book_condition = '기간만료')
+							</if>
+							<if test="!book_condition.equals('취소')">
 							and book_condition = #{book_condition}
+							</if>
 						</if>
 						<if test="book_condition == ''">
 						</if>
 					</if>
 					<if test="searchStart.toString().substring(0,10).contains('9999')">
 						<if test="book_condition != ''">
+							<if test="book_condition.equals('취소')">
+							and (book_condition = '취소' or book_condition = '기간만료')
+							</if>
+							<if test="!book_condition.equals('취소')">
 							and book_condition = #{book_condition}
+							</if>
 						</if>
 						<if test="book_condition == ''">
 						</if>
@@ -40,14 +50,24 @@
 						s.seat_no=b.seat_no and s.seat_date between #{searchStart} and
 						#{searchEnd}))
 						<if test="book_condition != ''">
+							<if test="book_condition.equals('취소')">
+							and (book_condition = '취소' or book_condition = '기간만료')
+							</if>
+							<if test="!book_condition.equals('취소')">
 							and book_condition = #{book_condition}
+							</if>
 						</if>
 						<if test="book_condition == ''">
 						</if>
 					</if>
 					<if test="searchStart.toString().substring(0,10).contains('9999')">
 						<if test="book_condition != ''">
+							<if test="book_condition.equals('취소')">
+							and (book_condition = '취소' or book_condition = '기간만료')
+							</if>
+							<if test="!book_condition.equals('취소')">
 							and book_condition = #{book_condition}
+							</if>
 						</if>
 						<if test="book_condition == ''">
 						</if>
@@ -63,14 +83,24 @@
 						s.seat_no=b.seat_no and s.seat_date between #{searchStart} and
 						#{searchEnd}))
 						<if test="book_condition != ''">
+							<if test="book_condition.equals('취소')">
+							and (book_condition = '취소' or book_condition = '기간만료')
+							</if>
+							<if test="!book_condition.equals('취소')">
 							and book_condition = #{book_condition}
+							</if>
 						</if>
 						<if test="book_condition == ''">
 						</if>
 					</if>
 					<if test="searchStart.toString().substring(0,10).contains('9999')">
 						<if test="book_condition != ''">
+							<if test="book_condition.equals('취소')">
+							and (book_condition = '취소' or book_condition = '기간만료')
+							</if>
+							<if test="!book_condition.equals('취소')">
 							and book_condition = #{book_condition}
+							</if>
 						</if>
 						<if test="book_condition == ''">
 						</if>
@@ -82,14 +112,24 @@
 						s.seat_no=b.seat_no and s.seat_date between #{searchStart} and
 						#{searchEnd}))
 						<if test="book_condition != ''">
+							<if test="book_condition.equals('취소')">
+							and (book_condition = '취소' or book_condition = '기간만료')
+							</if>
+							<if test="!book_condition.equals('취소')">
 							and book_condition = #{book_condition}
+							</if>
 						</if>
 						<if test="book_condition == ''">
 						</if>
 					</if>
 					<if test="searchStart.toString().substring(0,10).contains('9999')">
 						<if test="book_condition != ''">
+							<if test="book_condition.equals('취소')">
+							book_condition = '취소' or book_condition = '기간만료'
+							</if>
+							<if test="!book_condition.equals('취소')">
 							book_condition = #{book_condition}
+							</if>
 						</if>
 						<if test="book_condition == ''">
 						</if>
@@ -149,8 +189,10 @@
 		where menu_no = choice_menu8 ) menu_name8 ,
 		book_people, (select
 		coupon_name from couponhistory where couponhistory_no =
-		#{coupon_no}) coupon_name,
-		pay_way, pay_date, totalPay, book_memo, discount , book_no,
+		#{coupon_no})
+		coupon_name,
+		pay_way, pay_date, totalPay, book_memo, discount ,
+		book_no,
 		cancel_condition, cancel_reciver, cancel_bank, cancel_account,
 		cancel_total from
 		(select * from booking where book_no =
@@ -173,18 +215,30 @@
 			#{book_no}
 		</if>
 		<if test="book_condition.equals('취소')">
-			book_condition = #{book_condition}, cancel_condition =
-			'환불미완료',cancel_total = #{cancel_total}, cancel_date = sysdate,
-			cancel_reciver = #{cancel_reciver}, cancel_bank = #{cancel_bank},
-			cancel_account = #{cancel_account} where book_no =
-			#{book_no}
+			<if test="cancel_reciver.equals('환불불가')">
+				book_condition = #{book_condition}, cancel_condition =
+				'환불불가',cancel_total =
+				#{cancel_total}, cancel_date = sysdate,
+				cancel_reciver =
+				#{cancel_reciver}, cancel_bank = #{cancel_bank},
+				cancel_account =
+				#{cancel_account} where book_no =
+				#{book_no}
+			</if>
+			<if test="!cancel_reciver.equals('환불불가')">
+				book_condition = #{book_condition}, cancel_condition =
+				'환불미완료',cancel_total = #{cancel_total}, cancel_date = sysdate,
+				cancel_reciver = #{cancel_reciver}, cancel_bank = #{cancel_bank},
+				cancel_account = #{cancel_account} where book_no =
+				#{book_no}
+			</if>
 		</if>
 	</update>
 
 	<update id="lateReservationEdit">
 		update booking set book_condition = '기간만료', cancel_condition = '환불불가'
 		where seat_no in (select
-		seat_no from seat where seat_date <![CDATA[<= sysdate ) and book_condition = '미사용' ]]>
+		seat_no from seat where seat_date <![CDATA[< sysdate ) and book_condition = '미사용' ]]>
 	</update>
 
 	<!-- 환불상태 수정 -->

@@ -15,10 +15,11 @@
 
 	<select id="chartRankCnt" resultType="adminchart">
 		select (select
-		nvl(count(*),0) from member where rank = '일반') as normalCnt,
+		nvl(count(*),0) from member where (rank = '일반') and (condition = '활동중')) as normalCnt,
 		(select
-		nvl(count(*),0) from member where rank = 'VIP') as VIPCnt,(select
-		nvl(count(*),0) from member) as totalCnt from
+		nvl(count(*),0) from member where (rank = 'VIP') and (condition = '활동중')) as VIPCnt,(select
+		nvl(count(*),0) from member) as totalCnt, (select
+		nvl(count(*),0) from member where condition = '탈퇴') as cancelCnt from
 		dual
 	</select>
 

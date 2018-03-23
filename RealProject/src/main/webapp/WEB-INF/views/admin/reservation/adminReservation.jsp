@@ -268,18 +268,34 @@
 											.getDate()) == ((paydate.getMonth() + 1)
 											+ "-" + paydate.getDate())) {
 										cancelTotalPay = totalPayValue;
+										$("#inputcancel_total").val(cancelTotalPay);
 									} else if (sevenTermString >= nowString) {
 										cancelTotalPay = totalPayValue;
+										$("#inputcancel_total").val(cancelTotalPay);
 									} else if (fourTermString >= nowString) {
 										cancelTotalPay = totalPayValue * 0.9;
+										$("#inputcancel_total").val(cancelTotalPay);
 									} else if (twoTermString >= nowString) {
 										cancelTotalPay = totalPayValue * 0.8;
+										$("#inputcancel_total").val(cancelTotalPay);
 									} else if (oneTermString == nowString) {
 										cancelTotalPay = totalPayValue * 0.7;
+										$("#inputcancel_total").val(cancelTotalPay);
 									} else {
-										cancelTotalPay = totalPayValue * 0;
+										$("#inputcancel_reciver").val("환불불가");
+										$("#inputcancel_reciver").attr({
+											"readOnly" : "readOnly"
+										});
+										$("#inputcancel_bank").val("환불불가");
+										$("#inputcancel_bank").attr({
+											"readOnly" : "readOnly"
+										});
+										$("#inputcancel_account").val("환불불가");
+										$("#inputcancel_account").attr({
+											"readOnly" : "readOnly"
+										});
+										$("#inputcancel_total").val("0");
 									}
-									$("#inputcancel_total").val(cancelTotalPay);
 									// 환불정보 입력 모달 창 출력
 									$("#cancelPayInsertModal").modal('show');
 								} else {
@@ -324,7 +340,7 @@
 								$
 										.ajax({
 											url : "/adminReservation/reservationEdit",
-											type : "post",
+											method : "post",
 											data : {
 												"book_no" : checkedNum,
 												"book_condition" : '취소',
@@ -351,7 +367,6 @@
 													$('#table-result tr')
 															.removeAttr(
 																	"data-value");
-
 													window.history.go(0);
 												} else {
 													alert("예약취소처리 실패");
@@ -620,7 +635,7 @@
 												<c:when test="${reservation.book_condition == '취소'}">
 													<label style="color: red;">${reservation.book_condition}</label>
 												</c:when>
-												<c:when test="${reservation.book_condition == '기한만료'}">
+												<c:when test="${reservation.book_condition == '기간만료'}">
 													<label style="color: purple;">${reservation.book_condition}</label>
 												</c:when>
 												<c:otherwise>

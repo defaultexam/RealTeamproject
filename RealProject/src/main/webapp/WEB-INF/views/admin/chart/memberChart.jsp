@@ -67,27 +67,32 @@
 		var normalData = ${rankCnt.normalCnt};
 		var VIPData = ${rankCnt.VIPCnt};
 		var totalData = ${rankCnt.totalCnt};
+		var cancelData = ${rankCnt.cancelCnt};
 		var now = new Date();
 		var nowDate = now.getFullYear() + "-" + addzero((now.getMonth() + 1))
 				+ "-" + addzero(now.getDate()) + " " + addzero(now.getHours());
 		var normalRate = (normalData / totalData * 100).toFixed(1);
 		var VIPDataRate = (VIPData / totalData * 100).toFixed(1);
-		var normalRateString = String(normalRate)+'%';
-		var VIPDataRateString = String(VIPDataRate)+'%';
+		var cancelRate = (cancelData/ totalData * 100).toFixed(1);
+		var normalRateString = String(normalRate)+"%";
+		var VIPDataRateString = String(VIPDataRate)+"%";
+		var cancelRateString = String(cancelRate)+"%";
 
 		var data = google.visualization.arrayToDataTable([ [ '등급구분', '인원수', {
 			role : "style"
 		}, {
 			role : 'annotation'
 		} ], [ '일반회원', normalData, "green", normalRateString ],
-				[ 'VIP회원', VIPData, "purple", VIPDataRateString ] ]);
+				[ 'VIP회원', VIPData, "purple", VIPDataRateString ],['탈퇴회원',cancelData,'brown',cancelRateString] ]);
 		var options = {
 			title : '회원 등급 비율 (' + nowDate + '시) 기준',
 			legend : {
 				position : "none"
 			},
-			hAxis : {
-				format : 'percent'
+			vAxis : {
+				minValue : 0,
+				maxValue : 10
+				//format : 'percent'
 			},
 			chartArea : {
 				bottom : 24,
