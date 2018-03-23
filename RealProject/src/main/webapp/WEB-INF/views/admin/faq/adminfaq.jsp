@@ -371,7 +371,7 @@ textarea {
 							<div class="form-group">
 								<label for="faq_text" class="control-label">내용</label>
 								<textarea class="form-control" name="faq_text" id="faq_text"
-									maxlength="50"></textarea>
+									maxlength="500" rows="10" cols=""></textarea>
 							</div>
 							<div class="form-group">
 								<label for="faq_type" class="control-label">종류</label> <select
@@ -415,7 +415,7 @@ textarea {
 							<div class="form-group">
 								<label for="updatefaq_text" class="control-label">내용</label>
 								<textarea class="form-control" id="updatefaq_text"
-									maxlength="50"></textarea>
+									maxlength="500" rows="10" cols=""></textarea>
 							</div>
 							<div class="form-group">
 								<label for="updatefaq_type" class="control-label">종류</label> <select
