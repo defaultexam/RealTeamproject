@@ -9,10 +9,9 @@
 	</select>
 
 	<select id="loginSelect" parameterType="login" resultType="login">
-		select member_no, id, password, name, email, phone, rank, point from
-		member where
+		select member_no, id, password, name, email, phone from member where
 		id = #{id} and password =
-		#{password}
+		#{password} and condition = '활동중'
 	</select>
 
 	<insert id="loginHistoryInsert" parameterType="login"> insert into

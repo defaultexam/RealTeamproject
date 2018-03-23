@@ -7,10 +7,7 @@ function afterTime() {
 	window.location.href = '/';
 }
 
-/*로그인 창 숨기고 3초후에 실행*/
-function onLogin() {
-	loadInterval = window.setInterval("goNext()", 200);
-}
+
 function goNext() {
 	window.clearInterval(loadInterval);
 	$("#loginForm").attr({
@@ -34,8 +31,8 @@ $(function() {
 			return;
 		} else if (!inputVerify(0, '#id', '.error:eq(0)')) {
 			return;
-		}
-		else checkWrong($('#id'));
+		} else
+			checkWrong($('#id'));
 	});
 
 	$("#password").bind("blur", function() {
@@ -43,8 +40,8 @@ $(function() {
 			return;
 		} else if (!inputVerify(1, '#password', '.error:eq(1)')) {
 			return;
-		}
-		else checkWrong($('#password'));
+		} else
+			checkWrong($('#password'));
 	});
 
 	// 로그인 버튼 클릭 시 처리 이벤트
@@ -63,14 +60,6 @@ $(function() {
 		}
 	});
 
-	function runEffect() {
-		$("#effect").hide('highlight', "", 1000, callback);
-	}
-	;
-	function callback() {
-		setTimeout(function() {
-			$("#effect").removeAttr("style").hide().fade();
-		}, 1000);
-	}
-	;
+	
+	
 });

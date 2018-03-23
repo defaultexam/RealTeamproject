@@ -8,7 +8,36 @@
 <title>관리자 로그인</title>
 <link href="/resources/include/dist/css/bootstrap.min.css"
 	rel="stylesheet">
+<script src="/resources/include/js/jquery-3.3.1.min.js"></script>
+<script src="/resources/include/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/resources/include/js/adminLogin.js"></script>
 <script type="text/javascript">
+	$(function() {
+		// 엔터키 작동함수
+		$("#adminPw").keydown(function(key) {
+			if (key.keyCode == 13) {// 키가 13이면 실행(엔터키가 13)
+				adminLoginEnter();
+			}
+		});
+	});
+
+	// 엔터키 작동 함수
+	function adminLoginEnter() {
+		if (!formCheck($('#adminId'), $('.error:eq(0)'), "아이디를")) {
+			// $('.error:eq(1)').html("");
+			return;
+		} else if (!formCheck($('#adminPw'), $('.error:eq(1)'), "비밀번호를")) {
+			// $('.error:eq(0)').html("");
+			return;
+		} else {
+			$("#loginForm").attr({
+				"method" : "POST",
+				"action" : "/admin/login.do"
+			});
+			$("#loginForm").submit();
+		}
+	}
+
 	function chkIdPw() {
 		var checkCode = '<c:out value="${check}" />';
 		if (checkCode != "") {
@@ -56,9 +85,6 @@
 			</div>
 		</form>
 	</div>
-	<script src="/resources/include/js/jquery-3.3.1.min.js"></script>
-	<script src="/resources/include/dist/js/bootstrap.min.js"></script>
-	<script type="text/javascript"
-		src="/resources/include/js/adminLogin.js"></script>
+
 </body>
 </html>

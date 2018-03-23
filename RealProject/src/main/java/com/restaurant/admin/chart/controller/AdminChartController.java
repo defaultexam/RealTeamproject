@@ -1,7 +1,9 @@
 package com.restaurant.admin.chart.controller;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +12,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.restaurant.admin.chart.service.AdminChartService;
 import com.restaurant.admin.chart.vo.AdminChartVO;
-import com.restaurant.admin.reservation.vo.AdminReservationVO;
+import com.restaurant.common.file.FileUploadUtil;
 
 @Controller
 @RequestMapping("/adminChart")
@@ -63,5 +67,4 @@ public class AdminChartController {
 
 		return chartSeatDateList;
 	}
-
 }

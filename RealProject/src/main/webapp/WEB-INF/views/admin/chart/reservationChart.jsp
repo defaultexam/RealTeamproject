@@ -11,6 +11,9 @@
 	rel="stylesheet">
 <script type="text/javascript"
 	src="https://www.gstatic.com/charts/loader.js"></script>
+<!-- js pdf화관련 js -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
 <script type="text/javascript">
 	google.charts.load('current', {
 		'packages' : [ 'corechart' ]
@@ -31,6 +34,24 @@
 			$("#chartEndDate").val("");
 			drawChart();
 		});
+		
+		/* 차트 이미지 PDF화 함수 */
+			$('#pdfBtn').click(
+					function() {
+						var doc = new jsPDF('p', 'pt', 'a4', false); // 새로운 문서 생성
+						doc.setFontSize(15); //문서의 폰트사이즈
+						var yAxis = 70;
+						var imageTags = $("#graph-images img");
+						for (var i = 0; i < imageTags.length; i++) {
+							var someText = 'ReservationChart' + (i + 1);
+							doc.text(240, yAxis, someText);
+							yAxis = yAxis + 20;
+							doc.addImage(imageTags[i], 'png', 10, yAxis, 600, 300,
+									undefined, 'none');
+							yAxis = yAxis + 320;
+						}
+						doc.save('memberChart.pdf');
+					});
 
 	});
 
@@ -71,8 +92,6 @@
 									(30-list[i].firstSeat)/30, (40-list[i].secondSeat)/40,
 									(50-list[i].thirdSeat)/50, (20-list[i].fourthSeat)/20);
 							dataArray.push(plusArray);
-							console.log(dataArray);
-							console.log(i);
 						}
 
 						var data = google.visualization
@@ -93,6 +112,9 @@
 								.getElementById('reservationChart'));
 
 						chart.draw(data, options);
+						
+						var content = '<img src="' + chart.getImageURI() + '" style="transform: rotate(90deg);">';
+						$('#graph-images').append(content);
 
 						if ($("#chartStartDate").val() === '9999-12-31') {
 							$("#chartStartDate").val("");
@@ -114,9 +136,11 @@
 	<div align="center" id="chartDiv">
 		<div id="reservationChart" style="width: 2000px; height: 500px;"></div>
 	</div>
+	<div id="graph-images" hidden=""></div>
 	<div align="center">
 		<button id="pdfBtn">PDF출력하기</button>
 	</div>
+	<img alt="" src="" style="transform: rotate(90deg);">
 
 	<script type="text/javascript"
 		src="/resources/include/js/jquery-3.3.1.min.js"></script>
