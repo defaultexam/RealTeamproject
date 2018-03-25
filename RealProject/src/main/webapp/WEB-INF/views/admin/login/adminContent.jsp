@@ -286,7 +286,7 @@ a {
 								class="circle-tile-footer">More Info <i
 								class="fa fa-chevron-circle-right"></i></a>
 							<ul class="dropdown-menu" aria-labelledby="about-review">
-								<li><a href="#">방문후기관리</a></li>
+								<li><a href="/adminComment">방문후기관리</a></li>
 							</ul>
 						</div>
 					</div>

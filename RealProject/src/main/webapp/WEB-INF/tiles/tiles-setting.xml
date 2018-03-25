@@ -2,7 +2,8 @@
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
 
-	<definition name="security" template="/WEB-INF/views/template/security/security.jsp">
+	<definition name="security"
+		template="/WEB-INF/views/template/security/security.jsp">
 	</definition>
 
 	<definition name="intro"
@@ -49,5 +50,10 @@
 	<definition name="user/faq/*" extends="intro">
 		<put-attribute name="body" value="/WEB-INF/views/user/faq/{1}.jsp" />
 	</definition>
+	<definition name="user/comment/*" extends="intro">
+		<put-attribute name="body"
+			value="/WEB-INF/views/user/comment/{1}.jsp" />
+	</definition>
+
 
 </tiles-definitions> 

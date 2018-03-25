@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.restaurant.user.comment.dao.CommentDAO">
+	<sql id="commentSearch">
+		select comment_no,
+		comment_title,
+		comment_score,
+		member_no,
+		comment_date,
+		comment_text,
+		id,
+		comment_file
+		from
+		comment_tb
+		order by
+		comment_date desc
+	</sql>
+
+	<!-- 방문 후기 기본 조회 -->
+	<select id="commentList" resultType="comment" parameterType="comment">
+		select comment_no,
+		comment_title,comment_score, member_no,id,
+		to_char(comment_date,'YYYY.MM.DD') as
+		comment_date,
+		comment_text,
+		comment_file from (select list.*, rownum as rnum from(
+		<include refid="commentSearch"></include>
+		) list )
+		<where>
+			<if test="start_row != null and start_row != ''">
+				<if test="end_row != null and end_row != ''"> RNUM BETWEEN #{start_row} AND
+					#{end_row}
+				</if>
+			</if>
+		</where>
+	</select>
+
+	<!-- 방문 후기 등록 -->
+	<insert id="commentInsert" parameterType="comment">
+		<selectKey keyProperty="comment_no" resultType="int" order="BEFORE">
+			select comment_tb_seq.nextval from dual
+		</selectKey>
+		insert into comment_tb(
+		comment_no,
+		comment_title,
+		comment_score,
+		member_no,
+		id,
+		comment_date,
+		comment_text
+		<if test="comment_file != null and comment_file != ''">
+			,comment_file
+		</if>
+		)
+		values(
+		#{comment_no},
+		#{comment_title},
+		#{comment_score,
+		jdbcType=VARCHAR},
+		#{member_no},
+		#{id},
+		sysdate,
+		#{comment_text}
+		<if test="comment_file != null and comment_file != ''">
+			,#{comment_file}
+		</if>
+		)
+	</insert>
+
+
+	<select id="commentListCnt" parameterType="comment" resultType="int">
+		SELECT NVL(count(1), 0) FROM (SELECT list.*, ROWNUM AS RNUM FROM (
+		<include refid="commentSearch"></include>
+		) list )
+	</select>
+
+	<delete id="commentDelete" parameterType="comment">
+		delete from comment_tb
+		where
+		comment_no = #{comment_no}
+	</delete>
+
+	<!-- 방문 후기 기본 조회 -->
+	<select id="commentDetail" resultType="comment" parameterType="comment">
+		select comment_no,
+		comment_title,
+		comment_score,
+		member_no,
+		comment_date,
+		comment_text,
+		id,
+		comment_file
+		from
+		comment_tb
+		<where>
+			comment_no = #{comment_no}
+		</where>
+	</select>
+
+	<!-- 방문후기 수정 -->
+	<update id="commentUpdate" parameterType="comment">
+		update comment_tb
+		set
+		comment_text = #{comment_text},
+		comment_score =
+		#{comment_score}
+		<if test="comment_file != null and comment_file != ''">
+			,comment_file =
+			#{comment_file}
+		</if>
+		where
+		comment_no = #{comment_no}
+	</update>
+</mapper>

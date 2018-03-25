@@ -323,7 +323,7 @@
 						</ul></li>
 					<li><a href="#" target="" id="id_gnb_06005" class="">REVIEW</a>
 						<ul style="display: none;">
-							<li><a href="#"><span>REVIEW</span></a></li>
+							<li><a href="/comment/commentList.do"><span>REVIEW</span></a></li>
 						</ul></li>
 					<li><a href="/userNotice" target="" id="id_gnb_06006" class="">고객센터</a>
 						<ul style="display: none;">
