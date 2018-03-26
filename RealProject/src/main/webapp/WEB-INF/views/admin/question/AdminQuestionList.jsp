@@ -23,25 +23,25 @@
 
 		// 탭 상태 화면 표시 설정
 		// sessionStorage에서 저장된 데이터 가져옴.
-		if (sessionStorage.getItem("tab") == '미답변') {
+		if (sessionStorage.getItem("questionTab") == '미답변') {
 			tab1.classList.remove("active");
 			tab2.classList.remove("active");
 			tab3.classList.remove("active");
 			tab4.classList.remove("active");
 			tab5.classList.add("active")
-		} else if (sessionStorage.getItem("tab") == '레스토랑예약') {
-			tab1.classList.remove("active");
-			tab2.classList.remove("active");
-			tab3.classList.remove("active");
-			tab4.classList.add("active")
-			tab5.classList.remove("active");
-		} else if (sessionStorage.getItem("tab") == '홈페이지이용') {
+		} else if (sessionStorage.getItem("questionTab") == '레스토랑예약') {
 			tab1.classList.remove("active");
 			tab2.classList.remove("active");
 			tab3.classList.add("active");
-			tab4.classList.remove("active");
+			tab4.classList.remove("active")
 			tab5.classList.remove("active");
-		} else if (sessionStorage.getItem("tab") == '레스토랑이용') {
+		} else if (sessionStorage.getItem("questionTab") == '홈페이지이용') {
+			tab1.classList.remove("active");
+			tab2.classList.remove("active");
+			tab3.classList.remove("active");
+			tab4.classList.add("active");
+			tab5.classList.remove("active");
+		} else if (sessionStorage.getItem("questionTab") == '레스토랑이용') {
 			tab1.classList.remove("active");
 			tab2.classList.add("active");
 			tab3.classList.remove("active");
@@ -63,52 +63,42 @@
 		$("#전체").click(function() {
 			$("#question_type").removeAttr("value");
 			$("#question_process").removeAttr("value");
-			sessionStorage.removeItem("tab");
+			sessionStorage.removeItem("questionTab");
 			goPage(1);
-
 		});
-
 		$("#레스토랑이용").click(function() {
 			$("#question_type").attr({
 				"value" : "레스토랑이용"
-			})
+			});
 			$("#question_process").removeAttr("value");
-			sessionStorage.removeItem("tab", '레스토랑이용');
-
+			sessionStorage.setItem("questionTab", '레스토랑이용');
 			goPage(1);
-
 		});
-
 		$("#레스토랑예약").click(function() {
 			$("#question_type").attr({
 				"value" : "레스토랑예약"
-			})
+			});
 			$("#question_process").removeAttr("value");
-			sessionStorage.removeItem("tab", '레스토랑예약');
+			sessionStorage.setItem("questionTab", '레스토랑예약');
 			goPage(1);
-
 		});
-
 		$("#홈페이지이용").click(function() {
 			$("#question_type").attr({
 				"value" : "홈페이지이용"
-			})
+			});
 			$("#question_process").removeAttr("value");
-			sessionStorage.removeItem("tab", '홈페이지이용');
+			sessionStorage.setItem("questionTab", '홈페이지이용');
 			goPage(1);
-
 		});
-
 		$("#미답변").click(function() {
 			$("#question_process").attr({
 				"value" : "대기중"
-			})
+			});
 			$("#question_type").removeAttr("value");
-			sessionStorage.removeItem("tab", '미답변');
+			sessionStorage.setItem("questionTab", '미답변');
 			goPage(1);
-
 		});
-
+		
 		// 한페이지에 보여줄 레코드수 조회 후 선택한 값 그대로 유지하기 위한 설정
 		if ("<c:out value='${data.pageSize}' />" != "") {
 			$("#pageSize").val("<c:out value='${data.pageSize}' />");
@@ -141,7 +131,7 @@
 
 		}
 
-		/* 제목 클릭시 상세 페이지 이동을 위한 처리 이벤트 */
+		/* 행클릭시 상세 페이지 이동을 위한 처리 이벤트 */
 		$(".goDetail").click(function() {
 
 			var question_no = $(this).attr("data-num");

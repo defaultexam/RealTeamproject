@@ -190,6 +190,10 @@ a {
 	function faqTabClear() {
 		sessionStorage.removeItem("faqtab");
 	}
+	//텝 세션 삭제
+	function questionTabClear() {
+		sessionStorage.removeItem("questionTab");
+	}
 </script>
 <title>관리자컨텐츠부분</title>
 </head>
@@ -312,7 +316,7 @@ a {
 								<li><a href="/adminNotice">공지사항관리</a></li>
 								<li><a href="/adminFaq/adminFaqList"
 									onclick="faqTabClear();">FAQ관리</a></li>
-								<li><a href="/adminQuestion">1:1문의관리</a></li>
+								<li><a href="/adminQuestion" onclick="questionTabClear();">1:1문의관리</a></li>
 							</ul>
 						</div>
 					</div>
