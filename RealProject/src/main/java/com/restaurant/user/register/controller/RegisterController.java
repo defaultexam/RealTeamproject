@@ -43,13 +43,13 @@ public class RegisterController {
 	@RequestMapping(value = "/userIdConfirm", method = RequestMethod.POST)
 	public String userIdConfirm(@RequestParam("userId") String userId) {
 		int result = memberService.userIdConfirm(userId);
+		logger.info("/userIdConfirm 메소드 호출 성공, 결과 값: " + result);
 		return result + "";
 	}
 
 	/* 주소 /register/confirm (POST 메소드) */
 	@RequestMapping(value = "/confirm", method = RequestMethod.POST)
 	public ModelAndView memberInsert(@ModelAttribute MemberVO mvo) {
-		logger.info("/confirm post 방식에 의한 메서드 호출 성공");
 		ModelAndView mav = new ModelAndView();
 		int result = 3;
 		result = memberService.memberInsert(mvo);
@@ -68,6 +68,7 @@ public class RegisterController {
 			mav.setViewName("user/register/register");
 			break;
 		}
+		logger.info("/confirm post 메소드 호출 성공, 결과 값: " + result);
 		return mav;
 	}
 
@@ -77,9 +78,8 @@ public class RegisterController {
 	private int checkEmail(HttpSession session, @RequestParam(value = "email") String email) {
 		// 존재하는 이메일 = 2 , 존재하지 않음 = 0, 1
 		int resultType = 0;
-		logger.info("/checkEmail post 방식에 의한 메서드 호출 성공");
 		resultType = memberService.memberCheckEmail(email);
-		logger.info(resultType);
+		logger.info("/checkEmail post 방식에 의한 메서드 호출 성공, 결과 값: "+resultType);
 		return resultType;
 	}	
 	
@@ -87,7 +87,7 @@ public class RegisterController {
 	@ResponseBody
 	@RequestMapping(value = "/sendMail", method = RequestMethod.POST)
 	private String sendMail(HttpSession session, @RequestParam(value = "email") String email) {
-		logger.info("/sendMail post 방식에 의한 메서드 호출 성공");
+		logger.info("/sendMail post 메소드 호출 성공");
 		return mailService.send(session, email);
 	}
 	

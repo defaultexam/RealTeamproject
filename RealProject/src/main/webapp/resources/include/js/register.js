@@ -322,13 +322,14 @@ $(function() {
 				alert("이메일 인증을 진행해주세요.");
 				return;
 			} else {
-
 				$("#email").val($("#email1").val() + "@" + $("#email2").val());
 				$("#address").val(
 					$("#postcode").val() + " " + $("#roadAddress").val() + " " + $("#jibunAddress").val()
 				);
-				if ($("#weddingdate").val() == "")
+				if ($("#weddingdate").val() == "" || $("#weddingdate").attr("disabled") == "disabled") {
+					$("#weddingdate").removeAttr("disabled");
 					$("#weddingdate").val("9999-12-31");
+				}
 				$("#registerForm").attr({
 					"method" : "post",
 					"action" : "/register/confirm"

@@ -246,8 +246,7 @@ input:valid+span:after {
 						<tr>
 							<td class="tdsize"><label for="weddingdate">결혼 기념일</label></td>
 							<td class="tdsize2"><input type="text" class="form-control"
-								required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" id="weddingdate"
-								readonly="readonly" name="weddingdate"></td>
+								required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" id="weddingdate" name="weddingdate" disabled="disabled"></td>
 						</tr>
 					</table>
 				</div>
@@ -343,14 +342,15 @@ input:valid+span:after {
 			onSelect : function(dateText, inst) {}
 		});
 		// 결혼 여부 미혼일 경우 결혼 기념일에 Readonly 적용, 아닐 경우 삭제.
-		$("input[name=marriage]").bind("change", function() {
-			if ($(this).val() == 1) {
-				$("#weddingdate").attr("readonly", "readonly");
-				$("#weddingdate").removeAttr("id");
-			} else {
-				$("#weddingdate").removeAttr("readonly");
-				$("input[name=weddingdate]").attr("id", "weddingdate");
-			}
+		$(function() {
+			$("input[name=marriage]").bind("change", function() {
+				if ($(this).val() == 1) {
+					$("#weddingdate").attr("disabled", "disabled");
+					$("#weddingdate").val("");
+				} else {
+					$("#weddingdate").removeAttr("disabled");
+				}
+			});
 		});
 	</script>
 </body>
