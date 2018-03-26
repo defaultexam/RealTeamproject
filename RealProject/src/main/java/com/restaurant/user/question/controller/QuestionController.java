@@ -47,7 +47,7 @@ public class QuestionController {
 
 		// 사용자 보안처리
 		String url = "";
-		if (session.getAttribute("admin") == null) {
+		if (session.getAttribute("login") == null) {
 			url = "redirect:/security";
 		} else {
 
