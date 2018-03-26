@@ -15,7 +15,7 @@
 }
 
 .contentalign {
-	padding-top: 5%;
+	padding-top: 3%;
 	padding-left: 20%;
 }
 
@@ -247,7 +247,7 @@ input:valid+span:after {
 							<td class="tdsize"><label for="weddingdate">결혼 기념일</label></td>
 							<td class="tdsize2"><input type="text" class="form-control"
 								required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" id="weddingdate"
-								name="weddingdate"></td>
+								readonly="readonly" name="weddingdate"></td>
 						</tr>
 					</table>
 				</div>
@@ -341,6 +341,16 @@ input:valid+span:after {
 			yearRange : "1900:2018",
 			dateFormat : "yy-mm-dd",
 			onSelect : function(dateText, inst) {}
+		}); 
+		// 결혼 여부 미혼일 경우 결혼 기념일에 Readonly 적용, 아닐 경우 삭제.
+		$("input[name=marriage]").bind("change", function() {
+			if ($(this).val() == 1) {
+				$("#weddingdate").attr("readonly", "readonly");
+				$("#weddingdate").removeAttr("id");
+			} else {
+				$("#weddingdate").removeAttr("readonly");
+				$("input[name=weddingdate]").attr("id", "weddingdate");
+			}
 		});
 	</script>
 </body>
