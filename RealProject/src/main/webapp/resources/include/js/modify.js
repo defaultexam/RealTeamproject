@@ -169,10 +169,8 @@ $(function() {
 			return;
 		if ($("#reset_password1").val() != $("#reset_password2").val()) {
 			$('.error:eq(5)').css("color", "#000099").html("비밀번호와 비밀번호 확인란이 다릅니다.");
-			alert("1");
 			return;
 		} else if ($("#reset_password1").val() == $("#reset_password2").val()) {
-			alert("2");
 			passwordChange();
 		}
 	});

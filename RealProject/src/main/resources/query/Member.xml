@@ -96,6 +96,6 @@
 	</select>
 	
 	<select id="memberCheckEmail" parameterType="String" resultType="member">
-		select email from member where email = #{email}
+		select email from member where email = #{email} and condition = '활동중'
 	</select>
 </mapper>

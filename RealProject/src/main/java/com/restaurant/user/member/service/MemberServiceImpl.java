@@ -2,6 +2,7 @@ package com.restaurant.user.member.service;
 
 import java.util.List;
 
+import org.apache.ibatis.exceptions.TooManyResultsException;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -157,6 +158,12 @@ public class MemberServiceImpl implements MemberService {
 			// 조회 결과가 NULL값일 경우
 		} catch (NullPointerException e) {
 			result = 0;
+			// 조회 결과값이 다중으로 여러개 출력되었을 경우
+		} catch (TooManyResultsException e2) {
+			result = 2;
+			// 이외 통합 예외 처리는 존재하는 이메일로 간주.
+		} catch (Exception e3) {
+			result = 2;
 		}
 		// 조회된 이메일이 2개 이상일 경우 Error 출력.
 		return result;

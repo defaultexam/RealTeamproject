@@ -294,46 +294,46 @@ $("#datepicker").datepicker({
 					// 예외 처리
 					if (resultdata[0] != null) {
 						if (resultdata[0].seat_time == "12:00 ~ 14:00") {
-							$("#extra1").html(resultdata[0].seat_extra);
+							$("#extra1").html(resultdata[0].seat_extra);$("#numberic1").attr("max", resultdata[0].seat_extra);
 						} else if (resultdata[0].seat_time == "17:30 ~ 19:20") {
-							$("#extra2").html(resultdata[0].seat_extra);
+							$("#extra2").html(resultdata[0].seat_extra);$("#numberic2").attr("max", resultdata[0].seat_extra);
 						} else if (resultdata[0].seat_time == "20:00 ~ 22:00") {
-							$("#extra3").html(resultdata[0].seat_extra);
+							$("#extra3").html(resultdata[0].seat_extra);$("#numberic3").attr("max", resultdata[0].seat_extra);
 						} else if (resultdata[0].seat_time == "21:15 ~ 23:15") {
-							$("#extra4").html(resultdata[0].seat_extra);
+							$("#extra4").html(resultdata[0].seat_extra);$("#numberic4").attr("max", resultdata[0].seat_extra);
 						}
 					}
 					if (resultdata[1] != null) {
 						if (resultdata[1].seat_time == "12:00 ~ 14:00") {
-							$("#extra1").html(resultdata[1].seat_extra);
+							$("#extra1").html(resultdata[1].seat_extra);$("#numberic1").attr("max", resultdata[1].seat_extra);
 						} else if (resultdata[1].seat_time == "17:30 ~ 19:20") {
-							$("#extra2").html(resultdata[1].seat_extra);
+							$("#extra2").html(resultdata[1].seat_extra);$("#numberic2").attr("max", resultdata[1].seat_extra);
 						} else if (resultdata[1].seat_time == "20:00 ~ 22:00") {
-							$("#extra3").html(resultdata[1].seat_extra);
+							$("#extra3").html(resultdata[1].seat_extra);$("#numberic3").attr("max", resultdata[1].seat_extra);
 						} else if (resultdata[1].seat_time == "21:15 ~ 23:15") {
-							$("#extra4").html(resultdata[1].seat_extra);
+							$("#extra4").html(resultdata[1].seat_extra);$("#numberic4").attr("max", resultdata[1].seat_extra);
 						}
 					}
 					if (resultdata[2] != null) {
 						if (resultdata[2].seat_time == "12:00 ~ 14:00") {
-							$("#extra1").html(resultdata[2].seat_extra);
+							$("#extra1").html(resultdata[2].seat_extra);$("#numberic1").attr("max", resultdata[2].seat_extra);
 						} else if (resultdata[2].seat_time == "17:30 ~ 19:20") {
-							$("#extra2").html(resultdata[2].seat_extra);
+							$("#extra2").html(resultdata[2].seat_extra);$("#numberic2").attr("max", resultdata[2].seat_extra);
 						} else if (resultdata[2].seat_time == "20:00 ~ 22:00") {
-							$("#extra3").html(resultdata[2].seat_extra);
+							$("#extra3").html(resultdata[2].seat_extra);$("#numberic3").attr("max", resultdata[2].seat_extra);
 						} else if (resultdata[2].seat_time == "21:15 ~ 23:15") {
-							$("#extra4").html(resultdata[2].seat_extra);
+							$("#extra4").html(resultdata[2].seat_extra);$("#numberic4").attr("max", resultdata[2].seat_extra);
 						}
 					}
 					if (resultdata[3] != null) {
 						if (resultdata[3].seat_time == "12:00 ~ 14:00") {
-							$("#extra1").html(resultdata[3].seat_extra);
+							$("#extra1").html(resultdata[3].seat_extra);$("#numberic1").attr("max", resultdata[3].seat_extra);
 						} else if (resultdata[3].seat_time == "17:30 ~ 19:20") {
-							$("#extra2").html(resultdata[3].seat_extra);
+							$("#extra2").html(resultdata[3].seat_extra);$("#numberic2").attr("max", resultdata[3].seat_extra);
 						} else if (resultdata[3].seat_time == "20:00 ~ 22:00") {
-							$("#extra3").html(resultdata[3].seat_extra);
+							$("#extra3").html(resultdata[3].seat_extra);$("#numberic3").attr("max", resultdata[3].seat_extra);
 						} else if (resultdata[3].seat_time == "21:15 ~ 23:15") {
-							$("#extra4").html(resultdata[3].seat_extra);
+							$("#extra4").html(resultdata[3].seat_extra);$("#numberic4").attr("max", resultdata[3].seat_extra);
 						}
 					}
 				}
