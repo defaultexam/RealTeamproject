@@ -115,7 +115,7 @@
 					<font size="20px"><span class="glyphicon glyphicon-file"
 						aria-hidden="true"></span></font> <span style="position: fixed;">아직도
 						회원가입을 하지 않으셨나요?</span> <input type="button" value="회원가입" id="btnregister"
-						class="btn btn-default" onclick="location.href='/register'" />
+						class="btn btn-default" onclick="location.href='/register/terms'" />
 				</div>
 			</div>
 		</c:if>
