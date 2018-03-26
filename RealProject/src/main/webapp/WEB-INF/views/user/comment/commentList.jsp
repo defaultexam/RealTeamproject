@@ -2,150 +2,204 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="tag" uri="/WEB-INF/tld/custom_tag.tld"%>
-<!DOCTYPE html>
-<html>
 <head>
 <meta charset="UTF-8">
-
 <title>방문 후기</title>
-
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link href="/resources/include/dist/css/bootstrap.min.css"
 	rel="stylesheet">
-<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-<!-- 최신버전 js -->
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<!-- jqeury ui 관련 js -->
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link href="/resources/include/css/sticky-footer-navbar.css"
+	rel="stylesheet">
+<!-- JQUERY -->
+<script type="text/javascript"
+	src="/resources/include/js/jquery-3.3.1.min.js"></script>
 <!-- 부트스트랩 js -->
 <script src="/resources/include/dist/js/bootstrap.min.js"></script>
-<!-- jquery form 관련 js -->
-<script type="text/javascript"
-	src="/resources/include/js/jquery.form.min.js"></script>
-
 <script type="text/javascript">
 	$(function() {
-
 		/* 로그인 확인 후 비로그인시 로그인페이지로*/
 		$("#commentLoginBtn").click(function() {
 			alert("로그인 후 이용가능한 서비스입니다.");
 			location.href = "/login";
 		});
-
 		$("#commentInsertBtn").click(function() {
 			location.href = "/comment";
 		});
-
 	});
-	
 	function update(comment_no) {
 		alert("회원님의 방문후기 수정페이지로 이동합니다.");
-		location.href = "/comment/commentUpdateForm.do?comment_no="+comment_no;
+		location.href = "/comment/commentUpdateForm.do?comment_no=" + comment_no;
 	}
-	
 	function del(comment_no) {
-		if(confirm("삭제하시면 회원님의 글이 다시 복구되지 않습니다.\n정말로 삭제하시겠습니까?")){
-			location.href = "/comment/commentDelete.do?comment_no="+comment_no;
+		if (confirm("삭제하시면 회원님의 글이 다시 복구되지 않습니다.\n정말로 삭제하시겠습니까?")) {
+			location.href = "/comment/commentDelete.do?comment_no=" + comment_no;
 		}
 	}
-
-	/* //페이지 이동
-	function goPage(page) {
-		$("#page").val(page);
-		$("#pageset").attr({
-			"method" : "get",
-			"action" : "/comment/commentList"
-		});
-		$("#pageset").submit();
-	} */
 </script>
 </head>
-
 <body>
-
 	<!-- 방문후기 게시판 -->
-	<div class="contentContainer">
-		<h2>방문후기</h2>
+	<div class="container">
+		<h3 align="center">방문후기</h3>
 		<hr>
-		<h4>
+		<h5 align="right">
 			<span style="color: red;">※ 방문 후기 작성 시, 10point 적립!</span>
-		</h4>
+		</h5>
 		<!-- 후기글 등록 구현 -->
 		<p class="tar" style="float: right;">
 			<c:if test="${login.id != null and login.id != '' }">
-				<button type="button" class="btn_primary" id="commentInsertBtn">후기글
+				<button type="button" class="btn btn-default" id="commentInsertBtn">후기글
 					작성</button>
 			</c:if>
 			<c:if test="${login.id == null or login.id == '' }">
-				<button type="button" id="commentLoginBtn" class="btn-default">후기글
+				<button type="button" id="commentLoginBtn" class="btn btn-default">후기글
 					작성</button>
 			</c:if>
 		</p>
-		<!-- <form id="pageForm">
-			<input type="hidden" name="page" id="page"> <input
-				type="hidden" name="comment_type" id="type">
-		</form> -->
 		<form id="pageForm">
 			<input type="hidden" name="member_no" value="${data.member_no}">
 			<input type="hidden" id="page" name="page" value="${data.page }" />
 			<input type="hidden" id="pageSize" name="pageSize"
 				value="${data.pageSize}" />
 		</form>
-
+		<br /> <br /> <br />
 		<!-- 후기글 게시판리스트 영역 -->
-		<div class="commentList">
+		<div class="panel-group" id="accordion" role="tablist"
+			aria-multiselectable="true">
 			<c:choose>
 				<c:when test="${not empty commentList}">
 					<c:forEach var="comment" items="${commentList}" varStatus="status">
-						<table border="1" style="height: auto; width: 100;">
-							<tbody id="list">
-								<tr class="tac" data-num="${comment.comment_no}">
-									<td rowspan="2" class="comment_file"><img
-										src="/uploadStorage/comment/${comment.comment_file}"
-										id="c_img" style="width: 200px; height: 200px;" /></td>
-									<td>${comment.comment_title}${comment.comment_score}</td>
-								</tr>
-								<tr>
-									<td>${comment.id}님<br>${comment.comment_date}<br>${comment.comment_text}<br>
+						<div class="panel panel-default">
+							<!-- panel_heading -->
+							<div class="panel-heading" role="tab" id="heading${status.index}">
+								<!-- panel_title -->
+								<h4 class="panel-title"></h4>
+								<!-- title -->
+								<div id="test" data-toggle="collapse" data-parent="#accordion"
+									style="width: 100%;" href="#collapse${status.index}"
+									aria-controls="collapse${status.index}" aria-expanded="false">
+									<table class="table table-bordered table-hover">
+										<tr>
+											<td
+												style="width: 60px; background-color: rgba(196, 192, 192, 0.57)"
+												align="center">작성자</td>
+											<td style="width: 150px;" align="center">${comment.id}</td>
+											<td
+												style="width: 60px; background-color: rgba(196, 192, 192, 0.57)"
+												align="center">제목</td>
+											<td>${comment.comment_title}</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+						</div>
+						<c:if test="${status.index == 0}">
+							<div class="panel-collapse collapse in"
+								id="collapse${status.index}" role="tabpanel"
+								aria-labelledby="heading${status.index}">
+								<div class="panel-body">
+									<table class="table table-bordered"
+										style="height: auto; width: 100;">
+										<tbody id="list">
+											<tr>
+												<td rowspan="3" class="comment_file" align="center"
+													style="width: 200px; height: 200px;"><img
+													src="/uploadStorage/comment/${comment.comment_file}"
+													align="middle" id="c_img"
+													style="width: 200px; height: 200px;" /><br /> <br /> <c:if
+														test="${login.id == comment.id}">
+														<input type="button" value="수정" class="btn btn-default"
+															style="width: 70px;"
+															onclick="update(${comment.comment_no});">
+														<input type="button" value="삭제" class="btn btn-default"
+															style="width: 70px;"
+															onclick="del(${comment.comment_no});">
+													</c:if> <c:if test="${login.id != comment.id}">
+													</c:if></td>
+												<td style="width: 100px;">작성자</td>
+												<td style="width: 150px;">${comment.id}</td>
+												<td style="width: 100px;">작성일자</td>
+												<td>${comment.comment_date}</td>
+												<td style="width: 100px;">별점</td>
+												<td>${comment.comment_score}</td>
+											</tr>
+											<tr class="tac" data-num="${comment.comment_no}">
+												<td style="width: 50px;">제목</td>
+												<td colspan="5">${comment.comment_title}
+											</tr>
+											<tr>
+												<td style="width: 30px;">내용</td>
+												<td colspan="5"><textarea rows="10" cols="50"
+														class="form-control" readonly="readonly">${comment.comment_text}</textarea>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</c:if>
+						<c:if test="${status.index != 0}">
+							<div class="panel-collapse collapse"
+								id="collapse${status.index}" role="tabpanel"
+								aria-labelledby="heading${status.index}">
+								<div class="panel-body">
+									<table class="table table-bordered"
+										style="height: auto; width: 100;">
+										<tbody id="list">
+											<tr>
+												<td rowspan="3" class="comment_file" align="center"
+													style="width: 200px; height: 200px;"><img
+													src="/uploadStorage/comment/${comment.comment_file}"
+													align="middle" id="c_img"
+													style="width: 200px; height: 200px;" /><br /> <br /> <c:if
+														test="${login.id == comment.id}">
+														<input type="button" value="수정" class="btn btn-default"
+															style="width: 70px;"
+															onclick="update(${comment.comment_no});">
+														<input type="button" value="삭제" class="btn btn-default"
+															style="width: 70px;"
+															onclick="del(${comment.comment_no});">
+													</c:if> <c:if test="${login.id != comment.id}">
+													</c:if></td>
+												<td style="width: 100px;">작성자</td>
+												<td style="width: 150px;">${comment.id}</td>
+												<td style="width: 100px;">작성일자</td>
+												<td>${comment.comment_date}</td>
+												<td style="width: 100px;">별점</td>
+												<td>${comment.comment_score}</td>
+											</tr>
+											<tr class="tac" data-num="${comment.comment_no}">
+												<td style="width: 50px;">제목</td>
+												<td colspan="5">${comment.comment_title}
+											</tr>
+											<tr>
+												<td style="width: 30px;">내용</td>
+												<td colspan="5"><textarea rows="10" cols="50"
+														class="form-control" readonly="readonly">${comment.comment_text}</textarea>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</c:if>
 
-										<c:if test="${login.id == comment.id}">
-
-											<input type="button" value="수정" class="btn btn-default"
-												onclick="update(${comment.comment_no});">
-											<input type="button" value="삭제" class="btn btn-default"
-												onclick="del(${comment.comment_no});">
-										</c:if> <c:if test="${login.id != comment.id}">
-
-										</c:if>
-
-									</td>
-								</tr>
-							</tbody>
-						</table>
 						<br>
 					</c:forEach>
 				</c:when>
 				<c:otherwise>
-					<table border="1">
-						<tbody id="list">
-							<tr>
-								<td colspan="3" class="tac">등록된 방문후기가 없습니다.</td>
-							</tr>
-						</tbody>
-					</table>
+					<div class="well">등록된 방문후기가 없습니다.</div>
 				</c:otherwise>
 			</c:choose>
 		</div>
-	</div>
-
-	<!-- 페이징 처리 -->
-	<center>
-		<div id="commentPage">
+		<div id="commentPage" align="center">
 			<tag:paging page="${param.page}" total="${total}"
 				list_size="${data.pageSize }">
 			</tag:paging>
 		</div>
-	</center>
+	</div>
+	<!-- 페이징 처리 -->
+	<script type="text/javascript">
+		$("body").attr("data-dep1", 3);
+		$("body").attr("data-dep2", 0);
+	</script>
 </body>
-</html>

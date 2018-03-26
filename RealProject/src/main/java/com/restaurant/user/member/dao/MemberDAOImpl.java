@@ -73,7 +73,11 @@ public class MemberDAOImpl implements MemberDAO {
 
 	@Override
 	public MemberVO memberNoSearch(int member_no) {
-		// TODO Auto-generated method stub
 		return session.selectOne("memberNoSearch", member_no);
+	}
+
+	@Override
+	public MemberVO memberCheckEmail(String email) {
+		return session.selectOne("memberCheckEmail", email);
 	}
 }

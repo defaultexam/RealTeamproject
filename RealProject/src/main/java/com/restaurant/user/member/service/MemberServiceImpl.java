@@ -137,7 +137,28 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public MemberVO memberNoSearch(int member_no) {
-		// TODO Auto-generated method stub
 		return memberDAO.memberNoSearch(member_no);
+	}
+
+	@Override
+	public int memberCheckEmail(String email) {
+		int result = 0;
+		MemberVO mvo = new MemberVO();
+		try {
+			mvo = memberDAO.memberCheckEmail(email);
+			// 이메일이 존재하지 않을 경우
+			if (mvo.getEmail() == null || mvo.getEmail() == "") {
+				result = 1;
+			}
+			// 이메일이 존재할 경우
+			else {
+				result = 2;
+			}
+			// 조회 결과가 NULL값일 경우
+		} catch (NullPointerException e) {
+			result = 0;
+		}
+		// 조회된 이메일이 2개 이상일 경우 Error 출력.
+		return result;
 	}
 }

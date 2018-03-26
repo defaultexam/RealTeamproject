@@ -25,4 +25,6 @@ public interface MemberService {
 	public int memberCouponUpdate(MemberVO mvo);
 	
 	public MemberVO memberNoSearch(int member_no);
+	
+	public int memberCheckEmail(String email);
 }

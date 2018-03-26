@@ -61,7 +61,7 @@ public class RegisterController {
 		case 3:
 			mav.addObject("errCode", 3);
 			mav.setViewName("user/register/registerprocess"); // success to add new member; move to login page
-			logger.info("회원가입 성공, processPage로 이동 완료.");
+			logger.info(mvo.getId() + "회원 가입 성공, processPage로 이동 완료.");
 			break;
 		default:
 			mav.addObject("errCode", 2); // failed to add new member
@@ -71,6 +71,18 @@ public class RegisterController {
 		return mav;
 	}
 
+	/* 회원가입 이메일 중복 검사 */
+	@ResponseBody
+	@RequestMapping(value = "/checkEmail", method = RequestMethod.POST)
+	private int checkEmail(HttpSession session, @RequestParam(value = "email") String email) {
+		// 존재하는 이메일 = 2 , 존재하지 않음 = 0, 1
+		int resultType = 0;
+		logger.info("/checkEmail post 방식에 의한 메서드 호출 성공");
+		resultType = memberService.memberCheckEmail(email);
+		logger.info(resultType);
+		return resultType;
+	}	
+	
 	/* 회원가입 이메일 인증 */
 	@ResponseBody
 	@RequestMapping(value = "/sendMail", method = RequestMethod.POST)
@@ -78,4 +90,5 @@ public class RegisterController {
 		logger.info("/sendMail post 방식에 의한 메서드 호출 성공");
 		return mailService.send(session, email);
 	}
+	
 }

@@ -152,17 +152,31 @@ $(function() {
 			} else if (!formCheck($('#email2'), $('.error:eq(8)'), "이메일 주소를")) {
 				return;
 			}
-			$("#modalemail").modal('show');
-			var email = document.getElementById("email").value;
-			if ($("#emailsended").val() >= 1) /*이메일 전송을 이미 했을 경우*/
-			{
-				$('.error:eq(8)').css("color", "#000099").html("이미 인증번호가 전송되었습니다.");
-				return;
-			}
-			else
-				console.log("전송 여부: 가능");
-			var abc = sendMail(email);
-			$('.error:eq(8)').css("color", "#000099").html(abc);
+			$.ajax({
+				url : "/register/checkEmail",
+				type : "post",
+				data : {
+					"email" : $("#email").val()
+				},
+				error : function() {
+					alert('사이트 접속 문제로 정상 작동하지 못하였습니다. 잠시 후 다시 시도해 주세요.');
+				},
+				success : function(resultData) {
+					console.log("resultData : " + resultData);
+					if (resultData == 0 || resultData == 1) {
+						$("#modalemail").modal('show');
+						var email = document.getElementById("email").value;
+						if ($("#emailsended").val() >= 1) {
+							$('.error:eq(8)').css("color", "#000099").html("이미 인증번호가 전송되었습니다.");
+							return;
+						}
+						var abc = sendMail(email);
+						$('.error:eq(8)').css("color", "#000099").html(abc);
+					} else if (resultData == "2") {
+						alert("회원 정보가 존재하는 이메일입니다.");
+					}
+				}
+			});
 		}
 	);
 	$("#emailCheck").click(

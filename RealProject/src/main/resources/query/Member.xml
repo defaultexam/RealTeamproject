@@ -94,4 +94,8 @@
 		member
 		where member_no = #{member_no}
 	</select>
+	
+	<select id="memberCheckEmail" parameterType="String" resultType="member">
+		select email from member where email = #{email}
+	</select>
 </mapper>

@@ -6,6 +6,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>방문후기 관리</title>
+<link href="/resources/include/css/sticky-footer-navbar.css"
+	rel="stylesheet">
 <script type="text/javascript"
 	src="/resources/include/js/jquery-3.3.1.min.js"></script>
 <script src="/resources/include/dist/js/bootstrap.min.js"></script>
@@ -32,7 +34,7 @@
 			<c:choose>
 				<c:when test="${not empty commentList}">
 					<c:forEach var="comment" items="${commentList}" varStatus="status">
-						<table class="table table-bordered table-hover">
+						<table class="table table-bordered">
 							<tbody id="list">
 								<tr>
 									<td align="left">사용자명</td>
@@ -47,8 +49,8 @@
 										style="width: 200px; height: 200px;"><img
 										src="/uploadStorage/comment/${comment.comment_file}"
 										align="middle" id="c_img" style="width: 200px; height: 200px;" /><br />
-									<br /> <input type="button" value="삭제" class="btn btn-default"
-										style="width: 200px;"
+										<br /> <input type="button" value="삭제"
+										class="btn btn-primary" style="width: 200px;"
 										onclick="choiceDel(${comment.comment_no});"></td>
 									<td style="width: 50px;">제목</td>
 									<td colspan="4">${comment.comment_title}
