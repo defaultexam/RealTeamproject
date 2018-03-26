@@ -109,10 +109,17 @@
 								<tr>
 									<td>${comment.id}님<br>${comment.comment_date}<br>${comment.comment_text}<br>
 
-										<input type="button" value="수정" class="btn btn-default"
-										onclick="update(${comment.comment_no});"> <input
-										type="button" value="삭제" class="btn btn-default"
-										onclick="del(${comment.comment_no});"></td>
+										<c:if test="${login.id == comment.id}">
+
+											<input type="button" value="수정" class="btn btn-default"
+												onclick="update(${comment.comment_no});">
+											<input type="button" value="삭제" class="btn btn-default"
+												onclick="del(${comment.comment_no});">
+										</c:if> <c:if test="${login.id != comment.id}">
+
+										</c:if>
+
+									</td>
 								</tr>
 							</tbody>
 						</table>

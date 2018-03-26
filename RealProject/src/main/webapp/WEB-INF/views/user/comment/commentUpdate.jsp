@@ -30,7 +30,7 @@
 		});
 
 		$("#commentNoUpdateBtn").click(function() {
-			alert("회원님의 방문후기 수정이 완료되었습니다.");
+			alert("작성 중이던 방문후기가 취소됩니다.");
 			location.href = "/comment/commentList.do";
 		});
 	});
@@ -52,13 +52,12 @@
 				<table>
 					<tr>
 						<th scope="row" class="ac">작성자 ID</th>
-						<td><input type="text" id="id"
-							value="${updateData.id}" readonly="readonly"></td>
+						<td><input type="text" id="id" value="${updateData.id}"
+							readonly="readonly"></td>
 					</tr>
 					<tr>
 						<th scope="row" class="ac">후기글 제목</th>
-						<td><input type="text" id="comment_title"
-							readonly="readonly"
+						<td><input type="text" id="comment_title" readonly="readonly"
 							value="${updateData.comment_title}"></td>
 					</tr>
 					<tr>

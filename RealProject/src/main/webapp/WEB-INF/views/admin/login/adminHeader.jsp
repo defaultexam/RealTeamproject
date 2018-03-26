@@ -58,7 +58,7 @@ li < a {
 					onclick="menuTab();"><font color="black">메뉴관리</font></a></li>
 				<li id="menutab3"><a href="/adminReservation/list"
 					onclick="reservationTab();"><font color="black">예약관리</font></a></li>
-				<li id="menutab4"><a href="#"><font color="black">방문후기관리</font></a></li>
+				<li id="menutab4"><a href="/adminComment"><font color="black">방문후기관리</font></a></li>
 				<li id="menutab5" class="dropdown"><a href="#"
 					class="dropdown-toggle" data-toggle="dropdown" role="button"
 					aria-haspopup="true" aria-expanded="false"><font color="black">고객센터관리</font><span
@@ -66,7 +66,7 @@ li < a {
 					<ul class="dropdown-menu" aria-labelledby="about-us">
 						<li><a href="/adminNotice">공지사항관리</a></li>
 						<li><a href="/adminFaq/adminFaqList" onclick="faqTabClear();">FAQ관리</a></li>
-						<li><a href="#">1:1문의관리</a></li>
+						<li><a href="/adminQuestion">1:1문의관리</a></li>
 					</ul></li>
 				<li id="menutab6" class="dropdown"><a href="#"
 					class="dropdown-toggle" data-toggle="dropdown" role="button"

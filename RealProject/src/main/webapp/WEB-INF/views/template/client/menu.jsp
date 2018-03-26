@@ -321,7 +321,7 @@
 						<ul style="display: none;">
 							<li><a href="/reservation"><span>RESERVE</span></a></li>
 						</ul></li>
-					<li><a href="#" target="" id="id_gnb_06005" class="">REVIEW</a>
+					<li><a href="/comment/commentList.do" target="" id="id_gnb_06005" class="">REVIEW</a>
 						<ul style="display: none;">
 							<li><a href="/comment/commentList.do"><span>REVIEW</span></a></li>
 						</ul></li>
