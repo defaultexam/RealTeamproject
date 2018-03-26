@@ -281,7 +281,7 @@ $(function() {
 		if (!formCheck($('#address'), $('.error:eq(7)'), "주소를"))
 			return;
 	});
-	/* 확인 버튼 클릭 시 처리 이벤트 */
+	/* 확인 버튼 클릭 시 처리 이벤트. */
 	$("#registerConfirm").click(
 		function() {
 			// 입력값 체크
