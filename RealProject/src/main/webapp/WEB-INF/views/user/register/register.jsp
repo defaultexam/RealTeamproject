@@ -305,12 +305,12 @@ input:valid+span:after {
 	</div>
 	<script type="text/javascript"
 		src="/resources/include/js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript"
+		src="/resources/include/js/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="/resources/include/js/common.js"></script>
 	<script type="text/javascript" src="/resources/include/js/register.js"></script>
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 	<script src="/resources/include/dist/js/bootstrap.min.js"></script>
-	<script type="text/javascript"
-		src="/resources/include/js/jquery-ui.min.js"></script>
 	<script type="text/javascript">
 		$("#birthday").datepicker({
 			maxDate : "+d",
@@ -341,7 +341,7 @@ input:valid+span:after {
 			yearRange : "1900:2018",
 			dateFormat : "yy-mm-dd",
 			onSelect : function(dateText, inst) {}
-		}); 
+		});
 		// 결혼 여부 미혼일 경우 결혼 기념일에 Readonly 적용, 아닐 경우 삭제.
 		$("input[name=marriage]").bind("change", function() {
 			if ($(this).val() == 1) {

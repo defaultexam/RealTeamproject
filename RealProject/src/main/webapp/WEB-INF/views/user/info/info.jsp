@@ -7,29 +7,19 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
 <style>
-#wrap {
-	width: 1200px auto;
-	padding-top: 70px;
+.wrap {
+	width: 1400px;
+	padding-top: 100px;
 }
 
 #mainImg {
-	padding-top: 20px;
-	width: 400px;
-	height: 400px;
 	float: left;
-	display: block;
-	padding-right: 50px;
-}
-
-.info {
-	font-weight: 900;
-	text-decoration: underline;
 }
 
 #introduce {
-	padding-top: 100px;
-	width: 100%;
-	height: 450px;
+	float: left;
+	padding-top: 50px;
+	padding-left: 80px;
 }
 
 h2 {
@@ -42,10 +32,10 @@ p {
 </style>
 </head>
 <body>
-	<div id="wrap">
+	<div class="container wrap">
 		<!-- 레스토랑 이미지 -->
 		<div id="mainImg">
-			<img src="/resources/images/logo.png" width="400" height="400"
+			<img src="/resources/images/logo.png" width="300" height="300"
 				id="image">
 		</div>
 		<!-- 레스토랑 인사말 -->
