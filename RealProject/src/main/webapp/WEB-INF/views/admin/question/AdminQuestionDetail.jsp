@@ -8,7 +8,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>1:1 문의 답변</title>
-
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link href="/resources/include/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="/resources/include/dist/js/bootstrap.min.js"></script>
 <script type="text/javascript"
 	src="/resources/include/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript"
@@ -70,9 +75,15 @@
 
 	})
 </script>
-
+<style type="text/css">
+.contentContainer {
+	width: 1000px;
+	height: auto;
+	margin-bottom: 50px;
+	margin-top: 20px;
+}
+</style>
 </head>
-
 <body>
 	<div class="contentContainer">
 		<div class="contentTit">
@@ -85,7 +96,7 @@
 						value="${detail.question_no}" /> <input type="hidden" name="page"
 						id="page" value="${param.page}">
 
-					<table id="questionUpdate">
+					<table id="questionUpdate" class="table table-bordered table-hover">
 						<tr>
 							<td class="ac">회원 이름</td>
 							<td><input type="text" id="name" value="${mvo.name}"

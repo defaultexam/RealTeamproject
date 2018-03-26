@@ -3,24 +3,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="tag" uri="/WEB-INF/tld/custom_tag.tld"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
-
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
 <title>1:1문의 관리</title>
-
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link href="/resources/include/dist/css/bootstrap.min.css"
 	rel="stylesheet">
-
-<script type="text/javascript"
-	src="/resources/include/js/jquery-3.3.1.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="/resources/include/dist/js/bootstrap.min.js"></script>
-
 <script type="text/javascript">
 	$(function() {
 
@@ -153,7 +144,7 @@
 		/* 제목 클릭시 상세 페이지 이동을 위한 처리 이벤트 */
 		$(".goDetail").click(function() {
 
-			var question_no = $(this).parents("tr").attr("data-num");
+			var question_no = $(this).attr("data-num");
 			$("#question_no").val(question_no);
 			console.log("글번호 : " + question_no);
 
@@ -177,11 +168,17 @@
 		$("#q_search").submit();
 	}
 </script>
-
+<style type="text/css">
+#questionTable {
+	width: 1750px;
+	height: auto;
+	margin-bottom: 50px;
+	margin-top: 20px;
+}
+</style>
 </head>
-
 <body>
-	<div>
+	<div id="questionTable">
 		<h2>1:1 문의 관리</h2>
 		<hr>
 		<div>
@@ -226,7 +223,7 @@
 
 					<!-- 문의 리스트 -->
 					<div id="questionList">
-						<table>
+						<table class="table table-bordered table-hover">
 							<thead>
 								<tr>
 									<th class="tac">No.</th>
@@ -242,10 +239,10 @@
 									<c:when test="${not empty questionList}">
 										<c:forEach var="question" items="${questionList}"
 											varStatus="status">
-											<tr class="tac" data-num="${question.question_no}">
+											<tr class="goDetail tac" data-num="${question.question_no}">
 												<td>${count - status.index}</td>
 												<td>${question.question_type}</td>
-												<td class="goDetail tal">${question.question_title}</td>
+												<td class="tal">${question.question_title}</td>
 												<td>${question.question_date}</td>
 												<td>${question.question_process}</td>
 											</tr>
@@ -259,10 +256,10 @@
 								</c:choose>
 							</tbody>
 						</table>
+					</div>
 				</center>
 			</div>
 		</div>
-
 		<!-- 페이징 처리 -->
 		<div id="questionPage">
 			<tag:paging page="${param.page}" total="${total}"
@@ -270,7 +267,9 @@
 			</tag:paging>
 		</div>
 	</div>
-	</div>
+	<script type="text/javascript"
+		src="/resources/include/js/jquery-3.3.1.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script src="/resources/include/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -65,7 +65,7 @@
 		});
 		/* 제목 클릭시 상세 페이지 이동을 위한 처리 이벤트 */
 		$(".goDetail").click(function() {
-			var notice_no = $(this).parents("tr").attr("data-num");
+			var notice_no = $(this).attr("data-num");
 			$("#notice_no").val(notice_no);
 			console.log("글번호 : " + notice_no);
 			//상세 페이지로 이동하기 위해 form추가   
@@ -148,9 +148,9 @@
 					<c:choose>
 						<c:when test="${not empty noticeList}">
 							<c:forEach var="notice" items="${noticeList}" varStatus="status">
-								<tr class="tac" data-num="${notice.notice_no}">
+								<tr class="goDetail tac" data-num="${notice.notice_no}">
 									<td>${count - status.index}</td>
-									<td class="goDetail tal">${notice.notice_title}</td>
+									<td class="tal">${notice.notice_title}</td>
 									<td>${notice.notice_date}</td>
 								</tr>
 							</c:forEach>
