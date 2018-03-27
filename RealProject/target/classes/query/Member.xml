@@ -45,7 +45,7 @@
 		email, phone,
 		address, marriage, weddingdate, job, agreement1,
 		agreement2,
-		agreement3, condition, rank, member_date)
+		agreement3, condition, rank, member_date, point)
 		values(member_seq.nextval,
 		#{id},
 		#{password}, #{name},
@@ -62,7 +62,7 @@
 		#{job},
 		'1', '1',
 		#{agreement3}, '활동중',
-		'일반', sysdate)
+		'일반', sysdate, '50')
 	</insert>
 	<update id="memberUpdate" parameterType="member">
 		update member set
