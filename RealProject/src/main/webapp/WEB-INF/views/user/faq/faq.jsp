@@ -168,7 +168,7 @@ textarea {
 									<!-- 제목 출력 -->
 									<label style="padding-right: 10%;"> ${faq.faq_title} </label>
 									<!-- 날짜출력 -->
-									<label style="padding-right: 5%; float: right;">${faq.faq_date}</label>
+									<label style="padding-right: 5%; float: right;">${faq.faq_date.substring(0,10)}</label>
 								</div>
 								<!-- 아코디언 내용 단-->
 								<div class="panel-collapse collapse"

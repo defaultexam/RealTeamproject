@@ -57,7 +57,7 @@
 		#{faq_title},
 		#{faq_text},
 		#{faq_type},
-		sysdate
+		to_date(to_char(sysdate,'YYYY-MM-DD'),'YYYY-MM-DD')
 		)
 	</insert>
 	<!-- faq 수정 -->
@@ -70,7 +70,7 @@
 		#{faq_text},
 		faq_type = #{faq_type},
 		faq_date =
-		sysdate
+		to_date(to_char(sysdate,'YYYY-MM-DD'),'YYYY-MM-DD')
 		where faq_no = #{faq_no}
 	</update>
 
