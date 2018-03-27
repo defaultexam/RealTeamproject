@@ -155,7 +155,7 @@ public class MyPageController {
 			MyPageVO mvo2 = new MyPageVO();
 			mvo2 = mypageservice.retrySelect(mvo);
 			mvo.setRetry(mvo2.getRetry() + 1);
-			logger.info(mvo2.getRetry()+"ddddd");
+			logger.info(mvo2.getRetry() + "ddddd");
 			mypageservice.retryUpdate(mvo);
 			mav.addObject("retry", mvo.getRetry());
 			mav.addObject("errCode", 1);
@@ -164,7 +164,7 @@ public class MyPageController {
 				mypageservice.retryUpdate(mvo);
 				session.invalidate();
 				session = request.getSession(true);
-				
+
 				mav.setViewName("user/login/login");
 				mav.addObject("errCode", 7);
 				return mav;
@@ -173,7 +173,7 @@ public class MyPageController {
 			mav.setViewName("user/mypage/updatePassword");
 		} else {
 			mvo.setRetry(0);
-			/*리트라이 초기화 쿼리 실행*/
+			mypageservice.retryUpdate(mvo);
 			model.addAttribute("update", pwCheck);
 			mav.setViewName("user/mypage/update");
 		}
@@ -190,24 +190,26 @@ public class MyPageController {
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public ModelAndView updateMember(@ModelAttribute MyPageVO mvo, HttpSession session, Model model) {
 		logger.info("/update post 방식에 의한 메서드 호출 성공");
-		System.out.println(mvo.getPassword()+"pw");
-		System.out.println(mvo.getWeddingdate()+"wd");
-		System.out.println(mvo.getPhone()+"ph");
-		System.out.println(mvo.getEmail()+"em");
-		System.out.println(mvo.getAddress()+"ad");
-		System.out.println(mvo.getMarriage()+"ma");
-		System.out.println(mvo.getJob()+"jo");
-		System.out.println(mvo.getNo()+"no");
-		
-		
+		System.out.println(mvo.getPassword() + "pw");
+		System.out.println(mvo.getWeddingdate() + "wd");
+		System.out.println(mvo.getPhone() + "ph");
+		System.out.println(mvo.getEmail() + "em");
+		System.out.println(mvo.getAddress() + "ad");
+		System.out.println(mvo.getMarriage() + "ma");
+		System.out.println(mvo.getJob() + "jo");
+		System.out.println(mvo.getNo() + "no");
+
 		ModelAndView mav = new ModelAndView();
-		System.out.println(mvo.getId()+"+0");
+		System.out.println(mvo.getId() + "+0");
 		MemberSecurity sec = memberDAO.securitySelect(mvo.getId());
 		int result = 0;
-		System.out.println(sec.getSalt()+"+0");
-		System.out.println(mvo.getPassword()+"+1");
-		mvo.setPassword(new String(OpenCrypt.getSHA256(mvo.getPassword(), sec.getSalt())));
-		System.out.println(mvo.getPassword()+"+2");
+		System.out.println(sec.getSalt() + "+0");
+		System.out.println(mvo.getPassword() + "+1");
+		if (mvo.getPassword() == "") {
+		} else {
+			mvo.setPassword(new String(OpenCrypt.getSHA256(mvo.getPassword(), sec.getSalt())));
+		}
+		System.out.println(mvo.getPassword() + "+2");
 		result = mypageservice.updateMember(mvo);
 
 		if (result == 1) {
