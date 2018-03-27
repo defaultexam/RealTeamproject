@@ -22,6 +22,10 @@ public interface MyPageService {
 	public int userReservationEdit(MyPageVO mvo);
 
 	public MyPageVO pwSelect(MyPageVO mvo) throws Exception;
-	
+
 	public int updateMember(MyPageVO mvo);
+
+	public int retryUpdate(MyPageVO mvo);
+	
+	public MyPageVO retrySelect(MyPageVO mvo);
 }

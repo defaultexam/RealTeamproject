@@ -100,7 +100,16 @@ public class MyPageServiceImpl implements MyPageService {
 	
 	@Override
 	public int updateMember(MyPageVO mvo) {
-		
 		return mypagedao.updateMember(mvo);
+	}
+	
+	@Override
+	public int retryUpdate(MyPageVO mvo) {
+		return mypagedao.retryUpdate(mvo);
+	}
+	
+	@Override
+	public MyPageVO retrySelect(MyPageVO mvo) {
+		return mypagedao.retrySelect(mvo);
 	}
 }

@@ -234,20 +234,22 @@
 		id = #{id} and password = #{password}
 	</select>
 
-	<!-- 로그인 실패 횟수 증가 -->
-	<update id="retryUpdate" parameterType="mypage"> update
-		login_history_res
-		set retry = #{retry} where userId
-		= #{id}
-	</update>
-
 	<!-- 회원정보 수정 -->
 	<update id="updateMember" parameterType="mypage">
 		update member set
 		password=#{password}, email=#{email}, phone = #{phone}, address =
 		#{address}, weddingdate =
-		#{weddingdate,jdbcType=DATE}, marriage=#{marriage},
+		#{weddingdate,jdbcType=DATE},
+		marriage=#{marriage},
 		job=#{job} where
 		member_no=#{no}
 	</update>
+
+	<!-- Retry -->
+	<update id="retryUpdate" parameterType="mypage">
+		update login_history_res set retry = #{retry} where Id=#{id}
+	</update>
+	<select id="retrySelect" parameterType="mypage" resultType="mypage">
+		select retry from login_history_res where id=#{id}
+	</select>
 </mapper>

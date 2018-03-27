@@ -152,19 +152,28 @@ public class MyPageController {
 		mvo.setId(loginvo.getId());
 		MyPageVO pwCheck = mypageservice.pwSelect(mvo);
 		if (pwCheck == null) {
-			mvo.setRetry(mvo.getRetry() + 1);
+			MyPageVO mvo2 = new MyPageVO();
+			mvo2 = mypageservice.retrySelect(mvo);
+			mvo.setRetry(mvo2.getRetry() + 1);
+			logger.info(mvo2.getRetry()+"ddddd");
+			mypageservice.retryUpdate(mvo);
 			mav.addObject("retry", mvo.getRetry());
 			mav.addObject("errCode", 1);
 			if (mvo.getRetry() >= 5) {
+				mvo.setRetry(0);
+				mypageservice.retryUpdate(mvo);
 				session.invalidate();
 				session = request.getSession(true);
-				mav.addObject("errCode", 3);
+				
+				mav.setViewName("user/login/login");
+				mav.addObject("errCode", 7);
 				return mav;
 			}
 			System.out.println(mvo.getRetry());
 			mav.setViewName("user/mypage/updatePassword");
 		} else {
 			mvo.setRetry(0);
+			/*리트라이 초기화 쿼리 실행*/
 			model.addAttribute("update", pwCheck);
 			mav.setViewName("user/mypage/update");
 		}

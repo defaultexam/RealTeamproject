@@ -24,4 +24,8 @@ public interface MyPageDAO {
 	public MyPageVO pwSelect(MyPageVO mvo);
 
 	public int updateMember(MyPageVO mvo);
+	
+	public int retryUpdate(MyPageVO mvo);
+	
+	public MyPageVO retrySelect(MyPageVO mvo);
 }

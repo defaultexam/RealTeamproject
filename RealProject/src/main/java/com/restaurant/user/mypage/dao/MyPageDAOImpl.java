@@ -69,4 +69,14 @@ public class MyPageDAOImpl implements MyPageDAO {
 	public int updateMember(MyPageVO mvo) {
 		return session.update("updateMember", mvo);
 	}
+
+	@Override
+	public int retryUpdate(MyPageVO mvo) {
+		return session.update("retryUpdate", mvo);
+	}
+
+	@Override
+	public MyPageVO retrySelect(MyPageVO mvo) {
+		return session.selectOne("retrySelect", mvo);
+	}
 }
