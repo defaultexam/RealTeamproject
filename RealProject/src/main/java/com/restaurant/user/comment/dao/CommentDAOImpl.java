@@ -48,5 +48,10 @@ public class CommentDAOImpl implements CommentDAO {
 		// TODO Auto-generated method stub
 		return session.delete("commentDelete", comment_no);
 	}
+	
+	@Override
+	public int commentMemberPointUpdte(CommentVO cvo) {
+		return session.update("commentMemberPointUpdte", cvo);
+	}
 
 }

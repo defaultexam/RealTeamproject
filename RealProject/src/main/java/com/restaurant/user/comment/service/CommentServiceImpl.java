@@ -45,6 +45,7 @@ public class CommentServiceImpl implements CommentService {
 
 		try {
 			result = commentDAO.commentInsert(cvo);
+			commentDAO.commentMemberPointUpdte(cvo);
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = 0;
@@ -90,5 +91,7 @@ public class CommentServiceImpl implements CommentService {
 	public CommentVO commentDetail(CommentVO cvo) {
 		return commentDAO.commentDetail(cvo);
 	}
+	
+	
 
 }

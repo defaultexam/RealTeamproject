@@ -17,4 +17,6 @@ public interface CommentDAO {
 	public int commentUpdate(CommentVO cvo);
 
 	public int commentDelete(int comment_no);
+	
+	public int commentMemberPointUpdte(CommentVO cvo);
 }

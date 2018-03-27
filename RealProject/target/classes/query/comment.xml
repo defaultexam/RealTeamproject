@@ -69,6 +69,11 @@
 		)
 	</insert>
 
+	<!-- 등록회원 포인트 지급 쿼리 -->
+	<update id="commentMemberPointUpdte" parameterType="comment">
+		update member set <![CDATA[point = point + 10 where member_no = #{member_no}]]>
+	</update>
+
 
 	<select id="commentListCnt" parameterType="comment" resultType="int">
 		SELECT NVL(count(1), 0) FROM (SELECT list.*, ROWNUM AS RNUM FROM (
