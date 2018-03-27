@@ -8,18 +8,18 @@
 	<script type="text/javascript">
 		$(function() {
 			$("#ok").click(function() {
-				$("#pwCheck").attr({
+				$("#Check").attr({
 					"method" : "POST",
 					"action" : "/mypage/updatePassword"
 				});
-				$("#pwCheck").submit();
+				$("#Check").submit();
 			});
 			$("#cancelBtn").click(function() {
-				alert("d");
+				window.location.href="/mypage";
 			});
 		});
 	</script>
-	<form id="pwCheck" method="POST">
+	<form id="Check" method="POST">
 		<div class="container">
 			<div align="center" class="well">
 				<h3>비밀번호 확인</h3>

@@ -55,6 +55,10 @@
 			value="/WEB-INF/views/user/comment/{1}.jsp" />
 	</definition>
 
+	<definition name="user/outsuccess/*" extends="intro">
+		<put-attribute name="body"
+			value="/WEB-INF/views/user/outsuccess/{1}.jsp" />
+	</definition>
 	<definition name="intro2"
 		template="/WEB-INF/views/template/client/myPageLayout.jsp">
 		<put-attribute name="title" value="Yeop's Restaurant" />

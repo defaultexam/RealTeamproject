@@ -21,15 +21,15 @@
 
 		$("#updateBtn").click(function() {
 
+
 			$("#email").val($("#email1").val() + "@" + $("#email2").val());
 			$("#address").val(
 				$("#postcode").val() + "▒" + $("#roadAddress").val() + "▒" + $("#jibunAddress").val()
 			);
 			if ($("#weddingdate").val() == "")
 				$("#weddingdate").val("9999-12-31");
-			if ($("#password").val().replace('/s/g', "") == "") {
-				$("#password").removeAttr("name");
-			}
+
+
 			$("#update").attr({
 				"method" : "POST",
 				"action" : "/mypage/update"
@@ -37,8 +37,8 @@
 			$("#update").submit();
 		});
 
-		$("#cancelBtn").click(function() {
-			alert("d");
+		$("#updateCancel").click(function() {
+			window.location.href="/mypage";
 		});
 
 		var marriage = "<c:out value='${update.marriage}' />";

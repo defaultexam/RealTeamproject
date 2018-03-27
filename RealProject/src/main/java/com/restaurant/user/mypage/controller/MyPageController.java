@@ -51,7 +51,6 @@ public class MyPageController {
 
 		model.addAttribute("myPageMember", myPageMember);
 		model.addAttribute("loginInfo", loginvo);
-		
 
 		return "user/mypage/mypage";
 	}
@@ -64,7 +63,6 @@ public class MyPageController {
 
 		int login_no = loginvo.getMember_no();
 		mvo.setMember_no(login_no);
-		logger.info("1");
 		List<MyPageVO> userReservationList = mypageservice.userReservationNumberList(mvo);
 
 		List<MyPageVO> reservationList = new ArrayList<>();
@@ -73,7 +71,6 @@ public class MyPageController {
 		} else {
 			for (int i = 0; i < userReservationList.size(); i++) {
 				reservationList.add(mypageservice.userReservationOne(userReservationList.get(i)));
-				logger.info("2");
 			}
 		}
 		mav.addObject("reservationList", reservationList);
@@ -90,7 +87,6 @@ public class MyPageController {
 
 		int login_no = loginvo.getMember_no();
 		mvo.setMember_no(login_no);
-		logger.info("1");
 		List<MyPageVO> userReservationNumberCancel = mypageservice.userReservationNumberCancel(mvo);
 
 		List<MyPageVO> reservationCancel = new ArrayList<>();
@@ -99,7 +95,6 @@ public class MyPageController {
 		} else {
 			for (int i = 0; i < userReservationNumberCancel.size(); i++) {
 				reservationCancel.add(mypageservice.userReservationOneCancel(userReservationNumberCancel.get(i)));
-				logger.info("2");
 			}
 		}
 		mav.addObject("reservationCancel", reservationCancel);
@@ -113,9 +108,6 @@ public class MyPageController {
 	@RequestMapping(value = "/reservationEdit", method = RequestMethod.POST)
 	public int userReservationEdit(@ModelAttribute MyPageVO mvo) throws Exception {
 		int result = 0;
-		System.out.println(mvo.getBook_no());
-		System.out.println(mvo.getBook_condition());
-		System.out.println(mvo.getCancel_bank());
 		System.out.println("수정컨트롤러 실행");
 		result = mypageservice.userReservationEdit(mvo);
 		return result;
@@ -126,12 +118,8 @@ public class MyPageController {
 	public String coupon(HttpSession session, Model model) {
 		logger.info("/coupon GET 호출 성공");
 		int login_no = loginvo.getMember_no();
-		logger.info(login_no);
-
 		List<MyPageVO> myPageMember = null;
-
 		myPageMember = mypageservice.userCouponList(login_no);
-
 		model.addAttribute("myPageMember", myPageMember);
 		model.addAttribute("loginInfo", loginvo);
 		return "user/mypage/coupon";
@@ -148,7 +136,6 @@ public class MyPageController {
 	public ModelAndView update(@ModelAttribute MyPageVO mvo, HttpSession session, HttpServletRequest request,
 			Model model) throws Exception {
 		ModelAndView mav = new ModelAndView();
-
 		loginvo = (LoginVO) session.getAttribute("login");
 		mvo.setId(loginvo.getId());
 		MyPageVO pwCheck = mypageservice.pwSelect(mvo);
@@ -156,7 +143,6 @@ public class MyPageController {
 			MyPageVO mvo2 = new MyPageVO();
 			mvo2 = mypageservice.retrySelect(mvo);
 			mvo.setRetry(mvo2.getRetry() + 1);
-			logger.info(mvo2.getRetry() + "ddddd");
 			mypageservice.retryUpdate(mvo);
 			mav.addObject("retry", mvo.getRetry());
 			mav.addObject("errCode", 1);
@@ -184,53 +170,98 @@ public class MyPageController {
 	@RequestMapping(value = "/outPassword", method = RequestMethod.GET)
 	public String outPassword() {
 		logger.info("/outPassword GET 호출 성공");
-		return "user/mypage/outPassword";
+		return "user/mypage/updatePassword";
+	}
+
+	@RequestMapping(value = "/outPassword", method = RequestMethod.POST)
+	public ModelAndView out(@ModelAttribute MyPageVO mvo, HttpSession session, HttpServletRequest request, Model model)
+			throws Exception {
+		ModelAndView mav = new ModelAndView();
+		loginvo = (LoginVO) session.getAttribute("login");
+		mvo.setId(loginvo.getId());
+		MyPageVO pwCheck = mypageservice.pwSelect(mvo);
+		if (pwCheck == null) {
+			MyPageVO mvo2 = new MyPageVO();
+			mvo2 = mypageservice.retrySelect(mvo);
+			mvo.setRetry(mvo2.getRetry() + 1);
+			mypageservice.retryUpdate(mvo);
+			mav.addObject("retry", mvo.getRetry());
+			mav.addObject("errCode", 1);
+			if (mvo.getRetry() >= 5) {
+				mvo.setRetry(0);
+				mypageservice.retryUpdate(mvo);
+				session.invalidate();
+				session = request.getSession(true);
+
+				mav.setViewName("user/login/login");
+				mav.addObject("errCode", 7);
+				return mav;
+			}
+			System.out.println(mvo.getRetry());
+			mav.setViewName("user/mypage/outPassword");
+		} else {
+			mvo.setRetry(0);
+			mypageservice.retryUpdate(mvo);
+			model.addAttribute("out", pwCheck);
+
+			mav.setViewName("user/mypage/out");
+		}
+		return mav;
 	}
 
 	// 회원 정보 수정
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public ModelAndView updateMember(@ModelAttribute MyPageVO mvo, HttpSession session, Model model) {
 		logger.info("/update post 방식에 의한 메서드 호출 성공");
-		System.out.println(mvo.getPassword() + "pw");
-		System.out.println(mvo.getWeddingdate() + "wd");
-		System.out.println(mvo.getPhone() + "ph");
-		System.out.println(mvo.getEmail() + "em");
-		System.out.println(mvo.getAddress() + "ad");
-		System.out.println(mvo.getMarriage() + "ma");
-		System.out.println(mvo.getJob() + "jo");
-		System.out.println(mvo.getNo() + "no");
-
 		ModelAndView mav = new ModelAndView();
-		System.out.println(mvo.getId() + "+0");
 		MemberSecurity sec = memberDAO.securitySelect(mvo.getId());
 		int result = 0;
-		System.out.println(sec.getSalt() + "+0");
-		System.out.println(mvo.getPassword() + "+1");
-		if (mvo.getPassword() == "") {
-		} else {
-			mvo.setPassword(new String(OpenCrypt.getSHA256(mvo.getPassword(), sec.getSalt())));
-		}
-		System.out.println(mvo.getPassword() + "+2");
+		mvo.setPassword(new String(OpenCrypt.getSHA256(mvo.getPassword(), sec.getSalt())));
 		result = mypageservice.updateMember(mvo);
-
 		if (result == 1) {
 			mav.addObject("errCode", 3);
 			mav.setViewName("redirect:/mypage"); // success to add new member; move to login page
 			logger.info("회원수정 성공, mypage로 이동 완료.");
-
 		} else {
 			logger.info("수정실패" + result);
 			mav.setViewName("redirect:/mypage/update");
 		}
-		/*
-		 * switch (result) { case 1: mav.addObject("errCode", 1); // userId already
-		 * exist mav.setViewName("user/mypage/update"); break; case 3:
-		 * mav.addObject("errCode", 3); mav.setViewName("user/mypage/mypage"); //
-		 * success to add new member; move to login page
-		 * logger.info("회원수정 성공, mypage로 이동 완료."); break; default:
-		 * mav.addObject("errCode", 2); // failed to add new member
-		 * mav.setViewName("user/mypage/update"); break; }
-		 */
+		return mav;
+	}
+
+	@RequestMapping(value = "/out", method = RequestMethod.POST)
+	public ModelAndView outMember(@ModelAttribute MyPageVO mvo1, HttpSession session, HttpServletRequest request,
+			Model model) throws Exception {
+		logger.info("/out post 방식에 의한 메서드 호출 성공");
+		ModelAndView mav = new ModelAndView();
+		MyPageVO mvo2 = new MyPageVO();
+		int count = 0;
+		loginvo = (LoginVO) session.getAttribute("login");
+		mvo1.setId(loginvo.getId());
+
+		mvo2 = mypageservice.conditionSelect(mvo1);
+		mvo2.setNo(mvo1.getNo());
+		count = mvo2.getBookingCnt();
+		System.out.println(count + " : 예약갯수2");
+		logger.info(count + " : 예약갯수2");
+		int no = mvo2.getNo();
+		System.out.println(no + " : 회원넘버");
+		logger.info(no + " : 회원넘버");
+
+		if (count != 0) {
+			logger.info("탈퇴실패 : 예약갯수 : " + count + "개");
+			mav.addObject("errCode", 1);
+			MyPageVO fail = mypageservice.memberInfoCnt(no);
+			mav.addObject("myPageMember", fail);
+			mav.addObject("loginInfo", loginvo);
+			mav.setViewName("user/mypage/mypage");
+		} else {
+			logger.info("탈퇴완료");
+			mypageservice.outMember(no);
+			session.invalidate();
+			session = request.getSession(true);
+			mav.setViewName("user/outsuccess/outSuccess");
+		}
 		return mav;
 	}
 

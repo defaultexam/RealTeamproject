@@ -85,31 +85,42 @@ public class MyPageServiceImpl implements MyPageService {
 	@Override
 	public MyPageVO pwSelect(MyPageVO mvo1) throws Exception {
 		MemberSecurity sec = memberDAO.securitySelect(mvo1.getId());
-		System.out.println(sec.getSalt());
 		MyPageVO mvo2 = new MyPageVO();
 		if (sec != null) {
-			System.out.println(mvo1.getPassword());
 			mvo1.setPassword(new String(OpenCrypt.getSHA256(mvo1.getPassword(), sec.getSalt())));
-			System.out.println(mvo1.getPassword());
-			System.out.println(mvo1.getId());
 			mvo2 = mypagedao.pwSelect(mvo1);
-			System.out.println("mvo2 : "+mvo2);
 		}
 		return mvo2;
 	}
-	
+
 	@Override
 	public int updateMember(MyPageVO mvo) {
 		return mypagedao.updateMember(mvo);
 	}
-	
+
 	@Override
 	public int retryUpdate(MyPageVO mvo) {
 		return mypagedao.retryUpdate(mvo);
 	}
-	
+
 	@Override
 	public MyPageVO retrySelect(MyPageVO mvo) {
 		return mypagedao.retrySelect(mvo);
+	}
+
+	@Override
+	public MyPageVO conditionSelect(MyPageVO mvo) {
+		return mypagedao.conditionSelect(mvo);
+	}
+
+	@Override
+	public int outMember(int no) {
+		return mypagedao.outMember(no);
+	}
+
+	@Override
+	public MyPageVO selectMemberID(MyPageVO mvo) {
+		// TODO Auto-generated method stub
+		return mypagedao.selectMemberID(mvo);
 	}
 }

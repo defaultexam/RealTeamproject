@@ -227,6 +227,13 @@
 		#{book_no}
 	</update>
 
+	<select id="selectMemberID" parameterType="mypage" resultType="mypage">
+		select
+		*
+		from member where
+		id = #{id}
+	</select>
+
 	<select id="pwSelect" parameterType="mypage" resultType="mypage">
 		select
 		*
@@ -237,12 +244,7 @@
 	<!-- 회원정보 수정 -->
 	<update id="updateMember" parameterType="mypage">
 		update member set
-		<if test="password == ''">
-		</if>
-		<if test="password != ''">
-			password=#{password},
-		</if>
-		email=#{email}, phone = #{phone}, address =
+		password=#{password}, email=#{email}, phone = #{phone}, address =
 		#{address}, weddingdate =
 		#{weddingdate,jdbcType=DATE},
 		marriage=#{marriage},
@@ -258,4 +260,16 @@
 	<select id="retrySelect" parameterType="mypage" resultType="mypage">
 		select retry from login_history_res where id=#{id}
 	</select>
+
+	<!-- 회원 탈퇴 -->
+	<select id="conditionSelect" parameterType="mypage" resultType="mypage">
+		select condition,(select nvl(count(*),0) from booking where member_no
+		=
+		${no} and book_condition = '미사용' ) as bookingCnt from member where member_no= ${no}
+	</select>
+
+	<update id="outMember" parameterType="int">
+		update member set condition
+		= '탈퇴' where member_no = #{no}
+	</update>
 </mapper>

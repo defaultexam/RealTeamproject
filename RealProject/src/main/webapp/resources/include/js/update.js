@@ -30,20 +30,6 @@ function sendMail(email) {
 }
 
 
-//아이디에 비밀번호 포함 여부 확인
-function idPwdCheck() {
-	var userId = $("#id").val();
-	var userPw = $("#password").val();
-	if (userId == "") return true;
-	if (userPw.indexOf(userId) > -1) {
-		alert("비밀번호에 아이디를 포함할 수 없습니다.");
-		$("#password").val("");
-		$("#password").focus();
-		return false;
-	} else {
-		return true;
-	}
-}
 
 $(function() {
 	var idConfirm = 1;
@@ -123,7 +109,7 @@ $(function() {
 			passdiv.classList.remove('has-warning');
 			//repassdiv.classList.remove('has-error');
 			passdiv.classList.add("form-group", "has-success");
-		//repassdiv.classList.add("form-group", "has-success");
+			//repassdiv.classList.add("form-group", "has-success");
 		}
 	});
 	/* 확인 버튼 클릭 시 처리 이벤트 */
@@ -160,7 +146,7 @@ $(function() {
 				alert("이메일 인증을 진행해주세요.");
 				return;
 			} else {
-
+				
 				$("#email").val($("#email1").val() + "@" + $("#email2").val());
 				$("#address").val(
 					$("#postcode").val() + "▒" + $("#roadAddress").val() + "▒" + $("#jibunAddress").val()

@@ -28,4 +28,10 @@ public interface MyPageDAO {
 	public int retryUpdate(MyPageVO mvo);
 	
 	public MyPageVO retrySelect(MyPageVO mvo);
+	
+	public MyPageVO conditionSelect(MyPageVO mvo);
+	
+	public int outMember(int no);
+	
+	public MyPageVO selectMemberID(MyPageVO mvo);
 }
