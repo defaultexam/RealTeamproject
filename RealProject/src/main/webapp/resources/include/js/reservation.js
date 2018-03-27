@@ -11,6 +11,7 @@ var cart_kind = new Array();
 var cart_amount = new Array();
 var cart_seq = 0;
 var seat_no = 9999;
+var seat_time = "12:00 ~ 14:00";
 var book_people = 1;
 var discountrate = 0;
 var discountPrice = 0;
@@ -18,10 +19,10 @@ var discountPrice = 0;
 var time = "12:00 ~ 14:00";
 var selectOption = 1;
 var maxCart = 0;
-
 // DataPicker을 통해 선택한 날짜
-var selectedDay;
-
+dt = new Date();
+dt = dt.getFullYear() + "년 " + (dt.getMonth() + 1) + "월 " + (dt.getDate() + 1) + "일";
+var selectedDay = dt;
 function makecomma(num) {
 	var str = num + '';
 	var leng = str.length;
@@ -272,7 +273,7 @@ $("#datepicker").datepicker({
 		var dlf = dnjf[1].split("일");
 		var date = sus[0] + "-" + dnjf[0] + "-" + dlf[0];
 		// 지정한 dateFormat 'yy년 mm월 dd일'을 배열로 나누어 yy-mm-dd 포멧으로 변경.
-		selectedDay = date;
+		selectedDay = dateText;
 		console.log("예약 일시/인원 선택 날짜 : " + date);
 		$.ajax({
 			url : "/reservation/date",
@@ -452,25 +453,29 @@ $(function() {
 				window.location.href = '/';
 			}
 		});
-		alert("아~ 예약 ~ 되셨구요~ 시간 맞춰서~ 오세요~");
+		alert("예약하신 날짜 '" + selectedDay + "' , '" + seat_time + "'\n정상적으로 예약이 완료되었습니다.");
 	});
 	$('input:radio[name="timetable"]').change(function() {
 		if ($(this).val() == '1') {
 			selectOption = 1;
 			time = "12:00 ~ 14:00";
 			seat_no = seats[0].seat_no;
+			seat_time = seats[0].seat_time;
 		} else if ($(this).val() == '2') {
 			selectOption = 2;
 			time = "17:30 ~ 19:20"
 			seat_no = seats[1].seat_no;
+			seat_time = seats[1].seat_time;
 		} else if ($(this).val() == '3') {
 			selectOption = 3;
 			time = "20:00 ~ 22:00";
 			seat_no = seats[2].seat_no;
+			seat_time = seats[2].seat_time;
 		} else if ($(this).val() == '4') {
 			selectOption = 4;
 			time = "21:15 ~ 23:15";
 			seat_no = seats[3].seat_no;
+			seat_time = seats[3].seat_time;
 		}
 		toggleSpinners(selectOption);
 		$("#reservationtime").html(time);

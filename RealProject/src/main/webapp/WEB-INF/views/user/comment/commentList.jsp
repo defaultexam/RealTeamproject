@@ -62,135 +62,89 @@
 				value="${data.pageSize}" />
 		</form>
 		<br /> <br /> <br />
-		<!-- 후기글 게시판리스트 영역 -->
 		<div class="panel-group" id="accordion" role="tablist"
 			aria-multiselectable="true">
 			<c:choose>
 				<c:when test="${not empty commentList}">
 					<c:forEach var="comment" items="${commentList}" varStatus="status">
-						<div class="panel panel-default">
+						<!-- 아코디언-->
+						<div class="panel panel-default"
+							style="width: 100%; height: auto;" id="faq_list${status.index}">
 							<!-- panel_heading -->
-							<div class="panel-heading" role="tab" id="heading${status.index}">
-								<!-- panel_title -->
-								<h4 class="panel-title"></h4>
-								<!-- title -->
-								<div id="test" data-toggle="collapse" data-parent="#accordion"
-									style="width: 100%;" href="#collapse${status.index}"
-									aria-controls="collapse${status.index}" aria-expanded="false">
-									<table class="table table-bordered table-hover">
-										<tr>
-											<td
-												style="width: 60px; background-color: rgba(196, 192, 192, 0.57)"
-												align="center">작성자</td>
-											<td style="width: 150px;" align="center">${comment.id}</td>
-											<td
-												style="width: 60px; background-color: rgba(196, 192, 192, 0.57)"
-												align="center">제목</td>
-											<td>${comment.comment_title}</td>
-										</tr>
+							<div class="panel-heading" role="tab" id="heading${status.index}"
+								style="width: 100%; height: 70px;" class="test"
+								data-toggle="collapse" data-parent="#accordion"
+								data-target="#collapse${status.index}"
+								aria-controls="collapse${status.index}" aria-expanded="true">
+								<table class="table table-bordered table-hover"
+									style="height: 50px;">
+									<tr>
+										<td
+											style="width: 60px; background-color: rgba(196, 192, 192, 0.57)"
+											align="center">작성자</td>
+										<td style="width: 150px;" align="center">${comment.id}</td>
+										<td
+											style="width: 60px; background-color: rgba(196, 192, 192, 0.57)"
+											align="center">제목</td>
+										<td>${comment.comment_title}</td>
+									</tr>
+								</table>
+							</div>
+							<!-- 아코디언 내용 단-->
+							<div class="panel-collapse collapse" id="collapse${status.index}"
+								role="tabpanel" aria-labelledby="heading${status.index}">
+								<!-- body -->
+								<div class="panel-body">
+									<table class="table table-bordered"
+										style="height: auto; width: 100;">
+										<tbody id="list">
+											<tr>
+												<td rowspan="3" class="comment_file" align="center"
+													style="width: 200px; height: 200px;"><img
+													src="/uploadStorage/comment/${comment.comment_file}"
+													align="middle" id="c_img"
+													style="width: 200px; height: 200px;" /><br /> <br /> <c:if
+														test="${login.id == comment.id}">
+														<input type="button" value="수정" class="btn btn-default"
+															style="width: 70px;"
+															onclick="update(${comment.comment_no});">
+														<input type="button" value="삭제" class="btn btn-default"
+															style="width: 70px;"
+															onclick="del(${comment.comment_no});">
+													</c:if> <c:if test="${login.id != comment.id}">
+													</c:if></td>
+												<td style="width: 100px;">작성자</td>
+												<td style="width: 150px;">${comment.id}</td>
+												<td style="width: 100px;">작성일자</td>
+												<td>${comment.comment_date}</td>
+												<td style="width: 100px;">별점</td>
+												<td>${comment.comment_score}</td>
+											</tr>
+											<tr class="tac" data-num="${comment.comment_no}">
+												<td style="width: 50px;">제목</td>
+												<td colspan="5">${comment.comment_title}
+											</tr>
+											<tr>
+												<td style="width: 30px;">내용</td>
+												<td colspan="5"><textarea rows="10" cols="50"
+														class="form-control" readonly="readonly">${comment.comment_text}</textarea>
+												</td>
+											</tr>
+										</tbody>
 									</table>
 								</div>
 							</div>
 						</div>
-						<c:if test="${status.index == 0}">
-							<div class="panel-collapse collapse in"
-								id="collapse${status.index}" role="tabpanel"
-								aria-labelledby="heading${status.index}">
-								<div class="panel-body">
-									<table class="table table-bordered"
-										style="height: auto; width: 100;">
-										<tbody id="list">
-											<tr>
-												<td rowspan="3" class="comment_file" align="center"
-													style="width: 200px; height: 200px;"><img
-													src="/uploadStorage/comment/${comment.comment_file}"
-													align="middle" id="c_img"
-													style="width: 200px; height: 200px;" /><br /> <br /> <c:if
-														test="${login.id == comment.id}">
-														<input type="button" value="수정" class="btn btn-default"
-															style="width: 70px;"
-															onclick="update(${comment.comment_no});">
-														<input type="button" value="삭제" class="btn btn-default"
-															style="width: 70px;"
-															onclick="del(${comment.comment_no});">
-													</c:if> <c:if test="${login.id != comment.id}">
-													</c:if></td>
-												<td style="width: 100px;">작성자</td>
-												<td style="width: 150px;">${comment.id}</td>
-												<td style="width: 100px;">작성일자</td>
-												<td>${comment.comment_date}</td>
-												<td style="width: 100px;">별점</td>
-												<td>${comment.comment_score}</td>
-											</tr>
-											<tr class="tac" data-num="${comment.comment_no}">
-												<td style="width: 50px;">제목</td>
-												<td colspan="5">${comment.comment_title}
-											</tr>
-											<tr>
-												<td style="width: 30px;">내용</td>
-												<td colspan="5"><textarea rows="10" cols="50"
-														class="form-control" readonly="readonly">${comment.comment_text}</textarea>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</c:if>
-						<c:if test="${status.index != 0}">
-							<div class="panel-collapse collapse"
-								id="collapse${status.index}" role="tabpanel"
-								aria-labelledby="heading${status.index}">
-								<div class="panel-body">
-									<table class="table table-bordered"
-										style="height: auto; width: 100;">
-										<tbody id="list">
-											<tr>
-												<td rowspan="3" class="comment_file" align="center"
-													style="width: 200px; height: 200px;"><img
-													src="/uploadStorage/comment/${comment.comment_file}"
-													align="middle" id="c_img"
-													style="width: 200px; height: 200px;" /><br /> <br /> <c:if
-														test="${login.id == comment.id}">
-														<input type="button" value="수정" class="btn btn-default"
-															style="width: 70px;"
-															onclick="update(${comment.comment_no});">
-														<input type="button" value="삭제" class="btn btn-default"
-															style="width: 70px;"
-															onclick="del(${comment.comment_no});">
-													</c:if> <c:if test="${login.id != comment.id}">
-													</c:if></td>
-												<td style="width: 100px;">작성자</td>
-												<td style="width: 150px;">${comment.id}</td>
-												<td style="width: 100px;">작성일자</td>
-												<td>${comment.comment_date}</td>
-												<td style="width: 100px;">별점</td>
-												<td>${comment.comment_score}</td>
-											</tr>
-											<tr class="tac" data-num="${comment.comment_no}">
-												<td style="width: 50px;">제목</td>
-												<td colspan="5">${comment.comment_title}
-											</tr>
-											<tr>
-												<td style="width: 30px;">내용</td>
-												<td colspan="5"><textarea rows="10" cols="50"
-														class="form-control" readonly="readonly">${comment.comment_text}</textarea>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</c:if>
-
-						<br>
 					</c:forEach>
 				</c:when>
 				<c:otherwise>
-					<div class="well">등록된 방문후기가 없습니다.</div>
+					<div class="well" align="center">
+						<div>등록된 방문 후기가 존재하지 않습니다.</div>
+					</div>
 				</c:otherwise>
 			</c:choose>
 		</div>
+
 		<div id="commentPage" align="center">
 			<tag:paging page="${param.page}" total="${total}"
 				list_size="${data.pageSize }">

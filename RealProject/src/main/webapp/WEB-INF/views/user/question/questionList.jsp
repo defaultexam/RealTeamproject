@@ -80,10 +80,9 @@
 </head>
 
 <body>
-	<div class="contentContainer">
-		<h2>1:1 문의</h2>
+	<div class="container">
+		<h3 align="center">1:1 문의</h3>
 		<hr>
-
 		<!-- 상세페이지로 이동하기 위한 form -->
 		<form id="detailForm" name="detailForm">
 			<input type="hidden" name="member_no" id="member_no"><input
@@ -128,7 +127,7 @@
 								<h4 class="panel-title"></h4>
 								<!-- title -->
 								<div id="test" data-toggle="collapse" data-parent="#accordion"
-									style="width: 100%;" href="#collapse${status.index}"
+									style="width: 100%;" data-target="#collapse${status.index}"
 									aria-controls="collapse${status.index}" aria-expanded="true">
 									<div
 										style="width: 19%; display: inline-block; text-align: center;">${count - status.index}</div>

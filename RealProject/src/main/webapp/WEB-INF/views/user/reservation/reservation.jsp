@@ -615,7 +615,8 @@
 			<img src="/resources/include/css/images/reserv5.jpg" class="imgs">
 			<br />
 			<div align="right">
-				<input type="checkbox" id="inputid" value="">회원 정보와 동일합니다.
+				<input type="checkbox" id="inputid" value=""><label
+					for="inputid">회원 정보와 동일합니다.</label>
 			</div>
 			<div class="col-md-12">
 				<table

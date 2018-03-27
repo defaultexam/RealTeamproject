@@ -129,6 +129,8 @@ textarea {
 <body>
 	<!-- faq리스트 -->
 	<div class="container">
+		<h3 align="center">FAQ</h3>
+		<hr>
 		<div id="faq_all">
 			<form id="faq_all_list">
 				<ul class="nav nav-tabs">
@@ -156,7 +158,7 @@ textarea {
 								<div class="panel-heading" role="tab"
 									id="heading${status.index}" style="width: 100%;" class="test"
 									data-toggle="collapse" data-parent="#accordion"
-									href="#collapse${status.index}"
+									data-target="#collapse${status.index}"
 									aria-controls="collapse${status.index}" aria-expanded="true">
 									<!-- panel_title -->
 									<!-- 글번호 출력 -->
