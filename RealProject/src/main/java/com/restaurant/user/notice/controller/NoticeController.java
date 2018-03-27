@@ -59,10 +59,6 @@ public class NoticeController {
 		AdminNoticeVO detail = new AdminNoticeVO();
 		detail = noticeService.userNoticeDetail(nvo);
 
-		if (detail != null && (!detail.equals(""))) {
-			detail.setNotice_text(detail.getNotice_text().toString().replaceAll("\n", "<br>"));
-		}
-
 		model.addAttribute("detail", detail);
 
 		return "user/notice/noticeDetail";
