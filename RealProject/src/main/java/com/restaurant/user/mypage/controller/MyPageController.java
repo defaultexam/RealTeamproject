@@ -51,6 +51,7 @@ public class MyPageController {
 
 		model.addAttribute("myPageMember", myPageMember);
 		model.addAttribute("loginInfo", loginvo);
+		
 
 		return "user/mypage/mypage";
 	}

@@ -9,7 +9,6 @@ public class LoginVO extends LoginHistory {
 	private String phone = "";
 	private String rank = "";
 	private int point = 0;
-//
 	public LoginVO() {
 	}
 

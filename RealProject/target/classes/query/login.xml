@@ -9,7 +9,7 @@
 	</select>
 
 	<select id="loginSelect" parameterType="login" resultType="login">
-		select member_no, id, password, name, email, phone from member where
+		select member_no, id, password, name, email, phone, rank, point from member where
 		id = #{id} and password =
 		#{password} and condition = '활동중'
 	</select>
