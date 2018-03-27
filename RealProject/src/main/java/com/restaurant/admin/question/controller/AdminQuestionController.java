@@ -85,11 +85,7 @@ public class AdminQuestionController {
 
 			QuestionVO detail = new QuestionVO();
 			detail = adminQuestionService.adminQuestionDetail(qvo);
-
-			if (detail != null && (!detail.equals(""))) {
-				detail.setQuestion_text(detail.getQuestion_text().toString().replaceAll("\n", "<br>"));
-			}
-
+	
 			MemberVO mvo = memberService.memberNoSearch(detail.getMember_no());
 
 			model.addAttribute("detail", detail);

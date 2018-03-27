@@ -89,10 +89,6 @@ public class QuestionController {
 		QuestionVO detail = new QuestionVO();
 		detail = questionService.questionDetail(qvo);
 
-		if (detail != null && (!detail.equals(""))) {
-			detail.setQuestion_title(detail.getQuestion_title().toString().replaceAll("/n", "<br>"));
-		}
-
 		model.addAttribute("detail", detail);
 
 		return "user/question/questionDetail";

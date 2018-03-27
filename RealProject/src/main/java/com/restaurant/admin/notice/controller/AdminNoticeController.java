@@ -113,10 +113,6 @@ public class AdminNoticeController {
 			AdminNoticeVO detail = new AdminNoticeVO();
 			detail = adminNoticeService.noticeDetail(nvo);
 
-			if (detail != null && (!detail.equals(""))) {
-				detail.setNotice_text(detail.getNotice_text().toString().replaceAll("\n", "<br>"));
-			}
-
 			model.addAttribute("detail", detail);
 			url = "admin/notice/noticeDetail";
 		}
