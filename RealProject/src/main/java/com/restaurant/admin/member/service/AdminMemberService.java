@@ -31,4 +31,6 @@ public interface AdminMemberService {
 
 	public void newCouponGive(CouponHistoryVO cvo);
 
+	void memberRankAutoChange();
+
 }

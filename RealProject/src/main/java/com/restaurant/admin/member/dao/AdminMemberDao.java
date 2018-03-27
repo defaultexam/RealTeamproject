@@ -37,4 +37,6 @@ public interface AdminMemberDao {
 	
 	public void newCouponGive(CouponHistoryVO cvo);
 
+	void memberRankAutoChange();
+
 }

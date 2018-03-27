@@ -104,5 +104,10 @@ public class AdminMemberDaoImpl implements AdminMemberDao {
 		// TODO Auto-generated method stub
 		session.insert("newCouponGive", cvo);
 	}
+	
+	@Override
+	public void memberRankAutoChange() {
+		session.update("memberRankAutoChange");
+	}
 
 }

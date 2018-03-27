@@ -77,8 +77,8 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 		}
 	}
 
-	// 매일 0시에 자동실행처리
-	@Scheduled(cron = "0 0 0 * * *")
+	// 매일 0시 1분에 자동실행처리
+	@Scheduled(cron = "0 1 0 * * *")
 	@Override
 	public void giveMarry() {
 		System.out.println("결혼쿠폰 자동지급");
@@ -92,8 +92,8 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 		}
 	}
 
-	// 매년 1월 1일에 자동실행
-	@Scheduled(cron = "0 0 0 1 1 *")
+	// 매일 0시 2분에 자동실행
+	@Scheduled(cron = "0 2 0 * * *")
 	@Override
 	public void giveVIP() {
 		System.out.println("VIP쿠폰 자동지급");
@@ -107,8 +107,8 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 		}
 	}
 
-	// 매일 0시에 자동실행처리
-	@Scheduled(cron = "0 0 0 * * *")
+	// 매일 0시 3 분에자동실행처리
+	@Scheduled(cron = "0 3 0 * * *")
 	@Override
 	public void deleteCoupon() {
 		// TODO Auto-generated method stub
@@ -135,6 +135,14 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 	public void newCouponGive(CouponHistoryVO cvo) {
 		// TODO Auto-generated method stub
 		adminMemberDao.newCouponGive(cvo);
+	}
+
+	// 매일 0시 4분에 자동실행처리
+	@Scheduled(cron = "0 4 0 * * *")
+	@Override
+	public void memberRankAutoChange() {
+		System.out.println("2000P 일반회원 VIP등급으로 자동변경 실행");
+		adminMemberDao.memberRankAutoChange();
 	}
 
 }

@@ -56,7 +56,7 @@ input[type=checkbox]:not(old):checked+label {
 		<form id="checkForm" class="">
 			<div class="text-center" style="padding-left: 41%;">
 				<span class="txt_bold">YEOP'S Restaurant 이용약관, 개인정보 수집 및 이용,
-					마케팃 정보 수집(선택)에 모두 동의합니다.&nbsp;&nbsp;&nbsp; </span> <input type="checkbox"
+					마케팅 정보 수집(선택)에 모두 동의합니다.&nbsp;&nbsp;&nbsp; </span> <input type="checkbox"
 					id="checkall" name="checkall"><label for="checkall">
 					동의</label>
 			</div>

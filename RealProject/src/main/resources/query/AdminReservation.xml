@@ -6,7 +6,7 @@
 
 	<!-- 조건설정 -->
 	<sql id="searchReservation">
-		select book_no, seat_no, member_no, coupon_no, rownum as rnum from
+		select book_no, seat_no, member_no, coupon_no from
 		booking
 		<where>
 			<if test="name != '' ">
@@ -22,10 +22,11 @@
 						#{searchEnd}))
 						<if test="book_condition != ''">
 							<if test="book_condition.equals('취소')">
-							and (book_condition = '취소' or book_condition = '기간만료')
+								and (book_condition = '취소' or book_condition =
+								'기간만료')
 							</if>
 							<if test="!book_condition.equals('취소')">
-							and book_condition = #{book_condition}
+								and book_condition = #{book_condition}
 							</if>
 						</if>
 						<if test="book_condition == ''">
@@ -34,10 +35,11 @@
 					<if test="searchStart.toString().substring(0,10).contains('9999')">
 						<if test="book_condition != ''">
 							<if test="book_condition.equals('취소')">
-							and (book_condition = '취소' or book_condition = '기간만료')
+								and (book_condition = '취소' or book_condition =
+								'기간만료')
 							</if>
 							<if test="!book_condition.equals('취소')">
-							and book_condition = #{book_condition}
+								and book_condition = #{book_condition}
 							</if>
 						</if>
 						<if test="book_condition == ''">
@@ -51,10 +53,11 @@
 						#{searchEnd}))
 						<if test="book_condition != ''">
 							<if test="book_condition.equals('취소')">
-							and (book_condition = '취소' or book_condition = '기간만료')
+								and (book_condition = '취소' or book_condition =
+								'기간만료')
 							</if>
 							<if test="!book_condition.equals('취소')">
-							and book_condition = #{book_condition}
+								and book_condition = #{book_condition}
 							</if>
 						</if>
 						<if test="book_condition == ''">
@@ -63,10 +66,11 @@
 					<if test="searchStart.toString().substring(0,10).contains('9999')">
 						<if test="book_condition != ''">
 							<if test="book_condition.equals('취소')">
-							and (book_condition = '취소' or book_condition = '기간만료')
+								and (book_condition = '취소' or book_condition =
+								'기간만료')
 							</if>
 							<if test="!book_condition.equals('취소')">
-							and book_condition = #{book_condition}
+								and book_condition = #{book_condition}
 							</if>
 						</if>
 						<if test="book_condition == ''">
@@ -84,10 +88,11 @@
 						#{searchEnd}))
 						<if test="book_condition != ''">
 							<if test="book_condition.equals('취소')">
-							and (book_condition = '취소' or book_condition = '기간만료')
+								and (book_condition = '취소' or book_condition =
+								'기간만료')
 							</if>
 							<if test="!book_condition.equals('취소')">
-							and book_condition = #{book_condition}
+								and book_condition = #{book_condition}
 							</if>
 						</if>
 						<if test="book_condition == ''">
@@ -96,10 +101,11 @@
 					<if test="searchStart.toString().substring(0,10).contains('9999')">
 						<if test="book_condition != ''">
 							<if test="book_condition.equals('취소')">
-							and (book_condition = '취소' or book_condition = '기간만료')
+								and (book_condition = '취소' or book_condition =
+								'기간만료')
 							</if>
 							<if test="!book_condition.equals('취소')">
-							and book_condition = #{book_condition}
+								and book_condition = #{book_condition}
 							</if>
 						</if>
 						<if test="book_condition == ''">
@@ -113,10 +119,11 @@
 						#{searchEnd}))
 						<if test="book_condition != ''">
 							<if test="book_condition.equals('취소')">
-							and (book_condition = '취소' or book_condition = '기간만료')
+								and (book_condition = '취소' or book_condition =
+								'기간만료')
 							</if>
 							<if test="!book_condition.equals('취소')">
-							and book_condition = #{book_condition}
+								and book_condition = #{book_condition}
 							</if>
 						</if>
 						<if test="book_condition == ''">
@@ -125,10 +132,10 @@
 					<if test="searchStart.toString().substring(0,10).contains('9999')">
 						<if test="book_condition != ''">
 							<if test="book_condition.equals('취소')">
-							book_condition = '취소' or book_condition = '기간만료'
+								book_condition = '취소' or book_condition = '기간만료'
 							</if>
 							<if test="!book_condition.equals('취소')">
-							book_condition = #{book_condition}
+								book_condition = #{book_condition}
 							</if>
 						</if>
 						<if test="book_condition == ''">
@@ -143,11 +150,12 @@
 	<!-- 조건에 맞는 예약내역의 seat_no, member_no, coupon_no 출력 -->
 	<select id="reservationNumberList" parameterType="adminreservation"
 		resultType="adminreservation">
-		select list.book_no, list.seat_no, list.member_no, list.coupon_no
+		select * from (select list.book_no, list.seat_no, list.member_no,
+		list.coupon_no, rownum as rnum
 		from
 		(
 		<include refid="searchReservation"></include>
-		) list
+		) list ) dblist
 		<where>
 			<if test="start_row != null and start_row != ''">
 				<if test="end_row != null and end_row != ''">
@@ -155,8 +163,8 @@
 				</if>
 			</if>
 		</where>
+		order by book_no desc
 	</select>
-
 
 	<!-- 예약정보 한개뽑기 -->
 	<select id="reservationOne" parameterType="adminreservation"

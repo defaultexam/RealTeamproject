@@ -367,7 +367,7 @@
 	<select id="giveBirthCnt" resultType="adminMember">
 		select * from member where <![CDATA[ to_char(birthday,'mm/dd') = to_char(sysdate,'mm/dd') and condition = '활동중']]>
 	</select>
-
+	<!-- 생일쿠폰 자동지급 쿼리 -->
 	<insert id="giveBirth" parameterType="adminMember">
 		insert into
 		couponhistory(couponhistory_no,member_no,coupon_name,coupon_start,coupon_end,coupon_status,coupon_discountrate)
@@ -384,7 +384,7 @@
 	<select id="giveMarryCnt" resultType="adminMember">
 		select * from member where <![CDATA[ to_char(weddingdate,'mm/dd') = to_char(sysdate,'mm/dd') and condition = '활동중' ]]>
 	</select>
-
+	<!-- 결혼기념쿠폰 자동지급 쿼리 -->
 	<insert id="giveMarry" parameterType="adminMember">
 		insert into
 		couponhistory(couponhistory_no,member_no,coupon_name,coupon_start,coupon_end,coupon_status,coupon_discountrate)
@@ -398,10 +398,15 @@
 		coupon_name = '결혼기념쿠폰'))
 	</insert>
 
+	<!-- VIP회원중 사용가능한 vip쿠폰을 보유하지 않은 회원의 번호 구하는 쿼리 -->
 	<select id="giveVIPCnt" resultType="adminMember">
-		select * from member where <![CDATA[ rank = 'VIP' and condition = '활동중' ]]>
+		select distinct member_no
+		from couponhistory
+		where <![CDATA[(member_no in (select member_no from member where (rank='VIP') and (condition = '활동중')))]]>
+		and <![CDATA[(member_no not in (select member_no from couponhistory where (coupon_name='VIP쿠폰') and (coupon_status = '사용가능쿠폰')))]]>
 	</select>
 
+	<!-- VIP쿠폰 자동지급쿼리 -->
 	<insert id="giveVIP" parameterType="adminMember">
 		insert into
 		couponhistory(couponhistory_no,member_no,coupon_name,coupon_start,coupon_end,coupon_status,coupon_discountrate)
@@ -412,12 +417,15 @@
 		coupon_name = 'VIP쿠폰'))
 	</insert>
 
+	<!-- 기한만료 쿠폰 자동 삭제 쿼리 -->
 	<update id="deleteCoupon">
 		update couponhistory
 		set coupon_status = '기한만료', deletedate = sysdate
 		where <![CDATA[ to_char(coupon_end,'mm/dd') < to_char(sysdate,'mm/dd') ]]>
+		and coupon_status = '사용가능쿠폰'
 	</update>
 
+	<!-- 회원관리 페이지 쿠폰삭제 쿼리 -->
 	<update id="adminDeleteCoupon" parameterType="couponhistory">
 		update
 		couponhistory
@@ -425,12 +433,14 @@
 		member_no = #{member_no} and coupon_name = #{coupon_name}
 	</update>
 
+	<!-- 지급 가능 쿠폰 리스트 조회 쿼리 -->
 	<select id="couponNameList" parameterType="int" resultType="java.lang.String">
 		select coupon_name from coupon where coupon_active=
 		<![CDATA['사용가능쿠폰' and coupon_name != '생일기념쿠폰' and coupon_name != '결혼기념쿠폰' and coupon_name != 'VIP쿠폰' ]]>
 		<![CDATA[and coupon_name not in (select distinct coupon_name from couponhistory where member_no = #{member_no} and coupon_status = '사용가능쿠폰') ]]>
 	</select>
 
+	<!-- 신규 쿠폰 지급 쿼리 -->
 	<insert id="newCouponGive" parameterType="couponhistory">
 		insert into
 		couponhistory(couponhistory_no,member_no,coupon_name,coupon_start,coupon_end,coupon_status,coupon_discountrate)
@@ -442,5 +452,12 @@
 		coupon where
 		coupon_name=#{coupon_name}))
 	</insert>
+
+	<!-- VIP등급으로 자동전환 -->
+	<update id="memberRankAutoChange">
+		update member
+		set rank='VIP'
+		<![CDATA[ where point >= 2000 and condition = '활동중' and rank = '일반' ]]>
+	</update>
 </mapper>
 
