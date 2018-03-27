@@ -10,7 +10,7 @@ public class faqVO extends CommonVO {
 	private String faq_title = "";
 	private String faq_text = "";
 	private String faq_type = "";
-	private Date faq_date = null;
+	private String faq_date = null;
 
 	public int getFaq_no() {
 		return faq_no;
@@ -44,11 +44,11 @@ public class faqVO extends CommonVO {
 		this.faq_type = faq_type;
 	}
 
-	public Date getFaq_date() {
+	public String getFaq_date() {
 		return faq_date;
 	}
 
-	public void setFaq_date(Date faq_date) {
+	public void setFaq_date(String faq_date) {
 		this.faq_date = faq_date;
 	}
 
