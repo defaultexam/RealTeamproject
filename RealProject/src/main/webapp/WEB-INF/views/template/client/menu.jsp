@@ -347,7 +347,7 @@
 						<c:when test="${login.id != null and login.id != ''}">
 							<li>환영합니다 ${login.name}님</li>
 							<li><a href="/login/logout" onclick="alert('로그아웃 되었습니다.');">로그아웃</a></li>
-							<li class="last-child"><a href="#">내정보관리</a></li>
+							<li class="last-child"><a href="/mypage">내정보관리</a></li>
 						</c:when>
 						<c:otherwise>
 							<li><a href="/login">Login</a></li>

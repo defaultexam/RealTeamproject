@@ -33,5 +33,7 @@
 		<typeAlias type="com.restaurant.admin.chart.vo.AdminChartVO"
 			alias="adminchart" />
 		<typeAlias type="com.restaurant.user.faq.vo.faqVO" alias="userfaq" />
+		<typeAlias type="com.restaurant.user.mypage.vo.MyPageVO"
+			alias="mypage" />
 	</typeAliases>
 </configuration> 

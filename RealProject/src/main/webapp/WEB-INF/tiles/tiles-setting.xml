@@ -55,5 +55,22 @@
 			value="/WEB-INF/views/user/comment/{1}.jsp" />
 	</definition>
 
+	<definition name="intro2"
+		template="/WEB-INF/views/template/client/myPageLayout.jsp">
+		<put-attribute name="title" value="Yeop's Restaurant" />
+		<put-attribute name="menu"
+			value="/WEB-INF/views/template/client/menu.jsp" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/user/mypage/mypage.jsp" />
+		<put-attribute name="sidemenu"
+			value="/WEB-INF/views/template/client/side.jsp" />
+		<put-attribute name="footer"
+			value="/WEB-INF/views/template/client/footer.jsp" />
+	</definition>
+
+	<definition name="user/mypage/*" extends="intro2">
+		<put-attribute name="body" value="/WEB-INF/views/user/mypage/{1}.jsp" />
+	</definition>
+
 
 </tiles-definitions> 

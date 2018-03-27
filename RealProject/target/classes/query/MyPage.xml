@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.restaurant.user.mypage.dao.MyPageDAO">
+
+	<select id="memberInfoCnt" parameterType="int" resultType="mypage">
+		select (select
+		nvl(count(couponhistory_no),0) from couponhistory where
+		member_no =
+		#{no} and
+		<![CDATA[coupon_status = '사용가능쿠폰') as couponcnt,]]>
+		(select nvl(count(book_no),0) from
+		booking where member_no = #{no} and
+		book_condition =
+		<![CDATA['미사용') as]]>
+		bookingcnt,
+		(select nvl(count(book_no),0) from booking where member_no
+		=
+		#{no}
+		and book_condition =
+		<![CDATA['취소') as bookingCancelCnt,]]>
+		(select nvl(count(question_no),0) from question where member_no =
+		#{no}
+		) as qnaCnt
+		from dual
+	</select>
+
+	<select id="userCouponList" parameterType="int" resultType="mypage">
+		select * from couponhistory where
+		member_no =
+		#{no} and
+		<![CDATA[coupon_status = '사용가능쿠폰']]>
+	</select>
+
+	<sql id="userReservationSearch">
+		select book_no, seat_no, coupon_no, rownum as rnum from
+		booking
+		<where>
+			<if test="!searchStart.toString().substring(0,10).contains('9999')">
+				(seat_no in (select s.seat_no from seat s, booking b where
+				s.seat_no=b.seat_no and s.seat_date between #{searchStart} and
+				#{searchEnd})) and
+				<if test="book_condition != ''">
+					book_condition = #{book_condition}
+				</if>
+				<if test="book_condition == ''">
+							<![CDATA[ 1=1 ]]>
+				</if>
+			</if>
+			<if test="searchStart.toString().substring(0,10).contains('9999')">
+				<if test="book_condition != ''">
+					book_condition = #{book_condition}
+				</if>
+				<if test="book_condition == ''">
+							<![CDATA[ 1=1 ]]>
+				</if>
+			</if>
+		</where>
+		and member_no = #{member_no}
+		order by book_no desc
+	</sql>
+
+	<!-- 사용,미사용 내역만 뽑기 -->
+	<sql id="useList">
+		select book_no, seat_no, coupon_no, rownum as rnum from
+		booking where
+		member_no=#{member_no} and (book_condition = '사용' or
+		book_condition =
+		'미사용')
+	</sql>
+
+	<select id="userReservationNumberList" parameterType="mypage"
+		resultType="mypage">
+		select list.book_no, list.seat_no, list.coupon_no
+		from
+		(
+		<include refid="useList"></include>
+		) list
+		<where>
+			<if test="start_row != null and start_row != ''">
+				<if test="end_row != null and end_row != ''">
+					rnum between #{start_row} and #{end_row}
+				</if>
+			</if>
+		</where>
+	</select>
+
+	<select id="userReservationOne" parameterType="mypage"
+		resultType="mypage">
+		select book_condition,(select seat_date from seat where
+		seat_no = #{seat_no}) seat_date,(select seat_time from seat where
+		seat_no =#{seat_no}) seat_time, book_name,
+		(select menu_name from menu
+		where
+		menu_no = choice_menu1 ) menu_name1,(select
+		menu_name from menu
+		where
+		menu_no = choice_menu2 ) menu_name2 ,
+		(select
+		menu_name from menu
+		where
+		menu_no = choice_menu3 ) menu_name3 ,
+		(select
+		menu_name from menu
+		where
+		menu_no = choice_menu4 ) menu_name4 ,
+		(select
+		menu_name from menu
+		where
+		menu_no = choice_menu5 ) menu_name5 ,
+		(select
+		menu_name from menu
+		where
+		menu_no = choice_menu6 ) menu_name6 ,
+		(select
+		menu_name from menu
+		where
+		menu_no = choice_menu7 ) menu_name7 ,
+		(select
+		menu_name from menu
+		where
+		menu_no = choice_menu8 ) menu_name8 ,
+		book_people, (select
+		coupon_name
+		from couponhistory where couponhistory_no =
+		#{coupon_no})
+		coupon_name,(select
+		COUPON_DISCOUNTRATE from couponhistory where
+		couponhistory_no =
+		#{coupon_no})
+		COUPON_DISCOUNTRATE,
+		pay_way, pay_date,
+		totalPay,
+		book_memo, discount ,
+		book_no from
+		(select * from booking where
+		book_no
+		= #{book_no})
+	</select>
+
+
+	<!-- 예약취소내역 -->
+	<sql id="useCancel">
+		select book_no, seat_no, coupon_no, rownum as rnum from
+		booking where
+		member_no=#{member_no} and (book_condition = '취소')
+	</sql>
+
+	<select id="userReservationNumberCancel" parameterType="mypage"
+		resultType="mypage">
+		select list.book_no, list.seat_no, list.coupon_no
+		from
+		(
+		<include refid="useCancel"></include>
+		) list
+		<where>
+			<if test="start_row != null and start_row != ''">
+				<if test="end_row != null and end_row != ''">
+					rnum between #{start_row} and #{end_row}
+				</if>
+			</if>
+		</where>
+	</select>
+
+	<select id="userReservationOneCancel" parameterType="mypage"
+		resultType="mypage">
+		select book_condition,(select seat_date from seat where
+		seat_no = #{seat_no}) seat_date,(select seat_time from seat where
+		seat_no =#{seat_no}) seat_time, book_name,
+		(select menu_name from menu
+		where
+		menu_no = choice_menu1 ) menu_name1,(select
+		menu_name from menu
+		where
+		menu_no = choice_menu2 ) menu_name2 ,
+		(select
+		menu_name from menu
+		where
+		menu_no = choice_menu3 ) menu_name3 ,
+		(select
+		menu_name from menu
+		where
+		menu_no = choice_menu4 ) menu_name4 ,
+		(select
+		menu_name from menu
+		where
+		menu_no = choice_menu5 ) menu_name5 ,
+		(select
+		menu_name from menu
+		where
+		menu_no = choice_menu6 ) menu_name6 ,
+		(select
+		menu_name from menu
+		where
+		menu_no = choice_menu7 ) menu_name7 ,
+		(select
+		menu_name from menu
+		where
+		menu_no = choice_menu8 ) menu_name8 ,
+		book_people, (select
+		coupon_name
+		from couponhistory where couponhistory_no =
+		#{coupon_no})
+		coupon_name,(select
+		COUPON_DISCOUNTRATE from couponhistory where
+		couponhistory_no =
+		#{coupon_no})
+		COUPON_DISCOUNTRATE,
+		pay_way, pay_date,
+		totalPay,
+		book_memo, discount ,
+		book_no from
+		(select * from booking where
+		book_no
+		= #{book_no})
+	</select>
+
+	<!-- 예약상태 수정 -->
+	<update id="userReservationEdit" parameterType="adminreservation">
+		update booking
+		set
+		book_condition = #{book_condition}, cancel_condition =
+		'환불미완료',cancel_total = #{cancel_total}, cancel_date = sysdate,
+		cancel_reciver = #{cancel_reciver}, cancel_bank = #{cancel_bank},
+		cancel_account = #{cancel_account} where book_no =
+		#{book_no}
+	</update>
+
+	<select id="pwSelect" parameterType="mypage" resultType="mypage">
+		select
+		*
+		from member where
+		id = #{id} and password = #{password}
+	</select>
+
+	<!-- 로그인 실패 횟수 증가 -->
+	<update id="retryUpdate" parameterType="mypage"> update
+		login_history_res
+		set retry = #{retry} where userId
+		= #{id}
+	</update>
+
+	<!-- 회원정보 수정 -->
+	<update id="updateMember" parameterType="mypage">
+		update member set
+		password=#{password}, email=#{email}, phone = #{phone}, address =
+		#{address}, weddingdate =
+		#{weddingdate,jdbcType=DATE}, marriage=#{marriage},
+		job=#{job} where
+		member_no=#{no}
+	</update>
+</mapper>
