@@ -246,5 +246,17 @@
 			dateFormat : "yy-mm-dd",
 			onSelect : function(dateText, inst) {}
 		});
+		
+		// 결혼 여부 미혼일 경우 결혼 기념일에 Readonly 적용, 아닐 경우 삭제.
+		$(function() {
+			$("input[name=marriage]").bind("change", function() {
+				if ($(this).val() == 1) {
+					$("#weddingdate").attr("disabled", "disabled");
+					$("#weddingdate").val("");
+				} else {
+					$("#weddingdate").removeAttr("disabled");
+				}
+			});
+		});
 	</script>
 </body>
