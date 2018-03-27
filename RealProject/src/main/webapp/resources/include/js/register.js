@@ -324,7 +324,7 @@ $(function() {
 			} else {
 				$("#email").val($("#email1").val() + "@" + $("#email2").val());
 				$("#address").val(
-					$("#postcode").val() + " " + $("#roadAddress").val() + " " + $("#jibunAddress").val()
+					$("#postcode").val() + "▒" + $("#roadAddress").val() + "▒" + $("#jibunAddress").val()
 				);
 				if ($("#weddingdate").val() == "" || $("#weddingdate").attr("disabled") == "disabled") {
 					$("#weddingdate").removeAttr("disabled");
