@@ -166,7 +166,8 @@
 					<tbody>
 						<tr class="active">
 							<td><input type="radio" name="timetable" value="1"
-								checked="checked" /> 12:00 ~ 14:00</td>
+								checked="checked" id="12:00" />&nbsp;&nbsp; <label for="12:00"> 12:00
+									~ 14:00</label></td>
 							<td id="extra1">0</td>
 							<td class="form-inline"><input type="number" min="1"
 								max="30" class="form-control"
@@ -174,8 +175,8 @@
 								class="validity"></span></td>
 						</tr>
 						<tr class="active">
-							<td><input type="radio" name="timetable" value="2" /> 17:30
-								~ 19:20</td>
+							<td><input type="radio" name="timetable" value="2"
+								id="17:30" />&nbsp;&nbsp; <label for="17:30"> 17:30 ~ 19:20</label></td>
 							<td id="extra2">0</td>
 							<td class="form-inline"><input type="number" min="1"
 								max="40" class="form-control"
@@ -183,8 +184,8 @@
 								class="validity"></span></td>
 						</tr>
 						<tr class="active">
-							<td><input type="radio" name="timetable" value="3" /> 20:00
-								~ 22:00</td>
+							<td><input type="radio" name="timetable" value="3"
+								id="20:00" />&nbsp;&nbsp; <label for="20:00"> 20:00 ~ 22:00</label></td>
 							<td id="extra3">0</td>
 							<td class="form-inline"><input type="number" min="1"
 								max="50" class="form-control"
@@ -192,8 +193,8 @@
 								class="validity"></span></td>
 						</tr>
 						<tr class="active">
-							<td><input type="radio" name="timetable" value="4" /> 21:15
-								~ 23:15</td>
+							<td><input type="radio" name="timetable" value="4"
+								id="21:15" />&nbsp;&nbsp; <label for="21:15"> 21:15 ~ 23:15</label></td>
 							<td id="extra4">0</td>
 							<td class="form-inline"><input type="number" min="1"
 								max="20" class="form-control"
@@ -583,8 +584,8 @@
 									<script type="text/javascript">
 									var rate = '${couponList.coupon_discountrate * 100}';
 									var result = rate.split(".0");
-									$("#"+${couponList.couponhistory_no }).html(result[0] + "%");
-								</script>
+									$("#"+${couponList.couponhistory_no}).html(result[0] + "%");
+									</script>
 								</c:if>
 							</c:forEach>
 						</c:when>
@@ -688,9 +689,15 @@
 								10% 할인된 회원값이 적용됩니다.</strong></font></li>
 					<li><font size="2.5px"><strong>쿠폰은 중복 사용이
 								불가능하며, 최대 1개까지 사용하실 수 있습니다.</strong></font></li>
+					<li><font size="2.5px"><strong>예약은 온라인으로만
+								가능합니다.</strong></font></li>
 					<li><font size="2.5px"><strong>이용약관 제 16조에 의거
 								이용일 당일 취소 및 환불 불가합니다.</strong></font></li>
-					<li><font size="2px">이용방법 : 예약한 시간에 맞춰 레스토랑에 방문해 주세요.</font></li>
+					<li><font size="2px">6~4일전 예약 취소 시 10%공제, 3~2일전 예약 취소 시
+							20%공제, 하루 전 예약 취소 시 30%공제 됩니다.</font></li>
+					<li><font size="2px">단, 결제 당일 예약취소는 전액 환불 가능합니다.</font></li>
+					<li><font size="2px">예약한 시간내에 미이용시 자동취소처리되며, 환불이 불가하므로
+							예약한 시간에 맞춰 레스토랑에 방문해 주세요.</font></li>
 				</ul>
 			</div>
 		</div>
