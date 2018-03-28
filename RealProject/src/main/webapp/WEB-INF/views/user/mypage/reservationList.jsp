@@ -177,8 +177,8 @@ ${reservation.menu_name1} , ${reservation.menu_name2} 외 6종
 									<td>${reservation.book_memo }</td>
 									<td><c:if test="${reservation.book_condition == '사용' }">
 										</c:if> <c:if test="${reservation.book_condition == '미사용' }">
-											<input type="button" class="cancelBtn" value="예약 취소"
-												class="btn btn-default">
+											<input type="button" class="cancelBtn btn btn-secondary"
+												value="예약 취소">
 										</c:if></td>
 								</tr>
 								<script type="text/javascript">
