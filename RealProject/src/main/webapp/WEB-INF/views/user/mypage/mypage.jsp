@@ -56,7 +56,7 @@
 			</div>
 			<!-- 문의 내역 -->
 			<div class="div">
-				<a href="#"><img src="/resources/images/mypage/QA.png"></a>
+				<a href="/question/questionList.do"><img src="/resources/images/mypage/QA.png"></a>
 				<h4>문의 내역</h4>
 				<h5>${myPageMember.qnaCnt}건</h5>
 			</div>
