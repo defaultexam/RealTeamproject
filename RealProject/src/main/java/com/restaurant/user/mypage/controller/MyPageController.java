@@ -128,7 +128,7 @@ public class MyPageController {
 		return "user/mypage/coupon";
 	}
 
-	// 정보수장 비밀번호 확인
+	// 정보수정 비밀번호 확인
 	@RequestMapping(value = "/updatePassword", method = RequestMethod.GET)
 	public String updatePassword() {
 		logger.info("/updatePassword GET 호출 성공");

@@ -21,14 +21,12 @@
 
 		$("#updateBtn").click(function() {
 
-
 			$("#email").val($("#email1").val() + "@" + $("#email2").val());
 			$("#address").val(
 				$("#postcode").val() + "▒" + $("#roadAddress").val() + "▒" + $("#jibunAddress").val()
 			);
 			if ($("#weddingdate").val() == "")
 				$("#weddingdate").val("9999-12-31");
-
 
 			$("#update").attr({
 				"method" : "POST",
@@ -47,7 +45,6 @@
 			$("#mihon").attr({
 				"checked" : "checked"
 			});
-
 		} else {
 			$("#gihon").attr({
 				"checked" : "checked"
