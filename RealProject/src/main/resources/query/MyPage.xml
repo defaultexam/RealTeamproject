@@ -244,7 +244,7 @@
 	<!-- 회원정보 수정 -->
    <update id="updateMember" parameterType="mypage">
       update member set
-      <if test="password !='">
+      <if test="password !=''">
          password=#{password},
       </if>
       email=#{email}, phone = #{phone}, address =

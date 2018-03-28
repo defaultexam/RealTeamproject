@@ -47,7 +47,7 @@ public class MyPageController {
 		String login_id = loginvo.getId();
 		MyPageVO insertId = new MyPageVO();
 		insertId.setId(login_id);
-		
+
 		MyPageVO loginInfoVo = mypageservice.selectMemberID(insertId);
 
 		MyPageVO myPageMember = mypageservice.memberInfoCnt(login_no);
@@ -219,7 +219,11 @@ public class MyPageController {
 		ModelAndView mav = new ModelAndView();
 		MemberSecurity sec = memberDAO.securitySelect(mvo.getId());
 		int result = 0;
-		mvo.setPassword(new String(OpenCrypt.getSHA256(mvo.getPassword(), sec.getSalt())));
+		if (mvo.getPassword().replace("/s/g", "") == "") {
+			mvo.setPassword(mvo.getPassword().replace("/s/g", ""));
+		} else {
+			mvo.setPassword(new String(OpenCrypt.getSHA256(mvo.getPassword(), sec.getSalt())));
+		}
 		result = mypageservice.updateMember(mvo);
 		if (result == 1) {
 			mav.addObject("errCode", 3);
