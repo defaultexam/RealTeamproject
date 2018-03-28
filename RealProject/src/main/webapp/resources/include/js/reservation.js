@@ -1,28 +1,34 @@
 /*자바 스크립트*/
 var selectedMenu;
+// 라디오 버튼을 통해 선택한 시트의 정보.
 var seats;
+// 장바구니에 추가되는 메뉴들의 전체 가격.
 var allprice;
-// 장바구니 추가시 배열에 하나씩 추가, 쿼리로 데이터 이동.
+// 장바구니 추가시 배열에 하나씩 추가, 쿼리에 순서대로 저장한다.
 var cart_menuno = new Array();
 var cart_name = new Array();
 var cart_text = new Array();
 var cart_price = new Array();
 var cart_kind = new Array();
 var cart_amount = new Array();
+// 장바구니 배열 종료. ========================================
 var cart_seq = 0;
 var seat_no = 9999;
 var seat_time = "12:00 ~ 14:00";
+// 예약 인원, 최소 인원은 1명이기에 초기 값이 1.
 var book_people = 1;
+// 할인 금액 알고리즘에 사용되는 변수
 var discountrate = 0;
 var discountPrice = 0;
 // 이용 시간의 Default 값
 var time = "12:00 ~ 14:00";
-var selectOption = 1;
 var maxCart = 0;
 // DataPicker을 통해 선택한 날짜
 dt = new Date();
 dt = dt.getFullYear() + "년 " + (dt.getMonth() + 1) + "월 " + (dt.getDate() + 1) + "일";
 var selectedDay = dt;
+
+// 금액 단위수 마다 .를 찍어준다.
 function makecomma(num) {
 	var str = num + '';
 	var leng = str.length;
@@ -52,7 +58,8 @@ function makecomma(num) {
 	}
 	return finalStr;
 }
-/*핸드폰 형식*/
+
+/*핸드폰 형식 정규식 확인*/
 function inputVerifyAlert(index, data, text) {
 	var data_regExp = new RegExp("^\\d{3}-\\d{3,4}-\\d{4}");
 	var match = data_regExp.exec($(data).val());
@@ -65,51 +72,25 @@ function inputVerifyAlert(index, data, text) {
 	}
 }
 // 이용시간 체크 변경시, 스피너도 변경됨.
-var numberic1 = document.getElementById("#numberic1");
-var numberic2 = document.getElementById("#numberic2");
-var numberic3 = document.getElementById("#numberic3");
-var numberic4 = document.getElementById("#numberic4");
 function toggleSpinners(options) {
 	$(function() {
+		$("input[type='number']").attr("disabled", "disabled");
+		$("input[type='number']").val("");
 		switch (options) {
 		case 1:
 			$("#numberic1").removeAttr("disabled");
-			$("#numberic2").attr("disabled", "disabled");
-			$("#numberic3").attr("disabled", "disabled");
-			$("#numberic4").attr("disabled", "disabled");
 			$("#numberic1").val("1");
-			$("#numberic2").val("");
-			$("#numberic3").val("");
-			$("#numberic4").val("");
 			break;
 		case 2:
 			$("#numberic2").removeAttr("disabled");
-			$("#numberic1").attr("disabled", "disabled");
-			$("#numberic3").attr("disabled", "disabled");
-			$("#numberic4").attr("disabled", "disabled");
-			$("#numberic1").val("");
 			$("#numberic2").val("1");
-			$("#numberic3").val("");
-			$("#numberic4").val("");
 			break;
 		case 3:
 			$("#numberic3").removeAttr("disabled");
-			$("#numberic2").attr("disabled", "disabled");
-			$("#numberic1").attr("disabled", "disabled");
-			$("#numberic4").attr("disabled", "disabled");
-			$("#numberic1").val("");
-			$("#numberic2").val("");
 			$("#numberic3").val("1");
-			$("#numberic4").val("");
 			break;
 		case 4:
 			$("#numberic4").removeAttr("disabled");
-			$("#numberic2").attr("disabled", "disabled");
-			$("#numberic3").attr("disabled", "disabled");
-			$("#numberic1").attr("disabled", "disabled");
-			$("#numberic1").val("");
-			$("#numberic2").val("");
-			$("#numberic3").val("");
 			$("#numberic4").val("1");
 			break;
 		}
@@ -203,6 +184,7 @@ function cartPlus(menu_no) {
 	cart_amount[menu_no] = cart_amount[menu_no] + 1;
 	$("#amount" + originalNo).html(cart_amount[menu_no] + "개");
 	setPrice(menu_no, 1);
+	cart_seq++;
 }
 
 function cartMinus(menu_no) {
@@ -303,6 +285,8 @@ $("#datepicker").datepicker({
 						} else if (resultdata[0].seat_time == "21:15 ~ 23:15") {
 							$("#extra4").html(resultdata[0].seat_extra);$("#numberic4").attr("max", resultdata[0].seat_extra);
 						}
+					} else {
+						$('input:radio[id="12:00"]').attr("disabled", "disabled");
 					}
 					if (resultdata[1] != null) {
 						if (resultdata[1].seat_time == "12:00 ~ 14:00") {
@@ -314,6 +298,8 @@ $("#datepicker").datepicker({
 						} else if (resultdata[1].seat_time == "21:15 ~ 23:15") {
 							$("#extra4").html(resultdata[1].seat_extra);$("#numberic4").attr("max", resultdata[1].seat_extra);
 						}
+					} else {
+						$('input:radio[id="17:30"]').attr("disabled", "disabled");
 					}
 					if (resultdata[2] != null) {
 						if (resultdata[2].seat_time == "12:00 ~ 14:00") {
@@ -325,6 +311,8 @@ $("#datepicker").datepicker({
 						} else if (resultdata[2].seat_time == "21:15 ~ 23:15") {
 							$("#extra4").html(resultdata[2].seat_extra);$("#numberic4").attr("max", resultdata[2].seat_extra);
 						}
+					} else {
+						$('input:radio[id="20:00"]').attr("disabled", "disabled");
 					}
 					if (resultdata[3] != null) {
 						if (resultdata[3].seat_time == "12:00 ~ 14:00") {
@@ -336,6 +324,8 @@ $("#datepicker").datepicker({
 						} else if (resultdata[3].seat_time == "21:15 ~ 23:15") {
 							$("#extra4").html(resultdata[3].seat_extra);$("#numberic4").attr("max", resultdata[3].seat_extra);
 						}
+					} else {
+						$('input:radio[id="21:15"]').attr("disabled", "disabled");
 					}
 				}
 			}
@@ -387,6 +377,9 @@ $(function() {
 		if (cart_menuno == null || cart_menuno == "") {
 			alert("장바구니가 비었습니다.");
 			return;
+		} else if (cart_seq < book_people) {
+			alert("주문시 메뉴의 갯수(" + cart_seq + ")는 인원 수(" + book_people + ")보다 적을 수 없습니다.");
+			return;
 		} else if ($("#email1").val() == "" || $("#email2").val() == "") {
 			alert('이메일 입력란이 비어있습니다.');
 			$("#email1").focus();
@@ -402,6 +395,14 @@ $(function() {
 			$("#phone2").val("");
 			$("#phone3").val("");
 			return;
+		} // 만들어야하는거 - > 체크박스 확인해서 데이터 없음일 경우 취소 
+
+		else if ($('input:radio[name="timetable"]:checked') != null) {
+			if ($("#extra" + $('input:radio[name="timetable"]:checked').val()).html() == "데이터 없음") {
+				alert('사이트 접속 문제로 좌석 데이터를 불러오지 못하였습니다. 잠시 후 다시 시도해 주세요.');
+				$('input:radio[name="timetable"]:checked').focus();
+				return;
+			}
 		}
 		$.ajaxSettings.traditional = true;
 		$.ajax({
@@ -450,50 +451,31 @@ $(function() {
 				console.log(e);
 			},
 			success : function(resultdata) {
+				alert("결제 방식: " + $("input:radio[name='payway']").val()
+					+ "\n\n예약하신 날짜 '" + selectedDay + "' , '" + seat_time + "'"
+					+ "\n\n주문 금액: " + makecomma(allprice) + ", 할인 금액: " + makecomma(discountPrice) + ", 결제 금액: " + makecomma((allprice - discountPrice))
+					+ "\n\n정상적으로 예약이 완료되었습니다.");
 				window.location.href = '/';
 			}
 		});
-		alert("예약하신 날짜 '" + selectedDay + "' , '" + seat_time + "'\n정상적으로 예약이 완료되었습니다.");
 	});
 	$('input:radio[name="timetable"]').change(function() {
 		if ($(this).val() == '1') {
-			selectOption = 1;
 			time = "12:00 ~ 14:00";
-			seat_no = seats[0].seat_no;
-			seat_time = seats[0].seat_time;
 		} else if ($(this).val() == '2') {
-			selectOption = 2;
 			time = "17:30 ~ 19:20"
-			seat_no = seats[1].seat_no;
-			seat_time = seats[1].seat_time;
 		} else if ($(this).val() == '3') {
-			selectOption = 3;
 			time = "20:00 ~ 22:00";
-			seat_no = seats[2].seat_no;
-			seat_time = seats[2].seat_time;
 		} else if ($(this).val() == '4') {
-			selectOption = 4;
 			time = "21:15 ~ 23:15";
-			seat_no = seats[3].seat_no;
-			seat_time = seats[3].seat_time;
 		}
-		toggleSpinners(selectOption);
+		seat_no = seats[Number($(this).val()) - 1].seat_no;
+		seat_time = seats[Number($(this).val()) - 1].seat_time;
+		toggleSpinners(Number($(this).val()));
 		$("#reservationtime").html(time);
 	});
-	$("#numberic1").bind("click", function() {
-		$("#reservationpeople").html($("#numberic1").val());
-		book_people = $("#numberic1").val();
-	});
-	$("#numberic2").bind("click", function() {
-		$("#reservationpeople").html($("#numberic2").val());
-		book_people = $("#numberic2").val();
-	});
-	$("#numberic3").bind("click", function() {
-		$("#reservationpeople").html($("#numberic3").val());
-		book_people = $("#numberic3").val();
-	});
-	$("#numberic4").bind("click", function() {
-		$("#reservationpeople").html($("#numberic4").val());
-		book_people = $("#numberic4").val();
+	$("input[type='number']").bind("click", function(){
+		$("#reservationpeople").html($(this).val());
+		book_people = $(this).val();
 	});
 });

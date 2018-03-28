@@ -168,4 +168,19 @@ public class MemberServiceImpl implements MemberService {
 		// 조회된 이메일이 2개 이상일 경우 Error 출력.
 		return result;
 	}
+
+	@Override
+	public int memberPointUpdate(MemberVO mvo) {
+		int result = 0;
+		try {
+			// 받아온 mvo의 point값 만큼을 기존의 point 컬럼에 더한다.
+			memberDAO.memberPointUpdate(mvo);
+			result = 1;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			result = 0;
+		}
+		return result;
+	}
 }

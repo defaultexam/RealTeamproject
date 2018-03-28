@@ -80,4 +80,9 @@ public class MemberDAOImpl implements MemberDAO {
 	public MemberVO memberCheckEmail(String email) {
 		return session.selectOne("memberCheckEmail", email);
 	}
+
+	@Override
+	public int memberPointUpdate(MemberVO mvo) {
+		return session.update("memberPointUpdate", mvo);
+	}
 }

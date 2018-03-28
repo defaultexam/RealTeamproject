@@ -98,4 +98,9 @@
 	<select id="memberCheckEmail" parameterType="String" resultType="member">
 		select email from member where email = #{email} and condition = '활동중'
 	</select>
+	
+	<update id="memberPointUpdate" parameterType="member">
+		update member set
+		point= point + #{point} where member_no=#{member_no}
+	</update>
 </mapper>
