@@ -94,7 +94,7 @@ ${reservationCancel.menu_name1} , ${reservationCancel.menu_name2} 외 6종
 					</c:when>
 					<c:otherwise>
 						<tr>
-							<td colspan="11" class="tac">예약 취소 내역이 존재하지 않습니다.</td>
+							<td colspan="12" class="tac">예약 취소 내역이 존재하지 않습니다.</td>
 						</tr>
 					</c:otherwise>
 				</c:choose>

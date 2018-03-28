@@ -37,8 +37,7 @@
 							<td>${detail.notice_date}</td>
 						</tr>
 						<tr>
-							<td colspan="4"><textarea rows="10" cols="50"
-									class="form-control" readonly="readonly">${detail.notice_text}</textarea>
+							<td colspan="4">${detail.notice_text}
 							</td>
 						</tr>
 					</table>
@@ -52,4 +51,5 @@
 	</div>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script src="/resources/include/dist/js/bootstrap.min.js"></script>
+	
 </body>

@@ -21,9 +21,7 @@ import com.restaurant.common.util.OpenCrypt;
 import com.restaurant.user.login.vo.LoginVO;
 import com.restaurant.user.mail.service.MailService;
 import com.restaurant.user.member.dao.MemberDAO;
-import com.restaurant.user.member.service.MemberService;
 import com.restaurant.user.member.vo.MemberSecurity;
-import com.restaurant.user.member.vo.MemberVO;
 import com.restaurant.user.mypage.service.MyPageService;
 import com.restaurant.user.mypage.vo.MyPageVO;
 
@@ -42,15 +40,20 @@ public class MyPageController {
 
 	// 내정보 메인
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String mypage(HttpSession session, Model model) {
+	public String mypage(HttpSession session, Model model) throws Exception {
 		logger.info("마이페이지 GET 호출 성공");
 		loginvo = (LoginVO) session.getAttribute("login");
 		int login_no = loginvo.getMember_no();
+		String login_id = loginvo.getId();
+		MyPageVO insertId = new MyPageVO();
+		insertId.setId(login_id);
+		
+		MyPageVO loginInfoVo = mypageservice.selectMemberID(insertId);
 
 		MyPageVO myPageMember = mypageservice.memberInfoCnt(login_no);
 
 		model.addAttribute("myPageMember", myPageMember);
-		model.addAttribute("loginInfo", loginvo);
+		model.addAttribute("loginInfo", loginInfoVo);
 
 		return "user/mypage/mypage";
 	}

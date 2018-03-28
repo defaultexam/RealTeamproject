@@ -28,16 +28,16 @@
 								<td>${coupon.coupon_name}</td>
 								<td>${coupon.coupon_start.substring(0,10)} ~
 									${coupon.coupon_end.substring(0,10)}</td>
-								<td id="insidehere">
+								<td id="insidehere${status.index}">
 									<%-- ${coupon.coupon_discountRate * 100}% --%>
 								</td>
 							</tr>
 							<script type="text/javascript">
-									var discountRate = '${coupon.coupon_discountRate * 100}';
-									var splitRate = discountRate.split(".0");
-									var tost = "<td>" + splitRate[0] + "%</td>";
-									$("#insidehere").append(tost);
-								</script>
+							var discountRate = '${coupon.coupon_discountRate * 100}';
+								var splitRate = discountRate.split(".0");
+								var tost = splitRate[0] + "%";
+								$("#insidehere${status.index}").append(tost);
+							</script>
 						</c:forEach>
 					</c:when>
 					<c:otherwise>

@@ -11,8 +11,9 @@
 <script type="text/javascript"
 	src="/resources/include/js/jquery-3.3.1.min.js"></script>
 <script src="/resources/include/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/resources/include/js/common.js"></script>
 <script type="text/javascript"
-	src="/resources/include/js/common.js"></script>
+   src="/resources/include/ckeditor/ckeditor.js"></script>
 <script type="text/javascript">
 	$(function() {
 		/* 공지사항 상세보기(수정/삭제)에서 목록으로 버튼 클릭 시 */
@@ -30,9 +31,12 @@
 		});
 		/* 공지사항 상세보기(수정/삭제)에서 수정 버튼 클릭 시 */
 		$("#noticeUpdateBtn").click(function() {
+			// 스마트 에디터 사용설정
+	         $("#notice_text").val(CKEDITOR.instances.notice_text.getData());
 			// 입력값 체크
 			if (!chkSubmit($('#notice_text'), "수정할 공지사항 공지글 내용을 "))
-				return;else {
+				return;
+			else {
 				$("#n_data").attr({
 					"method" : "POST",
 					"action" : "/adminNotice/noticeUpdate.do"
@@ -89,5 +93,14 @@
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript">
+		CKEDITOR.config.language = 'english';
+		CKEDITOR.replace('notice_text');
+		$(function() {
+			CKEDITOR.replace('notice_text', {
+				customConfig : "/resources/include/ckeditor/config.js"
+			});
+		});
+	</script>
 </body>
 </html>

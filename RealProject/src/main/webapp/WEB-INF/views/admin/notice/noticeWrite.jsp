@@ -13,6 +13,8 @@
 	src="/resources/include/js/jquery-3.3.1.min.js"></script>
 <script src="/resources/include/dist/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/resources/include/js/common.js"></script>
+<script type="text/javascript"
+   src="/resources/include/ckeditor/ckeditor.js"></script>
 <script type="text/javascript">
 	$(function() {
 		/* 공지사항 글쓰기 폼에서 목록으로 버튼 클릭 시 */
@@ -26,6 +28,9 @@
 		});
 		/* 공지사항 글쓰기 폼에서 공지글 등록 버튼 클릭 시 */
 		$("#noticeInsertBtn").click(function() {
+			// 스마트 에디터 사용설정
+	         $("#notice_text").val(CKEDITOR.instances.notice_text.getData());
+			
 			// 입력값 체크
 			if (!chkSubmit($('#notice_title'), "공지사항 글제목을"))
 				return;
@@ -70,4 +75,14 @@
 				value="목록으로" class="btn btn-default" id="noticeListBtn">
 		</div>
 	</div>
+	  <script type="text/javascript">
+      CKEDITOR.config.language = 'english';
+      CKEDITOR.replace('notice_text');
+      $(function() {
+         CKEDITOR.replace('notice_text', {
+            customConfig : "/resources/include/ckeditor/config.js"
+         });
+      });
+   </script>
+	
 </body>
