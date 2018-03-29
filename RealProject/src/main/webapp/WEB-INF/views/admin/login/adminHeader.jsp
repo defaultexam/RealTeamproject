@@ -42,8 +42,9 @@ li < a {
 			<img align="middle" alt="" src="/resources/images/logo.png"
 				width="200" height="200"
 				onclick='location.href="/afterAdminLogin.do"'>
-			<div id="adminHello">
-				<label>관리자님 반갑습니다.</label> <a href="/admin/logout.do">로그아웃</a>
+			<div id="adminHello" align="right" style="padding-right: 33%;">
+				<label>관리자님 반갑습니다.</label><a href="/admin/logout.do">로그아웃</a>
+				<label>&nbsp;</label>
 			</div>
 		</div>
 		<div id="headerMenu" class="">

@@ -192,7 +192,8 @@ ${reservation.menu_name1} , ${reservation.menu_name2} 외 6종
 						</c:when>
 						<c:otherwise>
 							<tr>
-								<td colspan="13" class="tac">예약내역이 존재하지 않습니다.</td>
+								<td colspan="13" class="tac"><div class="well"
+										align="center">예약내역이 존재하지 않습니다.</div></td>
 							</tr>
 						</c:otherwise>
 					</c:choose>

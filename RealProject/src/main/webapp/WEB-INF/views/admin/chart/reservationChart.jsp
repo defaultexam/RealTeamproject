@@ -129,8 +129,9 @@
 	<div>
 		<label>조회 기간 설정 : </label> <input type="date" id="chartStartDate">
 		~ <input type="date" id="chartEndDate"> <input type="button"
-			id="chartSearch" value="조회하기"> <input type="button"
-			id="chartSearchTotal" value="전체보기">
+			id="chartSearch" value="조회하기" class="btn btn-default"> <input
+			type="button" id="chartSearchTotal" value="전체보기"
+			class="btn btn-default">
 	</div>
 
 	<div align="center" id="chartDiv">
@@ -138,7 +139,7 @@
 	</div>
 	<div id="graph-images" hidden=""></div>
 	<div align="center">
-		<button id="pdfBtn">PDF출력하기</button>
+		<button id="pdfBtn" class="btn btn-default">PDF출력하기</button>
 	</div>
 	<img alt="" src="" style="transform: rotate(90deg);">
 

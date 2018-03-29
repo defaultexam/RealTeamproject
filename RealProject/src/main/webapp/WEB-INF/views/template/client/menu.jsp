@@ -3,12 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page trimDirectiveWhitespaces="true"%>
 <head>
-<script type="text/javascript">
-	//텝 세션 삭제
-	function faqTabClear() {
-		sessionStorage.removeItem("faqtab");
-	}
-</script>
 <style>
 #header {
 	position: relative;
@@ -345,17 +339,14 @@
 				<ul class="utility-list">
 					<c:choose>
 						<c:when test="${login.id != null and login.id != ''}">
-							<li>환영합니다 ${login.name}님</li>
-							<li><a href="/login/logout" onclick="alert('로그아웃 되었습니다.');">로그아웃</a></li>
-							<li class="last-child"><a href="/mypage">내정보관리</a></li>
+							<li><a href="/login/logout" onclick="alert('로그아웃 되었습니다.');">Log Out</a></li>
+							<li class="last-child"><a href="/mypage">My Page</a></li>
 						</c:when>
 						<c:otherwise>
 							<li><a href="/login">Login</a></li>
 							<li class="last-child"><a href="/register/terms">Join</a></li>
 						</c:otherwise>
 					</c:choose>
-					<c:if test="${login.id == null and login.id == ''}">
-					</c:if>
 				</ul>
 			</div>
 			<!-- 스크롤을 내렸을때 우측에 생성되는 네모 버튼 -->
@@ -371,5 +362,4 @@
 	<script src="/resources/include/js/imMenu.js"></script>
 	<script src="/resources/include/js/TweenMax.min.js"></script>
 	<script src="/resources/include/js/scrollActive.js"></script>
-
 </body>
