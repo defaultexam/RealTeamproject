@@ -126,7 +126,7 @@
 						<tr>
 							<th scope="row" class="ac"><label for="question_text">문의내용</label></th>
 							<td><textarea name="question_text" id="question_text"
-									class="form-control formsize"></textarea></td>
+									class="form-control formsize" rows="8"></textarea></td>
 						</tr>
 						<tr>
 							<th scope="row" class="ac"><label for="question_file">첨부파일</label></th>
