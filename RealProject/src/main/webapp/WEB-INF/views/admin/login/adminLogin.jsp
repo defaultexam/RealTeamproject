@@ -66,13 +66,12 @@
 					<label>관리자 로그인 서비스 입니다. 로그인 하시면 레스토랑 사이트관리를 하실 수 있습니다.</label>
 					<div class="form-group col-md-12">
 						<br /> <label for="adminId"> 아 이 디 : </label> <input type="text"
-							id="adminId" name="adminId" placeholder="ID" value="test"
-							class="form-control">
+							id="adminId" name="adminId" placeholder="ID" class="form-control">
 						<p class="error">&nbsp;</p>
 					</div>
 					<div class="form-group col-md-12">
 						<label for="adminPw"> 비밀번호 : </label> <input type="password"
-							id="adminPw" name="adminPw" placeholder="Password" value="1234"
+							id="adminPw" name="adminPw" placeholder="Password"
 							class="form-control">
 						<p class="error">&nbsp;</p>
 					</div>
