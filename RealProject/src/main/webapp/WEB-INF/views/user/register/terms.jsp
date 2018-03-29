@@ -305,8 +305,11 @@ input[type=checkbox]:not(old):checked+label {
 					for="check3">동의</label>
 			</div>
 			<article data-spy="scroll" data-target="#scrollspy-nav"
-				data-offset="0" class="scrollspy-example">
-				<h3 align="center">마케팅 정보 수집 및 이용 동의</h3>
+				data-offset="0" class="scrollspy-example" style="height: 140px;">
+				<h3 align="center">마케팅 정보 수집 및 이용 동의 <span style="font-weight: 600">(선택)</span></h3>
+				<span class="txt_bold">제26조 (마케팅 정보 수집 및 이용 동의)</span><br> 마케팅
+				및 광고에의 활용 - 신규 메뉴 개발 및 맞춤 서비스 제공, 이벤트 및 광고성 정보 제공 및 참여기회 제공.<br>인구통계학적
+				특성에 따른 서비스 제공 및 광고 게재, 서비스의 유효성 확인, 접속빈도 파악 또는 회원의 서비스 이용에 대한 통계 등
 			</article>
 
 			<br /> <br />
@@ -347,7 +350,7 @@ input[type=checkbox]:not(old):checked+label {
 				}
 			});
 			$("#btnno").click(function() {
-			//	alert("필수 사항을 체크하지 않으실 경우, 회원 가입을 하실 수 없습니다. \n메인 페이지로 이동합니다.");				
+				//	alert("필수 사항을 체크하지 않으실 경우, 회원 가입을 하실 수 없습니다. \n메인 페이지로 이동합니다.");				
 				window.location.href = '/';
 			});
 	
