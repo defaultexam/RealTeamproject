@@ -49,9 +49,8 @@
 	<beans:bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<beans:property name="defaultEncoding" value="UTF-8" />
-		<beans:property name="maxUploadSize" value="5242880" />
+		<beans:property name="maxUploadSize" value="52428800" />
 	</beans:bean>
-
 	<beans:bean id="menudao"
 		class="com.restaurant.admin.menu.dao.AdminMenuDAOImpl" />
 	<beans:bean id="coupondao"

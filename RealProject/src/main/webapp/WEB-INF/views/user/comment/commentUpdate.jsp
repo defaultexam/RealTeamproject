@@ -18,7 +18,9 @@
 	<script type="text/javascript">
 		$(function() {
 			/* 라디오버튼 가져오기 */
-			$("input:radio[name='comment_score']:input[value='${updateData.comment_score}']").attr("checked", true);
+			$(
+					"input:radio[name='comment_score']:input[value='${updateData.comment_score}']")
+					.attr("checked", true);
 			$("#commentUpdateBtn").click(function() {
 				$("#commentForm").attr({
 					"method" : "POST",
@@ -61,20 +63,23 @@
 					<tr>
 						<th scope="row" class="ac">레스토랑 평점</th>
 						<td><input type="radio" class="comment_control"
-							name="comment_score" value="★☆☆☆☆ " />★☆☆☆☆ <input type="radio"
-							class="comment_control" name="comment_score" value="★★☆☆☆" />★★☆☆☆
-							<input type="radio" class="comment_control" name="comment_score"
-							value="★★★☆☆" />★★★☆☆ <input type="radio"
-							class="comment_control" name="comment_score" value="★★★★☆" />★★★★☆
-							<input type="radio" class="comment_control" name="comment_score"
-							value="★★★★★" />★★★★★</td>
+							name="comment_score" value="★☆☆☆☆ " id="star1" /><label
+							for="star1">★☆☆☆☆</label> <input type="radio"
+							class="comment_control" name="comment_score" value="★★☆☆☆"
+							id="star2" /><label for="star2">★★☆☆☆</label> <input
+							type="radio" class="comment_control" name="comment_score"
+							value="★★★☆☆" id="star3" /><label for="star3">★★★☆☆</label> <input
+							type="radio" class="comment_control" name="comment_score"
+							value="★★★★☆" id="star4" /><label for="star4">★★★★☆ </label><input
+							type="radio" class="comment_control" name="comment_score"
+							value="★★★★★" id="star5" /><label for="star5">★★★★★</label></td>
 					</tr>
 					<tr>
 						<th scope="row" class="ac">첨부 이미지</th>
 						<td><img alt="sdf"
 							src="/uploadStorage/comment/${updateData.comment_file}"
 							width="200px" height="200px"><input type="file" name="file"
-							class="form-control"></td>
+							class="form-control" accept=".jpg, .png, .jpeg"></td>
 					</tr>
 				</table>
 			</form>

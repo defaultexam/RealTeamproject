@@ -208,7 +208,7 @@
 						placeholder="메뉴가격" name="menu_price" id="menu_price"
 						class="menuset form-control"> <input type="file"
 						name="file" id="file" placeholder="이미지추가"
-						class="menuset form-control">
+						class="menuset form-control" accept=".jpg, .png, .jpeg">
 					<textarea name="menu_text" id="menu_text" placeholder="메뉴설명"
 						class="menuset form-control"></textarea>
 					<select name="menu_kind" id="menu_kind"
@@ -238,7 +238,7 @@
 	<script type="text/javascript">
 		var sel_file;
 		/* 초기화 버튼 */
-	
+
 		$(function() {
 			$("#menureset").click(function() {
 				$("#menu_name").val("");
@@ -257,7 +257,7 @@
 			$(".menu").parents("li").removeClass("active");
 			$("#menu" + selected).parents("li").addClass("active");
 		}
-	
+
 		function divChange(selected) {
 			let change = document.getElementById(selected + "div");
 			alldiv.classList.add("hide");
@@ -270,7 +270,7 @@
 			liquordiv.classList.add("hide");
 			change.classList.remove("hide");
 		}
-	
+
 		$(function() {
 			/* 추가 입력값 체크 및 submit */
 			$("#menuadd").click(function() {
@@ -286,12 +286,13 @@
 				} else if (!chkSubmit($('#file'), "등록할 이미지를")) {
 					return;
 				} else if (!chkFile($('#file'))) {
+					$('#file').val("");
 					return;
 				} else {
-	
+
 					$("#menu_no").removeAttr("name");
 					$("#menu_menufile").removeAttr("name");
-	
+
 					$('#menu_form').attr({
 						"method" : "POST",
 						"action" : "/menu/menuInsert"
@@ -304,82 +305,89 @@
 			$("#menudel").prop("disabled", true);
 			/* 파일선택 했을때 출력되는 이미지 스크립트 */
 			$("#file").on("change", handleImgFileSelect);
-	
+
 			/* 메뉴 선택시 발생 이벤트*/
-			$(".menuclick").click(
-				function() {
-					var menu_no = $(this).attr("data-num");
-					var result = {};
-					$("#menu_no").val(menu_no);
-					$.ajax({
-						url : "/menu/menuclick",
-						type : "get",
-						dataType : "json",
-						data : {
-							"menu_no" : menu_no
-						},
-						error : function() {
-							alert("사이트 접속 문제로 정상 작동하지 못하였습니다. 잠시후 다시 시도해 주세요");
-						},
-						success : function(data) {
-							result = data;
-							$("#menuedit").prop("disabled",
-								false);
-							$("#menudel").prop("disabled",
-								false);
-							$("#menuadd")
-								.prop("disabled", true);
-							$("#menu_no").val(result.menu_no);
-							$("#menu_menufile").val(
-								result.menu_menufile);
-							$("#menu_name").val(
-								result.menu_name);
-							$("#menu_price").val(
-								result.menu_price);
-							$("#menu_text").val(
-								result.menu_text);
-							$("#menu_img").attr({
-								"src" : "/uploadStorage/menu/thumbnail/" + result.menu_menufile
+			$(".menuclick")
+					.click(
+							function() {
+								var menu_no = $(this).attr("data-num");
+								var result = {};
+								$("#menu_no").val(menu_no);
+								$
+										.ajax({
+											url : "/menu/menuclick",
+											type : "get",
+											dataType : "json",
+											data : {
+												"menu_no" : menu_no
+											},
+											error : function() {
+												alert("사이트 접속 문제로 정상 작동하지 못하였습니다. 잠시후 다시 시도해 주세요");
+											},
+											success : function(data) {
+												result = data;
+												$("#menuedit").prop("disabled",
+														false);
+												$("#menudel").prop("disabled",
+														false);
+												$("#menuadd").prop("disabled",
+														true);
+												$("#menu_no").val(
+														result.menu_no);
+												$("#menu_menufile").val(
+														result.menu_menufile);
+												$("#menu_name").val(
+														result.menu_name);
+												$("#menu_price").val(
+														result.menu_price);
+												$("#menu_text").val(
+														result.menu_text);
+												$("#menu_img")
+														.attr(
+																{
+																	"src" : "/uploadStorage/menu/thumbnail/"
+																			+ result.menu_menufile
+																});
+
+												var seMenuKind = result.menu_kind;
+												console.log(seMenuKind);
+												$("option").removeAttr(
+														"selected");
+												if (seMenuKind == "steak") {
+													$("#steak").attr({
+														"selected" : "selected"
+													});
+												} else if (seMenuKind == "pasta") {
+													$("#pasta").attr({
+														"selected" : "selected"
+													});
+												} else if (seMenuKind == "sallad") {
+													$("#sallad").attr({
+														"selected" : "selected"
+													});
+												} else if (seMenuKind == "course") {
+													$("#course").attr({
+														"selected" : "selected"
+													});
+												} else if (seMenuKind == "wine") {
+													$("#wine").attr({
+														"selected" : "selected"
+													});
+												} else if (seMenuKind == "beer") {
+													$("#beer").attr({
+														"selected" : "selected"
+													});
+												} else {
+													$("#liquor").attr({
+														"selected" : "selected"
+													});
+												}
+											}
+										});
 							});
-	
-							var seMenuKind = result.menu_kind;
-							console.log(seMenuKind);
-							$("option").removeAttr("selected");
-							if (seMenuKind == "steak") {
-								$("#steak").attr({
-									"selected" : "selected"
-								});
-							} else if (seMenuKind == "pasta") {
-								$("#pasta").attr({
-									"selected" : "selected"
-								});
-							} else if (seMenuKind == "sallad") {
-								$("#sallad").attr({
-									"selected" : "selected"
-								});
-							} else if (seMenuKind == "course") {
-								$("#course").attr({
-									"selected" : "selected"
-								});
-							} else if (seMenuKind == "wine") {
-								$("#wine").attr({
-									"selected" : "selected"
-								});
-							} else if (seMenuKind == "beer") {
-								$("#beer").attr({
-									"selected" : "selected"
-								});
-							} else {
-								$("#liquor").attr({
-									"selected" : "selected"
-								});
-							}
-						}
-					});
-				});
 			/* 메뉴 삭제 */
 			$("#menudel").click(function() {
-	
+
 				$("#menu_form").removeAttr("method");
 				$("#menu_form").removeAttr("action");
 				$("#file").removeAttr("name");
@@ -389,7 +397,7 @@
 				});
 				$("#menu_form").submit();
 			});
-	
+
 			/* 메뉴 수정 */
 			$("#menuedit").click(function() {
 				//입력값체크
@@ -420,13 +428,15 @@
 				if (!f.type.match("image.*")) {
 					alert("확장자는 이미지 확장자만 가능.");
 					return;
+				} else {
+					sel_file = f;
+					var reader = new FileReader();
+					reader.onload = function(e) {
+						$("#menu_img").attr("src", e.target.result);
+					}
+					reader.readAsDataURL(f);
 				}
-				sel_file = f;
-				var reader = new FileReader();
-				reader.onload = function(e) {
-					$("#menu_img").attr("src", e.target.result);
-				}
-				reader.readAsDataURL(f);
+
 			});
 		}
 	</script>

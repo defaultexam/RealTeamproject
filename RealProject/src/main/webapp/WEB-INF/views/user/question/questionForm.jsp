@@ -131,7 +131,7 @@
 						<tr>
 							<th scope="row" class="ac"><label for="question_file">첨부파일</label></th>
 							<td><input type="file" name="file" id="question_file"
-								class="form-control formsize"></td>
+								class="form-control formsize" accept=".jpg, .png, .jpeg"></td>
 						</tr>
 					</table>
 				</form>

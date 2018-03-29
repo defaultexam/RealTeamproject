@@ -16,10 +16,7 @@
 <script src="/resources/include/dist/js/bootstrap.min.js"></script>
 <script type="text/javascript"
 	src="/resources/include/js/jquery-3.3.1.min.js"></script>
-<script type="text/javascript"
-	src="/resources/include/js/jquery.form.min.js"></script>
 <script type="text/javascript" src="/resources/include/js/common.js"></script>
-
 <script type="text/javascript">
 	$(function() {
 
@@ -36,7 +33,6 @@
 				width : "200px",
 				height : "200px"
 			});
-
 		}
 
 		// 관리자 답변 작성 중 목록으로 클릭 시  
@@ -51,7 +47,6 @@
 		});
 
 		$("#answerOkBtn").click(function() {
-
 			// 입력값 체크
 			if (!chkSubmit($('#answer_text'), "관리자 답변을"))
 				return;
@@ -63,16 +58,12 @@
 				$("#q_data").attr({
 					"method" : "POST",
 					"action" : "/adminQuestion/adminQuestionUpdate.do"
-
 				});
 
 				$("#q_data").submit();
 				alert("답변이 완료되었습니다.");
-
 			}
-
 		});
-
 	})
 </script>
 <style type="text/css">
@@ -143,7 +134,8 @@
 						</c:if> --%>
 						<tr>
 							<td class="ac">첨부 이미지</td>
-							<td><input type="file" name="file" id="answer_file"></td>
+							<td><input type="file" name="file" id="answer_file"
+								accept=".jpg, .png, .jpeg"></td>
 						</tr>
 					</table>
 				</form>
