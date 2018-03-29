@@ -13,6 +13,7 @@ var cart_kind = new Array();
 var cart_amount = new Array();
 // 장바구니 배열 종료. ========================================
 var cart_seq = 0;
+// /reservation/reserve 올라가는 좌석 정보
 var seat_no = 9999;
 var seat_time = "12:00 ~ 14:00";
 // 예약 인원, 최소 인원은 1명이기에 초기 값이 1.

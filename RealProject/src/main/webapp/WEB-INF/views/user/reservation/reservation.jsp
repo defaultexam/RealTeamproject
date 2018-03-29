@@ -80,6 +80,7 @@
 			success : function(resultdata) {
 				if (resultdata != null) {
 					seats = resultdata;
+					seat_no = seats[0].seat_no;
 					// 출력 초기값 설정
 					$("#extra1").html("데이터 없음");
 					$("#extra2").html("데이터 없음");
