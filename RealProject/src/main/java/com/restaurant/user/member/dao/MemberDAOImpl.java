@@ -85,4 +85,5 @@ public class MemberDAOImpl implements MemberDAO {
 	public int memberPointUpdate(MemberVO mvo) {
 		return session.update("memberPointUpdate", mvo);
 	}
+	
 }

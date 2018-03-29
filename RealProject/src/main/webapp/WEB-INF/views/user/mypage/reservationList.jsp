@@ -9,6 +9,7 @@
 		$(".cancelBtn").click(
 			function() {
 				var checkedNum = $(this).parents("tr").attr("data-num");
+				var totalPay = $(this).parents("tr").find(".memberTotalPay").attr("data-value");
 				var cancelTrBook_date = $(this).parents("td").siblings(".memberSeatDate").attr("data-value");
 				var cancelTrPayDate = $(this).parents("td").siblings(".memberPayDate").attr("data-value");
 				var totalPayValue = $(this).parents("td").siblings(".memberTotalPay").attr("data-value");
@@ -35,9 +36,7 @@
 				var oneTerm = new Date(bookdate - 1 * currDay);
 				var oneTermString = (oneTerm.getMonth() + 1) + "-"
 				+ oneTerm.getDate();
-				if (((now.getMonth() + 1) + "-" + now.getDate()) == ((paydate
-						.getMonth() + 1)
-					+ "-" + paydate.getDate())) {
+				if (((now.getMonth() + 1) + "-" + now.getDate()) == ((paydate.getMonth() + 1) + "-" + paydate.getDate())) {
 					cancelTotalPay = totalPayValue;
 				} else if (sevenTermString >= nowString) {
 					cancelTotalPay = totalPayValue;
@@ -52,6 +51,7 @@
 				}
 				$("#inputcancel_total").val(cancelTotalPay);
 				$("#cancelBook_no").val(checkedNum);
+				$("#totalPay").val(totalPay);
 				$("#cancelPayInsertModal").modal('show');
 			});
 
@@ -66,6 +66,7 @@
 					data : {
 						"book_no" : checkedNum,
 						"book_condition" : '취소',
+						"totalpay" : $("#totalPay").val(),
 						"cancel_total" : $("#inputcancel_total").val(),
 						"cancel_reciver" : $("#inputcancel_reciver").val(),
 						"cancel_bank" : $("#inputcancel_bank").val(),
@@ -96,11 +97,8 @@
 <body>
 	<h3 align="center" style="font-weight: 700;">예약 내역</h3>
 	<hr>
-	<div class="container-fluid" style="width: 1400px; padding-left: 0"
-		align="center">
-
-		<div id="table-result"
-			style="width: 1200px; padding-right: 100px; float: left;">
+	<div class="container-fluid" style="width: 1400px; padding-left: 0">
+		<div id="table-result" style="width: 1200px; float: left;">
 			<table class="table table-bordered table-hover">
 				<thead>
 					<tr>
@@ -127,7 +125,7 @@
 							<c:forEach var="reservation" items="${reservationList}"
 								varStatus="status">
 								<tr data-num="${reservation.book_no }">
-									<td>${reservation.book_condition }</td>
+									<td style="width: 80px;">${reservation.book_condition }</td>
 									<td>${reservation.book_name }</td>
 									<td class="memberSeatDate"
 										data-value="${reservation.seat_date.substring(0,10)}">${reservation.seat_date.substring(0,10)}</td>
@@ -175,10 +173,23 @@ ${reservation.menu_name1} , ${reservation.menu_name2} 외 6종
 									<td class="memberTotalPay"
 										data-value="${reservation.totalpay }">${reservation.totalpay }원</td>
 									<td>${reservation.book_memo }</td>
-									<td><c:if test="${reservation.book_condition == '사용' }">
+									<td id="tdbtn${status.index}"><c:if
+											test="${reservation.book_condition == '사용' }">
 										</c:if> <c:if test="${reservation.book_condition == '미사용' }">
-											<input type="button" class="cancelBtn btn btn-secondary"
-												value="예약 취소">
+											<!-- <input type="button" class="cancelBtn btn btn-secondary"
+												value="예약 취소"> -->
+											<script type="text/javascript">
+											var sysdate = new Date();
+											if(sysdate.getMonth() < 10)
+												sysdate = sysdate.getFullYear() + "-0" + (sysdate.getMonth() + 1) + "-" + (sysdate.getDate());
+											else
+												sysdate = sysdate.getFullYear() + "-" + (sysdate.getMonth() + 1) + "-" + (sysdate.getDate());	
+											var reservedDate = '${reservation.seat_date.substring(0,10)}';
+											if(sysdate == reservedDate) 
+												$("#tdbtn" + ${status.index}).append("<span><font size='2.5'><font color='#FF4848'>취소 불가</font></font></span>");						
+											else
+												$("#tdbtn" + ${status.index}).append("<input type='button' class='cancelBtn btn btn-secondary' value='예약 취소' alt='새로 생성된 버튼'>");
+											</script>
 										</c:if></td>
 								</tr>
 								<script type="text/javascript">
@@ -216,6 +227,7 @@ ${reservation.menu_name1} , ${reservation.menu_name2} 외 6종
 					<div class="modal-body">
 						<form id="f_Form">
 							<input type="hidden" id="cancelBook_no">
+							<input type="hidden" id="totalPay">
 							<div class="form-group">
 								<label for="inputcancel_reciver" class="control-label">환불예금주</label>
 								<input type="text" class="form-control" id="inputcancel_reciver"

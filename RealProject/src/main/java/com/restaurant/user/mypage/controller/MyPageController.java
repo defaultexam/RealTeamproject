@@ -22,6 +22,7 @@ import com.restaurant.user.login.vo.LoginVO;
 import com.restaurant.user.mail.service.MailService;
 import com.restaurant.user.member.dao.MemberDAO;
 import com.restaurant.user.member.vo.MemberSecurity;
+import com.restaurant.user.member.vo.MemberVO;
 import com.restaurant.user.mypage.service.MyPageService;
 import com.restaurant.user.mypage.vo.MyPageVO;
 
@@ -111,8 +112,16 @@ public class MyPageController {
 	@RequestMapping(value = "/reservationEdit", method = RequestMethod.POST)
 	public int userReservationEdit(@ModelAttribute MyPageVO mvo) throws Exception {
 		int result = 0;
-		System.out.println("수정컨트롤러 실행");
+		int pointResult = 0;
+		int point = (mvo.getTotalpay() / 1000);
+		System.out.println(mvo.toString());
+		MemberVO memvo = new MemberVO();
+		logger.info("/mypage/reservationEdit 호출, 수정 작업 시작.");
 		result = mypageservice.userReservationEdit(mvo);
+		memvo.setMember_no(loginvo.getMember_no());
+		memvo.setPoint(-point);
+		pointResult = memberDAO.memberPointUpdate(memvo);
+		logger.info("회원 번호 : " + memvo.getMember_no() + " 에 관련하여 포인트: " + -point + " 업데이트 성공 여부 : " + pointResult);
 		return result;
 	}
 

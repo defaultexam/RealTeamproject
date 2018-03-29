@@ -22,7 +22,6 @@ import com.restaurant.admin.menu.vo.AdminMenuVO;
 import com.restaurant.user.login.vo.LoginVO;
 import com.restaurant.user.member.service.MemberService;
 import com.restaurant.user.member.vo.MemberVO;
-import com.restaurant.user.register.controller.RegisterController;
 import com.restaurant.user.reservation.service.ReservationService;
 import com.restaurant.user.reservation.vo.ReservationVO;
 import com.restaurant.user.seat.service.SeatService;
@@ -31,7 +30,7 @@ import com.restaurant.user.seat.vo.SeatVO;
 @Controller
 @RequestMapping("/reservation")
 public class ReservationController {
-	Logger logger = Logger.getLogger(RegisterController.class);
+	Logger logger = Logger.getLogger(ReservationController.class);
 	@Autowired
 	private MenuService menuService;
 	@Autowired
@@ -141,6 +140,7 @@ public class ReservationController {
 				mvo.setAgreement2(rvo.getDiscount());
 				memberService.memberCouponUpdate(mvo);
 			}
+			mvo = new MemberVO();
 			// 구매 총액의 0.1% 만큼의 포인트를 적립한다.
 			mvo.setMember_no(rvo.getMember_no());
 			mvo.setPoint(rvo.getTotalpay() / 1000);
@@ -150,7 +150,7 @@ public class ReservationController {
 				pointResultToString = "성공";
 			else
 				pointResultToString = "실패";
-			logger.info("회원 번호 : " + mvo.getMember_no() + " 에 관련하여 포인트 업데이트 성공 여부 : " + pointResultToString);
+			logger.info("회원 번호 : " + mvo.getMember_no() + " 에 관련하여 포인트"+ mvo.getPoint() + "업데이트 성공 여부 : " + pointResultToString);
 			// =============================================================================
 			result = "성공";
 		} else {

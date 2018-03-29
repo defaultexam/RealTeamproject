@@ -22,4 +22,5 @@ public interface MemberDAO {
 	public MemberVO memberNoSearch(int member_no);
 	public MemberVO memberCheckEmail(String email);
 	public int memberPointUpdate(MemberVO mvo);
+	
 }

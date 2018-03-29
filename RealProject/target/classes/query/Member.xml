@@ -88,13 +88,17 @@
 		couponhistory_no=#{agreement1}
 	</update>
 
+	<update id="memberPointUpdate" parameterType="member">
+		update member set point = point + #{point} where member_no= #{member_no}
+	</update>
+	
 	<select id="memberNoSearch" parameterType="int" resultType="member">
 		select *
 		from
 		member
 		where member_no = #{member_no}
 	</select>
-	
+
 	<select id="memberCheckEmail" parameterType="String" resultType="member">
 		select email from member where email = #{email} and condition = '활동중'
 	</select>
