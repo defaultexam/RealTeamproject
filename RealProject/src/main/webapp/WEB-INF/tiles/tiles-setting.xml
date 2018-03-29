@@ -75,9 +75,7 @@
 	<definition name="user/mypage/*" extends="intro2">
 		<put-attribute name="body" value="/WEB-INF/views/user/mypage/{1}.jsp" />
 	</definition>
-	<definition name="user/question/*" extends="intro2">
-		<put-attribute name="body" value="/WEB-INF/views/user/question/{1}.jsp" />
-	</definition>
+	
 
 
 
