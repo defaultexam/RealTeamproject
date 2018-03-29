@@ -40,7 +40,7 @@
 </head>
 <body>
 	<h3 align="center" style="font-weight: 700">내 정보 관리</h3>
-	<h4 align="right">${loginInfo.name }님의등급은${loginInfo.rank }입니다.</h4>
+	<h4 align="right">${loginInfo.name }님의&nbsp;등급은&nbsp;${loginInfo.rank }입니다.</h4>
 	<h5 align="right">보유 포인트 : ${loginInfo.point } point</h5>
 	<hr>
 	<div class="container">

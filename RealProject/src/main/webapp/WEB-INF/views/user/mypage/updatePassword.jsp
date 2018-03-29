@@ -19,7 +19,7 @@
 			});
 		});
 	</script>
-	<h3 align="center" style="font-weight: 700">내 정보 수정</h3>
+	<h3 align="center" style="font-weight: 700">회원 탈퇴</h3>
 	<hr>
 	<form id="Check" method="POST">
 		<div class="container">
