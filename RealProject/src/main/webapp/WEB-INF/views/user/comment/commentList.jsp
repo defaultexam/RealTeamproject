@@ -100,11 +100,16 @@
 										<tbody id="list">
 											<tr>
 												<td rowspan="3" class="comment_file" align="center"
-													style="width: 200px; height: 200px;"><img
-													src="/uploadStorage/comment/${comment.comment_file}"
-													align="middle" id="c_img"
-													style="width: 200px; height: 200px;" /><br /> <br /> <c:if
-														test="${login.id == comment.id}">
+													style="width: 200px; height: 200px;"><script
+														type="text/javascript">
+										var test = "<c:out value='${comment.comment_file}' />";
+										console.log("file"+test);
+										if(test == null || test == ''){
+											document.write("<img src='/resources/images/common/noimage.png' align='middle' id='c_img' style='width: 200px; height: 200px;' />");
+										}else{
+											document.write("<img src='/uploadStorage/comment/${comment.comment_file}' align='middle' id='c_img' style='width: 200px; height: 200px;' />");
+										}
+										</script> <br /> <br /> <c:if test="${login.id == comment.id}">
 														<input type="button" value="수정" class="btn btn-default"
 															style="width: 70px;"
 															onclick="update(${comment.comment_no});">

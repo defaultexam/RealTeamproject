@@ -37,7 +37,7 @@
 						<table class="table table-bordered">
 							<tbody id="list">
 								<tr>
-									<td align="left">사용자명</td>
+									<td align="left">사용자아이디</td>
 									<td style="width: 150px;">${comment.id}</td>
 									<td style="width: 100px;">작성일자</td>
 									<td>${comment.comment_date}</td>
@@ -46,10 +46,16 @@
 								</tr>
 								<tr class="tac" data-num="${comment.comment_no}">
 									<td rowspan="2" class="comment_file" align="center"
-										style="width: 200px; height: 200px;"><img
-										src="/uploadStorage/comment/${comment.comment_file}"
-										align="middle" id="c_img" style="width: 200px; height: 200px;" /><br />
-										<br /> <input type="button" value="삭제"
+										style="width: 200px; height: 200px;">
+										<script type="text/javascript">
+										var test = "<c:out value='${comment.comment_file}' />";
+										console.log("file"+test);
+										if(test == null || test == ''){
+											document.write("<img src='/resources/images/common/noimage.png' align='middle' id='c_img' style='width: 200px; height: 200px;' />");
+										}else{
+											document.write("<img src='/uploadStorage/comment/${comment.comment_file}' align='middle' id='c_img' style='width: 200px; height: 200px;' />");
+										}
+										</script> <br /> <br /> <input type="button" value="삭제"
 										class="btn btn-primary" style="width: 200px;"
 										onclick="choiceDel(${comment.comment_no});"></td>
 									<td style="width: 50px;">제목</td>
