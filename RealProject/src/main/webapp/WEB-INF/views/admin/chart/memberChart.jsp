@@ -53,7 +53,8 @@
 				height : '100%'
 			},
 			height : 550,
-			width : 550
+			width : 550,
+			is3D : true
 		};
 		var chart = new google.visualization.PieChart(document
 				.getElementById('genderChart'));
@@ -92,7 +93,6 @@
 			vAxis : {
 				minValue : 0,
 				maxValue : 10
-				//format : 'percent'
 			},
 			chartArea : {
 				bottom : 24,
@@ -166,7 +166,7 @@
 	</div>
 	<div id="graph-images" hidden=""></div>
 	<div align="center">
-		<button id="pdfBtn">PDF출력하기</button>
+		<button id="pdfBtn" class="btn btn-default">PDF출력하기</button>
 	</div>
 </body>
 </html>
