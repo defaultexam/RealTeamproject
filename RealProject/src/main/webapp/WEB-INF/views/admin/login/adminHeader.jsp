@@ -11,20 +11,23 @@ li < a {
 }
 </style>
 <script type="text/javascript">
+	//회원관리 페이지 탭 선택 세션 초기화
 	function tab() {
 		sessionStorage.removeItem("tab");
 	}
+	//메뉴관리 페이지 탭 선택 세션 초기화
 	function menuTab() {
 		sessionStorage.removeItem("menu");
 	}
+	//예약관리 페이지 탭 선택 세션 초기화
 	function reservationTab() {
 		sessionStorage.removeItem("reservation");
 	}
-	//텝 세션 삭제
+	//FAQ관리 페이지 탭 선택 세션 초기화
 	function faqTabClear() {
 		sessionStorage.removeItem("faqtab");
 	}
-	//텝 세션 삭제
+	//1:1문의관리 페이지 탭 선택 세션 초기화
 	function questionTabClear() {
 		sessionStorage.removeItem("questionTab");
 	}
@@ -37,14 +40,12 @@ li < a {
 </head>
 <body>
 	<div id="header">
-
 		<div>
 			<img align="middle" alt="" src="/resources/images/logo.png"
 				width="200" height="200"
 				onclick='location.href="/afterAdminLogin.do"'>
 			<div id="adminHello" align="right" style="padding-right: 33%;">
-				<label>관리자님 반갑습니다.</label><a href="/admin/logout.do">로그아웃</a>
-				<label>&nbsp;</label>
+				<label>관리자님 반갑습니다.</label><a href="/admin/logout.do">로그아웃</a> <label>&nbsp;</label>
 			</div>
 		</div>
 		<div id="headerMenu" class="">
@@ -57,7 +58,6 @@ li < a {
 						<li><a href="/adminMember/list.do" onclick="tab();">회원조회</a></li>
 						<li><a href="/adminCoupon/couponList">쿠폰관리</a></li>
 					</ul></li>
-
 				<li id="menutab2"><a href="/menu/menuSelect"
 					onclick="menuTab();"><font color="black">메뉴관리</font></a></li>
 				<li id="menutab3"><a href="/adminReservation/list"

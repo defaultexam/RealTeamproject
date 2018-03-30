@@ -9,7 +9,6 @@
 	function update() {
 		location.href = "/mypage/updatePassword"
 	}
-
 	function out() {
 		location.href = "/mypage/outPassword"
 	}

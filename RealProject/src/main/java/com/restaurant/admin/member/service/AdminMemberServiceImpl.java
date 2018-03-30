@@ -76,7 +76,6 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 			}
 		}
 	}
-
 	// 매일 0시 1분에 자동실행처리
 	@Scheduled(cron = "0 1 0 * * *")
 	@Override
@@ -91,7 +90,6 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 			}
 		}
 	}
-
 	// 매일 0시 2분에 자동실행
 	@Scheduled(cron = "0 2 0 * * *")
 	@Override

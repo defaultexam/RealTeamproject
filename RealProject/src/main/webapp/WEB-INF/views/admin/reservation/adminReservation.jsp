@@ -136,7 +136,6 @@
 		$("#pageSize").change(function() {
 			goPage(1);
 		});
-
 		// 탭클릭시 이벤트
 		$("#전체").click(function() {
 			$("#book_condition").removeAttr("value");
@@ -263,7 +262,9 @@
 											* currDay);
 									var oneTermString = (oneTerm.getMonth() + 1)
 											+ "-" + oneTerm.getDate();
+									
 
+									/* 기간차이별 금액계산 및 적용 */
 									if (((now.getMonth() + 1) + "-" + now
 											.getDate()) == ((paydate.getMonth() + 1)
 											+ "-" + paydate.getDate())) {

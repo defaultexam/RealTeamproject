@@ -76,17 +76,12 @@
 						},
 						success : function(data) {
 							console.log("쿠폰선택완료");
-							console.log(data);
-							console.log(data.coupon_no);
-							console.log()
 							var result = data;
-
 							$("#selectedCoupon_no").val(data.coupon_no);
 							$("#updatecoupon_name").val(result.coupon_name);
 							$("#updatecoupon_term").val(result.coupon_term);
 							$("#updatecoupon_discountrate").val(
 									result.coupon_discountrate);
-
 							if (result.coupon_active == "사용가능쿠폰") {
 								$("#couponYes").attr({
 									"selected" : "selected"
@@ -99,7 +94,6 @@
 							$("#couponUpdate").modal('show');
 						}
 					});
-
 				});
 		$("#couponUpdateModalBtn")
 				.click(

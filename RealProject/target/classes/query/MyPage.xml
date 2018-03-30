@@ -11,15 +11,15 @@
 		#{no} and
 		<![CDATA[coupon_status = '사용가능쿠폰') as couponcnt,]]>
 		(select nvl(count(book_no),0) from
-		booking where member_no = #{no} and
-		book_condition =
-		<![CDATA['미사용') as]]>
+		booking where (member_no = #{no}) and
+		(book_condition =
+		<![CDATA['미사용' or book_condition = '사용')) as]]>
 		bookingcnt,
 		(select nvl(count(book_no),0) from booking where member_no
 		=
 		#{no}
-		and book_condition =
-		<![CDATA['취소') as bookingCancelCnt,]]>
+		and (book_condition =
+		<![CDATA['취소' or book_condition = '기간만료')) as bookingCancelCnt,]]>
 		(select nvl(count(question_no),0) from question where member_no =
 		#{no}
 		) as qnaCnt
@@ -66,8 +66,7 @@
 		select book_no, seat_no, coupon_no, rownum as rnum from
 		booking where
 		member_no=#{member_no} and (book_condition = '사용' or
-		book_condition =
-		'미사용')
+		book_condition = '미사용')
 	</sql>
 
 	<select id="userReservationNumberList" parameterType="mypage"
@@ -144,7 +143,7 @@
 	<sql id="useCancel">
 		select book_no, seat_no, coupon_no, rownum as rnum from
 		booking where
-		member_no=#{member_no} and (book_condition = '취소')
+		member_no=#{member_no} and (book_condition = '취소' or book_condition = '기간만료')
 	</sql>
 
 	<select id="userReservationNumberCancel" parameterType="mypage"
