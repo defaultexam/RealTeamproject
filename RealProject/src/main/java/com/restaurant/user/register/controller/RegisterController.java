@@ -52,6 +52,7 @@ public class RegisterController {
 	public ModelAndView memberInsert(@ModelAttribute MemberVO mvo) {
 		ModelAndView mav = new ModelAndView();
 		int result = 3;
+		int couponMember_no = 0;
 		result = memberService.memberInsert(mvo);
 		switch (result) {
 		case 1:
@@ -61,6 +62,10 @@ public class RegisterController {
 		case 3:
 			mav.addObject("errCode", 3);
 			mav.setViewName("user/register/registerprocess"); // success to add new member; move to login page
+			
+			couponMember_no = memberService.memberNewMeberno(mvo.getId());
+			logger.info(couponMember_no);
+			memberService.memberNewCouponGive(couponMember_no);
 			logger.info(mvo.getId() + "회원 가입 성공, processPage로 이동 완료.");
 			break;
 		default:

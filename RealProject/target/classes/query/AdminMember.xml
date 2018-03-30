@@ -436,7 +436,7 @@
 	<!-- 지급 가능 쿠폰 리스트 조회 쿼리 -->
 	<select id="couponNameList" parameterType="int" resultType="java.lang.String">
 		select coupon_name from coupon where coupon_active=
-		<![CDATA['사용가능쿠폰' and coupon_name != '생일기념쿠폰' and coupon_name != '결혼기념쿠폰' and coupon_name != 'VIP쿠폰' ]]>
+		<![CDATA['사용가능쿠폰' and coupon_name != '생일기념쿠폰' and coupon_name != '결혼기념쿠폰' and coupon_name != 'VIP쿠폰' and coupon_name != '회원가입축하쿠폰' ]]>
 		<![CDATA[and coupon_name not in (select distinct coupon_name from couponhistory where member_no = #{member_no} and coupon_status = '사용가능쿠폰') ]]>
 	</select>
 

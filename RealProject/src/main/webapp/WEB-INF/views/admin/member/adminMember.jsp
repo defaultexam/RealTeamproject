@@ -47,7 +47,7 @@
 			tab3.classList.add("active");
 			tab4.classList.remove("active");
 		}
-		// 이름클릭시 상세 페이지 이동을 위한 처리 이벤트
+		// 선택행 클릭시 상세 페이지 이동을 위한 처리 이벤트
 		$(".memberInfo").click(function() {
 			var m_no = $(this).attr("data-num");
 			$("#member_no").val(m_no);
@@ -93,15 +93,7 @@
 			//$("#infoPhone").val("<c:out value='${data.phone}' />");
 		}
 
-		// 선택 탭 유지하기 위한 설정
-		if ("<c:out value='${data.rank}' />" != "") {
-			$("#rank").val("<c:out value='${data.rank}' />");
-			//$("#infoRank").val("<c:out value='${data.rank}' />");
-		}
-		if ("<c:out value='${data.condition}' />" != "") {
-			$("#condition").val("<c:out value='${data.condition}' />");
-			//$("#infoCondition").val("<c:out value='${data.condition}' />");
-		}
+		
 
 		// 조회버튼 클릭시 발생 이벤트
 		$("#memberSearch").click(function() {
@@ -124,7 +116,14 @@
 		$("#pageSize").change(function() {
 			goPage(1);
 		});
-
+		
+		// 선택 탭 유지하기 위한 설정
+		if ("<c:out value='${data.rank}' />" != "") {
+			$("#rank").val("<c:out value='${data.rank}' />");
+		}
+		if ("<c:out value='${data.condition}' />" != "") {
+			$("#condition").val("<c:out value='${data.condition}' />");
+		}
 		// 탭클릭시 이벤트
 		$("#전체").click(function() {
 			$("#rank").removeAttr("value");

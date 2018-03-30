@@ -18,21 +18,19 @@
 <!-- jquery form 관련 js -->
 <script type="text/javascript"
 	src="/resources/include/js/jquery.form.min.js"></script>
-<!-- js pdf화관련 js -->
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
+<!-- jspdf화관련 js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
 <script type="text/javascript">
+/* n이 한자리 수가되면 앞에 0을 추가하는 함수 */
+function addzero(n) {
+	return n < 10 ? "0" + n : n;
+}
+
 	google.charts.load('current', {
 		'packages' : [ 'corechart' ]
 	});
 	google.charts.setOnLoadCallback(drawChart);
-	google.charts.setOnLoadCallback(drowRankChart);
-
-	/* n이 한자리 수가되면 앞에 0을 추가하는 함수 */
-	function addzero(n) {
-		return n < 10 ? "0" + n : n;
-	}
-
+	
 	/* 회원 성별 파이차트 */
 	function drawChart() {
 		var manData = ${memberCnt.manCnt};
@@ -63,7 +61,10 @@
 		var content = '<img src="' + chart.getImageURI() + '">';
 		$('#graph-images').append(content);
 	}
-	/* 회원 등급별 파이차트 */
+	
+	google.charts.setOnLoadCallback(drowRankChart);
+	
+	/* 회원 등급별 컬럼차트 */
 	function drowRankChart() {
 		var normalData = ${rankCnt.normalCnt};
 		var VIPData = ${rankCnt.VIPCnt};
@@ -113,22 +114,22 @@
 		$('#graph-images').append(content);
 
 	}
+	
 	/* 차트 이미지 PDF화 함수 */
 	$(function() {
 		$('#pdfBtn').click(
 				function() {
 					var doc = new jsPDF('p', 'pt', 'a4', false); // 새로운 문서 생성
 					doc.setFontSize(15); //문서의 폰트사이즈
-					var yAxis = 70;
+					var yAxis = 70; // 시작 y축 좌표
 					var imageTags = $("#graph-images img");
-					console.log(imageTags);
 					for (var i = 0; i < imageTags.length; i++) {
 						var someText = 'MemberChart' + (i + 1);
 						doc.text(60, yAxis, someText);
-						yAxis = yAxis + 20;
+						yAxis = yAxis + 20; // 아래로 20pt 이동
 						doc.addImage(imageTags[i], 'png', 40, yAxis, 300, 300,
 								undefined, 'none');
-						yAxis = yAxis + 320;
+						yAxis = yAxis + 320; // 아래로 320pt 이동
 					}
 					doc.save('memberChart.pdf');
 				});

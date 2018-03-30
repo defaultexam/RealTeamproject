@@ -60,16 +60,12 @@ public class menuController {
 	@RequestMapping(value = "/menuInsert", method = RequestMethod.POST)
 	public String menuInsert(@ModelAttribute AdminMenuVO bvo, Model model, HttpServletRequest request)
 			throws Exception {
-
 		logger.info("menuInsert 호출 성공");
-
 		// 확인 후 주석처리
 		// logger.info("fileName : " + bvo.getFile().getOriginalFilename());
 		logger.info("name : " + bvo.getMenu_name() + "성공");
-
 		int result = 0;
 		String url = "";
-
 		if (bvo.getMenu_menufile() != null) {
 			String menu_menufile = FileUploadUtil.fileUpload(bvo.getFile(), request, "menu");
 			bvo.setMenu_menufile(menu_menufile);
@@ -77,7 +73,6 @@ public class menuController {
 			String thumbName = FileUploadUtil.makeThumbnail(menu_menufile, request);
 			bvo.setMenu_menufile(thumbName);
 		}
-
 		result = menuService.menuInsert(bvo);
 		if (result == 1) {
 			url = "/menu/menuSelect";
@@ -85,7 +80,6 @@ public class menuController {
 			model.addAttribute("code", 1);
 			url = "/menu/menuSelect";
 		}
-
 		return "redirect:" + url;
 	}
 

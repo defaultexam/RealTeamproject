@@ -32,33 +32,35 @@
 
 		// 추가쿠폰지급 쿠폰이름 콤보박스 생성 
 		var list;
-		$.ajax({
-			method : "get",
-			url : "/adminMember/couponNameList",
-			dataType : "json",
-			data : {
-				"member_no" : $("#member_no").val()
-			},
-			error : function() {
-				alert("사이트 접속 문제로 정상작동하지 못하였습니다. 잠시후 다시 시도해주세요");
-			},
-			success : function(resultData) {
-				console.log(resultData);
-				list = resultData;
-				$("#selectCouponName").empty();
-				if (list.length > 0) {
-					for (var i = 0; i < list.length; i++) {
-						$("#selectCouponName").append(
-								"<option id='option"+i+"' value='"+list[i]+"'>"
-										+ list[i] + "</option>");
-					}
-				} else {
-					$("#selectCouponName").append(
-							"<option value='noCoupon'>선택가능한 쿠폰이 존재하지 않습니다.</option>");
-				}
+		$
+				.ajax({
+					method : "get",
+					url : "/adminMember/couponNameList",
+					dataType : "json",
+					data : {
+						"member_no" : $("#member_no").val()
+					},
+					error : function() {
+						alert("사이트 접속 문제로 정상작동하지 못하였습니다. 잠시후 다시 시도해주세요");
+					},
+					success : function(resultData) {
+						console.log(resultData);
+						list = resultData;
+						$("#selectCouponName").empty();
+						if (list.length > 0) {
+							for (var i = 0; i < list.length; i++) {
+								$("#selectCouponName").append(
+										"<option id='option"+i+"' value='"+list[i]+"'>"
+												+ list[i] + "</option>");
+							}
+						} else {
+							$("#selectCouponName")
+									.append(
+											"<option value='noCoupon'>선택가능한 쿠폰이 존재하지 않습니다.</option>");
+						}
 
-			}
-		});
+					}
+				});
 
 		/* 등급이 일반일때 콤보박스 셀렉트처리 */
 		if ($("#hirank").val() == "일반") {
@@ -103,7 +105,8 @@
 									.val());
 							var giveCouponName = $(
 									"#selectCouponName option:selected").val();
-							if (giveCouponName.length == 0 || giveCouponName == 'noCoupon') {
+							if (giveCouponName.length == 0
+									|| giveCouponName == 'noCoupon') {
 								alert("지급가능한 쿠폰명을 선택해주세요");
 								return;
 							} else if ($("#newCouponGiveDate").val().length == 0) {
@@ -214,7 +217,7 @@
 					<td><label class="intbName">결혼여부</label></td>
 					<td colspan="3"><c:set value="${memberInfo.marriage }"
 							var="marriage"></c:set> <c:choose>
-							<c:when test="${marriage == '1'}">
+							<c:when test="${marriage == '2'}">
 										기혼</c:when>
 							<c:otherwise>미혼</c:otherwise>
 						</c:choose></td>
@@ -258,8 +261,8 @@
 					<td><label class="intbName">추가쿠폰지급</label></td>
 					<td><select id="selectCouponName"></select></td>
 					<td><input type="date" id="newCouponGiveDate"></td>
-					<td><input type="button" id="newCouponGiveBtn" value="지급">
-					</td>
+					<td><input type="button" id="newCouponGiveBtn" value="지급"
+						class="btn btn-default"></td>
 
 				</tr>
 
@@ -272,7 +275,7 @@
 								<td>${couponList.coupon_name}</td>
 								<td><label class="intbName">유효기간</label></td>
 								<td>${couponList.coupon_start}~${couponList.coupon_end}
-									<button class="deleteCoupon">삭제</button>
+									<button class="deleteCoupon btn btn-default">삭제</button>
 								</td>
 							</tr>
 						</c:forEach>
@@ -285,9 +288,11 @@
 				</c:choose>
 			</table>
 		</form>
-		<input id="memInfoUpdate" type="button" value="수정완료"> <input
-			id="memInfoCancel" type="button" value="취소"
-			onclick="window.history.go(-1); return false;">
+		<input id="memInfoUpdate" type="button" value="수정완료"
+			class="btn btn-default"> <input id="memInfoCancel"
+			type="button" value="취소"
+			onclick="window.history.go(-1); return false;"
+			class="btn btn-default">
 	</div>
 	<script type="text/javascript"
 		src="/resources/include/js/jquery-3.3.1.min.js"></script>

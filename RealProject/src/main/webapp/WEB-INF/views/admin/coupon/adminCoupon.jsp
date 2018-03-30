@@ -314,8 +314,7 @@
 								name="coupon_discountrate" id="updatecoupon_discountrate"></input>
 						</div>
 						<div class="form-group">
-							<label for="updatecoupon_active" class="control-label">쿠폰
-								할인률(소수 단위)</label> <select class="form-control"
+							<label for="updatecoupon_active" class="control-label">쿠폰사용가능상태</label> <select class="form-control"
 								name="coupon_discountrate" id="updatecoupon_active">
 								<option value="사용가능쿠폰" id="couponYes">사용가능쿠폰</option>
 								<option value="사용불가쿠폰" id="couponNo">사용불가쿠폰</option>

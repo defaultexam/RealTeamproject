@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>예약내역관리 페이지</title>
+<title>예약/취소 내역관리 페이지</title>
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link href="/resources/include/dist/css/bootstrap.min.css"
@@ -502,7 +502,7 @@
 <body>
 	<div id="reservationTable">
 		<div>
-			<h3>예약내역관리</h3>
+			<h3>예약 / 취소 내역관리</h3>
 			<p id="span">* 선택칸의 라디오 버튼 클릭후 예약상태 수정 버튼 클릭시 상태변경이 가능합니다..</p>
 			<hr>
 		</div>

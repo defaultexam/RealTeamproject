@@ -52,11 +52,10 @@
 						}
 						doc.save('memberChart.pdf');
 					});
-
 	});
 
+	/* 조회 기간별 예약통계 작성 메소드 */
 	function drawChart() {
-
 		var searchStartDate = $("#chartStartDate").val();
 		var searchEndDate = $("#chartEndDate").val();
 		if (searchStartDate.length == 0) {
@@ -82,7 +81,6 @@
 						var nowDate = now.getFullYear() + "-"
 								+ addzero((now.getMonth() + 1)) + "-"
 								+ addzero(now.getDate()) + " " +addzero(now.getHours());
-
 						var dataArray = [ [ '날짜', '1타임확률', '2타임확률', '3타임확률',
 								'4타임확률' ] ];
 						var chartList = list;
@@ -93,7 +91,6 @@
 									(50-list[i].thirdSeat)/50, (20-list[i].fourthSeat)/20);
 							dataArray.push(plusArray);
 						}
-
 						var data = google.visualization
 								.arrayToDataTable(dataArray);
 						var options = {
@@ -110,12 +107,9 @@
 						};
 						var chart = new google.visualization.LineChart(document
 								.getElementById('reservationChart'));
-
 						chart.draw(data, options);
-						
 						var content = '<img src="' + chart.getImageURI() + '" style="transform: rotate(90deg);">';
 						$('#graph-images').append(content);
-
 						if ($("#chartStartDate").val() === '9999-12-31') {
 							$("#chartStartDate").val("");
 							$("#chartEndDate").val("");

@@ -37,7 +37,6 @@ public class AdminMemberController {
 		ModelAndView mav = new ModelAndView();
 		if (session.getAttribute("admin") == null) {
 			mav.setViewName("redirect:/adminSecurity");
-			;
 		} else {
 			logger.info("adminMember List 호출 성공");
 			logger.info(avo.getRank());
@@ -119,7 +118,6 @@ public class AdminMemberController {
 	/******************************************************
 	 * 액셀 다운로드 구현하기 참고 : ListExcelView 클래스에서 맵타입으로 Model에 접근하게 된다.
 	 *****************************************************/
-
 	@RequestMapping(value = "/memberExcel", method = RequestMethod.GET)
 	public ModelAndView memberExcel(@ModelAttribute AdminMemberVO avo) {
 		logger.info("boardExcel 호출 성공");

@@ -89,9 +89,10 @@
 	</update>
 
 	<update id="memberPointUpdate" parameterType="member">
-		update member set point = point + #{point} where member_no= #{member_no}
+		update member set
+		point = point + #{point} where member_no= #{member_no}
 	</update>
-	
+
 	<select id="memberNoSearch" parameterType="int" resultType="member">
 		select *
 		from
@@ -102,4 +103,22 @@
 	<select id="memberCheckEmail" parameterType="String" resultType="member">
 		select email from member where email = #{email} and condition = '활동중'
 	</select>
+
+	<!-- 가입회원 member_no 구하기 -->
+	<select id="memberNewMeberno" parameterType="String" resultType="int">
+		select member_no from member where id = #{id}
+	</select>
+	<!-- 회원가입축하 쿠폰 지급 쿼리 -->
+	<insert id="memberNewCouponGive" parameterType="int">
+		insert into
+		couponhistory(couponhistory_no,member_no,coupon_name,coupon_start,coupon_end,coupon_status,coupon_discountrate)
+		values(couponhistory_seq.nextval,
+		#{member_no},'회원가입축하쿠폰',<![CDATA[to_date(to_char(sysdate,'yyyy-MM-dd'),'yyyy-MM-dd'),]]>
+		<![CDATA[to_date(to_char(sysdate+(select coupon_term from coupon where coupon_name='회원가입축하쿠폰'),'yyyy-MM-dd'),'yyyy-MM-dd'),]]>
+		'사용가능쿠폰',(select
+		coupon_discountRate from
+		coupon where
+		coupon_name='회원가입축하쿠폰'))
+	</insert>
+
 </mapper>

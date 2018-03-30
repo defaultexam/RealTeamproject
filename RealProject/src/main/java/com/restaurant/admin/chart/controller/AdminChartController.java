@@ -53,6 +53,7 @@ public class AdminChartController {
 		return url;
 	}
 
+	/*예약 통계 정보 산출*/
 	@ResponseBody
 	@RequestMapping(value = "/reservation", method = RequestMethod.POST)
 	public List<AdminChartVO> chartReservation(@ModelAttribute AdminChartVO avo) throws Exception {
@@ -65,9 +66,7 @@ public class AdminChartController {
 			for (int i = 0; i < chartSeatDateList.size(); i++) {
 				String iSeat = chartSeatDateList.get(i).getSeat_date().substring(0, 10);
 				avo.setSeat_date(iSeat);
-
 				tempVo = adminchartservice.chartSeatExtra(avo);
-
 				chartSeatDateList.get(i).setFirstSeat(tempVo.getFirstSeat());
 				chartSeatDateList.get(i).setSecondSeat(tempVo.getSecondSeat());
 				chartSeatDateList.get(i).setThirdSeat(tempVo.getThirdSeat());

@@ -29,4 +29,8 @@ public interface MemberService {
 	public int memberCheckEmail(String email);
 	
 	public int memberPointUpdate(MemberVO mvo);
+
+	public int memberNewMeberno(String id);
+
+	public void memberNewCouponGive(int member_no);
 }

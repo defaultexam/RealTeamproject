@@ -86,4 +86,14 @@ public class MemberDAOImpl implements MemberDAO {
 		return session.update("memberPointUpdate", mvo);
 	}
 	
+	@Override
+	public int memberNewMeberno(String id) {
+		return session.selectOne("memberNewMeberno", id);
+	}
+	
+	@Override
+	public void memberNewCouponGive(int member_no) {
+		session.insert("memberNewCouponGive", member_no);
+	}
+	
 }

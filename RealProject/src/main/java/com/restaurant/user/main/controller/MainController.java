@@ -2,6 +2,8 @@ package com.restaurant.user.main.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.restaurant.admin.menu.service.MenuService;
 import com.restaurant.admin.menu.vo.AdminMenuVO;
@@ -38,20 +41,25 @@ public class MainController {
 
 	// 로그인 완료 후 화면
 	@RequestMapping(value = "/afterAdminLogin", method = RequestMethod.GET)
-	public String sub() {
-		return "adminSub";
+	public String sub(HttpSession session) {
+		String url = "";
+		if (session.getAttribute("admin") == null) {
+			url = "redirect:/adminSecurity";
+		} else {
+			url = "adminSub";
+		}
+		return url;
 	}
-
 	// 관리자 화면 보안처리
 	@RequestMapping(value = "/adminSecurity", method = RequestMethod.GET)
 	public String adminSecurity() {
 		return "adminSecurity";
 	}
-	
+
 	// 사용자 화면 보안처리
-	@RequestMapping(value="/security",method=RequestMethod.GET)
+	@RequestMapping(value = "/security", method = RequestMethod.GET)
 	public String security() {
 		return "security";
 	}
-	
+
 }

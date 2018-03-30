@@ -184,4 +184,16 @@ public class MemberServiceImpl implements MemberService {
 		return result;
 	}
 	
+	@Override
+	public int memberNewMeberno(String id) {
+		int member_no = 0;
+		member_no = memberDAO.memberNewMeberno(id);
+		return member_no;
+	}
+	
+	@Override
+	public void memberNewCouponGive(int member_no) {
+		memberDAO.memberNewCouponGive(member_no);
+	}
+	
 }
