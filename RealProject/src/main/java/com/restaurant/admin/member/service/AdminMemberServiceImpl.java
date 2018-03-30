@@ -61,12 +61,10 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 		return result;
 	}
 
-	// 매일 0시에 자동실행처리
-	// (cron = "초 분 시간 일 달 주 년(선택적)")
-	@Scheduled(cron = "0 0 0 * * *")
+	// 매일 0시 2분에 자동실행처리
+	@Scheduled(cron = "0 2 0 * * *")
 	@Override
 	public void giveBirth() {
-		System.out.println("생일쿠폰 자동지급");
 		AdminMemberVO relist = null;
 		List<AdminMemberVO> list = adminMemberDao.giveBirthCnt();
 		if (list != null) {
@@ -75,12 +73,12 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 				adminMemberDao.giveBirth(relist);
 			}
 		}
+		System.out.println("생일쿠폰 자동지급");
 	}
-	// 매일 0시 1분에 자동실행처리
-	@Scheduled(cron = "0 1 0 * * *")
+	// 매일 0시 3분에 자동실행처리
+	@Scheduled(cron = "0 3 0 * * *")
 	@Override
 	public void giveMarry() {
-		System.out.println("결혼쿠폰 자동지급");
 		AdminMemberVO relist = null;
 		List<AdminMemberVO> list = adminMemberDao.giveMarryCnt();
 		if (list != null) {
@@ -89,12 +87,12 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 				adminMemberDao.giveMarry(relist);
 			}
 		}
+		System.out.println("결혼쿠폰 자동지급");
 	}
-	// 매일 0시 2분에 자동실행
-	@Scheduled(cron = "0 2 0 * * *")
+	// 매일 0시 4분에 자동실행
+	@Scheduled(cron = "0 4 0 * * *")
 	@Override
 	public void giveVIP() {
-		System.out.println("VIP쿠폰 자동지급");
 		AdminMemberVO relist = null;
 		List<AdminMemberVO> list = adminMemberDao.giveVIPCnt();
 		if (list != null) {
@@ -103,15 +101,15 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 				adminMemberDao.giveVIP(relist);
 			}
 		}
+		System.out.println("VIP쿠폰 자동지급");
 	}
-
-	// 매일 0시 3 분에자동실행처리
-	@Scheduled(cron = "0 3 0 * * *")
+	// 매일 0시 5분에자동실행처리
+	@Scheduled(cron = "0 5 0 * * *")
 	@Override
 	public void deleteCoupon() {
 		// TODO Auto-generated method stub
-		System.out.println("기한만료 쿠폰 자동삭제");
 		adminMemberDao.deleteCoupon();
+		System.out.println("기한만료 쿠폰 자동삭제");
 	}
 
 	@Override
@@ -135,12 +133,12 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 		adminMemberDao.newCouponGive(cvo);
 	}
 
-	// 매일 0시 4분에 자동실행처리
-	@Scheduled(cron = "0 4 0 * * *")
+	// 매일 0시 1분에 자동실행처리
+	@Scheduled(cron = "0 1 0 * * *")
 	@Override
 	public void memberRankAutoChange() {
-		System.out.println("2000P 일반회원 VIP등급으로 자동변경 실행");
 		adminMemberDao.memberRankAutoChange();
+		System.out.println("2000P 일반회원 VIP등급으로 자동변경 실행");
 	}
 
 }

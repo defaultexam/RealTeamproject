@@ -243,6 +243,7 @@
 		</if>
 	</update>
 
+	<!-- 기간만료 자동 취소처리 쿼리 -->
 	<update id="lateReservationEdit">
 		update booking set book_condition = '기간만료', cancel_condition = '환불불가'
 		where seat_no in (select
@@ -258,22 +259,19 @@
 	<!-- 매일 0 시 예약가능좌석수 생성쿼리 -->
 	<insert id="insertSeatFirst">
 		insert into seat
-		values(seat_seq.nextval,<![CDATA[to_date(to_char(sysdate+15,'yyyy-MM-dd'),'yyyy-MM-dd'),'12:00 ~ 14:00',30)]]>
+		values(seat_seq.nextval,<![CDATA[to_date(to_char(sysdate+14,'yyyy-MM-dd'),'yyyy-MM-dd'),'12:00 ~ 14:00',30)]]>
 	</insert>
-
 	<insert id="insertSeatSecond">
 		insert into seat
-		values(seat_seq.nextval,<![CDATA[to_date(to_char(sysdate+15,'yyyy-MM-dd'),'yyyy-MM-dd'),'17:30 ~ 19:20',40)]]>
+		values(seat_seq.nextval,<![CDATA[to_date(to_char(sysdate+14,'yyyy-MM-dd'),'yyyy-MM-dd'),'17:30 ~ 19:20',40)]]>
 	</insert>
-
 	<insert id="insertSeatThird">
 		insert into seat
-		values(seat_seq.nextval,<![CDATA[to_date(to_char(sysdate+15,'yyyy-MM-dd'),'yyyy-MM-dd'),'20:00 ~ 22:00',50)]]>
+		values(seat_seq.nextval,<![CDATA[to_date(to_char(sysdate+14,'yyyy-MM-dd'),'yyyy-MM-dd'),'20:00 ~ 22:00',50)]]>
 	</insert>
-
 	<insert id="insertSeatFourth">
 		insert into seat
-		values(seat_seq.nextval,<![CDATA[to_date(to_char(sysdate+15,'yyyy-MM-dd'),'yyyy-MM-dd'),'21:15 ~ 23:15',20)]]>
+		values(seat_seq.nextval,<![CDATA[to_date(to_char(sysdate+14,'yyyy-MM-dd'),'yyyy-MM-dd'),'21:15 ~ 23:15',20)]]>
 	</insert>
 
 

@@ -364,6 +364,7 @@
 		where member_no = #{member_no}
 	</update>
 
+	<!-- 당일 생일자 명단 구하는 쿼리 -->
 	<select id="giveBirthCnt" resultType="adminMember">
 		select * from member where <![CDATA[ to_char(birthday,'mm/dd') = to_char(sysdate,'mm/dd') and condition = '활동중']]>
 	</select>
@@ -381,6 +382,7 @@
 		coupon_name = '생일기념쿠폰'))
 	</insert>
 
+	<!-- 당일 결혼기념일자 명단 구하는 쿼리 -->
 	<select id="giveMarryCnt" resultType="adminMember">
 		select * from member where <![CDATA[ to_char(weddingdate,'mm/dd') = to_char(sysdate,'mm/dd') and condition = '활동중' ]]>
 	</select>

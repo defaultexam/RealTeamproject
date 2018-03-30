@@ -47,14 +47,13 @@ public class AdminReservationServiceImpl implements AdminReservationService {
 		return adminreservationdao.reservationEdit(rvo);
 	}
 
-	// 매일 0시 5분에 자동실행처리
-	// (cron = "초 분 시간 일 달 주 년(선택적)")
-	@Scheduled(cron = "0 5 0 * * *")
+	// 매일 0시 6분에 자동실행처리
+	@Scheduled(cron = "0 6 0 * * *")
 	@Override
 	public void lateReservationEdit() {
 		// TODO Auto-generated method stub
-		System.out.println("기간만료 예약내역 자동삭제처리 ");
 		adminreservationdao.lateReservationEdit();
+		System.out.println("기간만료 예약내역 자동삭제(기간만료)처리 ");
 	}
 
 	@Override
@@ -73,6 +72,7 @@ public class AdminReservationServiceImpl implements AdminReservationService {
 		adminreservationdao.insertSeatSecond();
 		adminreservationdao.insertSeatThird();
 		adminreservationdao.insertSeatFourth();
+		System.out.println("15일뒤 예약가능 좌석 수 DB세팅 완료");
 	}
 
 }
