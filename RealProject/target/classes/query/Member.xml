@@ -37,7 +37,7 @@
 		resultType="String">
 		select id from member
 		where name = #{name} and email =
-		#{email}
+		#{email} and condition = '활동중'
 	</select>
 	<insert id="memberInsert" parameterType="member">
 		insert into

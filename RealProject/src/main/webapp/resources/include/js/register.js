@@ -120,7 +120,7 @@ $(function() {
 							$("#modalid").parents(
 								".idclass").find(
 								".error").html(
-								"현재 사용 중인 아이디입니다.");
+								"현재 사용 중 혹은 탈퇴한 아이디입니다.");
 							iddiv.classList.add("form-group", "has-warning");
 						} else if (resultData == "2") {
 							$("#modalid").parents(
