@@ -3,7 +3,6 @@
 <%@ page trimDirectiveWhitespaces="true"%>
 <div class="container">
 	<div class="">
-		<p class="text-muted">사업자등록번호: 128-23-45267 | 대표: 홍길동 | 개인정보보호책임자:
-			김철수 | 이메일 : javauser1234@naver.com | 서울특별시 성동구 무학로2길 54(신방빌딩)</p>
+		<p class="text-muted">사업자등록번호: 123-45-67890 | 대표: 김태엽 장윤희 최일규 이상훈 이종원  | 이메일 : yeoprestaurant@naver.com | 서울특별시 성동구 무학로2길 54(신방빌딩)</p>
 	</div>
 </div>
