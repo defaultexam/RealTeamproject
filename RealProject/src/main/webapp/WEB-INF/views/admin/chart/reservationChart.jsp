@@ -50,7 +50,7 @@
 									undefined, 'none');
 							yAxis = yAxis + 320;
 						}
-						doc.save('memberChart.pdf');
+						doc.save('reservationChart.pdf');
 					});
 	});
 

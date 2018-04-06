@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.web.servlet.view.document.AbstractXlsxView;
 
@@ -24,24 +23,6 @@ public class ListExcelView extends AbstractXlsxView {
 	 * 참고 : "Content-disposition: attachment"은 브라우저 인식 파일 확장자를 포함하여 모든 확장자의 파일들에 대해,
 	 * 다운로드시 무조건 "파일 다운로드" 대화상자를 보여주도록 * 헤더속성이라 할 수 있다.
 	 ********************************************************************/
-	/*
-	 * @Override protected void buildExcelDocument(Map<String, Object> model,
-	 * HSSFWorkbook arg1, HttpServletRequest request, HttpServletResponse response)
-	 * throws Exception { response.setHeader("Content-Disposition",
-	 * "attachment;fileName=\"" + model.get("file_name") + "_" + new
-	 * SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime()) +
-	 * ".xlsx" + "\"");
-	 * response.setContentType("application/x-msexcel; charset=UTF-8");
-	 * 
-	 **
-	 * String docRoot = request.getSession().getServletContext().
-	 * getRealPath("/WEB-INF/excel/"); logger.info("경로 체크(docRoot) : " + docRoot);
-	 * InputStream is = new BufferedInputStream(new FileInputStream(docRoot +
-	 * model.get("template"))); XLSTransformer trans = new XLSTransformer();
-	 * Workbook workbook = trans.transformXLS(is, model); is.close();
-	 * workbook.write(response.getOutputStream()); }
-	 */
-
 	@Override
 	protected void buildExcelDocument(Map<String, Object> model, Workbook arg1, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
