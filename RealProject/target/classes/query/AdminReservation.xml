@@ -243,6 +243,23 @@
 		</if>
 	</update>
 
+	<!-- 예약상태 수정변경시 포인트 삭감처리 -->
+	<update id="reservationEditPoint" parameterType="adminreservation">
+		update member
+		set point = point - ((select totalpay from booking where book_no =
+		#{book_no})/1000)
+		where member_no = (select member_no from booking
+		where book_no =
+		#{book_no})
+	</update>
+
+	<!-- 기간만료 자동취소 전 book_no 리스트 조회 -->
+	<select id="lateReservationEditList" resultType="adminreservation">
+		select book_no from booking where seat_no in (select
+		seat_no from seat
+		where seat_date <![CDATA[< sysdate ) and book_condition = '미사용']]>
+	</select>
+
 	<!-- 기간만료 자동 취소처리 쿼리 -->
 	<update id="lateReservationEdit">
 		update booking set book_condition = '기간만료', cancel_condition = '환불불가'

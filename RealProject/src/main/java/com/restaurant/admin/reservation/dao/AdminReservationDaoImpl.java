@@ -37,11 +37,21 @@ public class AdminReservationDaoImpl implements AdminReservationDao {
 		// TODO Auto-generated method stub
 		return session.update("reservationEdit", rvo);
 	}
+	
+	@Override
+	public int reservationEditPoint(AdminReservationVO rvo) {
+		return session.update("reservationEditPoint", rvo);
+	}
 
 	@Override
 	public void lateReservationEdit() {
 		// TODO Auto-generated method stub
 		session.update("lateReservationEdit");
+	}
+	
+	@Override
+	public List<AdminReservationVO> lateReservationEditList() {
+		return session.selectList("lateReservationEditList");
 	}
 
 	@Override

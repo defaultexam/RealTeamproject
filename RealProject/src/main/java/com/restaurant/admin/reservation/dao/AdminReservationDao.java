@@ -26,4 +26,8 @@ public interface AdminReservationDao {
 
 	public void insertSeatFourth();
 
+	public int reservationEditPoint(AdminReservationVO rvo);
+
+	public List<AdminReservationVO> lateReservationEditList();
+
 }

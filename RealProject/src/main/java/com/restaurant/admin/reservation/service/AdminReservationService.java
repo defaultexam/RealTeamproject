@@ -20,4 +20,6 @@ public interface AdminReservationService {
 	
 	public void insertSeat();
 
+	public int reservationEditPoint(AdminReservationVO rvo);
+
 }

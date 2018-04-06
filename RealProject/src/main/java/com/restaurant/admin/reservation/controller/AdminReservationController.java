@@ -80,6 +80,7 @@ public class AdminReservationController {
 	@RequestMapping(value = "/reservationEdit", method = RequestMethod.POST)
 	public int editReservationCondition(@ModelAttribute AdminReservationVO rvo) throws Exception {
 		int result = 0;
+		result = adminreservationservice.reservationEditPoint(rvo);
 		result = adminreservationservice.reservationEdit(rvo);
 		return result;
 	}
