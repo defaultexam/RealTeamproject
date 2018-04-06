@@ -70,7 +70,7 @@ public class AdminReservationServiceImpl implements AdminReservationService {
 		// TODO Auto-generated method stub
 		adminreservationdao.cancelUpdate(rvo);
 	}
-
+//
 	// 매일 0시에 자동실행처리
 	// (cron = "초 분 시간 일 달 주 년(선택적)")
 	@Scheduled(cron = "0 0 0 * * *")
